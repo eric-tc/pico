@@ -27,7 +27,7 @@ def anagrafica():
 
 @main.route('/pathology')
 @login_required
-def patology():
+def pathology():
 
     if request.method == 'POST':
         # Extract form data from the request

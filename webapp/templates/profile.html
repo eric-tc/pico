@@ -4,35 +4,44 @@
 
 {% block content %}
 <h1 class="title">
-  Welcome, {{ name }}!
+  Buongiorno, dott {{ name }}!
 </h1>
 
+<div class="row">
 
-  <form method="post">
-    <div class="mb-3">
-        <label for="category" class="form-label">Category</label>
-        <select class="form-select" id="category" name="category">
-            <option value="rizoartrosi">Rizoartrosi</option>
-            <option value="frattura_radio_distale">Fratture radio distale</option>
-        </select>
-    </div>
+  <div class="col-md-4 mb-4 col-lg-4">
 
-    <div class="mb-3">
-        <label for="item" class="form-label">Item</label>
-        <select class="form-select" id="item" name="item">
-            <!-- Options will be dynamically populated based on the selected category -->
-        </select>
-    </div>
+    <h4 class="title mt-3">
+      Seleziona la patologia da trattare
+    </h4>
 
-    <div class="mb-3" id="additionalFieldContainer" style="display: none;">
-      <label for="additionalField" class="form-label">Additional Field</label>
-      <input type="text" class="form-control" id="additionalField" name="additionalField">
-    </div>
+    <form action="{{ url_for('main.pathology') }}" method="get">
+      <div class="mb-3 mt-4">
+          <label for="category" class="form-label">Category</label>
+          <select class="form-select" id="category" name="category">
+              <option value="rizoartrosi">Rizoartrosi</option>
+              <option value="frattura_radio_distale">Fratture radio distale</option>
+          </select>
+      </div>
+
+      <div class="mb-3">
+          <label for="item" class="form-label">Item</label>
+          <select class="form-select" id="item" name="item">
+              <!-- Options will be dynamically populated based on the selected category -->
+          </select>
+      </div>
+
+      <div class="mb-3" id="additionalFieldContainer" style="display: none;">
+        <label for="additionalField" class="form-label">Additional Field</label>
+        <input type="text" class="form-control" id="additionalField" name="additionalField">
+      </div>
 
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
 
+</div>
 
 <script>
   // Dummy data for options
