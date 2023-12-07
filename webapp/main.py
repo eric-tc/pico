@@ -1,8 +1,10 @@
 # main.py
 
-from flask import Blueprint, render_template,request
+from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
 from .internal_data import ROLE
+from .models import User,DoctorPatient
+from . import db
 
 main = Blueprint('main', __name__)
 
@@ -22,11 +24,38 @@ def index():
 def profile():
     return render_template('profile.html', name=current_user.name)
 
-
 @main.route('/profile_patient')
 @login_required
 def profile_patient():
     return render_template('profile_patient.html', name=current_user.name)
+
+
+@main.route('/link_patient',methods=["POST"])
+@login_required
+def link_patient():
+
+    patient_id = request.json.get('patient_id')
+    
+   
+
+    new_link = DoctorPatient(id_doctor=current_user.id, id_patient=patient_id)
+    db.session.add(new_link)
+    db.session.commit()
+
+
+    if True:
+        return jsonify({"success":"associato"})
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
+@main.route('/patients_list')
+@login_required
+def patients_list():
+
+    patients_list= User.query.filter_by(role=ROLE.PATIENT.value).all()
+
+    return render_template('patients_list.html',patients_list=patients_list)
+
 
 @main.route('/anagrafica')
 @login_required

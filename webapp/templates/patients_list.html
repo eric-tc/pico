@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Bootstrap Table</h2>
+    <table id="patientTable" class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in patients_list %}
+                <tr class="patientRow" data-patient-id="{{ item.id}}">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.name }}</td>
+                    <td><button class="btn btn-primary sendLinkPatient" >Associa</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $('#patientTable').on('click', '.sendLinkPatient', function() {
+        var patientId = $(this).closest('.patientRow').data('patient-id');
+
+      // Send AJAX request to Flask endpoint
+        $.ajax({
+            type: 'POST',
+            url: '/link_patient',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ 'patient_id': patientId }),
+            success: function(response) {
+                // Display the selected user details
+                $('#selectedUserDetails').html('<h3>Selected User Details</h3>' +
+                    '<p>ID: ' + response.id + '</p>' +
+                    '<p>Name: ' + response.name + '</p>');
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    </script>
+
+{% endblock %}

@@ -51,6 +51,25 @@
       Pazienti Attualmente in cura
     </h4>
 
+    <table id="patientTable" class="table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for item in current_patient_list %}
+              <tr class="patientRow" data-patient-id="{{ item.id}}">
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.name }}</td>
+                  <td><button class="btn btn-primary sendLinkPatient" >Associa</button></td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
   </div>
 </div>
 

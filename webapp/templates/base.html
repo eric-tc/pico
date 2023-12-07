@@ -13,6 +13,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
 
   <body>
@@ -58,6 +59,15 @@
             </li>
             {% endif %}
             
+            {% if current_user.is_authenticated %}
+              {% if current_user.role==1 %}
+                <li class="nav-item">
+                  <a href="{{ url_for('main.patients_list') }}" class="nav-link">
+                    Lista Pazienti
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
             {% if not current_user.is_authenticated %}
             <li class="nav-item">
               <a href="{{ url_for('auth.login') }}" class="nav-link">
