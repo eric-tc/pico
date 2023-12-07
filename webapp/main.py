@@ -2,13 +2,17 @@
 
 from flask import Blueprint, render_template,request
 from flask_login import login_required, current_user
+from .internal_data import ROLE
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
     if current_user.is_authenticated:
-        return render_template('profile.html', name=current_user.name)
+        if(current_user.role == ROLE.DOCTOR.value):
+            return render_template('profile.html', name=current_user.name)
+        if(current_user.role == ROLE.PATIENT.value):
+            return render_template('profile_patient.html', name=current_user.name)
     else:
 
         return render_template('login.html')
@@ -18,6 +22,11 @@ def index():
 def profile():
     return render_template('profile.html', name=current_user.name)
 
+
+@main.route('/profile_patient')
+@login_required
+def profile_patient():
+    return render_template('profile_patient.html', name=current_user.name)
 
 @main.route('/anagrafica')
 @login_required

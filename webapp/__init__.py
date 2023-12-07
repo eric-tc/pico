@@ -6,6 +6,11 @@ from flask_login import LoginManager
 
 import os
 
+from enum import Enum
+
+#ROLE 1 = DOCTOR
+#ROLE 2 = PATIENT
+
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
