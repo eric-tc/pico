@@ -35,10 +35,10 @@ def login_post():
     print(ROLE.DOCTOR)
     print(ROLE.PATIENT)
     if(ROLE.DOCTOR.value == user.role):
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('doctor.profile'))
 
     if(ROLE.PATIENT.value==user.role):
-         return redirect(url_for('main.profile_patient'))
+         return redirect(url_for('patient.profile_patient'))
 
 @auth.route('/signup')
 def signup():

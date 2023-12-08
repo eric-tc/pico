@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-4 mb-4 col-lg-4">
+  
+      <h4 class="title mt-3">
+        Seleziona la patologia da trattare
+      </h4>
+  
+      <form action="{{ url_for('doctor.pathology') }}" method="get">
+        <div class="mb-3 mt-4">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category">
+                <option value="rizoartrosi">Rizoartrosi</option>
+                <option value="frattura_radio_distale">Fratture radio distale</option>
+            </select>
+        </div>
+  
+        <div class="mb-3">
+            <label for="item" class="form-label">Item</label>
+            <select class="form-select" id="item" name="item">
+                <!-- Options will be dynamically populated based on the selected category -->
+            </select>
+        </div>
+  
+        <div class="mb-3" id="additionalFieldContainer" style="display: none;">
+          <label for="additionalField" class="form-label">Additional Field</label>
+          <input type="text" class="form-control" id="additionalField" name="additionalField">
+        </div>
+  
+  
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  
+  </div>
+
+
+  <script>
+    // Dummy data for options
+    const optionsByCategory = {
+        rizoartrosi: ["Trapeziectomia con artroplastica in sospensione con APL", "Protesi Touch", "Altro"],
+        frattura_radio_distale: ["Gesso Chiuso", "Placca e viti", "Altro"]
+    };
+  
+    // Function to update options in the "Item" select based on the selected category
+    function updateItemOptions() {
+        const categorySelect = document.getElementById('category');
+        const itemSelect = document.getElementById('item');
+        const additionalFieldContainer = document.getElementById('additionalFieldContainer');
+        const selectedCategory = categorySelect.value;
+  
+        // Clear existing options
+        itemSelect.innerHTML = '';
+  
+        // Populate options based on the selected category
+        optionsByCategory[selectedCategory].forEach(optionValue => {
+            const option = document.createElement('option');
+            option.value = option.textContent = optionValue;
+            itemSelect.appendChild(option);
+        });
+        
+        additionalFieldContainer.style.display = (itemSelect.value === 'Altro') ? 'block' : 'none';
+    }
+  
+    function show_additional_field(){
+      console.log("show_additional_field");
+      const itemSelect = document.getElementById('item');
+      additionalFieldContainer.style.display = (itemSelect.value === 'Altro') ? 'block' : 'none';
+    }
+  
+  
+    // Attach the function to the "change" event of the "Category" select
+    document.getElementById('category').addEventListener('change', updateItemOptions);
+  
+     // Attach the function to the "change" event of the "Item" select
+     document.getElementById('item').addEventListener('change', show_additional_field);
+  
+    // Initial population of the "Item" select based on the default selected category
+    updateItemOptions();
+  </script>
+
+{% endblock %}

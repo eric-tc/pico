@@ -52,17 +52,25 @@
             </li>
 
             {% if current_user.is_authenticated %}
+           
             <li class="nav-item">
-              <a href="{{ url_for('main.profile') }}" class="nav-link">
+              {% if current_user.role==1 %}
+              <a href="{{ url_for('doctor.profile') }}" class="nav-link">
                 Profile
               </a>
+              {% endif %}
+              {% if current_user.role==2 %}
+              <a href="{{ url_for('patient.profile') }}" class="nav-link">
+                Profile
+              </a>
+              {% endif %}
             </li>
             {% endif %}
             
             {% if current_user.is_authenticated %}
               {% if current_user.role==1 %}
                 <li class="nav-item">
-                  <a href="{{ url_for('main.patients_list') }}" class="nav-link">
+                  <a href="{{ url_for('doctor.patients_list') }}" class="nav-link">
                     Lista Pazienti
                   </a>
                 </li>

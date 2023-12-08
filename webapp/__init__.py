@@ -43,4 +43,11 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .doctor import doctor as doctor_blueprint
+    app.register_blueprint(doctor_blueprint)
+
+    from .patient import patient as patient_blueprint
+    app.register_blueprint(patient_blueprint)
+
+
     return app
