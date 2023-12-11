@@ -8,7 +8,7 @@
 </h1>
 <div class="row">
 
-  <div class="col-md-4 mb-4 col-lg-4">
+  <div class="col-md-6 mb-6 col-lg-4">
   
     <h4>
       Pazienti Attualmente in cura
@@ -19,7 +19,8 @@
           <tr class="text-center">
               <th>ID</th>
               <th>Name</th>
-              <th>Nuovo Trattamento</th>
+              <th>Nuovo Controllo</th>
+              <th>Storia Paziente</th>
               <th>Azioni</th>
               
           </tr>
@@ -32,6 +33,11 @@
                   <td>
                     <form method="post" action="{{ url_for('doctor.medical_treatment', patient_id=item.id, patient_name=item.name) }}">
                         <button class="btn btn-success" type="submit">Crea</button>
+                      </form>
+                  </td>
+                  <td>
+                    <form method="post" action="{{ url_for('doctor.patient_history', patient_id=item.id, patient_name=item.name) }}">
+                        <button class="btn btn-primary" type="submit">Vedi</button>
                       </form>
                   </td>
                   <td><button class="btn btn-danger sendLinkPatient" >Rimuovi</button></td>

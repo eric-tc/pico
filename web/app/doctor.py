@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .internal_data import ROLE
 from .models import User,DoctorPatient
 from . import db
+from sqlalchemy import cast, Integer
 
 doctor = Blueprint('doctor', __name__)
 
@@ -11,8 +12,11 @@ doctor = Blueprint('doctor', __name__)
 @login_required
 def profile():
 
-    patient_ids_query= DoctorPatient.query.filter_by(id_doctor=current_user.id).all()
-
+    patient_ids_query = (
+    db.session.query(DoctorPatient.id)
+    .filter(cast(DoctorPatient.id_doctor, Integer) == int(current_user.id))
+    .all()
+)
     patients_id=[]
     for row in patient_ids_query:
         patients_id.append(row.id_patient)
@@ -20,7 +24,7 @@ def profile():
     print(patients_id)
     
     patients_list= User.query.filter(User.id.in_(patients_id)).all()
-    
+    patients_list=[]
     return render_template('profile.html', name=current_user.name,patients_list=patients_list)
 
 """
@@ -55,6 +59,17 @@ def patients_list():
 
     return render_template('patients_list.html',patients_list=patients_list)
 
+"""
+Route to show all patient available
+
+"""
+@doctor.route('/patient_history')
+@login_required
+def patient_history():
+
+    
+
+    return render_template('patient_history.html')
 
 # From used to setup pathology parameters
 @doctor.route('/pathology')
@@ -80,9 +95,9 @@ def pathology():
     return render_template('patology.html')
 
 
-@doctor.route('/medical_treatment/<patient_id>',methods=["POST"])
+@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])
 @login_required
-def medical_treatment(patient_id):
+def medical_treatment(patient_id,patient_name):
 
     print(patient_id)
-    return render_template('medical_treatment_selection.html')
+    return render_template('medical_treatment_selection.html',doctor_id=current_user.id,patient_name=patient_name,patient_id=patient_id)
