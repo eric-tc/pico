@@ -3,3 +3,6 @@ flask-sqlalchemy>=3.1.1
 psycopg2>=2.9.4
 flask-login==0.6.3
 gunicorn>=20.1.0
+Celery==5.3.6
+redis==5.0.1
+postgres==4.0
