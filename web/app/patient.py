@@ -13,7 +13,7 @@ def profile_patient():
 
     #get all notification
 
-    current_notifications_list= Notification.query.filter((Notification.id_patient==current_user.id) & (Notification.status==NOTIFICATION_STATUS.SENT.value)).all()
+    current_notifications_list= Notification.query.filter((Notification.id_patient==current_user.id)).all()
 
     print(len(current_notifications_list))
 

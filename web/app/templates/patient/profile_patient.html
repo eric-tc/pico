@@ -14,7 +14,20 @@
     </div>
 
     <div class="row">
-        <h2> Richieste notifiche </h2>
+        <h2> Richieste cura </h2>
+        <h5> Qui puoi gestire le richieste ricevute dai dottori </h5>
+        <p>
+            Accettando una richiesta permetterai al dottore di vedere la tua storia
+            clinica per aiutarlo nella scelta migliore della terapia per il tuo caso
+        </p>
+        
+        <p>
+           Una volta accetta la richiesta potrai rimuoverla in ogni momento impedendo al dottore
+           di prescriverti nuove terapie. 
+           Ricorda una volta eliminato il dottore non potrai più essere seguito. Solo il dottore potrà inviarti una 
+           nuova richiesta.
+        </p>
+        
         <table id="patientRequests" class="table">
             <thead>
                 <tr>
@@ -27,7 +40,12 @@
                 {% for item in current_notifications_list %}
                     <tr class="patientRequest" data-id-doctor="{{ item.id_doctor}}" data-id-notification="{{item.id}}" >
                         <td>Il dottore {{ item.doctor_name }}</td>
-                        <td><button class="btn btn-success sendLinkPatient" >Accetta</button></td>
+                        {% if item.status == 1 %}
+                            <td><button class="btn btn-success sendLinkPatient" >Accetta</button></td>
+                        {% endif %}
+                        {% if item.status == 2 %}
+                            <td><button class="btn btn-danger removeLinkPatient" >Rimuovi</button></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
