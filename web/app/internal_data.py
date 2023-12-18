@@ -6,3 +6,9 @@ from enum import Enum
 class ROLE(Enum):
     DOCTOR = 1
     PATIENT = 2
+
+# Define the notification status
+class NOTIFICATION_STATUS(Enum):
+    SENT = 1
+    APPROVED = 2
+    TOELIMINATE= 3

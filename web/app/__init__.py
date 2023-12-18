@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from .config import BaseConfig
 import os
-
 from enum import Enum
 
 #ROLE 1 = DOCTOR
@@ -49,8 +48,7 @@ def create_app():
 
     from .patient import patient as patient_blueprint
     app.register_blueprint(patient_blueprint)
-
-
+    
     return app
 
 my_app= create_app()

@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 
 @auth.route('/login', methods=['POST'])
@@ -42,7 +42,7 @@ def login_post():
 
 @auth.route('/signup')
 def signup():
-    return render_template('signup.html')
+    return render_template('auth/signup.html')
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
@@ -68,7 +68,7 @@ def signup_post():
 
 @auth.route('/signup_patient')
 def signup_patient():
-    return render_template('signup_patient.html')
+    return render_template('auth/signup_patient.html')
 
 @auth.route('/signup_patient', methods=['POST'])
 def signup_patient_post():

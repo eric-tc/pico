@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
-from .internal_data import ROLE
-from .models import User,DoctorPatient
+from .internal_data import ROLE,NOTIFICATION_STATUS
+from .models import User,DoctorPatient,Notification
 from . import db
 from sqlalchemy import cast, Integer
 
@@ -25,18 +25,23 @@ def profile():
     
     patients_list= User.query.filter(User.id.in_(patients_id)).all()
     patients_list=[]
-    return render_template('profile.html', name=current_user.name,patients_list=patients_list)
+    return render_template('doctor/profile.html', name=current_user.name,patients_list=patients_list)
+
 
 """
-Ajax request to link doctor and patient
+Ajax request to send notification to patient
+
 """
-@doctor.route('/link_patient',methods=["POST"])
+@doctor.route('/send_patient_notification',methods=["POST"])
 @login_required
-def link_patient():
+def send_patient_notification():
 
     patient_id = request.json.get('patient_id')
     
-    new_link = DoctorPatient(id_doctor=current_user.id, id_patient=patient_id)
+    new_link = Notification(id_doctor=current_user.id,
+                            doctor_name=current_user.name, 
+                            id_patient=patient_id,
+                            status=NOTIFICATION_STATUS.SENT.value)
     db.session.add(new_link)
     db.session.commit()
 
@@ -45,6 +50,8 @@ def link_patient():
         return jsonify({"success":"associato"})
     else:
         return jsonify({'error': 'User not found'}), 404
+    
+
     
 
 """
@@ -57,7 +64,7 @@ def patients_list():
 
     patients_list= User.query.filter_by(role=ROLE.PATIENT.value).all()
 
-    return render_template('patients_list.html',patients_list=patients_list)
+    return render_template('doctor/patients_list.html',patients_list=patients_list)
 
 """
 Route to show all patient available
@@ -92,7 +99,7 @@ def pathology():
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
 
-    return render_template('patology.html')
+    return render_template('doctor/patology.html')
 
 
 @doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])
@@ -100,4 +107,4 @@ def pathology():
 def medical_treatment(patient_id,patient_name):
 
     print(patient_id)
-    return render_template('medical_treatment_selection.html',doctor_id=current_user.id,patient_name=patient_name,patient_id=patient_id)
+    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,patient_name=patient_name,patient_id=patient_id)

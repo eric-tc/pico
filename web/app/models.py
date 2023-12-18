@@ -4,6 +4,8 @@ from flask_login import UserMixin
 from . import db
 from datetime import datetime
 from sqlalchemy import UniqueConstraint
+from sqlalchemy.dialects.postgresql import ARRAY
+from datetime import datetime
 
 print("READ MODEL")
 class User(UserMixin, db.Model):
@@ -14,6 +16,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(300))
     name = db.Column(db.String(120))
     role = db.Column(db.Integer)
+    #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
+    doctor_ids = db.Column(ARRAY(db.Integer))
 
 def create_phatology_data():
 
@@ -65,8 +69,8 @@ Uno stesso paziente può avere più dottori nello stesso momento?
 class DoctorPatient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    id_doctor = db.Column(db.String)
-    id_patient = db.Column(db.String)
+    id_doctor = db.Column(db.Integer)
+    id_patient = db.Column(db.Integer)
 
     # Adding a unique constraint on column1 and column2
     __table_args__ = (
@@ -74,3 +78,33 @@ class DoctorPatient(db.Model):
     )
     
 
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_doctor = db.Column(db.Integer)
+    doctor_name= db.Column(db.String(50))
+    id_patient = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+
+class NotificationStatus(db.Model):
+    status_list=["sent","approved","to be eliminated"]
+    id = db.Column(db.Integer, primary_key=True)
+    status_name= db.Column(db.String(50), nullable=False)
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for value in cls.status_list:
+                new_instance = cls(status_name=value)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
+
+        
+    
