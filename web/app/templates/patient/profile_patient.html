@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
   <div class="container mt-5">
     <div class="row">
         <h1 class="title">
@@ -27,7 +26,7 @@
            Ricorda una volta eliminato il dottore non potrai più essere seguito. Solo il dottore potrà inviarti una 
            nuova richiesta.
         </p>
-        
+
         <table id="patientRequests" class="table">
             <thead>
                 <tr>
@@ -54,6 +53,7 @@
 </div>
 
 <script>
+
     $('#patientRequests').on('click', '.sendLinkPatient', function() {
         var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
         var idNotification = $(this).closest('.patientRequest').data('id-notification');
@@ -63,6 +63,37 @@
             url: '/accept_doctor_request',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({ 'id_doctor': idDoctor,"id_notification": idNotification }),
+            success: function(response) {
+                // Display the selected user details
+                
+                $('#alert_success').removeClass('d-none');
+                $(this).hide()
+                setTimeout(function() {
+                    $('#alert_success').addClass('d-none');
+                }, 3000);
+            
+            },
+            error: function(error) {
+                console.error('Error:', error);
+                $('#alert_danger').removeClass('d-none');
+
+                setTimeout(function() {
+                    $('#alert_danger').addClass('d-none');
+                }, 3000);
+            }
+        });
+    });
+
+    $('#patientRequests').on('click', '.removeLinkPatient', function() {
+
+        var idNotification = $(this).closest('.patientRequest').data('id-notification');
+        var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
+
+        $.ajax({
+            type: 'POST',
+            url: '/remove_doctor_request',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ 'id_doctor': idDoctor,"id_notification":idNotification }),
             success: function(response) {
                 // Display the selected user details
                 
@@ -82,6 +113,8 @@
                 }, 3000);
             }
         });
+
+
     });
 
 </script>
