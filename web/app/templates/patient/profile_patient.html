@@ -57,6 +57,7 @@
     $('#patientRequests').on('click', '.sendLinkPatient', function() {
         var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
         var idNotification = $(this).closest('.patientRequest').data('id-notification');
+        var button=  $(this);
       // Send AJAX request to Flask endpoint
         $.ajax({
             type: 'POST',
@@ -66,8 +67,11 @@
             success: function(response) {
                 // Display the selected user details
                 
-                $('#alert_success').removeClass('d-none');
-                $(this).hide()
+                
+                button.removeClass('btn-success');
+                button.addClass('btn-danger');
+                button.addClass('removeLinkPatient');
+                
                 setTimeout(function() {
                     $('#alert_success').addClass('d-none');
                 }, 3000);
@@ -88,7 +92,7 @@
 
         var idNotification = $(this).closest('.patientRequest').data('id-notification');
         var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
-
+        var row = $(this).closest('tr');
         $.ajax({
             type: 'POST',
             url: '/remove_doctor_request',
@@ -98,6 +102,8 @@
                 // Display the selected user details
                 
                 $('#alert_success').removeClass('d-none');
+
+               row.hide()
 
                 setTimeout(function() {
                     $('#alert_success').addClass('d-none');
