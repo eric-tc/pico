@@ -19,6 +19,12 @@ collegandosi ad nginx
 
 In entrambi gli ambienti il database è gestito tramite il container di postgres.
 
+# Development
+
+docker-compose -f docker-compose-dev.yaml build
+docker-compose -f docker-compose-dev.yaml up
+
+docker-compose -f docker-compose-dev.yaml down
 
 # Connettersi a Postgres con DBEaver
 

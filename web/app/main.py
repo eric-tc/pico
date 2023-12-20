@@ -12,12 +12,12 @@ main = Blueprint('main', __name__)
 def index():
     if current_user.is_authenticated:
         if(current_user.role == ROLE.DOCTOR.value):
-            return render_template('profile.html', name=current_user.name)
+            return render_template('doctor/profile.html', name=current_user.name)
         if(current_user.role == ROLE.PATIENT.value):
-            return render_template('profile_patient.html', name=current_user.name)
+            return render_template('patient/profile_patient.html', name=current_user.name)
     else:
 
-        return render_template('login.html')
+        return render_template('auth/login.html')
 
 
 @main.route('/anagrafica')

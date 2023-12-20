@@ -13,8 +13,7 @@ patient = Blueprint('patient', __name__)
 def profile_patient():
 
     #get all notification
-
-    current_notifications_list= Notification.query.filter(
+    current_notifications_list= db.session.query(Notification, User.name).join(User, Notification.id_doctor == User.id).filter(
         and_(
             Notification.id_patient==current_user.id,
             or_(

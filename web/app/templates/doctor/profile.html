@@ -26,17 +26,17 @@
           </tr>
       </thead>
       <tbody>
-          {% for item in patients_list %}
-              <tr class="patientRow text-center" data-patient-id="{{ item.id}}">
-                  <td >{{ item.id }}</td>
-                  <td>{{ item.name }}</td>
+          {% for link, name in patients_list %}
+              <tr class="patientRow text-center" data-patient-id="{{ link.id}}">
+                  <td >{{ link.id }}</td>
+                  <td>{{ name }}</td>
                   <td>
-                    <form method="post" action="{{ url_for('doctor.medical_treatment', patient_id=item.id, patient_name=item.name) }}">
+                    <form method="post" action="{{ url_for('doctor.medical_treatment', patient_id=link.id, patient_name=name) }}">
                         <button class="btn btn-success" type="submit">Crea</button>
                       </form>
                   </td>
                   <td>
-                    <form method="post" action="{{ url_for('doctor.patient_history', patient_id=item.id, patient_name=item.name) }}">
+                    <form method="post" action="{{ url_for('doctor.patient_history', patient_id=link.id, patient_name=name) }}">
                         <button class="btn btn-primary" type="submit">Vedi</button>
                       </form>
                   </td>
@@ -46,6 +46,33 @@
       </tbody>
   </table>
 
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6 mb-6 col-lg-4">
+
+      
+    <table id="notificationTable" class="table">
+      <thead>
+          <tr class="text-center">
+              <th>Nome Paziente</th>
+              <th>Data</th>
+              <th>Stato</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for notification, username in sent_notifications %}
+              <tr class="notificationRow text-center">
+                  <td >{{ username }}</td>
+                  <td>{{ notification.timestamp }}</td>
+                  <td>{{ notification.status }}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+    </div>
   </div>
 </div>
 

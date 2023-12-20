@@ -12,20 +12,26 @@ doctor = Blueprint('doctor', __name__)
 @login_required
 def profile():
 
-    patient_ids_query = (
-    db.session.query(DoctorPatient.id)
-    .filter(cast(DoctorPatient.id_doctor, Integer) == int(current_user.id))
+    patients_list=(
+    db.session.query(DoctorPatient, User.name)
+    .join(User, DoctorPatient.id_patient == User.id)
+    .filter(DoctorPatient.id_doctor == current_user.id)
     .all()
-)
-    patients_id=[]
-    for row in patient_ids_query:
-        patients_id.append(row.id_patient)
+    )
 
-    print(patients_id)
+    print(patients_list)
     
-    patients_list= User.query.filter(User.id.in_(patients_id)).all()
-    patients_list=[]
-    return render_template('doctor/profile.html', name=current_user.name,patients_list=patients_list)
+    #sent_notifications= Notification.query.filter_by(id_doctor=current_user.id)
+
+    sent_notifications = (
+    db.session.query(Notification, User.name)
+    .join(User, Notification.id_patient == User.id)
+    .filter(Notification.id_doctor == current_user.id)
+    .all()
+    )
+
+    print(sent_notifications)
+    return render_template('doctor/profile.html', name=current_user.name,patients_list=patients_list, sent_notifications=sent_notifications)
 
 
 """
@@ -39,7 +45,6 @@ def send_patient_notification():
     patient_id = request.json.get('patient_id')
     
     new_link = Notification(id_doctor=current_user.id,
-                            doctor_name=current_user.name, 
                             id_patient=patient_id,
                             status=NOTIFICATION_STATUS.SENT.value)
     db.session.add(new_link)
@@ -74,7 +79,6 @@ Route to show all patient available
 @login_required
 def patient_history():
 
-    
 
     return render_template('patient_history.html')
 

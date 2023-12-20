@@ -40,8 +40,10 @@ different timestamp
 class Rizoartrosi(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
-    doctor = db.Column(db.Integer)
-    patient = db.Column(db.Integer)
+    id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doctor = db.relationship('User', foreign_keys=[id_doctor])
+    id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    patient = db.relationship('User', foreign_keys=[id_patient])
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     #Parametri
     nprs_vas=db.Column(db.Integer)
@@ -69,8 +71,11 @@ Uno stesso paziente può avere più dottori nello stesso momento?
 class DoctorPatient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    id_doctor = db.Column(db.Integer)
-    id_patient = db.Column(db.Integer)
+
+    id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doctor = db.relationship('User', foreign_keys=[id_doctor])
+    id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    patient = db.relationship('User', foreign_keys=[id_patient])
 
     # Adding a unique constraint on column1 and column2
     __table_args__ = (
@@ -80,9 +85,10 @@ class DoctorPatient(db.Model):
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    id_doctor = db.Column(db.Integer)
-    doctor_name= db.Column(db.String(50))
-    id_patient = db.Column(db.Integer)
+    id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doctor = db.relationship('User', foreign_keys=[id_doctor])
+    id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    patient = db.relationship('User', foreign_keys=[id_patient])
     status = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 

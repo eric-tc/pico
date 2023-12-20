@@ -36,13 +36,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in current_notifications_list %}
-                    <tr class="patientRequest" data-id-doctor="{{ item.id_doctor}}" data-id-notification="{{item.id}}" >
-                        <td>Il dottore {{ item.doctor_name }}</td>
-                        {% if item.status == 1 %}
+                {% for notification, name in current_notifications_list %}
+                    <tr class="patientRequest" data-id-doctor="{{ notification.id_doctor}}" data-id-notification="{{notification.id}}" >
+                        <td>Il {{name }}</td>
+                        {% if notification.status == 1 %}
                             <td><button class="btn btn-success sendLinkPatient" >Accetta</button></td>
                         {% endif %}
-                        {% if item.status == 2 %}
+                        {% if notification.status == 2 %}
                             <td><button class="btn btn-danger removeLinkPatient" >Rimuovi</button></td>
                         {% endif %}
                     </tr>
