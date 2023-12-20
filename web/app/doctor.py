@@ -75,9 +75,9 @@ def patients_list():
 Route to show all patient available
 
 """
-@doctor.route('/patient_history')
+@doctor.route('/patient_history/<patient_id>/<patient_name>',methods=["POST"])
 @login_required
-def patient_history():
+def patient_history(patient_id,patient_name):
 
 
     return render_template('patient_history.html')

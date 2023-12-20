@@ -8,6 +8,19 @@ from . import db
 
 main = Blueprint('main', __name__)
 
+"""
+PROBLEMI
+
+1) Quando seleziono il pulsante accetta o rimuovi, il pulsante dopo il click non si aggiorna in automatico
+2) Verifica se un paziente può accedere agli URL del dottore e viceversa
+NEW FEATURE
+1) Quando il medico genera il primo trattaemento di default creare tutti i trattamenti successivi e controlli per il 
+paziente
+2) Creare una tabella lato dottore per visualizzare i prossimi trattamenti
+3) Creare una cronistoria del paziente
+
+"""
+
 @main.route('/')
 def index():
     if current_user.is_authenticated:
