@@ -6,8 +6,8 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
+from .internal_data import RIZOARTROSI_CONTROLS,PATHOLOGY_TYPE,PATHOLOGY
 
-print("READ MODEL")
 class User(UserMixin, db.Model):
 
     
@@ -27,9 +27,49 @@ def create_phatology_data():
         rizoartrosi= Phatology(name="Rizoartrosi")
 
 class Phatology(db.Model):
-
+    pathology_list= [PATHOLOGY.RIZOARTROSI.value[1]]
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(120))
+
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for value in cls.pathology_list:
+                new_instance = cls(name=value)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
+
+
+
+class PathologyType(db.Model):
+    types=[
+        PATHOLOGY_TYPE.RIZOARTROSI_TRAPEZIECTOMIA.value[1],
+        PATHOLOGY_TYPE.RIZOARTROSI_PROTESI.value[1],
+        PATHOLOGY_TYPE.RIZOARTROSI_ALTRO.value[1]
+        ]
+    
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(120))
+    
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for value in cls.types:
+                new_instance = cls(name=value)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
+
 
 """
 This class will contains all data releated to
@@ -41,11 +81,18 @@ class Rizoartrosi(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_type= db.Column(db.Integer,nullable=False)
     doctor = db.relationship('User', foreign_keys=[id_doctor])
     id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     patient = db.relationship('User', foreign_keys=[id_patient])
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    #Parametri
+    next_control_date= db.Column(db.DateTime,nullable=False)
+    next_control_number= db.Column(db.Integer,nullable=False)
+    #identifica se i dati sono già stati inseriti e non è possibile cambiarli
+    is_closed = db.Column(db.Integer, nullable=False)
+    #Identifica il tipo di rizoartrosi APL, ecc...
+    id_type= db.Column(db.Integer,nullable=False)
+    #Parametri  
     nprs_vas=db.Column(db.Integer)
     prom_arom_mcpj= db.Column(db.Integer)
     prom_arom_Ipj=db.Column(db.Integer)
@@ -59,6 +106,7 @@ class Rizoartrosi(db.Model):
     Eaton_littler=db.Column(db.Integer)
     scar_status= db.Column(db.String(100))
     scar_type = db.Column(db.String(100))
+    modena = db.Column(db.String(100))
 
 
 """
@@ -66,7 +114,6 @@ Classe per tenere traccia relazione paziente dottore
 Un dottore può avere più pazienti in cura.
 
 Uno stesso paziente può avere più dottori nello stesso momento?
-
 """
 class DoctorPatient(db.Model):
 
@@ -81,7 +128,29 @@ class DoctorPatient(db.Model):
     __table_args__ = (
         UniqueConstraint('id_doctor', 'id_patient'),
     )
-    
+
+"""
+Tiene traccia quali pazienti ha in cura e per quali patologie.
+Questa tabella si riempe solo quando un dottore ha creato una cura 
+per uno specifico paziente dopo che sono diventati amici.
+"""
+
+class DoctorCurrentPathology(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doctor = db.relationship('User', foreign_keys=[id_doctor])
+    id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    patient = db.relationship('User', foreign_keys=[id_patient])
+    id_pathology = db.Column(db.Integer)    
+    id_pathology_type= db.Column(db.Integer)
+
+    # Adding a unique constraint on column1 and column2
+    __table_args__ = (
+        UniqueConstraint('id_doctor', 'id_patient',"id_pathology","id_pathology_type"),
+    )
+
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)

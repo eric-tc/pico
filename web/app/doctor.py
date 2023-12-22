@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE
 from .models import User,DoctorPatient,Notification
 from . import db
 from sqlalchemy import cast, Integer
@@ -102,6 +102,7 @@ def pathology():
         Eaton_littler = request.form.get('Eaton_littler')
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
+    
 
     return render_template('doctor/patology.html')
 
@@ -111,4 +112,12 @@ def pathology():
 def medical_treatment(patient_id,patient_name):
 
     print(patient_id)
-    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,patient_name=patient_name,patient_id=patient_id)
+
+    for value in PATHOLOGY:
+        print(value.value[0])
+        print(value.value[1])
+    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
+                           patient_name=patient_name,
+                           patient_id=patient_id,
+                           pathology=PATHOLOGY,
+                           pathology_type=PATHOLOGY_TYPE)
