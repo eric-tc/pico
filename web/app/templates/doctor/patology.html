@@ -8,73 +8,54 @@
     <div class="col-md-4 mb-4 col-lg-4">
    
         <h2>Compila il form per la patologia selezionata</h2>
-        <form method="post">
-            <div class="mb-3">
-                <label for="nprs_vas" class="form-label">NPRS VAS</label>
-                <input type="number" class="form-control" id="nprs_vas" name="nprs_vas" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="prom_arom_mcpj" class="form-label">PROM AROM MCPJ</label>
-                <input type="number" class="form-control" id="prom_arom_mcpj" name="prom_arom_mcpj" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="prom_arom_Ipj" class="form-label">PROM AROM IPJ</label>
-                <input type="number" class="form-control" id="prom_arom_Ipj" name="prom_arom_Ipj" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="abduction" class="form-label">Abduction</label>
-                <input type="number" class="form-control" id="abduction" name="abduction" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="anterposition" class="form-label">Anterposition</label>
-                <input type="number" class="form-control" id="anterposition" name="anterposition" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="kapandji" class="form-label">Kapandji</label>
-                <input type="number" class="form-control" id="kapandji" name="kapandji" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="pinch" class="form-label">Pinch</label>
-                <input type="number" class="form-control" id="pinch" name="pinch" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="grip" class="form-label">Grip</label>
-                <input type="number" class="form-control" id="grip" name="grip" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="dash" class="form-label">DASH</label>
-                <input type="number" class="form-control" id="dash" name="dash" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="prwhe" class="form-label">PRWHE</label>
-                <input type="number" class="form-control" id="prwhe" name="prwhe" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="Eaton_littler" class="form-label">Eaton Littler</label>
-                <input type="number" class="form-control" id="Eaton_littler" name="Eaton_littler" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="scar_status" class="form-label">Scar Status</label>
-                <input type="text" class="form-control" id="scar_status" name="scar_status" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="scar_type" class="form-label">Scar Type</label>
-                <input type="text" class="form-control" id="scar_type" name="scar_type" required>
-            </div>
+        <form method="POST">
+            {{ form.csrf_token }}
+            
+            <!-- Add each field to the form -->
+            {{ form.nprs_vas.label }}
+            {{ form.nprs_vas }}
+            
+            {{ form.prom_arom_mcpj.label }}
+            {{ form.prom_arom_mcpj }}
+            
+            {{ form.prom_arom_Ipj.label }}
+            {{ form.prom_arom_Ipj }}
+            
+            {{ form.abduction.label }}
+            {{ form.abduction }}
+            
+            {{ form.anterposition.label }}
+            {{ form.anterposition }}
+            
+            {{ form.kapandji.label }}
+            {{ form.kapandji }}
+            
+            {{ form.pinch.label }}
+            {{ form.pinch }}
+            
+            {{ form.grip.label }}
+            {{ form.grip }}
+            
+            {{ form.dash.label }}
+            {{ form.dash }}
+            
+            {{ form.prwhe.label }}
+            {{ form.prwhe }}
+            
+            {{ form.Eaton_littler.label }}
+            {{ form.Eaton_littler }}
+            
+            {{ form.scar_status.label }}
+            {{ form.scar_status }}
+            
+            {{ form.scar_type.label }}
+            {{ form.scar_type }}
+            
+            
+            <!-- Repeat the above lines for each form field -->
 
             <button type="submit" class="btn btn-primary">Submit</button>
+
         </form>
     </div>
 

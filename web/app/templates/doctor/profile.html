@@ -2,12 +2,13 @@
 
 {% extends "base.html" %}
 
+
 {% block content %}
 <h1 class="title">
   Buongiorno, dott {{ name }}!
 </h1>
 <div class="row">
-
+  
   <div class="col-md-6 mb-6 col-lg-4">
   
     <h4>
@@ -32,11 +33,13 @@
                   <td>{{ name }}</td>
                   <td>
                     <form method="post" action="{{ url_for('doctor.medical_treatment', patient_id=link.id, patient_name=name) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-success" type="submit">Crea</button>
                       </form>
                   </td>
                   <td>
                     <form method="post" action="{{ url_for('doctor.patient_history', patient_id=link.id, patient_name=name) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-primary" type="submit">Vedi</button>
                       </form>
                   </td>
@@ -74,7 +77,10 @@
 
     </div>
   </div>
+ 
+
 </div>
+
 
 
 

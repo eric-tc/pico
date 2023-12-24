@@ -90,8 +90,6 @@ class Rizoartrosi(db.Model):
     next_control_number= db.Column(db.Integer,nullable=False)
     #identifica se i dati sono già stati inseriti e non è possibile cambiarli
     is_closed = db.Column(db.Integer, nullable=False)
-    #Identifica il tipo di rizoartrosi APL, ecc...
-    id_type= db.Column(db.Integer,nullable=False)
     #Parametri  
     nprs_vas=db.Column(db.Integer)
     prom_arom_mcpj= db.Column(db.Integer)
@@ -143,7 +141,9 @@ class DoctorCurrentPathology(db.Model):
     doctor = db.relationship('User', foreign_keys=[id_doctor])
     id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     patient = db.relationship('User', foreign_keys=[id_patient])
-    id_pathology = db.Column(db.Integer)    
+    #Corrisponde all'id della patologia nella tabella pathology
+    id_pathology = db.Column(db.Integer)
+    id_pathology_row=db.Column(db.Integer)    
     id_pathology_type= db.Column(db.Integer)
 
     # Adding a unique constraint on column1 and column2

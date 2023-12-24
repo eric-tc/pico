@@ -4,6 +4,7 @@ from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE
 from .models import User,DoctorPatient,Notification
 from . import db
 from sqlalchemy import cast, Integer
+from .doctor_forms import RizoartrosiForm
 
 doctor = Blueprint('doctor', __name__)
 
@@ -31,7 +32,11 @@ def profile():
     )
 
     print(sent_notifications)
-    return render_template('doctor/profile.html', name=current_user.name,patients_list=patients_list, sent_notifications=sent_notifications)
+    return render_template('doctor/profile.html', 
+                           name=current_user.name,
+                           patients_list=patients_list, 
+                           sent_notifications=sent_notifications)
+                          
 
 
 """
@@ -83,7 +88,7 @@ def patient_history(patient_id,patient_name):
     return render_template('patient_history.html')
 
 # From used to setup pathology parameters
-@doctor.route('/pathology')
+@doctor.route('/pathology/',methods=["POST"])
 @login_required
 def pathology():
 
@@ -102,9 +107,12 @@ def pathology():
         Eaton_littler = request.form.get('Eaton_littler')
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
-    
 
-    return render_template('doctor/patology.html')
+      
+        
+    form= RizoartrosiForm()
+
+    return render_template('doctor/patology.html',form=form)
 
 
 @doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])

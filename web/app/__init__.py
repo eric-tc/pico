@@ -7,16 +7,22 @@ from .config import BaseConfig
 import os
 from enum import Enum
 
+from flask_wtf import FlaskForm, CSRFProtect
 #ROLE 1 = DOCTOR
 #ROLE 2 = PATIENT
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
+boostrap= None
+csrf = None
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SECRET_KEY'] = os.urandom(24)
+    
+    
+    csrf = CSRFProtect(app)
 
     db.init_app(app)
     

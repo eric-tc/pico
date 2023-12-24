@@ -11,10 +11,13 @@
       </h4>
 
 
-      <form action="{{ url_for('doctor.pathology') }}" method="get">
+      <form action="{{ url_for('doctor.pathology') }}" method="post">
+        
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <div class="mb-3 mt-4">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" name="category">
+            <label for="category" class="form-label">Patologia</label>
+            <select class="form-select" id="pathology" name="pathology">
 
               {% for member in pathology %}
                 <option value="{{member.value[0]}}">{{member.value[1]}}</option>
@@ -23,8 +26,8 @@
         </div>
   
         <div class="mb-3">
-            <label for="item" class="form-label">Item</label>
-            <select class="form-select" id="item" name="item">
+            <label for="pathology_type" class="form-label">Item</label>
+            <select class="form-select" id="pathology_type" name="pathology_type">
                 <!-- Options will be dynamically populated based on the selected category -->
             </select>
         </div>
@@ -51,8 +54,8 @@
   
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {
-        const categorySelect = document.getElementById('category');
-        const itemSelect = document.getElementById('item');
+        const categorySelect = document.getElementById('pathology');
+        const itemSelect = document.getElementById('pathology_type');
         const additionalFieldContainer = document.getElementById('additionalFieldContainer');
         const selectedCategory = categorySelect.value;
   
@@ -71,18 +74,18 @@
   
     function show_additional_field(){
       console.log("show_additional_field");
-      const itemSelect = document.getElementById('item');
+      const itemSelect = document.getElementById('pathology_type');
       additionalFieldContainer.style.display = (itemSelect.value === 'Altro') ? 'block' : 'none';
     }
   
   
-    // Attach the function to the "change" event of the "Category" select
-    document.getElementById('category').addEventListener('change', updateItemOptions);
+    // Attach the function to the "change" event of the "pathology" select
+    document.getElementById('pathology').addEventListener('change', updateItemOptions);
   
-     // Attach the function to the "change" event of the "Item" select
-     document.getElementById('item').addEventListener('change', show_additional_field);
+     // Attach the function to the "change" event of the "pathology_type" select
+     document.getElementById('pathology_type').addEventListener('change', show_additional_field);
   
-    // Initial population of the "Item" select based on the default selected category
+    // Initial population of the "pathology_type" select based on the default selected pathology
     updateItemOptions();
   </script>
 
