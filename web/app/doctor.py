@@ -92,7 +92,14 @@ def patient_history(patient_id,patient_name):
 @login_required
 def pathology():
 
-    if request.method == 'POST':
+    form= RizoartrosiForm()
+    
+    print(f'Request Method: {request.method}')
+    print(f'Form Data: {request.form}')
+    print(f'Form Errors: {form.errors}')
+    print(f'Form Errors: {form.validate_on_submit()}')
+
+    if form.validate_on_submit():
         # Extract form data from the request
         nprs_vas = request.form.get('nprs_vas')
         prom_arom_mcpj = request.form.get('prom_arom_mcpj')
@@ -108,10 +115,17 @@ def pathology():
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
 
+        print(nprs_vas)
       
         
-    form= RizoartrosiForm()
+    
 
+    pathology_id = request.form.get('pathology')
+    pathology_type_id = request.form.get('pathology_type')
+    
+    print("RECEIVED PATHOLOGY")
+    print(pathology_id)
+    print(pathology_type_id)
     return render_template('doctor/patology.html',form=form)
 
 
