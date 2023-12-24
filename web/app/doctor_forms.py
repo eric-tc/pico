@@ -29,6 +29,7 @@ class RizoartrosiForm(FlaskForm):
     grip = IntegerField('Grip', render_kw={'class': 'form-control'},  validators=None)
     dash = IntegerField('DASH', render_kw={'class': 'form-control'},  validators=None)
     prwhe = IntegerField('PRWHE', render_kw={'class': 'form-control'},  validators=None)
-    Eaton_littler = IntegerField('Eaton Littler', render_kw={'class': 'form-control'}, validators=None )
+    eaton_littler = IntegerField('Eaton Littler', render_kw={'class': 'form-control'}, validators=None )
     scar_status = StringField('Scar Status', render_kw={'class': 'form-control'},  validators=None)
     scar_type = StringField('Scar Type', render_kw={'class': 'form-control'},  validators=None)
+    submit_rizoartrosi = SubmitField('Crea Controllo', render_kw={'class': 'btn btn-primary'})

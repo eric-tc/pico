@@ -43,8 +43,8 @@ class RIZOARTROSI_CONTROLS(Enum):
 class RizoartrosiControlsTimeline:
 
     #The values set number of weeks after first meeting
-   
-    timeline= [2,6,12,26,52,154,520.,1040]
+    #0 serve perchè al primo incontro paziente/dottore la data è quella corrente
+    timeline= [0,2,6,12,26,52,154,520.,1040]
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1
@@ -91,6 +91,12 @@ class RizoartrosiControlsTimeline:
     get_controls=[first_control,second_control,third_control]
 
     
+class DoctorData:
+    #Usato per salvare l'id paziente senza doverlo passare al template
+    patient_id=None
+    #Usato per salvare id patologia selezionato da utente
+    pathology_id= None
+    pathology_type_id=None
 
         
         

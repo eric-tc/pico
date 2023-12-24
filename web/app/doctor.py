@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template,request,jsonify
+from flask import Blueprint, render_template,request,jsonify,redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE
-from .models import User,DoctorPatient,Notification
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
+from .models import User,DoctorPatient,Notification,Rizoartrosi
 from . import db
 from sqlalchemy import cast, Integer
 from .doctor_forms import RizoartrosiForm
+import datetime
+from datetime import datetime, timedelta
 
 doctor = Blueprint('doctor', __name__)
 
@@ -77,8 +79,7 @@ def patients_list():
     return render_template('doctor/patients_list.html',patients_list=patients_list)
 
 """
-Route to show all patient available
-
+Route to show patient history
 """
 @doctor.route('/patient_history/<patient_id>/<patient_name>',methods=["POST"])
 @login_required
@@ -93,13 +94,15 @@ def patient_history(patient_id,patient_name):
 def pathology():
 
     form= RizoartrosiForm()
+   
     
     print(f'Request Method: {request.method}')
     print(f'Form Data: {request.form}')
     print(f'Form Errors: {form.errors}')
     print(f'Form Errors: {form.validate_on_submit()}')
 
-    if form.validate_on_submit():
+    if form.submit_rizoartrosi.data and form.validate_on_submit():
+        print("SUBMIT RIZOARTROSI")
         # Extract form data from the request
         nprs_vas = request.form.get('nprs_vas')
         prom_arom_mcpj = request.form.get('prom_arom_mcpj')
@@ -115,17 +118,57 @@ def pathology():
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
 
-        print(nprs_vas)
-      
-        
-    
+        print("DOCTOR DATA")
+        print(PATHOLOGY.RIZOARTROSI.value[0])
+        print(DoctorData.pathology_id)
 
-    pathology_id = request.form.get('pathology')
-    pathology_type_id = request.form.get('pathology_type')
-    
-    print("RECEIVED PATHOLOGY")
-    print(pathology_id)
-    print(pathology_type_id)
+        print(PATHOLOGY.RIZOARTROSI.value[0]== int(DoctorData.pathology_id))
+        #Controllo quale tipologia di malattia ha selezionato il dottore
+        if(PATHOLOGY.RIZOARTROSI.value[0]== int(DoctorData.pathology_id)):
+            #inserimento tabella rizoartrosi
+            print("inserimento rizoartrosi")
+
+            for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
+                new_entry = Rizoartrosi(
+                    id_doctor=current_user.id,  # Replace with the actual doctor ID
+                    id_type=DoctorData.pathology_id,  # Replace with the actual type ID
+                    id_patient=DoctorData.pathology_id,  # Replace with the actual patient ID
+                    next_control_date=datetime.utcnow() + timedelta(weeks=weeks_to_add),
+                    next_control_number=control_number +1,
+                    is_closed=1 if control_number==0 else 0,  # Replace with the actual value
+                    nprs_vas=nprs_vas,  # Replace with the actual value
+                    prom_arom_mcpj=90,  # Replace with the actual value
+                    prom_arom_Ipj=85,  # Replace with the actual value
+                    abduction=75,  # Replace with the actual value
+                    anterposition=70,  # Replace with the actual value
+                    kapandji=95,  # Replace with the actual value
+                    pinch=80,  # Replace with the actual value
+                    grip=90,  # Replace with the actual value
+                    dash=25,  # Replace with the actual value
+                    prwhe=40,  # Replace with the actual value
+                    Eaton_littler=60,  # Replace with the actual value
+                    scar_status='Healed',  # Replace with the actual value
+                    scar_type='Normal',  # Replace with the actual value
+                    modena='Some Value'  # Replace with the actual value
+                )
+
+                        # Add the instance to the session
+                db.session.add(new_entry)
+
+            # Commit the session to persist the changes to the database
+            db.session.commit()
+
+            flash('Inserimento terapia con successo')
+            return redirect(url_for('doctor.profile')) # if user doesn't exist or password is wrong, reload the page
+
+        print(nprs_vas)
+        print(nprs_vas)
+
+    #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
+    # A meno che la patologia non sia inserita correttamente
+    DoctorData.pathology_id = request.form.get('pathology')
+    DoctorData.pathology_type_id = request.form.get('pathology_type')
+
     return render_template('doctor/patology.html',form=form)
 
 
@@ -135,11 +178,12 @@ def medical_treatment(patient_id,patient_name):
 
     print(patient_id)
 
+    DoctorData.patient_id= patient_id
+
     for value in PATHOLOGY:
         print(value.value[0])
         print(value.value[1])
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
-                           patient_id=patient_id,
                            pathology=PATHOLOGY,
                            pathology_type=PATHOLOGY_TYPE)
