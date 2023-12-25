@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
-from .models import User,DoctorPatient,Notification,Rizoartrosi
+from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
 from . import db
 from sqlalchemy import cast, Integer
 from .doctor_forms import RizoartrosiForm
@@ -88,6 +88,41 @@ def patient_history(patient_id,patient_name):
 
     return render_template('patient_history.html')
 
+
+"""
+Route per mostrare tutti i pazienti e i rispettivi trattamenti eseguiti
+
+"""
+@doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["POST"])
+@login_required
+def patient_treatment_list(patient_id,patient_name):
+
+    #prendo tutti i pazienti associati al dottore e mi faccio ritornare le malattie
+    
+    patients_ids = db.session.query(DoctorPatient.id_patient).filter(DoctorPatient.id_doctor == current_user.id).all()
+    
+    patients_id_list= [patient_id[0] for patient_id in patients_ids ]
+
+    print(patients_id_list)
+
+    #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
+    # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
+
+    pathology_list=(db.session.query(Rizoartrosi.id_patient,User.name,Pathology.name,PathologyType.name)
+    .join(Pathology, Pathology.id == Rizoartrosi.id_pathology)
+    .join(PathologyType, PathologyType.id == Rizoartrosi.id_pathology_type)
+    .join(User,User.id==patient_id)
+    .filter(Rizoartrosi.id_patient.in_(patients_id_list), 
+            Rizoartrosi.next_control_number==1).all()
+    )
+    
+    
+    print(pathology_list)
+
+
+    return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
+
+
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])
 @login_required
@@ -118,11 +153,6 @@ def pathology():
         scar_status = request.form.get('scar_status')
         scar_type = request.form.get('scar_type')
 
-        print("DOCTOR DATA")
-        print(PATHOLOGY.RIZOARTROSI.value[0])
-        print(DoctorData.pathology_id)
-
-        print(PATHOLOGY.RIZOARTROSI.value[0]== int(DoctorData.pathology_id))
         #Controllo quale tipologia di malattia ha selezionato il dottore
         if(PATHOLOGY.RIZOARTROSI.value[0]== int(DoctorData.pathology_id)):
             #inserimento tabella rizoartrosi
@@ -131,8 +161,9 @@ def pathology():
             for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_type=DoctorData.pathology_id,  # Replace with the actual type ID
-                    id_patient=DoctorData.pathology_id,  # Replace with the actual patient ID
+                    id_pathology=DoctorData.pathology_id,  # Replace with the actual type ID
+                    id_pathology_type=DoctorData.pathology_id,
+                    id_patient=DoctorData.patient_id,  # Replace with the actual patient ID
                     next_control_date=datetime.utcnow() + timedelta(weeks=weeks_to_add),
                     next_control_number=control_number +1,
                     is_closed=1 if control_number==0 else 0,  # Replace with the actual value
@@ -168,6 +199,10 @@ def pathology():
     # A meno che la patologia non sia inserita correttamente
     DoctorData.pathology_id = request.form.get('pathology')
     DoctorData.pathology_type_id = request.form.get('pathology_type')
+
+    print("DOCTOR DATA")
+    print(DoctorData.pathology_id)
+    print(DoctorData.pathology_type_id)
 
     return render_template('doctor/patology.html',form=form)
 

@@ -19,14 +19,8 @@ class User(UserMixin, db.Model):
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
     doctor_ids = db.Column(ARRAY(db.Integer))
 
-def create_phatology_data():
 
-    existing_data= Phatology.query.first()
-    if not existing_data:
-        #Create all Pathology
-        rizoartrosi= Phatology(name="Rizoartrosi")
-
-class Phatology(db.Model):
+class Pathology(db.Model):
     pathology_list= [PATHOLOGY.RIZOARTROSI.value[1]]
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(120))
@@ -80,14 +74,26 @@ different timestamp
 class Rizoartrosi(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
+    
     id_doctor = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    id_type= db.Column(db.Integer,nullable=False)
     doctor = db.relationship('User', foreign_keys=[id_doctor])
+    
     id_patient = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     patient = db.relationship('User', foreign_keys=[id_patient])
+    
+    id_pathology= db.Column(db.Integer,db.ForeignKey('pathology.id'),nullable=False)
+    pathology = db.relationship('Pathology', foreign_keys=[id_pathology])
+    
+    id_pathology_type= db.Column(db.Integer,db.ForeignKey('pathology_type.id'),nullable=False)
+    pathology_type = db.relationship('PathologyType', foreign_keys=[id_pathology_type])
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     next_control_date= db.Column(db.DateTime,nullable=False)
     next_control_number= db.Column(db.Integer,nullable=False)
+    #Gestione email per controllo
+    email_status= db.Column(db.Integer, default=0)
+    email_sent_date=db.Column(db.DateTime,default=None)
+    email_confirmed_date= db.Column(db.DateTime,default=None)
     #identifica se i dati sono già stati inseriti e non è possibile cambiarli
     is_closed = db.Column(db.Integer, nullable=False)
     #Parametri  
@@ -162,6 +168,24 @@ class Notification(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
+
+class EmailStatus(db.Model):
+    status_list=["sent","confirmed","to be eliminated"]
+    id = db.Column(db.Integer, primary_key=True)
+    status_name= db.Column(db.String(50), nullable=False)
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for value in cls.status_list:
+                new_instance = cls(status_name=value)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
 
 class NotificationStatus(db.Model):
     status_list=["sent","approved","to be eliminated"]
