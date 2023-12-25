@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,request,jsonify,redirect, url_for, request, flash
+from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
 from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
@@ -78,50 +78,26 @@ def patients_list():
 
     return render_template('doctor/patients_list.html',patients_list=patients_list)
 
-"""
-Route to show patient history
-"""
-@doctor.route('/patient_history/<patient_id>/<patient_name>',methods=["POST"])
+
+# -------------------------ROUTE PER DEFINIRE un nuovo controllo paziente---------------------------------------------------
+
+@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])
 @login_required
-def patient_history(patient_id,patient_name):
-
-
-    return render_template('patient_history.html')
-
-
-"""
-Route per mostrare tutti i pazienti e i rispettivi trattamenti eseguiti
-
-"""
-@doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["POST"])
-@login_required
-def patient_treatment_list(patient_id,patient_name):
-
-    #prendo tutti i pazienti associati al dottore e mi faccio ritornare le malattie
+def medical_treatment(patient_id,patient_name):
     
-    patients_ids = db.session.query(DoctorPatient.id_patient).filter(DoctorPatient.id_doctor == current_user.id).all()
+    session[DoctorData.ID_PATIENT.value]=patient_id
+
+    print("PATIENT ID")
+    print(session.get(DoctorData.ID_PATIENT.value))
+
     
-    patients_id_list= [patient_id[0] for patient_id in patients_ids ]
-
-    print(patients_id_list)
-
-    #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
-    # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
-
-    pathology_list=(db.session.query(Rizoartrosi.id_patient,User.name,Pathology.name,PathologyType.name)
-    .join(Pathology, Pathology.id == Rizoartrosi.id_pathology)
-    .join(PathologyType, PathologyType.id == Rizoartrosi.id_pathology_type)
-    .join(User,User.id==patient_id)
-    .filter(Rizoartrosi.id_patient.in_(patients_id_list), 
-            Rizoartrosi.next_control_number==1).all()
-    )
-    
-    
-    print(pathology_list)
-
-
-    return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
-
+    for value in PATHOLOGY:
+        print(value.value[0])
+        print(value.value[1])
+    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
+                           patient_name=patient_name,
+                           pathology=PATHOLOGY,
+                           pathology_type=PATHOLOGY_TYPE)
 
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])
@@ -161,9 +137,9 @@ def pathology():
             for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_pathology=DoctorData.pathology_id,  # Replace with the actual type ID
-                    id_pathology_type=DoctorData.pathology_id,
-                    id_patient=DoctorData.patient_id,  # Replace with the actual patient ID
+                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"1"),  # Replace with the actual type ID
+                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"1"), #TODO da cambiare con id patologia
+                    id_patient=session.get(DoctorData.ID_PATIENT.value,"1"),  # Replace with the actual patient ID
                     next_control_date=datetime.utcnow() + timedelta(weeks=weeks_to_add),
                     next_control_number=control_number +1,
                     is_closed=1 if control_number==0 else 0,  # Replace with the actual value
@@ -197,28 +173,68 @@ def pathology():
 
     #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
     # A meno che la patologia non sia inserita correttamente
-    DoctorData.pathology_id = request.form.get('pathology')
-    DoctorData.pathology_type_id = request.form.get('pathology_type')
-
-    print("DOCTOR DATA")
-    print(DoctorData.pathology_id)
-    print(DoctorData.pathology_type_id)
+    session[DoctorData.ID_PATHOLOGY.value] = request.form.get('pathology')
+    session[DoctorData.ID_PATHOLOGY_TYPE.value] = request.form.get('pathology_type')
 
     return render_template('doctor/patology.html',form=form)
 
 
-@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])
+# ------------------------------ROUTE PER MOSTRARE LA STORIA DEL PAZIENTE-------------------------------
+#in ogni route devo salvare id paziente selezionato e la pathology type nella sessione
+# Non passo nessun parametro nella path. passo tutti i valori in Post con il form
+"""
+Route to show patient history
+"""
+@doctor.route('/patient_history/',methods=["POST"])
 @login_required
-def medical_treatment(patient_id,patient_name):
+def patient_history():
+    
+    print(session.get(DoctorData.ID_PATIENT.value))
+    print(session.get(DoctorData.ID_PATHOLOGY.value))
+    print(session.get(DoctorData.ID_PATHOLOGY_TYPE.value))
 
-    print(patient_id)
+    Rizoartrosi.id_pathology== session.get(DoctorData.ID_PATHOLOGY.value)
 
-    DoctorData.patient_id= patient_id
+    timeline = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
+                                          Rizoartrosi.id_pathology== session.get(DoctorData.ID_PATHOLOGY.value),
+                                          Rizoartrosi.id_pathology_type== session.get(DoctorData.ID_PATHOLOGY_TYPE.value)).order_by(Rizoartrosi.next_control_date.desc()).all()
 
-    for value in PATHOLOGY:
-        print(value.value[0])
-        print(value.value[1])
-    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
-                           patient_name=patient_name,
-                           pathology=PATHOLOGY,
-                           pathology_type=PATHOLOGY_TYPE)
+    print(timeline)
+    return render_template('patient_history.html')
+
+
+"""
+Route per mostrare tutti i pazienti e i rispettivi trattamenti eseguiti
+
+"""
+@doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["POST"])
+@login_required
+def patient_treatment_list(patient_id,patient_name):
+
+    #prendo tutti i pazienti associati al dottore e mi faccio ritornare le malattie
+    
+    session[DoctorData.ID_PATIENT.value]= patient_id
+
+
+    patients_ids = db.session.query(DoctorPatient.id_patient).filter(DoctorPatient.id_doctor == current_user.id).all()
+    
+    patients_id_list= [patient_id[0] for patient_id in patients_ids ]
+
+    print(patients_id_list)
+
+    #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
+    # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
+
+    pathology_list=(db.session.query(Rizoartrosi.id_patient,User.name,Pathology.name,PathologyType.name)
+    .join(Pathology, Pathology.id == Rizoartrosi.id_pathology)
+    .join(PathologyType, PathologyType.id == Rizoartrosi.id_pathology_type)
+    .join(User,User.id==patient_id)
+    .filter(Rizoartrosi.id_patient.in_(patients_id_list), 
+            Rizoartrosi.next_control_number==1).all()
+    )
+    
+    
+    print(pathology_list)
+
+
+    return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)

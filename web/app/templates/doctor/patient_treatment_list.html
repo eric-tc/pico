@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row">
+        <h2>Terapie Pazienti in Cura</h2>
+        <table id="patientTable" class="table">
+            <thead>
+                <tr>
+                    <th>Nome paziente</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id,name,pathology,pathology_type in pathology_list %}
+                    <tr class="patientRow" >
+                        <td>{{ name }}</td>
+                        <td>{{ pathology_type }}</td>
+                        <td><a class="btn btn-primary" href="{{ url_for('doctor.patient_history', id_pathology=id,id_pathology_type=id) }}">Vedi Storia</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

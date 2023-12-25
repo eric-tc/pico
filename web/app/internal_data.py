@@ -90,15 +90,15 @@ class RizoartrosiControlsTimeline:
 
     get_controls=[first_control,second_control,third_control]
 
-    
-class DoctorData:
-    #Usato per salvare l'id paziente senza doverlo passare al template
-    patient_id=None
-    #Usato per salvare id patologia selezionato da utente
-    pathology_id= None
-    pathology_type_id=None
 
-        
+
+"""
+Chiavi utilizzate per salvare i dati nella sessione user dottore
+"""
+class DoctorData(Enum):
+    ID_PATIENT= "id_patient"
+    ID_PATHOLOGY= "id_pathology"
+    ID_PATHOLOGY_TYPE= "id_pathology_type"
         
     
     
