@@ -180,34 +180,14 @@ def pathology():
 
 
 # ------------------------------ROUTE PER MOSTRARE LA STORIA DEL PAZIENTE-------------------------------
-#in ogni route devo salvare id paziente selezionato e la pathology type nella sessione
+# In ogni route devo salvare id paziente selezionato e la pathology type nella sessione
 # Non passo nessun parametro nella path. passo tutti i valori in Post con il form
-"""
-Route to show patient history
-"""
-@doctor.route('/patient_history/',methods=["POST"])
-@login_required
-def patient_history():
-    
-    print(session.get(DoctorData.ID_PATIENT.value))
-    print(session.get(DoctorData.ID_PATHOLOGY.value))
-    print(session.get(DoctorData.ID_PATHOLOGY_TYPE.value))
-
-    Rizoartrosi.id_pathology== session.get(DoctorData.ID_PATHOLOGY.value)
-
-    timeline = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
-                                          Rizoartrosi.id_pathology== session.get(DoctorData.ID_PATHOLOGY.value),
-                                          Rizoartrosi.id_pathology_type== session.get(DoctorData.ID_PATHOLOGY_TYPE.value)).order_by(Rizoartrosi.next_control_date.desc()).all()
-
-    print(timeline)
-    return render_template('patient_history.html')
-
 
 """
 Route per mostrare tutti i pazienti e i rispettivi trattamenti eseguiti
 
 """
-@doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["POST"])
+@doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["GET"])
 @login_required
 def patient_treatment_list(patient_id,patient_name):
 
@@ -225,7 +205,12 @@ def patient_treatment_list(patient_id,patient_name):
     #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
     # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
 
-    pathology_list=(db.session.query(Rizoartrosi.id_patient,User.name,Pathology.name,PathologyType.name)
+    pathology_list=(db.session.query(Rizoartrosi.id_patient,
+                                     User.name,
+                                     Pathology.id,
+                                     Pathology.name,
+                                     PathologyType.id,
+                                     PathologyType.name)
     .join(Pathology, Pathology.id == Rizoartrosi.id_pathology)
     .join(PathologyType, PathologyType.id == Rizoartrosi.id_pathology_type)
     .join(User,User.id==patient_id)
@@ -238,3 +223,28 @@ def patient_treatment_list(patient_id,patient_name):
 
 
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
+
+
+"""
+Route to show patient history
+"""
+@doctor.route('/patient_history/<id_pathology>/<id_pathology_type>/',methods=["GET"])
+@login_required
+def patient_history(id_pathology,id_pathology_type):
+    
+    print(session.get(DoctorData.ID_PATIENT.value))
+    
+   
+
+    print("HISTORY PATIENT")
+    print(id_pathology)
+    print(id_pathology_type)
+
+    timeline = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
+                                          Rizoartrosi.id_pathology==id_pathology ,
+                                          Rizoartrosi.id_pathology_type== id_pathology_type).order_by(Rizoartrosi.next_control_date.asc()).all()
+
+    print(timeline)
+    return render_template('patient_history.html',timeline=timeline)
+
+
