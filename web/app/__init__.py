@@ -8,6 +8,7 @@ import os
 from enum import Enum
 
 from flask_wtf import FlaskForm, CSRFProtect
+from flask_cors import CORS
 #ROLE 1 = DOCTOR
 #ROLE 2 = PATIENT
 
@@ -17,13 +18,16 @@ boostrap= None
 csrf = None
 
 def create_app():
+    global csrf
+
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SECRET_KEY'] = os.urandom(24)
     
     
     csrf = CSRFProtect(app)
-
+    CORS(app)
+    
     db.init_app(app)
     
     login_manager = LoginManager()

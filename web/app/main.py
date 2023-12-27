@@ -4,7 +4,7 @@ from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
 from .internal_data import ROLE
 from .models import User,DoctorPatient
-from . import db
+from . import db,csrf
 
 main = Blueprint('main', __name__)
 
@@ -15,9 +15,11 @@ PROBLEMI
 2) Verifica se un paziente può accedere agli URL del dottore e viceversa
 NEW FEATURE
 1) Quando il medico genera il primo trattaemento di default creare tutti i trattamenti successivi e controlli per il 
-paziente
-2) Creare una tabella lato dottore per visualizzare i prossimi trattamenti
-3) Creare una cronistoria del paziente
+paziente OK
+2) Creare una tabella lato dottore per visualizzare i prossimi trattamenti 
+3) Creare una cronistoria del paziente WORK IN PROGRESS
+4) Qunado un dottore inserisce un trattamento, quelli successivi a quale dottore/fisioterapista sono assegnati. Sono assegnati in modo automatico?
+
 
 """
 
@@ -39,3 +41,8 @@ def anagrafica():
     return render_template('anagrafica.html', id=current_user.id)
 
 
+# Route to get the CSRF token for AJAX requests
+@main.route('/get_csrf_token', methods=['GET'])
+def get_csrf_token():
+    token = csrf._get_csrf_token()
+    return jsonify({'csrf_token': token})

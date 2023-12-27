@@ -42,7 +42,7 @@ def login_post():
 
 @auth.route('/signup')
 def signup():
-    return render_template('auth/signup.html')
+    return render_template('auth/signup_doctor.html')
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
@@ -81,7 +81,7 @@ def signup_patient_post():
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again  
         flash('Email address already exists')
-        return redirect(url_for('auth.signup'))
+        return redirect(url_for('auth.signup_patient'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password),role=2)

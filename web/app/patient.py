@@ -17,8 +17,8 @@ def profile_patient():
         and_(
             Notification.id_patient==current_user.id,
             or_(
-                Notification.status==NOTIFICATION_STATUS.SENT.value,
-                Notification.status==NOTIFICATION_STATUS.APPROVED.value
+                Notification.status==NOTIFICATION_STATUS.SENT.value[0],
+                Notification.status==NOTIFICATION_STATUS.APPROVED.value[0]
             )
         )
     ).all()
@@ -45,7 +45,7 @@ def accept_doctor_request():
 
         if notification_to_update:
 
-            notification_to_update.status= NOTIFICATION_STATUS.APPROVED.value
+            notification_to_update.status= NOTIFICATION_STATUS.APPROVED.value[0]
 
             new_link = DoctorPatient(id_doctor=id_doctor, id_patient=current_user.id)
             db.session.add(new_link)
@@ -83,7 +83,7 @@ def remove_doctor_request():
 
         if notification_to_update:
 
-            notification_to_update.status= NOTIFICATION_STATUS.TOELIMINATE.value
+            notification_to_update.status= NOTIFICATION_STATUS.TOELIMINATE.value[0]
             db.session.delete(removeLinkPatientDoctor)
             db.session.commit()
             

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template,request,jsonify,redirect, url_for, 
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
 from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
-from . import db
+from . import db,csrf
 from sqlalchemy import cast, Integer
 from .doctor_forms import RizoartrosiForm
 import datetime
@@ -49,11 +49,15 @@ Ajax request to send notification to patient
 @login_required
 def send_patient_notification():
 
+    print("DATA JSON")
+    csrf.protect()
+
+    print("DATA JSON")
     patient_id = request.json.get('patient_id')
     
     new_link = Notification(id_doctor=current_user.id,
                             id_patient=patient_id,
-                            status=NOTIFICATION_STATUS.SENT.value)
+                            status=NOTIFICATION_STATUS.SENT.value[0])
     db.session.add(new_link)
     db.session.commit()
 
