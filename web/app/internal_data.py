@@ -9,9 +9,23 @@ class ROLE(Enum):
 
 # Define the notification status
 class NOTIFICATION_STATUS(Enum):
-    SENT = 1
-    APPROVED = 2
-    TOELIMINATE= 3
+    SENT = (1,"Sent")
+    APPROVED = (2,"Approved")
+    TOELIMINATE= (3,"To be Eliminated")
+
+class CONTROL_STATUS(Enum):
+
+    ACTIVE = (1,"Active")
+    CLOSED = (2,"Closed")
+    EXPIRED = (3,"Expired")
+
+class EMAIL_STATUS(Enum):
+
+    #Email inviata al paziente per il prossimo controllo
+    ACTIVE = (1,"Sent")
+    #il paziente ha confermato appuntamento
+    CLOSED = (2,"Confirmed")
+
 
 class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"Rizoartrosi")
@@ -95,13 +109,14 @@ class RizoartrosiControlsTimeline:
 """
 Chiavi utilizzate per salvare i dati nella sessione user dottore
 """
+
 class DoctorData(Enum):
     ID_PATIENT= "id_patient"
     ID_PATHOLOGY= "id_pathology"
     ID_PATHOLOGY_TYPE= "id_pathology_type"
         
     
-    
+
 
     
 

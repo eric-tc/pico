@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
-from .internal_data import RIZOARTROSI_CONTROLS,PATHOLOGY_TYPE,PATHOLOGY
+from .internal_data import RIZOARTROSI_CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS
 
 class User(UserMixin, db.Model):
 
@@ -95,7 +95,10 @@ class Rizoartrosi(db.Model):
     email_sent_date=db.Column(db.DateTime,default=None)
     email_confirmed_date= db.Column(db.DateTime,default=None)
     #identifica se i dati sono già stati inseriti e non è possibile cambiarli
-    is_closed = db.Column(db.Integer, nullable=False)
+    
+    id_control_status = db.Column(db.Integer,db.ForeignKey('control_status.id'),nullable=False)
+    control_status = db.relationship('ControlStatus', foreign_keys=[id_control_status])
+    
     #Parametri  
     nprs_vas=db.Column(db.Integer)
     prom_arom_mcpj= db.Column(db.Integer)
@@ -167,10 +170,36 @@ class Notification(db.Model):
     status = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+"""
+Classe utilizzata per salvare lo stato del controllo
 
+1 Active. Significa che il controllo è stato inserito a database
+2 Closed. Significa che un medico ha inserito i dati del controllo. 
+3 Expired. Significa che il paziente non si è presentato e il sistema ha chiuso in automatico 
+il controllo dopo x settimane
+
+"""
+class ControlStatus(db.Model):
+    
+
+    id = db.Column(db.Integer, primary_key=True)
+    control_name= db.Column(db.String(50), nullable=False)
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for member in CONTROL_STATUS:
+                new_instance = cls(control_name=member.value[1])
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
 
 class EmailStatus(db.Model):
-    status_list=["sent","confirmed","to be eliminated"]
+    
     id = db.Column(db.Integer, primary_key=True)
     status_name= db.Column(db.String(50), nullable=False)
 
@@ -178,8 +207,8 @@ class EmailStatus(db.Model):
     def insert_rows(cls):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
-            for value in cls.status_list:
-                new_instance = cls(status_name=value)
+            for member in EMAIL_STATUS:
+                new_instance = cls(status_name=member.value[1])
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -188,7 +217,7 @@ class EmailStatus(db.Model):
             print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
 
 class NotificationStatus(db.Model):
-    status_list=["sent","approved","to be eliminated"]
+    
     id = db.Column(db.Integer, primary_key=True)
     status_name= db.Column(db.String(50), nullable=False)
 
@@ -196,8 +225,8 @@ class NotificationStatus(db.Model):
     def insert_rows(cls):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
-            for value in cls.status_list:
-                new_instance = cls(status_name=value)
+            for member in NOTIFICATION_STATUS:
+                new_instance = cls(status_name=member.value[1])
                 db.session.add(new_instance)
             
             # Commit the changes

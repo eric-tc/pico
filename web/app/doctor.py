@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
 from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
 from . import db
 from sqlalchemy import cast, Integer
@@ -81,7 +81,7 @@ def patients_list():
 
 # -------------------------ROUTE PER DEFINIRE un nuovo controllo paziente---------------------------------------------------
 
-@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["POST"])
+@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["GET"])
 @login_required
 def medical_treatment(patient_id,patient_name):
     
@@ -130,19 +130,20 @@ def pathology():
         scar_type = request.form.get('scar_type')
 
         #Controllo quale tipologia di malattia ha selezionato il dottore
-        if(PATHOLOGY.RIZOARTROSI.value[0]== int(DoctorData.pathology_id)):
+        #Per ogni patologia avrò un controllo specifico
+        if(PATHOLOGY.RIZOARTROSI.value[0]== int(session.get(DoctorData.ID_PATHOLOGY.value))):
             #inserimento tabella rizoartrosi
             print("inserimento rizoartrosi")
 
             for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"1"),  # Replace with the actual type ID
-                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"1"), #TODO da cambiare con id patologia
-                    id_patient=session.get(DoctorData.ID_PATIENT.value,"1"),  # Replace with the actual patient ID
+                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
+                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"0"), #TODO da cambiare con id patologia
+                    id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
                     next_control_date=datetime.utcnow() + timedelta(weeks=weeks_to_add),
                     next_control_number=control_number +1,
-                    is_closed=1 if control_number==0 else 0,  # Replace with the actual value
+                    id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                     nprs_vas=nprs_vas,  # Replace with the actual value
                     prom_arom_mcpj=90,  # Replace with the actual value
                     prom_arom_Ipj=85,  # Replace with the actual value

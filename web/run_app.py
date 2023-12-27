@@ -1,11 +1,12 @@
 from app import my_app
-from app.models import NotificationStatus,PathologyType,Pathology,EmailStatus
+from app.models import NotificationStatus,PathologyType,Pathology,EmailStatus,ControlStatus
 
 with my_app.app_context():
     NotificationStatus.insert_rows()
     PathologyType.insert_rows()
     Pathology.insert_rows()
     EmailStatus.insert_rows()
+    ControlStatus.insert_rows()
 
 if __name__ == "__main__":
 
