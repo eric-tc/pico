@@ -35,12 +35,54 @@
           <label for="additionalField" class="form-label">Additional Field</label>
           <input type="text" class="form-control" id="additionalField" name="additionalField">
         </div>
-  
+        <div class="mb-3">
+
+          <h4>
+            Selezionare i controlli futuri
+          </h4>
+        </div>
+        <div class="mb-3">
+         <!-- Add each field to the form -->
+         <label for="additionalField" class="form-label"><b>Controllo 1</b> Entro 2 settimane dalla data attuale</label> 
+         {{ form.entrydate_1 }}
+         <p class="mb-2 mt-2"> Seleziona orario </p>
+         {{ form.entrytime_1 }}
+        </div>
+
+        <div class="mb-3">
+          <!-- Add each field to the form -->
+          <label for="additionalField" class="form-label"><b>Controllo 2</b> Entro 6 settimane dalla data attuale</label> 
+          {{ form.entrydate_2 }}
+          
+         </div>
+
+         <div class="mb-3">
+          <!-- Add each field to the form -->
+          <label for="additionalField" class="form-label"><b>Controllo 3</b> Entro 1 anno dalla data attuale </label> 
+          {{ form.entrydate_3 }}
+         </div>
   
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+
+   
   
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-4 mb-4 col-lg-4">
+
+      <form  method="POST">
+     
+        
+       
+  
+      </form>
+
+    </div>
+
   </div>
 
 

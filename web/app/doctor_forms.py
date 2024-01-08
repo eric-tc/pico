@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
+from wtforms.fields import DateField,TimeField
 
 # class RizoartrosiForm(FlaskForm):
 #     nprs_vas = IntegerField('NPRS VAS', render_kw={'class': 'form-control'}, validators=[DataRequired()])
@@ -33,3 +34,13 @@ class RizoartrosiForm(FlaskForm):
     scar_status = StringField('Scar Status', render_kw={'class': 'form-control'},  validators=None)
     scar_type = StringField('Scar Type', render_kw={'class': 'form-control'},  validators=None)
     submit_rizoartrosi = SubmitField('Crea Controllo', render_kw={'class': 'btn btn-primary'})
+
+
+
+class MedicalTreatmentForm(FlaskForm):
+    entrydate_1 = DateField('controllo 1',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
+    entrytime_1 = TimeField('Time')
+    entrydate_2 = DateField('controllo 2',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
+    entrydate_3 = DateField('controllo 3',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
+
+    submit = SubmitField('Submit')

@@ -4,7 +4,7 @@ from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMA
 from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer
-from .doctor_forms import RizoartrosiForm
+from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
 import datetime
 from datetime import datetime, timedelta
 
@@ -89,6 +89,8 @@ def patients_list():
 @login_required
 def medical_treatment(patient_id,patient_name):
     
+    medicalForm= MedicalTreatmentForm()
+
     session[DoctorData.ID_PATIENT.value]=patient_id
 
     print("PATIENT ID")
@@ -101,7 +103,8 @@ def medical_treatment(patient_id,patient_name):
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
                            pathology=PATHOLOGY,
-                           pathology_type=PATHOLOGY_TYPE)
+                           pathology_type=PATHOLOGY_TYPE,
+                           form=medicalForm)
 
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])
