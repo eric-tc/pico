@@ -183,3 +183,8 @@
 }
 
 .control_success {background-color: #52d652 !important;}
+
+.my-class a {
+    background: #FC0 !important;
+  }
+
