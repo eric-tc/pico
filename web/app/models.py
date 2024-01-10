@@ -90,6 +90,8 @@ class Rizoartrosi(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     next_control_date= db.Column(db.DateTime,nullable=False)
     next_control_number= db.Column(db.Integer,nullable=False)
+    #1= se il paziente ha confermato la data della prossima visita
+    is_date_accepted = db.Column(db.Integer,default=0)
     #Gestione email per controllo
     email_status= db.Column(db.Integer, default=0)
     email_sent_date=db.Column(db.DateTime,default=None)

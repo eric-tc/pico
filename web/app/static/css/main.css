@@ -184,7 +184,17 @@
 
 .control_success {background-color: #52d652 !important;}
 
-.my-class a {
+.calendar-highlight a {
     background: #FC0 !important;
   }
 
+  .ui-datepicker-trigger span {
+    display: none;
+  }
+
+  /* Add custom styling for the icon (optional) */
+  .ui-datepicker-trigger:after {
+    content: "📅"; /* Use the calendar emoji or replace it with your preferred icon */
+    font-size: 16px; /* Adjust the font size as needed */
+    margin-left: 5px; /* Add spacing if needed */
+  }
