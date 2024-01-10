@@ -4,7 +4,7 @@
 
 <div class="row">
 
-    <div class="col-md-4 mb-4 col-lg-4">
+    <div class="col-md-6 mb-6 col-lg-6">
   
       <h4 class="title mt-3">
         Seleziona la patologia da trattare
@@ -44,47 +44,17 @@
         <div class="mb-3">
          <!-- Add each field to the form -->
          <label for="additionalField" class="form-label"><b>Controllo 1</b> Entro 2 settimane dalla data attuale</label> 
-         {{ form.entrydate_1 }}
-         <p class="mb-2 mt-2"> Seleziona orario </p>
-         {{ form.entrytime_1 }}
+          <p><input class="form-control-custom" type="text" name="selected_date" id="datepicker" ></p>
+          <p class="mb-2 mt-2"> Seleziona orario </p>
+          <div><input type="text" name="selected_time" id="timepicker"> <img src="/static/img/clock.png" height="32" width="32" alt=""></div>
         </div>
-
-        <div class="mb-3">
-          <!-- Add each field to the form -->
-          <label for="additionalField" class="form-label"><b>Controllo 2</b> Entro 6 settimane dalla data attuale</label> 
-          {{ form.entrydate_2 }}
-          
-         </div>
-
-         <div class="mb-3">
-          <!-- Add each field to the form -->
-          <label for="additionalField" class="form-label"><b>Controllo 3</b> Entro 1 anno dalla data attuale </label> 
-          {{ form.entrydate_3 }}
-         </div>
-  
+        
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    </div>
+    </div>  
 
-   
-  
+    
   </div>
-
-  <div class="row">
-
-    <div class="col-md-4 mb-4 col-lg-4">
-
-      <form  method="POST">
-     
-        
-        <p>Date: <input type="text" id="datepicker"></p>
-  
-      </form>
-
-    </div>
-
-  </div>
-
 
   <script>
     // Dummy data for options
@@ -133,7 +103,7 @@
       // Define the start and end dates
       // Initialize Datepicker
       $("#datepicker").datepicker({
-          dateFormat: 'yy-mm-dd', // Set the date format
+          dateFormat: 'dd-mm-yy', // Set the date format
           changeMonth: true,
           changeYear: true,
           showOn: "button", // Show the Datepicker when clicking the button
@@ -148,15 +118,28 @@
             // a and b are set to today ± 5 days for demonstration
             var a = new Date();
             var b = new Date();
-            a.setDate(a.getDate() + 10);
-            b.setDate(b.getDate() + 17);
+            a.setDate(a.getDate() + 12);
+            b.setDate(b.getDate() + 19);
             return [true, a <= d && d <= b ? "calendar-highlight" : ""];
           }
           // Add more options as needed
       });
   });
+  $(function () {
   
-    
+  $("#timepicker").timepicker({
+    timeFormat: 'HH:mm',
+    controlType: 'select',
+    oneLine: true,
+    showButtonPanel: true,
+    showTimezone: false,
+    showHour: true,
+    showMinute: true,
+    showSecond: false,
+    showMillisec: false,
+    showMicrosec: false,
+    });
+  });
   </script>
 
 {% endblock %}

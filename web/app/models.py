@@ -88,7 +88,10 @@ class Rizoartrosi(db.Model):
     pathology_type = db.relationship('PathologyType', foreign_keys=[id_pathology_type])
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    #Data prossimo incontro
     next_control_date= db.Column(db.DateTime,nullable=False)
+    #Ora prossimo incontro
+    next_control_time= db.Column(db.String(10),nullable=False)
     next_control_number= db.Column(db.Integer,nullable=False)
     #1= se il paziente ha confermato la data della prossima visita
     is_date_accepted = db.Column(db.Integer,default=0)

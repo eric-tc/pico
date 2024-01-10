@@ -114,6 +114,10 @@ class DoctorData(Enum):
     ID_PATIENT= "id_patient"
     ID_PATHOLOGY= "id_pathology"
     ID_PATHOLOGY_TYPE= "id_pathology_type"
+    CONTROL_DATE = "first_control_date"
+    CONTROL_TIME = "first_control_time"
+    #questa chiave tiene traccia dell'appuntamento del controllo successivo
+    NUM_CONTROL = "control_number"
         
     
 

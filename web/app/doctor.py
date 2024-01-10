@@ -6,7 +6,7 @@ from . import db,csrf
 from sqlalchemy import cast, Integer
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
 import datetime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,time
 
 doctor = Blueprint('doctor', __name__)
 
@@ -92,6 +92,8 @@ def medical_treatment(patient_id,patient_name):
     medicalForm= MedicalTreatmentForm()
 
     session[DoctorData.ID_PATIENT.value]=patient_id
+    #Quando crea un nuovo controllo l'appuntamento successivo è sempre il secondo
+    session[DoctorData.NUM_CONTROL.value]= 1
 
     print("PATIENT ID")
     print(session.get(DoctorData.ID_PATIENT.value))
@@ -100,6 +102,7 @@ def medical_treatment(patient_id,patient_name):
     for value in PATHOLOGY:
         print(value.value[0])
         print(value.value[1])
+      
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
                            pathology=PATHOLOGY,
@@ -112,8 +115,6 @@ def medical_treatment(patient_id,patient_name):
 def pathology():
 
     form= RizoartrosiForm()
-   
-    
     print(f'Request Method: {request.method}')
     print(f'Form Data: {request.form}')
     print(f'Form Errors: {form.errors}')
@@ -143,12 +144,39 @@ def pathology():
             print("inserimento rizoartrosi")
 
             for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
+
+                next_control_date= datetime.utcnow() + timedelta(weeks=weeks_to_add)
+                next_control_time = "12:00"
+                
+                is_date_accepted= 0
+                
+                #Se il numero del controllo corrisponde al controllo successivo verifico
+                # se la data del prossimo incontro è stata accettata dal paziente
+                print("CONTROL NUMBER")
+                print(control_number)
+                if(control_number == int(session.get(DoctorData.NUM_CONTROL.value))):
+                    print(control_number)
+
+                    if(session.get(DoctorData.CONTROL_DATE.value)!=""):
+                        print(session.get(DoctorData.CONTROL_DATE.value))
+                        next_control_date= datetime.strptime(str(session.get(DoctorData.CONTROL_DATE.value)),"%d-%m-%Y")
+                        print("DATE ACCEPTED")
+                        print(next_control_date)
+                        is_date_accepted=1
+                        
+
+                    if(session.get(DoctorData.CONTROL_TIME.value)!=""):
+                        next_control_time= session.get(DoctorData.CONTROL_TIME.value)
+                        is_date_accepted=1
+
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
                     id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
                     id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"0"), #TODO da cambiare con id patologia
                     id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
-                    next_control_date=datetime.utcnow() + timedelta(weeks=weeks_to_add),
+                    next_control_date=next_control_date,
+                    next_control_time= next_control_time,
+                    is_date_accepted= is_date_accepted,
                     next_control_number=control_number +1,
                     id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                     nprs_vas=nprs_vas,  # Replace with the actual value
@@ -183,7 +211,14 @@ def pathology():
     # A meno che la patologia non sia inserita correttamente
     session[DoctorData.ID_PATHOLOGY.value] = request.form.get('pathology')
     session[DoctorData.ID_PATHOLOGY_TYPE.value] = request.form.get('pathology_type')
+    session[DoctorData.CONTROL_DATE.value] = request.form.get("selected_date")
+    session[DoctorData.CONTROL_TIME.value] = request.form.get("selected_time")
 
+    print(request.form.get("selected_date"))
+    print(request.form.get("selected_time"))
+    print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
+    print(f"PRIMO INTERVENTO TEMPO SELEZIONATA {session.get(DoctorData.CONTROL_TIME.value)}")
+    
     return render_template('doctor/patology.html',form=form)
 
 
@@ -227,8 +262,7 @@ def patient_treatment_list(patient_id,patient_name):
     )
     
     
-    print(pathology_list)
-
+  
 
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
 

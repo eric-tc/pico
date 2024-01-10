@@ -38,9 +38,8 @@ class RizoartrosiForm(FlaskForm):
 
 
 class MedicalTreatmentForm(FlaskForm):
-    entrydate_1 = DateField('controllo 1',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
-    entrytime_1 = TimeField('Time')
-    entrydate_2 = DateField('controllo 2',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
-    entrydate_3 = DateField('controllo 3',render_kw={'class': 'form-control'}, format='%d-%m-%Y' )
-
-    submit = SubmitField('Submit')
+    """
+    Questo form gestisce
+    """
+    entrytime_1 = TimeField('Time',render_kw={'class': 'form-control-custom'})
+    
