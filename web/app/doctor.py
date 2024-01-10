@@ -22,8 +22,6 @@ def profile():
     .all()
     )
 
-    print(patients_list)
-    
     #sent_notifications= Notification.query.filter_by(id_doctor=current_user.id)
 
     sent_notifications = (
@@ -33,11 +31,21 @@ def profile():
     .all()
     )
 
-    print(sent_notifications)
+    # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
+    next_treatments=[]
+    for patient_query in patients_list:
+        #in base all'id paziente 
+        print("value")
+        doctorPatient, name = patient_query
+        row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).first()
+        next_treatments.extend(row)
+    
+
     return render_template('doctor/profile.html', 
                            name=current_user.name,
                            patients_list=patients_list, 
-                           sent_notifications=sent_notifications)
+                           sent_notifications=sent_notifications,
+                           next_treatments=next_treatments)
                           
 
 
