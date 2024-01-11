@@ -109,6 +109,20 @@
             <button class="btn btn-success" type="submit">Compila</button>
           </form>
           </td>
+
+          {% for pathology, username in next_treatments %}
+          <tr class="notificationRow text-center">
+              <td >{{ username }}</td>
+              <td>{{ pathology.next_control_date }}</td>
+              <td>
+                <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-success" type="submit">Compila</button>
+                </form>
+              </td>
+          </tr>
+      {% endfor %}
+      
         </tr>
     
       </tbody>

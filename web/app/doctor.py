@@ -38,9 +38,13 @@ def profile():
         print("value")
         doctorPatient, name = patient_query
         row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).first()
-        next_treatments.extend(row)
-    
+        time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
 
+        # Create a datetime object with today's date and the extracted time
+        row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
+
+        next_treatments.append(row)
+    
     return render_template('doctor/profile.html', 
                            name=current_user.name,
                            patients_list=patients_list, 
@@ -230,6 +234,16 @@ def pathology():
     return render_template('doctor/patology.html',form=form)
 
 
+#---------------------------------ROUTE PER GESTIRE I CONTROLLI SUCCESSIVI DEL PAZIENTE-----------------------------
+@doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>',methods=["GET"])
+@login_required
+def next_control(patient_id,patient_name,next_control_number):
+
+
+    return render_template('doctor/next_control.html')
+
+
+
 # ------------------------------ROUTE PER MOSTRARE LA STORIA DEL PAZIENTE-------------------------------
 # In ogni route devo salvare id paziente selezionato e la pathology type nella sessione
 # Non passo nessun parametro nella path. passo tutti i valori in Post con il form
@@ -269,9 +283,6 @@ def patient_treatment_list(patient_id,patient_name):
             Rizoartrosi.next_control_number==1).all()
     )
     
-    
-  
-
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
 
 
