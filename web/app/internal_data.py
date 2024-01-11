@@ -58,51 +58,87 @@ class RizoartrosiControlsTimeline:
 
     #The values set number of weeks after first meeting
     #0 serve perchè al primo incontro paziente/dottore la data è quella corrente
-    timeline= [0,2,6,12,26,52,154,520.,1040]
+    timeline= [0,2,6,12,26,52,154,520,1040]
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1
+
+    #Mappa che tiente traccia di tutti i controlli da mostrare.
+    #Questa mappa attiva o disattiva i campi nella UI in base ai controlli
+    #selezionati negli array first_control, second_control ecc...
+
+    Controls_Map={
+        RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
+        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
+        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
+        RIZOARTROSI_CONTROLS.ABDUZIONE.value: False,
+        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value: False,
+        RIZOARTROSI_CONTROLS.KAPANDJI.value: False,
+        RIZOARTROSI_CONTROLS.PINCH.value: False,
+        RIZOARTROSI_CONTROLS.GRIP.value: False,
+        RIZOARTROSI_CONTROLS.DASH.value: False,
+        RIZOARTROSI_CONTROLS.PRWHE.value: False,
+        RIZOARTROSI_CONTROLS.EATON_LITTLER.value: False,
+        RIZOARTROSI_CONTROLS.CICATRICE.value: False,
+        RIZOARTROSI_CONTROLS.MODENA.value: False
+    }
+
+
     
     first_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ,
-        RIZOARTROSI_CONTROLS.CICATRICE
+        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
+        RIZOARTROSI_CONTROLS.CICATRICE.value
         ]
     
     second_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ,
-        RIZOARTROSI_CONTROLS.ABDUZIONE,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE,
-        RIZOARTROSI_CONTROLS.KAPANDJI,
-        RIZOARTROSI_CONTROLS.PINCH,
-        RIZOARTROSI_CONTROLS.GRIP,
-        RIZOARTROSI_CONTROLS.DASH,
-        RIZOARTROSI_CONTROLS.PRWHE,
-        RIZOARTROSI_CONTROLS.MODENA,
-        RIZOARTROSI_CONTROLS.CICATRICE,
+        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
+        RIZOARTROSI_CONTROLS.ABDUZIONE.value,
+        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value,
+        RIZOARTROSI_CONTROLS.KAPANDJI.value,
+        RIZOARTROSI_CONTROLS.PINCH.value,
+        RIZOARTROSI_CONTROLS.GRIP.value,
+        RIZOARTROSI_CONTROLS.DASH.value,
+        RIZOARTROSI_CONTROLS.PRWHE.value,
+        RIZOARTROSI_CONTROLS.MODENA.value,
+        RIZOARTROSI_CONTROLS.CICATRICE.value,
 
     ]
 
     third_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ,
-        RIZOARTROSI_CONTROLS.ABDUZIONE,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE,
-        RIZOARTROSI_CONTROLS.KAPANDJI,
-        RIZOARTROSI_CONTROLS.PINCH,
-        RIZOARTROSI_CONTROLS.GRIP,
-        RIZOARTROSI_CONTROLS.DASH,
-        RIZOARTROSI_CONTROLS.PRWHE,
-        RIZOARTROSI_CONTROLS.MODENA,
-        RIZOARTROSI_CONTROLS.CICATRICE,
+        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
+        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
+        RIZOARTROSI_CONTROLS.ABDUZIONE.value,
+        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value,
+        RIZOARTROSI_CONTROLS.KAPANDJI.value,
+        RIZOARTROSI_CONTROLS.PINCH.value,
+        RIZOARTROSI_CONTROLS.GRIP.value,
+        RIZOARTROSI_CONTROLS.DASH.value,
+        RIZOARTROSI_CONTROLS.PRWHE.value,
+        RIZOARTROSI_CONTROLS.MODENA.value,
+        RIZOARTROSI_CONTROLS.CICATRICE.value,
 
     ]
 
     get_controls=[first_control,second_control,third_control]
+
+    def __init__(self) -> None:
+        pass
+    
+    def get_controls(self,control_number)->dict:
+        #TODO: Da aggiungere per ogni controllo previsto dalla terapia
+        if(control_number==1):
+            for key in RizoartrosiControlsTimeline.Controls_Map:
+            # Check if the value of the key is present in the array
+                if key in RizoartrosiControlsTimeline.first_control:
+                    # Change the value in the map to True
+                    RizoartrosiControlsTimeline.Controls_Map[key] = True
+                     
+            return RizoartrosiControlsTimeline.Controls_Map[key]
 
 
 
