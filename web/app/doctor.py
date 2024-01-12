@@ -243,7 +243,7 @@ def pathology():
 """
 row_id_to_update= rappresenta il numero della riga della colonna da aggiornare.
 """
-@doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>/<row_id_to_update>',methods=["GET"])
+@doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>/<row_id_to_update>',methods=["GET","POST"])
 @login_required
 def next_control(patient_id,patient_name,next_control_number,row_id_to_update):
 
@@ -259,8 +259,17 @@ def next_control(patient_id,patient_name,next_control_number,row_id_to_update):
         pathology_row_to_update = Rizoartrosi.query.get(row_id_to_update)
         
         #Ciclo su tutte le chiavi della controls_map e tramite sett_attr assegno i nuovi valori
+        for key in controls_map.keys():
+            
+            setattr(pathology_row_to_update, key, request.form.get(key=key))
+            
+        # una volta inserito i valori il controllo si chiude e non può essere modificato
+        pathology_row_to_update.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
+        #Aggiornamento della row
+        db.session.commit()
         
-
+        flash('Inserimento terapia con successo')
+        return redirect(url_for('doctor.profile')) # if user doesn't exist or password is wrong, reload the page
 
     print(controls_map)
 

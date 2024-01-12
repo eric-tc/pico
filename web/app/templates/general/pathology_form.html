@@ -93,6 +93,13 @@
         {{ form.stato_cicatrice }}
 
     {% endif %} 
+
+    {% if controls_map.modena  %}
+                
+    {{ form.modena.label }}
+    {{ form.modena }}
+
+    {% endif %} 
     
     {% if form.errors %}
     {{ form.errors }}

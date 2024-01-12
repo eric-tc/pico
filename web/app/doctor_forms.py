@@ -37,6 +37,7 @@ class RizoartrosiForm(FlaskForm):
     eaton_littler = IntegerField(RIZOARTROSI_CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control'}, validators=None )
     stato_cicatrice = StringField(RIZOARTROSI_CONTROLS.STATO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
     tipo_cicatrice = StringField(RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
+    modena = StringField(RIZOARTROSI_CONTROLS.MODENA.value,render_kw={'class': 'form-control'},  validators=None)
     submit_rizoartrosi = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
 
