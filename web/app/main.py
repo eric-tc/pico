@@ -16,10 +16,16 @@ PROBLEMI
 NEW FEATURE
 1) Quando il medico genera il primo trattaemento di default creare tutti i trattamenti successivi e controlli per il 
 paziente OK
-2) Creare una tabella lato dottore per visualizzare i prossimi trattamenti 
-3) Creare una cronistoria del paziente WORK IN PROGRESS
+2) Creare una tabella lato dottore per visualizzare i prossimi trattamenti OK
+3) Creare una cronistoria del paziente WORK IN PROGRESS -> Grafica OK manca la visualizzazione dei trattamenti
 4) Qunado un dottore inserisce un trattamento, quelli successivi a quale dottore/fisioterapista sono assegnati. Sono assegnati in modo automatico?
 
+
+Feature 12/01/2024
+
+1) Finire la gestione dei diversi controlli tramite MAP. Manca da inserire i controlli 2,3
+2) Inserimento a Database del valore del controllo. Cambio di stato del controllo
+3) Visualizzazione nella dashboard del dottore nuovo controllo più vicinio non già chiuso.(il controllo si chiude quando inserisco i dati e non posso più modificarli)
 
 """
 

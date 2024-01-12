@@ -1,7 +1,7 @@
 #This file handles internal data of the application
 
 from enum import Enum
-
+import copy
 # Define an enumeration class
 class ROLE(Enum):
     DOCTOR = 1
@@ -69,7 +69,7 @@ class RizoartrosiControlsTimeline:
     #selezionati negli array first_control, second_control ecc...
 
     Controls_Map={
-        
+
         RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
         RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
         RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
@@ -86,7 +86,24 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.MODENA.value: False
     }
 
-    first_control = [
+    first_control={
+
+        RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
+        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
+        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
+        RIZOARTROSI_CONTROLS.ABDUZIONE.value: False,
+        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value: False,
+        RIZOARTROSI_CONTROLS.KAPANDJI.value: False,
+        RIZOARTROSI_CONTROLS.PINCH.value: False,
+        RIZOARTROSI_CONTROLS.GRIP.value: False,
+        RIZOARTROSI_CONTROLS.DASH.value: False,
+        RIZOARTROSI_CONTROLS.PRWHE.value: False,
+        RIZOARTROSI_CONTROLS.EATON_LITTLER.value: False,
+        RIZOARTROSI_CONTROLS.MODENA.value: False
+    }
+
+
+    second_control = [
         RIZOARTROSI_CONTROLS.NPRS_VAS.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
@@ -94,7 +111,7 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value
         ]
     
-    second_control = [
+    first_control = [
         RIZOARTROSI_CONTROLS.NPRS_VAS.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
@@ -129,22 +146,37 @@ class RizoartrosiControlsTimeline:
 
     get_controls=[first_control,second_control,third_control]
     
+
+    @classmethod
+    def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
+
+        for key in control_map.keys():
+            # Check if the value of the key is present in the array
+            if key in control_array:
+                # Change the value in the map to True
+                print("SET TRUE")
+                control_map[key] = True
+        
+        return control_map
+
+
     @classmethod
     def get_controls(cls,control_number)->dict:
         #TODO: Da aggiungere per ogni controllo previsto dalla terapia
-        print(control_number)
-        print("INSIDE FUNC")
-        if(int(control_number)==2):
-            print("CONTROL NUMBER")
-            for key in RizoartrosiControlsTimeline.Controls_Map.keys():
-                # Check if the value of the key is present in the array
-                print(key)
-                if key in RizoartrosiControlsTimeline.first_control:
-                    # Change the value in the map to True
-                    print("SET TRUE")
-                    RizoartrosiControlsTimeline.Controls_Map[key] = True
+        
+        #Non posso modificare i dati interni della mappa altrimenti per ogni utente
+        #avrei uno stessa struttura dati condivisa e questo non andrebbe bene
+        # copio i dati in una mappa temporanera
+        tmp_ControlMap = copy.deepcopy(RizoartrosiControlsTimeline.Controls_Map)
 
-            return RizoartrosiControlsTimeline.Controls_Map
+        if(int(control_number)==2):
+            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
+                                                                            RizoartrosiControlsTimeline.second_control)
+        if(int(control_number)==3):
+            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
+                                                                            RizoartrosiControlsTimeline.third_control)
+
+        return tmp_ControlMap
 
 
 
