@@ -115,7 +115,7 @@
               <td >{{ username }}</td>
               <td>{{ pathology.next_control_date }}</td>
               <td>
-                <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number) }}">
+                <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number,row_id_to_update=pathology.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button class="btn btn-success" type="submit">Compila</button>
                 </form>

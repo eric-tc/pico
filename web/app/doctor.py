@@ -38,12 +38,13 @@ def profile():
         print("value")
         doctorPatient, name = patient_query
         row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).first()
-        time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
-
-        # Create a datetime object with today's date and the extracted time
-        row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
-
-        next_treatments.append(row)
+        
+        #Verfico che la row recuperata della patologia non è None
+        if row is not None:
+            time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
+            # Create a datetime object with today's date and the extracted time
+            row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
+            next_treatments.append(row)
     
     return render_template('doctor/profile.html', 
                            name=current_user.name,
@@ -192,18 +193,18 @@ def pathology():
                     next_control_number=control_number +1,
                     id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                     nprs_vas=nprs_vas,  # Replace with the actual value
-                    prom_arom_mcpj=90,  # Replace with the actual value
-                    prom_arom_Ipj=85,  # Replace with the actual value
-                    abduction=75,  # Replace with the actual value
-                    anterposition=70,  # Replace with the actual value
+                    prom_aprom_mcpj=90,  # Replace with the actual value
+                    prom_aprom_ipj=85,  # Replace with the actual value
+                    abduzione=75,  # Replace with the actual value
+                    anteposizione=70,  # Replace with the actual value
                     kapandji=95,  # Replace with the actual value
                     pinch=80,  # Replace with the actual value
                     grip=90,  # Replace with the actual value
                     dash=25,  # Replace with the actual value
                     prwhe=40,  # Replace with the actual value
-                    Eaton_littler=60,  # Replace with the actual value
-                    scar_status='Healed',  # Replace with the actual value
-                    scar_type='Normal',  # Replace with the actual value
+                    eaton_littler=60,  # Replace with the actual value
+                    tipo_cicatrice='Healed',  # Replace with the actual value
+                    stato_cicatrice='Normal',  # Replace with the actual value
                     modena='Some Value'  # Replace with the actual value
                 )
 
@@ -226,24 +227,41 @@ def pathology():
     session[DoctorData.CONTROL_DATE.value] = request.form.get("selected_date")
     session[DoctorData.CONTROL_TIME.value] = request.form.get("selected_time")
 
+    print(request.form.get('pathology'))
     print(request.form.get("selected_date"))
     print(request.form.get("selected_time"))
     print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
     print(f"PRIMO INTERVENTO TEMPO SELEZIONATA {session.get(DoctorData.CONTROL_TIME.value)}")
     
-    return render_template('doctor/patology.html',form=form)
+    #Quando il dottore crea il primo intervento il numero del controllo è sempre 1
+    controls_map = RizoartrosiControlsTimeline.get_controls(control_number = 1)
+
+    return render_template('doctor/patology.html',form=form,controls_map=controls_map)
 
 
 #---------------------------------ROUTE PER GESTIRE I CONTROLLI SUCCESSIVI DEL PAZIENTE-----------------------------
-@doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>',methods=["GET"])
+"""
+row_id_to_update= rappresenta il numero della riga della colonna da aggiornare.
+"""
+@doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>/<row_id_to_update>',methods=["GET"])
 @login_required
-def next_control(patient_id,patient_name,next_control_number):
+def next_control(patient_id,patient_name,next_control_number,row_id_to_update):
 
     print(next_control_number)
-    
+
     form= RizoartrosiForm()
     controls_map = RizoartrosiControlsTimeline.get_controls(control_number = next_control_number)
     
+
+    if form.submit_rizoartrosi.data and form.validate_on_submit():
+
+        print(row_id_to_update)
+        pathology_row_to_update = Rizoartrosi.query.get(row_id_to_update)
+        
+        #Ciclo su tutte le chiavi della controls_map e tramite sett_attr assegno i nuovi valori
+        
+
+
     print(controls_map)
 
     return render_template('doctor/next_control.html',

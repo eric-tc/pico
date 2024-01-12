@@ -110,23 +110,6 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
         RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value
         ]
-    
-    first_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
-        RIZOARTROSI_CONTROLS.ABDUZIONE.value,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value,
-        RIZOARTROSI_CONTROLS.KAPANDJI.value,
-        RIZOARTROSI_CONTROLS.PINCH.value,
-        RIZOARTROSI_CONTROLS.GRIP.value,
-        RIZOARTROSI_CONTROLS.DASH.value,
-        RIZOARTROSI_CONTROLS.PRWHE.value,
-        RIZOARTROSI_CONTROLS.MODENA.value,
-        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
-        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value,
-
-    ]
 
     third_control = [
         RIZOARTROSI_CONTROLS.NPRS_VAS.value,
@@ -165,10 +148,13 @@ class RizoartrosiControlsTimeline:
         #TODO: Da aggiungere per ogni controllo previsto dalla terapia
         
         #Non posso modificare i dati interni della mappa altrimenti per ogni utente
-        #avrei uno stessa struttura dati condivisa e questo non andrebbe bene
+        #avrei una stessa struttura dati condivisa e questo non andrebbe bene
         # copio i dati in una mappa temporanera
         tmp_ControlMap = copy.deepcopy(RizoartrosiControlsTimeline.Controls_Map)
 
+        if(int(control_number)==1):
+            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
+                                                                            RizoartrosiControlsTimeline.first_control)
         if(int(control_number)==2):
             tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
                                                                             RizoartrosiControlsTimeline.second_control)

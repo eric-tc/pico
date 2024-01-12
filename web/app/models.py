@@ -104,21 +104,24 @@ class Rizoartrosi(db.Model):
     id_control_status = db.Column(db.Integer,db.ForeignKey('control_status.id'),nullable=False)
     control_status = db.relationship('ControlStatus', foreign_keys=[id_control_status])
     
-    #Parametri  
+
+    #I valori di queste variabili devono corrispondere ai valori di RIZOARTROSI_CONTROLS dentro internal Data.
+    #In questo modo posso accedere a queste variabili utilizzando setattr(myinstance,RIZOARTROSI_CONTROLS....value)  
     nprs_vas=db.Column(db.Integer)
-    prom_arom_mcpj= db.Column(db.Integer)
-    prom_arom_Ipj=db.Column(db.Integer)
-    abduction=db.Column(db.Integer)
-    anterposition=db.Column(db.Integer)
+    prom_aprom_mcpj= db.Column(db.Integer)
+    prom_aprom_ipj=db.Column(db.Integer)
+    abduzione=db.Column(db.Integer)
+    anteposizione=db.Column(db.Integer)
     kapandji=db.Column(db.Integer)
     pinch=db.Column(db.Integer)
     grip=db.Column(db.Integer)
     dash=db.Column(db.Integer)
     prwhe=db.Column(db.Integer)
-    Eaton_littler=db.Column(db.Integer)
-    scar_status= db.Column(db.String(100))
-    scar_type = db.Column(db.String(100))
-    modena = db.Column(db.String(100))
+    eaton_littler=db.Column(db.Integer)
+    tipo_cicatrice= db.Column(db.String(100))
+    stato_cicatrice = db.Column(db.String(100))
+    modena = db.Column(db.String(100)) 
+    
 
 
 """
