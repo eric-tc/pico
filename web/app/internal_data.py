@@ -50,7 +50,8 @@ class RIZOARTROSI_CONTROLS(Enum):
     DASH = "dash"
     PRWHE = "prwhe"
     EATON_LITTLER = "eaton_littler"
-    CICATRICE = "cicatrice"
+    TIPO_CICATRICE = "tipo_cicatrice"
+    STATO_CICATRICE= "stato_cicatrice"
     MODENA = "modena"
 
 
@@ -68,6 +69,7 @@ class RizoartrosiControlsTimeline:
     #selezionati negli array first_control, second_control ecc...
 
     Controls_Map={
+        
         RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
         RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
         RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
@@ -79,17 +81,17 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.DASH.value: False,
         RIZOARTROSI_CONTROLS.PRWHE.value: False,
         RIZOARTROSI_CONTROLS.EATON_LITTLER.value: False,
-        RIZOARTROSI_CONTROLS.CICATRICE.value: False,
+        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value: False,
+        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value: False,
         RIZOARTROSI_CONTROLS.MODENA.value: False
     }
 
-
-    
     first_control = [
         RIZOARTROSI_CONTROLS.NPRS_VAS.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
         RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
-        RIZOARTROSI_CONTROLS.CICATRICE.value
+        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
+        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value
         ]
     
     second_control = [
@@ -104,7 +106,8 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.DASH.value,
         RIZOARTROSI_CONTROLS.PRWHE.value,
         RIZOARTROSI_CONTROLS.MODENA.value,
-        RIZOARTROSI_CONTROLS.CICATRICE.value,
+        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
+        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value,
 
     ]
 
@@ -120,25 +123,28 @@ class RizoartrosiControlsTimeline:
         RIZOARTROSI_CONTROLS.DASH.value,
         RIZOARTROSI_CONTROLS.PRWHE.value,
         RIZOARTROSI_CONTROLS.MODENA.value,
-        RIZOARTROSI_CONTROLS.CICATRICE.value,
-
+        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
+        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value,
     ]
 
     get_controls=[first_control,second_control,third_control]
-
-    def __init__(self) -> None:
-        pass
     
-    def get_controls(self,control_number)->dict:
+    @classmethod
+    def get_controls(cls,control_number)->dict:
         #TODO: Da aggiungere per ogni controllo previsto dalla terapia
-        if(control_number==1):
-            for key in RizoartrosiControlsTimeline.Controls_Map:
-            # Check if the value of the key is present in the array
+        print(control_number)
+        print("INSIDE FUNC")
+        if(int(control_number)==2):
+            print("CONTROL NUMBER")
+            for key in RizoartrosiControlsTimeline.Controls_Map.keys():
+                # Check if the value of the key is present in the array
+                print(key)
                 if key in RizoartrosiControlsTimeline.first_control:
                     # Change the value in the map to True
+                    print("SET TRUE")
                     RizoartrosiControlsTimeline.Controls_Map[key] = True
-                     
-            return RizoartrosiControlsTimeline.Controls_Map[key]
+
+            return RizoartrosiControlsTimeline.Controls_Map
 
 
 

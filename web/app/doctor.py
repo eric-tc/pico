@@ -239,8 +239,18 @@ def pathology():
 @login_required
 def next_control(patient_id,patient_name,next_control_number):
 
+    print(next_control_number)
+    
+    form= RizoartrosiForm()
+    controls_map = RizoartrosiControlsTimeline.get_controls(control_number = next_control_number)
+    
+    print(controls_map)
 
-    return render_template('doctor/next_control.html')
+    return render_template('doctor/next_control.html',
+                           controls_map=controls_map,
+                           form=form,
+                           patient_id=patient_id,
+                           )
 
 
 
