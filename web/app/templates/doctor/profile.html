@@ -4,11 +4,15 @@
 
 
 {% block content %}
-<h1 class="title">
+
+<h1 class="title mb-3">
   Buongiorno, dott {{ name }}!
 </h1>
-<div class="row">
-  <div class="col-md-6 mb-6 col-lg-4">
+
+<!-- --------------------------ROW 1 ASSOCIAZIONI PAZIENTI ------------------------------- -->
+<div class="row mb-5">
+  <div class="col-md-2 mb-2 col-lg-3"></div>
+  <div class="col-md-8 mb-8 col-lg-6">
       
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -56,11 +60,17 @@
       </tbody>
     </table>
   </div>
+
+  <div class="col-md-2 mb-2 col-lg-3"></div>
 </div>
 
-
-<div class="row">
-  <div class="col-md-6 mb-6 col-lg-4">
+<!-- --------------------------ROW 2 NOTIFICHE ------------------------------- -->
+<h1 class="title mb-3">
+ Notifiche ricevute
+</h1>
+<div class="row mb-5">
+  
+  <div class="col-md-8 mb-8 col-lg-6">
     <table id="notificationTable" class="table">
       <thead>
           <tr class="text-center">
@@ -80,35 +90,44 @@
       </tbody>
     </table>
   </div>
+  <div class="col-md-2 mb-2 col-lg-3"></div>
 </div>
  
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- --------------------------ROW 3 PROSSIMI INTERVENTI ------------------------------- -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="changeDateModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+              <h5 class="modal-title" id="changeDateModal">Modal Title</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
               <!-- Modal content goes here -->
-              <p>Content of the modal...</p>
+              <form class="edit-form" action="{{ url_for('doctor.change_date') }}" >
+                {% include 'general/select_date.html' %}
+
+                <input type="hidden" id="pathology_id_row" name="pathology_id_row" value="">
+                <input type="hidden" id="pathology_type" name="pathology_type" value="1">
+                <input type="submit" class="btn btn-primary" value="Submit">
+              </form>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
           </div>
       </div>
   </div>
 </div>
 
-
+<h1 class="title mb-3">
+  Prossimi appuntamenti
+ </h1>
 
 <div class="row">
-  <div class="col-md-6 mb-6 col-lg-4">
+
+  <div class="col-md-2 mb-2 col-lg-3"></div>
+  <div class="col-md-8 mb-8 col-lg-6">
     Tabella che visualizza i prossimi controlli. Se sono Verdi signfica che il meeting è stato concordato con il Paziente
     Altrimenti il meeting è schedulato da Software, ma non concordato con il paziente
     
@@ -122,47 +141,44 @@
           </tr>
       </thead>
       <tbody>
-          
-        <tr class="notificationRow text-center">
-
-
-          {% for pathology, username in next_treatments %}
-          <tr class="notificationRow text-center" data-item-id="{{ pathology.id }}">
-              <td >{{ username }}</td>
-              <td class="editable" data-field="next_control_date">
-                <span class="content">{{ pathology.next_control_date }}</span>
-                <form class="edit-form" style="display: none;">
-                    {% include 'general/select_date.html' %}
-                    <input type="submit" value="Submit">
-                </form>
+        {% for pathology, username in next_treatments %}
+        <tr class="notificationRow text-center" data-item-id="{{ pathology.id }}">
+            <td >{{ username }}</td>
+            <td class="editable" data-field="next_control_date">
+              <span class="content">{{ pathology.next_control_date }}</span>
+          </td>
+            <td>
+              <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number,row_id_to_update=pathology.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn-success" type="submit">Compila</button>
+              </form>
             </td>
-              <td>
-                <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number,row_id_to_update=pathology.id) }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button class="btn btn-success" type="submit">Compila</button>
-                </form>
-              </td>
-              <td class="open-modal-cell"><button class="btn btn-primary">Open Modal</button></td>
-          </tr>
-      {% endfor %}
-      
+            <td class="open-modal-cell"><button class="btn btn-primary">Cambia Data</button></td>
         </tr>
-    
+        {% endfor %}
       </tbody>
     </table>
   </div>
+  <div class="col-md-2 mb-2 col-lg-3"></div>
 </div>
 
 
-<script>
-  
-$("#nextControlsTable").on("click", function () {
-    console.log("Button clicked!");
-    
-    $(".edit-form").show();
-});
 
+<script>
+  $(document).ready(function () {
+    $(".open-modal-cell").click(function () {
+        // Find the closest 'tr' (table row) to the clicked cell
+        var selectedRow = $(this).closest('tr');
+
+        // Access the 'data-item-id' attribute to get the item ID
+        var itemId = selectedRow.data('item-id');
+
+        // Open the Bootstrap modal
+        $('#myModal').modal('show');
+        $('#pathology_id_row').val(itemId);
+        $('#changeDateModal').text('ATTENZIONE cambio della data:');
+    });
+});
 </script>
- 
 
 {% endblock %}
