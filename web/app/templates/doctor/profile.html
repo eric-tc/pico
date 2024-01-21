@@ -83,6 +83,28 @@
 </div>
  
 
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Modal content goes here -->
+              <p>Content of the modal...</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 
 <div class="row">
@@ -96,30 +118,31 @@
               <th>Nome Paziente</th>
               <th>Data Intervento</th>
               <th>Azioni</th>
+              <th>Cambia</th>
           </tr>
       </thead>
       <tbody>
           
         <tr class="notificationRow text-center">
-          <td >Marco Rossi</td>
-          <td>16/01/2024</td>
-          <td>                    
-            <form method="get" action="#">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-success" type="submit">Compila</button>
-          </form>
-          </td>
+
 
           {% for pathology, username in next_treatments %}
-          <tr class="notificationRow text-center">
+          <tr class="notificationRow text-center" data-item-id="{{ pathology.id }}">
               <td >{{ username }}</td>
-              <td>{{ pathology.next_control_date }}</td>
+              <td class="editable" data-field="next_control_date">
+                <span class="content">{{ pathology.next_control_date }}</span>
+                <form class="edit-form" style="display: none;">
+                    {% include 'general/select_date.html' %}
+                    <input type="submit" value="Submit">
+                </form>
+            </td>
               <td>
                 <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number,row_id_to_update=pathology.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button class="btn btn-success" type="submit">Compila</button>
                 </form>
               </td>
+              <td class="open-modal-cell"><button class="btn btn-primary">Open Modal</button></td>
           </tr>
       {% endfor %}
       
@@ -129,6 +152,17 @@
     </table>
   </div>
 </div>
+
+
+<script>
+  
+$("#nextControlsTable").on("click", function () {
+    console.log("Button clicked!");
+    
+    $(".edit-form").show();
+});
+
+</script>
  
 
 {% endblock %}

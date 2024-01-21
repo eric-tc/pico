@@ -23,10 +23,11 @@ paziente OK
 
 Feature 12/01/2024
 
-1) Finire la gestione dei diversi controlli tramite MAP. Manca da inserire i controlli 2,3
-2) Inserimento a Database del valore del controllo. Cambio di stato del controllo
-3) Visualizzazione nella dashboard del dottore nuovo controllo più vicinio non già chiuso.(il controllo si chiude quando inserisco i dati e non posso più modificarli)
-
+1) Finire la gestione dei diversi controlli tramite MAP. Manca da inserire i controlli 2,3 OK
+2) Inserimento a Database del valore del controllo. Cambio di stato del controllo OK
+3) Inserimento del controllo successivo a database con gestione dinamica delle chiavi tramite map OK
+4) Visualizzazione nella dashboard del dottore nuovo controllo più vicinio non già chiuso.(il controllo si chiude quando inserisco i dati e non posso più modificarli)
+    (Devo capire se una query può recuperare la data successiva verificando un campo)
 """
 
 @main.route('/')

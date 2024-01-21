@@ -37,8 +37,14 @@ def profile():
         #in base all'id paziente 
         print("value")
         doctorPatient, name = patient_query
+        #TODO: Qui invece di ritornare la prima data ritorno tutte le date del paziente ordinate in modo ascendete
         row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).first()
-        
+        #successivamente creo un ciclo for su tutte le date
+        # la prima volta che trovo un id < 2(Data chiusa) fermo il ciclo for e prendo quella data
+        #faccio questo per tutti i pazienti associati al dottore
+
+        #In questo modo mostro solo gli appuntamenti non ancora conclusi e successivi alla data attuale.
+
         #Verfico che la row recuperata della patologia non è None
         if row is not None:
             time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
