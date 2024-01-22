@@ -7,7 +7,7 @@ from sqlalchemy import cast, Integer
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
-
+from .mutils import get_date,get_date_from_datetime
 doctor = Blueprint('doctor', __name__)
 
 
@@ -59,7 +59,10 @@ def profile():
                            next_treatments=next_treatments)
                           
 
-
+"""
+Route chimata dalla tabella nella sezione profile del prossimo intervento
+permette di cambiare la data dell'intervento se neccessario
+"""
 @doctor.route('/change_date')
 @login_required
 def change_date():
@@ -311,9 +314,30 @@ def next_control(patient_id,patient_name,next_control_number,row_id_to_update):
         print(row_id_to_update)
         pathology_row_to_update = Rizoartrosi.query.get(row_id_to_update)
         
+        #per trovare unicamente una row trovo id_patient,id_pathology_type, e prossimo controllo = next_control_number + 1
+        pathology_row_to_update_for_next_control= Rizoartrosi.query.filter(Rizoartrosi.id_patient == pathology_row_to_update.id_patient,Rizoartrosi.id_pathology_type==pathology_row_to_update.id_pathology_type,Rizoartrosi.next_control_number==int(next_control_number)+1).first()
+       
+        #TODO: Per qualche motivo la data non è formattata secondo la regola del javascript
+        next_date= get_date(request.form.get("selected_date"))
+        next_time=request.form.get("selected_time") 
+        print("NEXT DATE")
+        print(next_date)
+        # se la data o il tempo sono selezionati cambio rispettivamente
+        # la data e l'ora del controllo successivo a quello compilato
+        is_date_accepted=0
+        if(next_date != ""):
+            pathology_row_to_update_for_next_control.next_control_date= get_date_from_datetime(next_date)
+            is_date_accepted = 1
+
+        if(next_time != ""):
+            pathology_row_to_update_for_next_control.next_control_time= request.form.get("selected_time")
+
+        #Se la data è non null la data concordata con il paziente
+        pathology_row_to_update_for_next_control.is_date_accepted = is_date_accepted
+
         #Ciclo su tutte le chiavi della controls_map e tramite sett_attr assegno i nuovi valori
+        #Con questo metodo in base ai valori ritornati nella map aggiorno i campi a database
         for key in controls_map.keys():
-            
             setattr(pathology_row_to_update, key, request.form.get(key=key))
             
         # una volta inserito i valori il controllo si chiude e non può essere modificato

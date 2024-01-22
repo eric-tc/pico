@@ -6,8 +6,10 @@
 <div class="row">
 
     <div class="col-md-4 mb-4 col-lg-4">
-   
+        
         <h2>Compila il form per la patologia selezionata</h2>
+        {% set next_control_jinja = 1 %}
+
         {% include 'general/pathology_form.html' %}
     
     </div>
