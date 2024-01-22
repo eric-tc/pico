@@ -143,7 +143,7 @@
       </thead>
       <tbody>
         {% for pathology, username,week_to_add in next_treatments %}
-        <tr class="notificationRow text-center" data-item-id="{{pathology.id}}_{{ week_to_add }}">
+        <tr class="notificationRow text-center" data-item-id="{{pathology.id}}_{{ week_to_add }}_{{pathology.created_at}}">
             <td >{{ pathology.next_control_number }}</td>
             <td >{{ username }}</td>
             <td class="editable" data-field="next_control_date">
@@ -169,14 +169,13 @@
 <script>
   
   var week_to_add;
+  var specificDate;
 
   function customBeforeShowDay(d){
     
     var daysBefore= 3;
     var daysAfter=  4;
     
-    specificDate= getSpecificDate(week_to_add);
-
     //Devo inizializzare il valore delle date con la data specifica dell'intervento altrimenti non funziona
     //Inizializzando la data con new Date() viene preso il mese di riferimento corrente e non quello futuro
     var beforeDate = new Date(specificDate);
@@ -205,6 +204,7 @@
         var pathology_id = parseInt(itemsId[0], 10);
         week_to_add  = parseInt(itemsId[1], 10);
 
+        var next_control_date= itemsId[2];
         
         // Open the Bootstrap modal
         $('#myModal').modal('show');
@@ -213,8 +213,25 @@
         
         $('#changeDateModal').text('ATTENZIONE cambio della data:');
 
+        var dateComponent = next_control_date.split(" ")[0];
+        var dateComponents = next_control_date.split("-");
 
-        //$("#datepicker").datepicker("setDate", "+" + newDefaultDate + "d");
+      // Create Date object
+        specificDate =  new Date(
+        parseInt(dateComponents[0], 10),
+        parseInt(dateComponents[1], 10) - 1, // JavaScript months are 0-indexed
+        parseInt(dateComponents[2], 10)
+        );
+        //devo costruire la default date in base al valore di settimane da aggiungere
+        //non posso prendere la data della tabella direttamente perchè altrimenti l'utente
+        //modificando la data più volte potrebbe spostare all'infinito il termine dell'incontro
+        specificDate.setDate(specificDate.getDate() + (week_to_add*7))
+
+        console.log("DATE TO SET", specificDate);
+        
+        //setto la prorietà default date del datepicker
+        $("#datepicker").datepicker("option","defaultDate", specificDate);
+        
     });
 });
 </script>
