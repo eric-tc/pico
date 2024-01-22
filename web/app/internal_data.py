@@ -13,6 +13,7 @@ class NOTIFICATION_STATUS(Enum):
     APPROVED = (2,"Approved")
     TOELIMINATE= (3,"To be Eliminated")
 
+#Indica se i dati di un controllo sono stati inseriti
 class CONTROL_STATUS(Enum):
 
     ACTIVE = (1,"Active")
@@ -31,7 +32,7 @@ class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"Rizoartrosi")
     FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale")
 
-
+    
 class PATHOLOGY_TYPE(Enum):
     RIZOARTROSI_TRAPEZIECTOMIA = (1,"Trapeziectomia e artoplastica in sospensione con APL")
     RIZOARTROSI_PROTESI = (2,"Protesi Touch")
@@ -163,6 +164,7 @@ class RizoartrosiControlsTimeline:
                                                                             RizoartrosiControlsTimeline.third_control)
 
         return tmp_ControlMap
+
 
 
 

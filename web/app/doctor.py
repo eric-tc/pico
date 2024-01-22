@@ -38,7 +38,7 @@ def profile():
         print("value")
         doctorPatient, name = patient_query
         #TODO: Qui invece di ritornare la prima data ritorno tutte le date del paziente ordinate in modo ascendete
-        row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).first()
+        patients_row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).all()
         #successivamente creo un ciclo for su tutte le date
         # la prima volta che trovo un id < 2(Data chiusa) fermo il ciclo for e prendo quella data
         #faccio questo per tutti i pazienti associati al dottore
@@ -46,12 +46,21 @@ def profile():
         #In questo modo mostro solo gli appuntamenti non ancora conclusi e successivi alla data attuale.
 
         #Verfico che la row recuperata della patologia non è None
-        if row is not None:
-            time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
-            # Create a datetime object with today's date and the extracted time
-            row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
-            next_treatments.append(row)
-    
+        if patients_row is not None:
+            
+
+            for row in patients_row:
+                #trovo il prossimo controllo in linea temporale non chiuso
+                if(row[0].id_control_status == CONTROL_STATUS.ACTIVE.value[0]):
+                    print(row)
+                    time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
+                    # Create a datetime object with today's date and the extracted time
+                    row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
+                    next_treatments.append(row)
+                    #appena trovo un controllo non chiuso interrompo il ciclo di ricerca
+                    break
+
+            
     return render_template('doctor/profile.html', 
                            name=current_user.name,
                            patients_list=patients_list, 

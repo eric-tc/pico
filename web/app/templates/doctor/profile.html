@@ -134,15 +134,17 @@
     <table id="nextControlsTable" class="table">
       <thead>
           <tr class="text-center">
-              <th>Nome Paziente</th>
-              <th>Data Intervento</th>
-              <th>Azioni</th>
-              <th>Cambia</th>
+            <th>Numero Controllo </th>
+            <th>Nome Paziente</th>
+            <th>Data Intervento</th>
+            <th>Azioni</th>
+            <th>Cambia</th>
           </tr>
       </thead>
       <tbody>
         {% for pathology, username in next_treatments %}
         <tr class="notificationRow text-center" data-item-id="{{ pathology.id }}">
+            <td >{{ pathology.next_control_number }}</td>
             <td >{{ username }}</td>
             <td class="editable" data-field="next_control_date">
               <span class="content">{{ pathology.next_control_date }}</span>
