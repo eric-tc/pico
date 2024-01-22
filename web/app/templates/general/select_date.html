@@ -1,6 +1,14 @@
 
   <div class="mb-3">
    <!-- Add each field to the form -->
+   {% if default_date %}
+
+    {% set check_if_default = 1 %}
+
+   {% else %}
+    {% set check_if_default = 0 %}
+    {% set default_date = "" %}
+   {% endif %}
    <p class="mb-2 mt-2"> Seleziona Data Prossimo Controllo </p>
     <p><input class="form-control-custom" placeholder="nuova data" type="text" name="selected_date" id="datepicker" ></p>
     <p class="mb-2 mt-2"> Seleziona orario Prossimo Controllo </p>
@@ -11,9 +19,45 @@
     $(function () {
         // Define the start and end dates
         // Initialize Datepicker
+
+        var week_to_add= "{{week_to_add}}"
+        var daysToAdd = parseInt(week_to_add)*7;
+        var daysBefore= 3;
+        var daysAfter=  4;
+
+        var check_if_default = "{{ check_if_default|lower }}";
+        
+       
+        var specificDate;
+        
+        if(check_if_default){
+          var default_date="{{default_date}}"
+          
+          var dateComponent = default_date.split(" ")[0];
+          var dateComponents = default_date.split("-");
+
+          // Create Date object
+          specificDate =  new Date(
+            parseInt(dateComponents[0], 10),
+            parseInt(dateComponents[1], 10) - 1, // JavaScript months are 0-indexed
+            parseInt(dateComponents[2], 10)
+            );
+            console.log("Default date",default_date);
+
+        }else{
+          
+          console.log("Current Date");
+          specificDate=new Date();
+        }
+
+        specificDate.setDate(specificDate.getDate() + daysToAdd);
+
+        console.log("specificDate",specificDate);
+
         $("#datepicker").datepicker({
             dateFormat: 'dd-mm-yy', // Set the date format
             changeMonth: true,
+            defaultDate: specificDate,
             changeYear: true,
             showOn: "button", // Show the Datepicker when clicking the button
             buttonText: "",
@@ -24,12 +68,18 @@
               }
             },
             beforeShowDay: function(d) {
-              // a and b are set to today ± 5 days for demonstration
-              var a = new Date();
-              var b = new Date();
-              a.setDate(a.getDate() + 12);
-              b.setDate(b.getDate() + 19);
-              return [true, a <= d && d <= b ? "calendar-highlight" : ""];
+              
+              //Devo inizializzare il valore delle date con la data specifica dell'intervento altrimenti non funziona
+              //Inizializzando la data con new Date() viene preso il mese di riferimento corrente e non quello futuro
+              var beforeDate = new Date(specificDate);
+              var afterDate = new Date(specificDate);      
+        
+              beforeDate.setDate(specificDate.getDate() - daysBefore);
+              afterDate.setDate(specificDate.getDate() + daysAfter);
+             
+              
+              // Check if the current date is within the specified range
+              return [true, beforeDate <= d && d <= afterDate ? "calendar-highlight" : ""];      
             }
             // Add more options as needed
         });

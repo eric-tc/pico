@@ -68,6 +68,8 @@ class RizoartrosiControlsTimeline:
     #Mappa che tiente traccia di tutti i controlli da mostrare.
     #Questa mappa attiva o disattiva i campi nella UI in base ai controlli
     #selezionati negli array first_control, second_control ecc...
+    
+    LAST_CONTROL=9
 
     Controls_Map={
 
@@ -143,10 +145,33 @@ class RizoartrosiControlsTimeline:
         
         return control_map
 
+    @classmethod
+    def get_week(cls,control_number):
+        """
+        control_number: numero controllo
+
+        ritorna il numero di settimana successive rispetto al numeroù
+        di controllo richiesto
+        """
+        last_control_check = False
+        if(control_number==0):
+            return cls.timeline[0],last_control_check
+
+        # non ho nessun controllo successivo
+        if(control_number==len(cls.timeline)):
+            return cls.timeline[control_number-1],True
+        
+        return cls.timeline[control_number-1],False
 
     @classmethod
     def get_controls(cls,control_number)->dict:
+        """
+        Ritorna la mappa per il controllo indicato in control_number
+        Questa mappa serve per visualizzare nell'interfaccia grafica solo i campi
+        specifici per il numero di controllo selezionato
+        """
         #TODO: Da aggiungere per ogni controllo previsto dalla terapia
+
         
         #Non posso modificare i dati interni della mappa altrimenti per ogni utente
         #avrei una stessa struttura dati condivisa e questo non andrebbe bene
