@@ -54,7 +54,11 @@ def profile():
                     time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
                     # Create a datetime object with today's date and the extracted time
                     row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
-                    next_treatments.append(row)
+                    #TODO: Dovrò controllare per tipologia di patologia. La week serve per evidenziare i giorni
+                    #corretti nella modal del cambio data
+                    week_to_add , check_if_last = RizoartrosiControlsTimeline.get_week(control_number = int(row[0].next_control_number))
+                    row_with_week=(row[0],row[1],week_to_add)
+                    next_treatments.append(row_with_week)
                     #appena trovo un controllo non chiuso interrompo il ciclo di ricerca
                     break
 
@@ -79,7 +83,6 @@ def change_date():
 
     """
 
-    
     date= request.args.get("selected_date")
     time = request.args.get("selected_time")
     pathology_id_row= request.args.get("pathology_id_row")
