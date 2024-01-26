@@ -12,29 +12,29 @@
 
 <ul class="timeline">
     
-      {% for  item in timeline %}
+      {% for  pathologies_row,controls_map in pathology_and_control_maps %}
       {% if (loop.index + 1) is divisibleby(2) %}
       <li>
-      <div class="timeline-badge  {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif item.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
+      <div class="timeline-badge  {% if pathologies_row.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif pathologies_row.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
       <div class="timeline-panel">
         <div class="timeline-heading">
-          <h4 class="timeline-title">{{item.next_control_date}}</h4>
-          
+          <h4 class="timeline-title">{{pathologies_row.next_control_date}}</h4>
         </div>
         <div class="timeline-body">
           
-          {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}
-          <a href="{{ url_for('main.show_history_control_value', control_value=item) }}">Vedi Valori Controllo</a>
+          {% if pathologies_row.id_control_status==control_status_enum.CLOSED.value[0] %}
+            {% include 'general/show_control_history.html' %}
           {% endif %}
         </div>
       </div>
     </li>
     {% else %}
     <li class="timeline-inverted">
-      <div class="timeline-badge  {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif item.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
+      <div class="timeline-badge  {% if pathologies_row.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif pathologies_row.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
        <div class="timeline-panel">
         <div class="timeline-heading">
-          <h4 class="timeline-title">{{item.next_control_date}}</h4>
+          
+          <h4 class="timeline-title">{{pathologies_row.next_control_date}}</h4>
         </div>
         <div class="timeline-body">
         </div>

@@ -140,7 +140,6 @@ class RizoartrosiControlsTimeline:
             # Check if the value of the key is present in the array
             if key in control_array:
                 # Change the value in the map to True
-                print("SET TRUE")
                 control_map[key] = True
         
         return control_map
@@ -188,6 +187,10 @@ class RizoartrosiControlsTimeline:
             tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
                                                                             RizoartrosiControlsTimeline.third_control)
 
+        if(int(control_number)>3):
+            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
+                                                                            RizoartrosiControlsTimeline.third_control)
+        
         return tmp_ControlMap
 
 

@@ -1,8 +1,8 @@
 # main.py
 
-from flask import Blueprint, render_template,request,jsonify
+from flask import Blueprint, render_template,request,jsonify,redirect,url_for
 from flask_login import login_required, current_user
-from .internal_data import ROLE,CONTROL_STATUS
+from .internal_data import ROLE,CONTROL_STATUS,RizoartrosiControlsTimeline
 from .models import User,Notification
 from . import db,csrf
 main = Blueprint('main', __name__)
@@ -31,17 +31,18 @@ Feature 12/01/2024
 
 @main.route('/')
 def index():
-    if current_user.is_authenticated:
-        if(current_user.role == ROLE.DOCTOR.value):
-            return render_template('doctor/profile.html', name=current_user.name)
-        if(current_user.role == ROLE.PATIENT.value):
-            return render_template('patient/profile_patient.html', name=current_user.name)
-        
-        #TODO: Probabilmente devo rimuovere la sottoscrizione
-        return render_template('auth/login.html')
-    else:
 
-        return render_template('auth/login.html')
+    print("INDEX")
+    if current_user.is_authenticated:
+        print("INDEX")
+        if(current_user.role == ROLE.DOCTOR.value):
+            return redirect(url_for('doctor.profile'))
+        if(current_user.role == ROLE.PATIENT.value):
+            return redirect(url_for('patient.profile_patient'))
+
+        return redirect(url_for('auth.login'))
+    else:
+        return redirect(url_for('auth.login'))
 
 
 @main.route('/anagrafica')
@@ -72,11 +73,12 @@ def show_notifications():
 
 
 #pagina che mostra i valori del controllo per ogni singolo intervento
-@main.route("/show_history_control_value/<control_value>")
+@main.route("/show_history_control_value/<control_value>/")
 @login_required
 def show_history_control_value(control_value):
     
     print(control_value)
 
+    controls_map = RizoartrosiControlsTimeline.get_controls(control_number = int(control_value.next_control_number))
 
-    return render_template("show_history_control_value.html",control_value=control_value)
+    return render_template("show_history_control_value.html",control_value=control_value,controls_map=controls_map)

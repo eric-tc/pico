@@ -426,12 +426,19 @@ def patient_history(id_pathology,id_pathology_type):
     print(id_pathology)
     print(id_pathology_type)
 
-    timeline = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
+    all_pathology_row = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
                                           Rizoartrosi.id_pathology==id_pathology ,
                                           Rizoartrosi.id_pathology_type== id_pathology_type).order_by(Rizoartrosi.next_control_date.asc()).all()
+    
+    #Associa ad ogni controllo la propria lista di controlli attivi 
+    pathology_and_control_maps=[]
 
-    print(timeline)
-    return render_template('patient_history.html',timeline=timeline,control_status_enum=CONTROL_STATUS)
+    for pathology_raw in all_pathology_row:
+
+        control_map = RizoartrosiControlsTimeline.get_controls(pathology_raw.next_control_number)
+        pathology_and_control_maps.append((pathology_raw,control_map))
+
+    return render_template('patient_history.html',pathology_and_control_maps=pathology_and_control_maps,control_status_enum=CONTROL_STATUS)
 
 
 """
