@@ -70,15 +70,3 @@ def show_notifications():
     )
 
     return render_template("notification_list.html",sent_notifications=sent_notifications)
-
-
-#pagina che mostra i valori del controllo per ogni singolo intervento
-@main.route("/show_history_control_value/<control_value>/")
-@login_required
-def show_history_control_value(control_value):
-    
-    print(control_value)
-
-    controls_map = RizoartrosiControlsTimeline.get_controls(control_number = int(control_value.next_control_number))
-
-    return render_template("show_history_control_value.html",control_value=control_value,controls_map=controls_map)
