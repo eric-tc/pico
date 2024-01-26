@@ -37,6 +37,9 @@ def index():
             return render_template('doctor/profile.html', name=current_user.name)
         if(current_user.role == ROLE.PATIENT.value):
             return render_template('patient/profile_patient.html', name=current_user.name)
+        
+        #TODO: Probabilmente devo rimuovere la sottoscrizione
+        return render_template('auth/login.html')
     else:
 
         return render_template('auth/login.html')

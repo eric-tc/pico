@@ -8,6 +8,8 @@ from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime
+from werkzeug.security import generate_password_hash
+
 doctor = Blueprint('doctor', __name__)
 
 
@@ -145,8 +147,6 @@ def send_patient_notification():
         return jsonify({"success":"associato"})
     else:
         return jsonify({'error': 'User not found'}), 404
-    
-
     
 
 """
@@ -441,3 +441,43 @@ def patient_history(id_pathology,id_pathology_type):
     return render_template('patient_history.html',timeline=timeline)
 
 
+"""
+Questa route permette al dottore di creare istantaneamente il paziente e
+associarlo senza passare dalle notifiche
+
+"""
+
+@doctor.route('/create_new_patient',methods=["GET"])
+def create_patient():
+    
+    return render_template("doctor/create_new_patient.html")
+
+"""
+Il metodo post serve per gestire i dati derivati dal form
+"""
+@doctor.route('/create_new_patient',methods=["POST"])
+def create_patient_post():
+
+    email = request.form.get('email')
+    name = request.form.get('name')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+
+    if user: # if a user is found, we want to redirect back to signup page so user can try again  
+        flash('Email address already exists')
+        return redirect(url_for('auth.signup'))
+
+    # create new user with the form data. Hash the password so plaintext version isn't saved.
+    new_patient = User(email=email, name=name, password=generate_password_hash(password),role=ROLE.PATIENT.value)
+
+    # add the new user to the database
+    db.session.add(new_patient)
+    db.session.commit()
+
+    if(new_patient):
+            new_link = DoctorPatient(id_doctor=current_user.id, id_patient=new_patient.id)
+            db.session.add(new_link)
+            db.session.commit()
+
+    return redirect(url_for('doctor.profile'))

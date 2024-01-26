@@ -58,7 +58,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password),role=1)
+    new_user = User(email=email, name=name, password=generate_password_hash(password),role=ROLE.DOCTOR.value)
 
     # add the new user to the database
     db.session.add(new_user)
@@ -84,7 +84,7 @@ def signup_patient_post():
         return redirect(url_for('auth.signup_patient'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password),role=2)
+    new_user = User(email=email, name=name, password=generate_password_hash(password),role=ROLE.PATIENT.value)
 
     # add the new user to the database
     db.session.add(new_user)

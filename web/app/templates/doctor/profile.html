@@ -4,13 +4,18 @@
 
 
 {% block content %}
-
-<h1 class="title mb-3">
-  Buongiorno, dott {{ name }}!
-</h1>
-
+<div class="row">
+  <div class="col-12 d-flex align-items-center ">
+    <h1 class="mb-3 ">
+      Buongiorno, dott {{ name }}!
+    </h1>
+    <a href="{{ url_for('doctor.create_patient') }}" class="ms-3 btn btn-success" >
+      Aggiungi Paziente
+    </a>
+</div>
+</div>
 <!-- --------------------------ROW 1 ASSOCIAZIONI PAZIENTI ------------------------------- -->
-<div class="row mb-5">
+<div class="row mt-3 mb-5">
   <div class="col-md-2 mb-2 col-lg-3"></div>
   <div class="col-md-8 mb-8 col-lg-6">
       
@@ -21,11 +26,10 @@
         </div>
     {% endif %}
     {% endwith %}
-
-    <h4>
-      Pazienti Attualmente in cura
-    </h4>
-
+    
+      <h4>
+        Pazienti Attualmente in cura
+      </h4>
     <table id="patientTable" class="table">
       <thead>
           <tr class="text-center">
@@ -120,7 +124,7 @@
   </div>
 </div>
 
-<h1 class="title mb-3">
+<h1 class="title mb-3" data-toggle="tooltip" data-placement="top" title="Qui sono visualizzati i prossimi controlli ordinati per paziente">
   Prossimi appuntamenti
  </h1>
 
@@ -128,8 +132,7 @@
 
   <div class="col-md-2 mb-2 col-lg-3"></div>
   <div class="col-md-8 mb-8 col-lg-6">
-    Tabella che visualizza i prossimi controlli. Se sono Verdi signfica che il meeting è stato concordato con il Paziente
-    Altrimenti il meeting è schedulato da Software, ma non concordato con il paziente
+   
     
     <table id="nextControlsTable" class="table">
       <thead>
