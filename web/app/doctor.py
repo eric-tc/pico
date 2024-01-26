@@ -431,7 +431,7 @@ def patient_history(id_pathology,id_pathology_type):
                                           Rizoartrosi.id_pathology_type== id_pathology_type).order_by(Rizoartrosi.next_control_date.asc()).all()
 
     print(timeline)
-    return render_template('patient_history.html',timeline=timeline)
+    return render_template('patient_history.html',timeline=timeline,control_status_enum=CONTROL_STATUS)
 
 
 """

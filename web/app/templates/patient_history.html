@@ -15,26 +15,28 @@
       {% for  item in timeline %}
       {% if (loop.index + 1) is divisibleby(2) %}
       <li>
-      <div class="timeline-badge control_success">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
+      <div class="timeline-badge  {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif item.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
       <div class="timeline-panel">
         <div class="timeline-heading">
           <h4 class="timeline-title">{{item.next_control_date}}</h4>
+          
         </div>
         <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra látis.</p>
+          
+          {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}
+          <a href="{{ url_for('main.show_history_control_value', control_value=item) }}">Vedi Valori Controllo</a>
+          {% endif %}
         </div>
       </div>
     </li>
     {% else %}
     <li class="timeline-inverted">
-      <div class="timeline-badge danger">{{loop.index}}<i class="glyphicon glyphicon-credit-card"></i></div>
-      <div class="timeline-panel">
+      <div class="timeline-badge  {% if item.id_control_status==control_status_enum.CLOSED.value[0] %}success{% elif item.id_control_status==control_status_enum.EXPIRED.value[0] %}danger {% else %} info {% endif %}">{{loop.index}}<i class="glyphicon glyphicon-check"></i></div>
+       <div class="timeline-panel">
         <div class="timeline-heading">
           <h4 class="timeline-title">{{item.next_control_date}}</h4>
         </div>
         <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra látis.s</p>
-          
         </div>
       </div>
     </li>
