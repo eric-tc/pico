@@ -68,4 +68,4 @@ def show_notifications():
     .all()
     )
 
-    return render_template("notification.html",sent_notifications=sent_notifications)
+    return render_template("notification_list.html",sent_notifications=sent_notifications)
