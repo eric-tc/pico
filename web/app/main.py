@@ -3,9 +3,8 @@
 from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
 from .internal_data import ROLE
-from .models import User,DoctorPatient
+from .models import User,Notification
 from . import db,csrf
-
 main = Blueprint('main', __name__)
 
 """
@@ -56,3 +55,17 @@ def anagrafica():
 def get_csrf_token():
     token = csrf._get_csrf_token()
     return jsonify({'csrf_token': token})
+
+
+@main.route("/show_notifications")
+@login_required
+def show_notifications():
+
+    sent_notifications = (
+    db.session.query(Notification, User.name)
+    .join(User, Notification.id_patient == User.id)
+    .filter(Notification.id_doctor == current_user.id)
+    .all()
+    )
+
+    return render_template("notification.html",sent_notifications=sent_notifications)

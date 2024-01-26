@@ -68,34 +68,7 @@
   <div class="col-md-2 mb-2 col-lg-3"></div>
 </div>
 
-<!-- --------------------------ROW 2 NOTIFICHE ------------------------------- -->
-<h1 class="title mb-3">
- Notifiche ricevute
-</h1>
-<div class="row mb-5">
-  
-  <div class="col-md-8 mb-8 col-lg-6">
-    <table id="notificationTable" class="table">
-      <thead>
-          <tr class="text-center">
-              <th>Nome Paziente</th>
-              <th>Data</th>
-              <th>Stato</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for notification, username in sent_notifications %}
-              <tr class="notificationRow text-center">
-                  <td >{{ username }}</td>
-                  <td>{{ notification.timestamp }}</td>
-                  <td>{{ notification.status }}</td>
-              </tr>
-          {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-2 mb-2 col-lg-3"></div>
-</div>
+
  
 
 <!-- --------------------------ROW 3 PROSSIMI INTERVENTI ------------------------------- -->
