@@ -69,3 +69,18 @@ def show_notifications():
     )
 
     return render_template("notification_list.html",sent_notifications=sent_notifications)
+
+
+#pagina che mostra i valori del controllo per ogni singolo intervento
+@main.route("/show_history_control_value")
+@login_required
+def show_history_control_value():
+
+    sent_notifications = (
+    db.session.query(Notification, User.name)
+    .join(User, Notification.id_patient == User.id)
+    .filter(Notification.id_doctor == current_user.id)
+    .all()
+    )
+
+    return render_template("show_history_control_value.html",sent_notifications=sent_notifications)
