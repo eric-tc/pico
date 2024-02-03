@@ -10,6 +10,8 @@ from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime
 from werkzeug.security import generate_password_hash
 
+from .internal_data import get_pathology_type_dict
+
 doctor = Blueprint('doctor', __name__)
 
 
@@ -170,16 +172,18 @@ def medical_treatment(patient_id,patient_name):
     print("PATIENT ID")
     print(session.get(DoctorData.ID_PATIENT.value))
 
+
+    pathology_options = get_pathology_type_dict()
     
-    for value in PATHOLOGY:
-        print(value.value[0])
-        print(value.value[1])
-      
+    pathology_options = str(pathology_options).replace("'", '"')
+    print(pathology_options)
+    
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
                            pathology=PATHOLOGY,
                            pathology_type=PATHOLOGY_TYPE,
-                           form=medicalForm)
+                           form=medicalForm,
+                           pathology_options=pathology_options)
 
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])

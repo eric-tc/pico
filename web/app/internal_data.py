@@ -31,12 +31,36 @@ class EMAIL_STATUS(Enum):
 class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"Rizoartrosi")
     FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale")
-
+    FRATTURE_METACARPALI = (3,"Frattura Metacarpale")
     
 class PATHOLOGY_TYPE(Enum):
-    RIZOARTROSI_TRAPEZIECTOMIA = (1,"Trapeziectomia e artoplastica in sospensione con APL")
-    RIZOARTROSI_PROTESI = (2,"Protesi Touch")
-    RIZOARTROSI_ALTRO = (3,"Altro")
+    RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI.value[0],"Trapeziectomia e artoplastica in sospensione con APL")
+    RIZOARTROSI_PROTESI = (2,PATHOLOGY.RIZOARTROSI.value[0],"Protesi Touch")
+    RIZOARTROSI_ALTRO = (3,PATHOLOGY.RIZOARTROSI.value[0],"Altre tipologie Rizoartrosi")
+    FRATTURA_RADIO_DISTALE_GESSO = (4,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Gesso Chiuso")
+    FRATTURA_RADIO_DISTALE_PLACCA_VITI= (5,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Placca Viti")
+    FRATTURA_RADIO_DISTALE_PLACCA_ALTRO= (6,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Altro Frattura radio distale")
+    FRATTURE_METACARPALI_GESSO = (7,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Gesso Chiuso")
+    FRATTURE_METACARPALI_VALVA_GESSATA = (8,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Valva Gessata")
+    FRATTURE_METACARPALI_TUTORE_TERMOPLASTICA = (9,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Tutore Termoplastica")
+
+def get_pathology_type_dict():
+
+    options_by_category = {}
+
+    # Iterate over enum values
+    for pathology_type in PATHOLOGY_TYPE:
+        category = str(pathology_type.value[1])
+        option = pathology_type.value[2]
+
+        # If category already exists, append the option, otherwise create a new list
+        if category in options_by_category:
+            options_by_category[category].append(option)
+        else:
+            options_by_category[category] = [option]
+
+    return options_by_category
+
 
 class RIZOARTROSI_CONTROLS(Enum):
 

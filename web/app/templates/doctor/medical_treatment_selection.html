@@ -25,7 +25,7 @@
         </div>
   
         <div class="mb-3">
-            <label for="pathology_type" class="form-label">Item</label>
+            <label for="pathology_type" class="form-label">Seleziona la patologia</label>
             <select class="form-select" id="pathology_type" name="pathology_type">
                 <!-- Options will be dynamically populated based on the selected category -->
             </select>
@@ -41,7 +41,7 @@
             Selezionare i controlli futuri
           </h4>
         </div>
-        <label for="additionalField" class="form-label"><b>Controllo 1</b> Entro 2 settimane dalla data attuale</label> 
+        <label class="form-label"><b>Controllo 1</b> Entro 2 settimane dalla data attuale</label> 
         {% include 'general/select_date.html' %}
       </div>
        
@@ -55,12 +55,11 @@
   </div>
 
   <script>
-    // Dummy data for options
-    const optionsByCategory = {
-        1: ["Trapeziectomia con artroplastica in sospensione con APL", "Protesi Touch", "Altro"],
-        2: ["Gesso Chiuso", "Placca e viti", "Altro"]
-    };
-  
+    
+    const jsonString ='{{pathology_options | safe}}';
+    var optionsByCategory = JSON.parse(jsonString);
+
+    
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {
         const categorySelect = document.getElementById('pathology');

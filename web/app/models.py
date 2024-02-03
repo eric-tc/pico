@@ -30,8 +30,9 @@ class Pathology(db.Model):
     def insert_rows(cls):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
-            for value in cls.pathology_list:
-                new_instance = cls(name=value)
+            for row in PATHOLOGY:
+                id,name= row.value
+                new_instance = cls(name=name)
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -42,21 +43,20 @@ class Pathology(db.Model):
 
 
 class PathologyType(db.Model):
-    types=[
-        PATHOLOGY_TYPE.RIZOARTROSI_TRAPEZIECTOMIA.value[1],
-        PATHOLOGY_TYPE.RIZOARTROSI_PROTESI.value[1],
-        PATHOLOGY_TYPE.RIZOARTROSI_ALTRO.value[1]
-        ]
+   
     
     id = db.Column(db.Integer,primary_key=True)
+    type=db.Column(db.Integer) 
     name = db.Column(db.String(120))
     
     @classmethod
     def insert_rows(cls):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
-            for value in cls.types:
-                new_instance = cls(name=value)
+            for row in PATHOLOGY_TYPE:
+
+                id,type,name= row.value
+                new_instance = cls(name=name,type=type)
                 db.session.add(new_instance)
             
             # Commit the changes
