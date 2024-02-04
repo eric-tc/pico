@@ -71,23 +71,6 @@
         // Clear existing options
         itemSelect.innerHTML = '';
   
-        // Populate options based on the selected category
-/*        <!-- optionsByName[selectedCategory].forEach(optionValue => {
-
-            var name_array = optionValue["name"];
-            var id_array= optionValue["id"];
-
-            for (var i =0; i < id_array.lenght; i++){
-
-              const option = document.createElement('option');
-              option.value = id_array[i];
-              option.textContent = name_array[i];
-              itemSelect.appendChild(option);
-
-            }
-           
-        }); */
-
         var selectedOptions= optionsByName[selectedCategory];
 
         var name_array = selectedOptions["name"];

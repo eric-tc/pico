@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import DateField,TimeField
-from .internal_data import RIZOARTROSI_CONTROLS
+from .internal_data import CONTROLS
 
 # class RizoartrosiForm(FlaskForm):
 #     nprs_vas = IntegerField('NPRS VAS', render_kw={'class': 'form-control'}, validators=[DataRequired()])
@@ -21,23 +21,23 @@ from .internal_data import RIZOARTROSI_CONTROLS
 
 
 class RizoartrosiForm(FlaskForm):
-    # I valori del campo del form devono avere lo stesso valore delle chiavi di RIZOARTROSI_CONTROLS
+    # I valori del campo del form devono avere lo stesso valore delle chiavi di CONTROLS
     #in questo modo nella UI posso verificare quando un campo è attivo o meno utilizzando una map dove la chiave
     # è la label:True,False. Vedere pagina next_control
-    nprs_vas = IntegerField(RIZOARTROSI_CONTROLS.NPRS_VAS.value, render_kw={'class': 'form-control'}, validators=None)
-    prom_aprom_mcpj = IntegerField(RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value, render_kw={'class': 'form-control'}, validators=None)
-    prom_aprom_ipj = IntegerField(RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value, render_kw={'class': 'form-control'}, validators=None)
-    abduzione = IntegerField(RIZOARTROSI_CONTROLS.ABDUZIONE.value, render_kw={'class': 'form-control'},  validators=None)
-    anteposizione = IntegerField(RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value, render_kw={'class': 'form-control'},  validators=None)
-    kapandji = IntegerField(RIZOARTROSI_CONTROLS.KAPANDJI.value, render_kw={'class': 'form-control'},  validators=None)
-    pinch = IntegerField(RIZOARTROSI_CONTROLS.PINCH.value, render_kw={'class': 'form-control'},  validators=None)
-    grip = IntegerField(RIZOARTROSI_CONTROLS.GRIP.value, render_kw={'class': 'form-control'},  validators=None)
-    dash = IntegerField(RIZOARTROSI_CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
-    prwhe = IntegerField(RIZOARTROSI_CONTROLS.PRWHE.value, render_kw={'class': 'form-control'},  validators=None)
-    eaton_littler = IntegerField(RIZOARTROSI_CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control'}, validators=None )
-    stato_cicatrice = StringField(RIZOARTROSI_CONTROLS.STATO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
-    tipo_cicatrice = StringField(RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
-    modena = StringField(RIZOARTROSI_CONTROLS.MODENA.value,render_kw={'class': 'form-control'},  validators=None)
+    nprs_vas = IntegerField(CONTROLS.NPRS_VAS.value, render_kw={'class': 'form-control'}, validators=None)
+    prom_aprom_mcpj = IntegerField(CONTROLS.PROM_APROM_MCPJ.value, render_kw={'class': 'form-control'}, validators=None)
+    prom_aprom_ipj = IntegerField(CONTROLS.PROM_APROM_IPJ.value, render_kw={'class': 'form-control'}, validators=None)
+    abduzione = IntegerField(CONTROLS.ABDUZIONE.value, render_kw={'class': 'form-control'},  validators=None)
+    anteposizione = IntegerField(CONTROLS.ANTEPOSIZIONE.value, render_kw={'class': 'form-control'},  validators=None)
+    kapandji = IntegerField(CONTROLS.KAPANDJI.value, render_kw={'class': 'form-control'},  validators=None)
+    pinch = IntegerField(CONTROLS.PINCH.value, render_kw={'class': 'form-control'},  validators=None)
+    grip = IntegerField(CONTROLS.GRIP.value, render_kw={'class': 'form-control'},  validators=None)
+    dash = IntegerField(CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
+    prwhe = IntegerField(CONTROLS.PRWHE.value, render_kw={'class': 'form-control'},  validators=None)
+    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control'}, validators=None )
+    stato_cicatrice = StringField(CONTROLS.STATO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
+    tipo_cicatrice = StringField(CONTROLS.TIPO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
+    modena = StringField(CONTROLS.MODENA.value,render_kw={'class': 'form-control'},  validators=None)
     submit_rizoartrosi = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
 

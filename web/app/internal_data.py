@@ -46,6 +46,17 @@ class PATHOLOGY_TYPE(Enum):
 
 def get_pathology_type_dict():
 
+    """
+    Ritorna le patologie in formato json in modo da essere utilizzate in javascript
+    Esempio
+    {"1": 
+        {
+        "name": ["Trapeziectomia e artoplastica in sospensione con APL", "Protesi Touch", "Altre tipologie Rizoartrosi"],
+        "id": ["1", "2", "3"]
+        }
+    "2":...
+    }
+    """
     name_dict = {}
     id_dict = {}
     # Iterate over enum values
@@ -68,7 +79,7 @@ def get_pathology_type_dict():
     return name_dict
 
 
-class RIZOARTROSI_CONTROLS(Enum):
+class CONTROLS(Enum):
 
     NPRS_VAS = "nprs_vas"
     PROM_APROM_MCPJ = "prom_aprom_mcpj"
@@ -86,82 +97,33 @@ class RIZOARTROSI_CONTROLS(Enum):
     MODENA = "modena"
 
 
-class RizoartrosiControlsTimeline:
+#--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
 
-    #The values set number of weeks after first meeting
-    #0 serve perchè al primo incontro paziente/dottore la data è quella corrente
-    timeline= [0,2,6,12,26,52,154,520,1040]
+#Definizione Timelines per le diverse patologie
+#Ad ogni patologia associo una classe dove definisco per ogni controllo quali campi devono essere visualizzati
+#Ogni campo corrisponde ad un valore associato al database.
     
-    #quante settimane aspettare se il paziente non risponde alla mail
-    waiting_weeks= 1
 
-    #Mappa che tiente traccia di tutti i controlli da mostrare.
-    #Questa mappa attiva o disattiva i campi nella UI in base ai controlli
-    #selezionati negli array first_control, second_control ecc...
+
+class PathologyTimline:
     
-    LAST_CONTROL=9
-
     Controls_Map={
 
-        RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
-        RIZOARTROSI_CONTROLS.ABDUZIONE.value: False,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value: False,
-        RIZOARTROSI_CONTROLS.KAPANDJI.value: False,
-        RIZOARTROSI_CONTROLS.PINCH.value: False,
-        RIZOARTROSI_CONTROLS.GRIP.value: False,
-        RIZOARTROSI_CONTROLS.DASH.value: False,
-        RIZOARTROSI_CONTROLS.PRWHE.value: False,
-        RIZOARTROSI_CONTROLS.EATON_LITTLER.value: False,
-        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value: False,
-        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value: False,
-        RIZOARTROSI_CONTROLS.MODENA.value: False
+        CONTROLS.NPRS_VAS.value: False,
+        CONTROLS.PROM_APROM_MCPJ.value: False,
+        CONTROLS.PROM_APROM_IPJ.value: False,
+        CONTROLS.ABDUZIONE.value: False,
+        CONTROLS.ANTEPOSIZIONE.value: False,
+        CONTROLS.KAPANDJI.value: False,
+        CONTROLS.PINCH.value: False,
+        CONTROLS.GRIP.value: False,
+        CONTROLS.DASH.value: False,
+        CONTROLS.PRWHE.value: False,
+        CONTROLS.EATON_LITTLER.value: False,
+        CONTROLS.STATO_CICATRICE.value: False,
+        CONTROLS.TIPO_CICATRICE.value: False,
+        CONTROLS.MODENA.value: False
     }
-
-    first_control={
-
-        RIZOARTROSI_CONTROLS.NPRS_VAS.value: False,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value: False,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value: False,
-        RIZOARTROSI_CONTROLS.ABDUZIONE.value: False,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value: False,
-        RIZOARTROSI_CONTROLS.KAPANDJI.value: False,
-        RIZOARTROSI_CONTROLS.PINCH.value: False,
-        RIZOARTROSI_CONTROLS.GRIP.value: False,
-        RIZOARTROSI_CONTROLS.DASH.value: False,
-        RIZOARTROSI_CONTROLS.PRWHE.value: False,
-        RIZOARTROSI_CONTROLS.EATON_LITTLER.value: False,
-        RIZOARTROSI_CONTROLS.MODENA.value: False
-    }
-
-
-    second_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
-        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
-        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value
-        ]
-
-    third_control = [
-        RIZOARTROSI_CONTROLS.NPRS_VAS.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_MCPJ.value,
-        RIZOARTROSI_CONTROLS.PROM_APROM_IPJ.value,
-        RIZOARTROSI_CONTROLS.ABDUZIONE.value,
-        RIZOARTROSI_CONTROLS.ANTEPOSIZIONE.value,
-        RIZOARTROSI_CONTROLS.KAPANDJI.value,
-        RIZOARTROSI_CONTROLS.PINCH.value,
-        RIZOARTROSI_CONTROLS.GRIP.value,
-        RIZOARTROSI_CONTROLS.DASH.value,
-        RIZOARTROSI_CONTROLS.PRWHE.value,
-        RIZOARTROSI_CONTROLS.MODENA.value,
-        RIZOARTROSI_CONTROLS.STATO_CICATRICE.value,
-        RIZOARTROSI_CONTROLS.TIPO_CICATRICE.value,
-    ]
-
-    get_controls=[first_control,second_control,third_control]
-    
 
     @classmethod
     def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
@@ -223,8 +185,106 @@ class RizoartrosiControlsTimeline:
         
         return tmp_ControlMap
 
+class FrattureRadioDistaliTimeline(PathologyTimline):
+    
+    #Questi sono i dati per ogni controllo
+    timeline= [0,2,4,8,12,26,52,154,520,1040]
+
+    first_control={
+        CONTROLS.NPRS_VAS.value: False,
+        CONTROLS.PROM_APROM_MCPJ.value: False,
+        CONTROLS.PROM_APROM_IPJ.value: False,
+        CONTROLS.ABDUZIONE.value: False,
+        CONTROLS.ANTEPOSIZIONE.value: False,
+        CONTROLS.KAPANDJI.value: False,
+        CONTROLS.PINCH.value: False,
+        CONTROLS.GRIP.value: False,
+        CONTROLS.DASH.value: False,
+        CONTROLS.PRWHE.value: False,
+        CONTROLS.EATON_LITTLER.value: False,
+        CONTROLS.MODENA.value: False
+    }
+
+    second_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value
+        ]
+
+    third_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.MODENA.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value,
+    ]
 
 
+class RizoartrosiControlsTimeline(PathologyTimline):
+
+    #The values set number of weeks after first meeting
+    #0 serve perchè al primo incontro paziente/dottore la data è quella corrente
+    timeline= [0,2,6,12,26,52,154,520,1040]
+    
+    #quante settimane aspettare se il paziente non risponde alla mail
+    waiting_weeks= 1
+    
+    #Ultimo Controllo
+    LAST_CONTROL=9
+
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
+
+
+    #Questi valori rappresentano le chiavi che saranno attivate nella control MAP
+    second_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value
+    ]
+
+    third_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.MODENA.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value,
+    ]
+    
+
+   
 
 """
 Chiavi utilizzate per salvare i dati nella sessione user dottore

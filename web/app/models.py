@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
-from .internal_data import RIZOARTROSI_CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS
+from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS
 
 class User(UserMixin, db.Model):
 

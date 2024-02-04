@@ -172,10 +172,9 @@ def medical_treatment(patient_id,patient_name):
     print("PATIENT ID")
     print(session.get(DoctorData.ID_PATIENT.value))
 
-
+   
+    #ogni chiave rappresenta id patologia
     pathology_names_id_options = get_pathology_type_dict()
-
-    
 
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
@@ -291,6 +290,8 @@ def pathology():
     session[DoctorData.CONTROL_TIME.value] = request.form.get("selected_time")
 
     print(request.form.get('pathology'))
+    print(request.form.get('pathology_type'))
+
     print(request.form.get("selected_date"))
     print(request.form.get("selected_time"))
     print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
@@ -299,6 +300,8 @@ def pathology():
     #Quando il dottore crea il primo intervento il numero del controllo è sempre 1
     controls_map = RizoartrosiControlsTimeline.get_controls(control_number = 1)
 
+    print(controls_map)
+    
     return render_template('doctor/patology.html',form=form,controls_map=controls_map)
 
 
