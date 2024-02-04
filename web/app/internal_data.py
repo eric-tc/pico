@@ -46,20 +46,26 @@ class PATHOLOGY_TYPE(Enum):
 
 def get_pathology_type_dict():
 
-    options_by_category = {}
-
+    name_dict = {}
+    id_dict = {}
     # Iterate over enum values
     for pathology_type in PATHOLOGY_TYPE:
         category = str(pathology_type.value[1])
-        option = pathology_type.value[2]
+        #Questo id è lo stesso inserito a database
+        id_type = str(pathology_type.value[0])
+        name = pathology_type.value[2]
 
         # If category already exists, append the option, otherwise create a new list
-        if category in options_by_category:
-            options_by_category[category].append(option)
+        if category in name_dict:
+            name_dict[category]["name"].append(name)
+            name_dict[category]["id"].append(id_type)
         else:
-            options_by_category[category] = [option]
-
-    return options_by_category
+            name_dict[category]={}            
+            name_dict[category]["name"] = [name]
+            name_dict[category]["id"] = [id_type]
+            
+    name_dict = str(name_dict).replace("'", '"')
+    return name_dict
 
 
 class RIZOARTROSI_CONTROLS(Enum):

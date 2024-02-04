@@ -173,17 +173,17 @@ def medical_treatment(patient_id,patient_name):
     print(session.get(DoctorData.ID_PATIENT.value))
 
 
-    pathology_options = get_pathology_type_dict()
+    pathology_names_id_options = get_pathology_type_dict()
+
     
-    pathology_options = str(pathology_options).replace("'", '"')
-    print(pathology_options)
-    
+
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
                            patient_name=patient_name,
                            pathology=PATHOLOGY,
                            pathology_type=PATHOLOGY_TYPE,
                            form=medicalForm,
-                           pathology_options=pathology_options)
+                           pathology_names_id_options=pathology_names_id_options,
+                          )
 
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])

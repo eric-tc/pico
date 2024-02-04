@@ -56,10 +56,11 @@
 
   <script>
     
-    const jsonString ='{{pathology_options | safe}}';
-    var optionsByCategory = JSON.parse(jsonString);
+    const jsonStringNames ='{{pathology_names_id_options | safe}}';
+    var optionsByName = JSON.parse(jsonStringNames);
 
-    
+    console.log(optionsByName);
+
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {
         const categorySelect = document.getElementById('pathology');
@@ -71,11 +72,36 @@
         itemSelect.innerHTML = '';
   
         // Populate options based on the selected category
-        optionsByCategory[selectedCategory].forEach(optionValue => {
-            const option = document.createElement('option');
-            option.value = option.textContent = optionValue;
-            itemSelect.appendChild(option);
-        });
+/*        <!-- optionsByName[selectedCategory].forEach(optionValue => {
+
+            var name_array = optionValue["name"];
+            var id_array= optionValue["id"];
+
+            for (var i =0; i < id_array.lenght; i++){
+
+              const option = document.createElement('option');
+              option.value = id_array[i];
+              option.textContent = name_array[i];
+              itemSelect.appendChild(option);
+
+            }
+           
+        }); */
+
+        var selectedOptions= optionsByName[selectedCategory];
+
+        var name_array = selectedOptions["name"];
+        var id_array= selectedOptions["id"];
+
+        for (var i =0; i < id_array.length; i++){
+
+          const option = document.createElement('option');
+          option.value = id_array[i];
+          option.textContent = name_array[i];
+          itemSelect.appendChild(option);
+          
+        }
+
         
         additionalFieldContainer.style.display = (itemSelect.value === 'Altro') ? 'block' : 'none';
     }
