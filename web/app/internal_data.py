@@ -27,58 +27,6 @@ class EMAIL_STATUS(Enum):
     #il paziente ha confermato appuntamento
     CLOSED = (2,"Confirmed")
 
-
-class PATHOLOGY(Enum):
-    RIZOARTROSI= (1,"Rizoartrosi")
-    FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale")
-    FRATTURE_METACARPALI = (3,"Frattura Metacarpale")
-    
-class PATHOLOGY_TYPE(Enum):
-    RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI.value[0],"Trapeziectomia e artoplastica in sospensione con APL")
-    RIZOARTROSI_PROTESI = (2,PATHOLOGY.RIZOARTROSI.value[0],"Protesi Touch")
-    RIZOARTROSI_ALTRO = (3,PATHOLOGY.RIZOARTROSI.value[0],"Altre tipologie Rizoartrosi")
-    FRATTURA_RADIO_DISTALE_GESSO = (4,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Gesso Chiuso")
-    FRATTURA_RADIO_DISTALE_PLACCA_VITI= (5,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Placca Viti")
-    FRATTURA_RADIO_DISTALE_PLACCA_ALTRO= (6,PATHOLOGY.FRATTURA_RADIO_DISTALE.value[0],"Altro Frattura radio distale")
-    FRATTURE_METACARPALI_GESSO = (7,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Gesso Chiuso")
-    FRATTURE_METACARPALI_VALVA_GESSATA = (8,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Valva Gessata")
-    FRATTURE_METACARPALI_TUTORE_TERMOPLASTICA = (9,PATHOLOGY.FRATTURE_METACARPALI.value[0],"Tutore Termoplastica")
-
-def get_pathology_type_dict():
-
-    """
-    Ritorna le patologie in formato json in modo da essere utilizzate in javascript
-    Esempio
-    {"1": 
-        {
-        "name": ["Trapeziectomia e artoplastica in sospensione con APL", "Protesi Touch", "Altre tipologie Rizoartrosi"],
-        "id": ["1", "2", "3"]
-        }
-    "2":...
-    }
-    """
-    name_dict = {}
-    id_dict = {}
-    # Iterate over enum values
-    for pathology_type in PATHOLOGY_TYPE:
-        category = str(pathology_type.value[1])
-        #Questo id è lo stesso inserito a database
-        id_type = str(pathology_type.value[0])
-        name = pathology_type.value[2]
-
-        # If category already exists, append the option, otherwise create a new list
-        if category in name_dict:
-            name_dict[category]["name"].append(name)
-            name_dict[category]["id"].append(id_type)
-        else:
-            name_dict[category]={}            
-            name_dict[category]["name"] = [name]
-            name_dict[category]["id"] = [id_type]
-            
-    name_dict = str(name_dict).replace("'", '"')
-    return name_dict
-
-
 class CONTROLS(Enum):
 
     NPRS_VAS = "nprs_vas"
@@ -167,23 +115,68 @@ class PathologyTimline:
         #Non posso modificare i dati interni della mappa altrimenti per ogni utente
         #avrei una stessa struttura dati condivisa e questo non andrebbe bene
         # copio i dati in una mappa temporanera
-        tmp_ControlMap = copy.deepcopy(RizoartrosiControlsTimeline.Controls_Map)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
         if(int(control_number)==1):
-            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
-                                                                            RizoartrosiControlsTimeline.first_control)
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.first_control)
         if(int(control_number)==2):
-            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
-                                                                            RizoartrosiControlsTimeline.second_control)
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.second_control)
         if(int(control_number)==3):
-            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
-                                                                            RizoartrosiControlsTimeline.third_control)
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.third_control)
 
         if(int(control_number)>3):
-            tmp_ControlMap= RizoartrosiControlsTimeline.setup_map_key_value(tmp_ControlMap,
-                                                                            RizoartrosiControlsTimeline.third_control)
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.third_control)
         
         return tmp_ControlMap
+
+class FratturaMetaCarpaleTimeline(PathologyTimline):
+    
+    #Questi sono i dati per ogni controllo
+    timeline= [0,4,6,8,12,26,52,154,520,1040]
+
+    first_control={
+        CONTROLS.NPRS_VAS.value: False,
+        CONTROLS.PROM_APROM_MCPJ.value: False,
+        CONTROLS.PROM_APROM_IPJ.value: False,
+        CONTROLS.ABDUZIONE.value: False,
+        CONTROLS.ANTEPOSIZIONE.value: False,
+        CONTROLS.KAPANDJI.value: False,
+        CONTROLS.PINCH.value: False,
+        CONTROLS.GRIP.value: False,
+        CONTROLS.DASH.value: False,
+        CONTROLS.PRWHE.value: False,
+        CONTROLS.EATON_LITTLER.value: False,
+        CONTROLS.MODENA.value: False
+    }
+
+    second_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value
+        ]
+
+    third_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.MODENA.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value,
+    ]
+
 
 class FrattureRadioDistaliTimeline(PathologyTimline):
     
@@ -299,9 +292,61 @@ class DoctorData(Enum):
     #questa chiave tiene traccia dell'appuntamento del controllo successivo
     NUM_CONTROL = "control_number"
         
+
+class PATHOLOGY(Enum):
+    RIZOARTROSI= (1,"Rizoartrosi",RizoartrosiControlsTimeline)
+    FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale",FrattureRadioDistaliTimeline)
+    FRATTURE_METACARPALI = (3,"Frattura Metacarpale",FratturaMetaCarpaleTimeline)
     
+class PATHOLOGY_TYPE(Enum):
+    RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI,"Trapeziectomia e artoplastica in sospensione con APL")
+    RIZOARTROSI_PROTESI = (2,PATHOLOGY.RIZOARTROSI,"Protesi Touch")
+    RIZOARTROSI_ALTRO = (3,PATHOLOGY.RIZOARTROSI,"Altre tipologie Rizoartrosi")
+    FRATTURA_RADIO_DISTALE_GESSO = (4,PATHOLOGY.FRATTURA_RADIO_DISTALE,"Gesso Chiuso")
+    FRATTURA_RADIO_DISTALE_PLACCA_VITI= (5,PATHOLOGY.FRATTURA_RADIO_DISTALE,"Placca Viti")
+    FRATTURA_RADIO_DISTALE_PLACCA_ALTRO= (6,PATHOLOGY.FRATTURA_RADIO_DISTALE,"Altro Frattura radio distale")
+    FRATTURE_METACARPALI_GESSO = (7,PATHOLOGY.FRATTURE_METACARPALI,"Gesso Chiuso")
+    FRATTURE_METACARPALI_VALVA_GESSATA = (8,PATHOLOGY.FRATTURE_METACARPALI,"Valva Gessata")
+    FRATTURE_METACARPALI_TUTORE_TERMOPLASTICA = (9,PATHOLOGY.FRATTURE_METACARPALI,"Tutore Termoplastica")
 
 
-    
+def get_pathology_type_dict():
 
-    
+    """
+    Ritorna le patologie in formato json in modo da essere utilizzate in javascript
+    Esempio
+    {"1": 
+        {
+        "name": ["Trapeziectomia e artoplastica in sospensione con APL", "Protesi Touch", "Altre tipologie Rizoartrosi"],
+        "id": ["1", "2", "3"]
+        }
+    "2":...
+    }
+    """
+    name_dict = {}
+    #Per ogni controllo devo ritornare il numero di settimane del controllo successivo.
+    #Questo serve nell'interfaccia grafica per selezionare i giorni del calendario in cui è possibile selzionare la data
+
+    timeline_dict = {}
+    # Iterate over enum values
+    for pathology_type in PATHOLOGY_TYPE:
+        category = str(pathology_type.value[1].value[0])
+        #Questo id è lo stesso inserito a database
+        id_type = str(pathology_type.value[0])
+        name = pathology_type.value[2]
+
+        # If category already exists, append the option, otherwise create a new list
+        if category in name_dict:
+            name_dict[category]["name"].append(name)
+            name_dict[category]["id"].append(id_type)
+        else:
+            name_dict[category]={}            
+            name_dict[category]["name"] = [name]
+            name_dict[category]["id"] = [id_type]
+            #per ogni PATHOLOGY prendo dopo quante settimane c'è il primo controllo
+            timeline_dict[category]= pathology_type.value[1].value[2].timeline[1]
+            
+            
+    name_dict = str(name_dict).replace("'", '"')
+    timeline_dict = str(timeline_dict).replace("'", '"')
+    return name_dict,timeline_dict

@@ -41,12 +41,12 @@
             Selezionare i controlli futuri
           </h4>
         </div>
-        <label class="form-label"><b>Controllo 1</b> Entro 2 settimane dalla data attuale</label> 
+        {{default_date}}
         {% include 'general/select_date.html' %}
       </div>
        
         
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Prosegui per inserimento valori</button>
       </form>
     </div>  
 
@@ -58,8 +58,7 @@
     
     const jsonStringNames ='{{pathology_names_id_options | safe}}';
     var optionsByName = JSON.parse(jsonStringNames);
-
-    console.log(optionsByName);
+    
 
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {

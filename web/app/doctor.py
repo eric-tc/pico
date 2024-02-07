@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS
 from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer
@@ -63,7 +63,6 @@ def profile():
     return render_template('doctor/profile.html', 
                            name=current_user.name,
                            patients_list=patients_list, 
-                           
                            next_treatments=next_treatments)
                           
 
@@ -159,7 +158,7 @@ def patients_list():
 
 # -------------------------ROUTE PER DEFINIRE un nuovo controllo paziente---------------------------------------------------
 
-@doctor.route('/medical_treatment/<patient_id>/<patient_name>',methods=["GET"])
+@doctor.route('/medical_treatment/<patient_id>/<patient_name>/',methods=["GET"])
 @login_required
 def medical_treatment(patient_id,patient_name):
     
@@ -174,14 +173,16 @@ def medical_treatment(patient_id,patient_name):
 
    
     #ogni chiave rappresenta id patologia
-    pathology_names_id_options = get_pathology_type_dict()
+    pathology_names_id_options,timeline_pathology = get_pathology_type_dict()
 
     return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
-                           patient_name=patient_name,
-                           pathology=PATHOLOGY,
-                           pathology_type=PATHOLOGY_TYPE,
-                           form=medicalForm,
-                           pathology_names_id_options=pathology_names_id_options,
+                            patient_name=patient_name,
+                            pathology=PATHOLOGY,
+                            pathology_type=PATHOLOGY_TYPE,
+                            form=medicalForm,
+                            pathology_names_id_options=pathology_names_id_options,
+                            timeline_pathology=timeline_pathology,
+                            default_date= datetime.utcnow()
                           )
 
 # From used to setup pathology parameters
@@ -198,19 +199,20 @@ def pathology():
     if form.submit_rizoartrosi.data and form.validate_on_submit():
         print("SUBMIT RIZOARTROSI")
         # Extract form data from the request
-        nprs_vas = request.form.get('nprs_vas')
-        prom_arom_mcpj = request.form.get('prom_arom_mcpj')
-        prom_arom_Ipj = request.form.get('prom_arom_Ipj')
-        abduction = request.form.get('abduction')
-        anterposition = request.form.get('anterposition')
-        kapandji = request.form.get('kapandji')
-        pinch = request.form.get('pinch')
-        grip = request.form.get('grip')
-        dash = request.form.get('dash')
-        prwhe = request.form.get('prwhe')
-        Eaton_littler = request.form.get('Eaton_littler')
-        scar_status = request.form.get('scar_status')
-        scar_type = request.form.get('scar_type')
+        nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
+        prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
+        prom_arom_Ipj = request.form.get(CONTROLS.PROM_APROM_IPJ.value)
+        abduzione = request.form.get(CONTROLS.ABDUZIONE.value)
+        anteposizione = request.form.get(CONTROLS.ANTEPOSIZIONE.value)
+        kapandji = request.form.get(CONTROLS.KAPANDJI.value)
+        pinch = request.form.get(CONTROLS.PINCH.value)
+        grip = request.form.get(CONTROLS.GRIP.value)
+        dash = request.form.get(CONTROLS.DASH.value)
+        prwhe = request.form.get(CONTROLS.PRWHE.value)
+        eaton_littler = request.form.get(CONTROLS.EATON_LITTLER.value)
+        stato_cicatrice = request.form.get(CONTROLS.STATO_CICATRICE.value)
+        tipo_cicatrice = request.form.get(CONTROLS.TIPO_CICATRICE.value)
+        modena = request.form.get(CONTROLS.MODENA.value)
 
         #Controllo quale tipologia di malattia ha selezionato il dottore
         #Per ogni patologia avrò un controllo specifico
@@ -246,7 +248,7 @@ def pathology():
 
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
+                    id_pathology=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"),  # Replace with the actual type ID
                     id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"0"), #TODO da cambiare con id patologia
                     id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
                     next_control_date=next_control_date,
@@ -255,19 +257,19 @@ def pathology():
                     next_control_number=control_number +1,
                     id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                     nprs_vas=nprs_vas,  # Replace with the actual value
-                    prom_aprom_mcpj=90,  # Replace with the actual value
-                    prom_aprom_ipj=85,  # Replace with the actual value
-                    abduzione=75,  # Replace with the actual value
-                    anteposizione=70,  # Replace with the actual value
-                    kapandji=95,  # Replace with the actual value
-                    pinch=80,  # Replace with the actual value
-                    grip=90,  # Replace with the actual value
-                    dash=25,  # Replace with the actual value
-                    prwhe=40,  # Replace with the actual value
-                    eaton_littler=60,  # Replace with the actual value
-                    tipo_cicatrice='Healed',  # Replace with the actual value
-                    stato_cicatrice='Normal',  # Replace with the actual value
-                    modena='Some Value'  # Replace with the actual value
+                    prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
+                    prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
+                    abduzione=abduzione,  # Replace with the actual value
+                    anteposizione=anteposizione,  # Replace with the actual value
+                    kapandji=kapandji,  # Replace with the actual value
+                    pinch=pinch,  # Replace with the actual value
+                    grip=grip,  # Replace with the actual value
+                    dash=dash,  # Replace with the actual value
+                    prwhe=prwhe,  # Replace with the actual value
+                    eaton_littler=eaton_littler,  # Replace with the actual value
+                    tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
+                    stato_cicatrice=stato_cicatrice,  # Replace with the actual value
+                    modena=modena # Replace with the actual value
                 )
 
                         # Add the instance to the session
@@ -277,10 +279,8 @@ def pathology():
             db.session.commit()
 
             flash('Inserimento terapia con successo')
-            return redirect(url_for('doctor.profile')) # if user doesn't exist or password is wrong, reload the page
+            return redirect(url_for('doctor.profile'))
 
-        print(nprs_vas)
-        print(nprs_vas)
 
     #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
     # A meno che la patologia non sia inserita correttamente
@@ -308,6 +308,8 @@ def pathology():
 #---------------------------------ROUTE PER GESTIRE I CONTROLLI SUCCESSIVI DEL PAZIENTE-----------------------------
 """
 row_id_to_update= rappresenta il numero della riga della colonna da aggiornare.
+deafult_date= rappresenta la data di creazione del controllo. Serve per quando programmare il controllo successivo rispetto alla data
+in cui è stato creato
 """
 @doctor.route('/next_control/<patient_id>/<patient_name>/<next_control_number>/<row_id_to_update>/<default_date>',methods=["GET","POST"])
 @login_required

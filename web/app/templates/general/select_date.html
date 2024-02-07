@@ -17,10 +17,33 @@
 
 <script>
 
+  
+  const jsonTimeline= '{{timeline_pathology | safe}}';
+  var timelineByName=null;
+  
+  if(jsonTimeline.length>0){
+
+    timelineByName = JSON.parse(jsonTimeline);
+  }
+  
+
+  //di default la patologia selezionata è la prima dell'elenco
+  var currentSelectedPathologyid=1;
+
   function getSpecificDate(week_to_add) {
     // Function body
-    var week_to_add= week_to_add;
-    var daysToAdd = parseInt(week_to_add)*7;
+
+    var week_to_add_int= parseInt(week_to_add);
+
+    console.log(week_to_add_int);
+
+    if(isNaN(week_to_add_int)){
+
+      console.log("NO WEEK TO ADD");
+      week_to_add_int=0;
+    }
+   
+    var daysToAdd = parseInt(week_to_add_int)*7;
     var check_if_default = "{{ check_if_default|lower }}";
     var specificDate;
     
@@ -61,8 +84,21 @@
   function customBeforeShowDay(d){
     var daysBefore= 3;
     var daysAfter=  4;
+    var TmpSpecificDate=null;
+
+    if(timelineByName !=null ){
+      //quando creo il primo controllo, i valori delle settimane da aggiungere sono dinamici in base
+       //a quello che sceglie l'utente dal form  
+       TmpSpecificDate= getSpecificDate(timelineByName["1"]);
     
-    var TmpSpecificDate= getSpecificDate("{{week_to_add}}")
+    }else{
+
+       TmpSpecificDate= getSpecificDate("{{week_to_add}}");
+
+    }
+   
+
+    
     //Devo inizializzare il valore delle date con la data specifica dell'intervento altrimenti non funziona
     //Inizializzando la data con new Date() viene preso il mese di riferimento corrente e non quello futuro
     var beforeDate = new Date(TmpSpecificDate);
@@ -83,14 +119,23 @@
         // Define the start and end dates
         // Initialize Datepicker
 
-       
-        var specificDate = getSpecificDate("{{week_to_add}}");
+        if(timelineByName !=null ){
+          
+          //quando creo il primo controllo, i valori delle settimane da aggiungere sono dinamici in base
+           //a quello che sceglie l'utente dal form  
+           TmpSpecificDate= getSpecificDate(timelineByName["1"]);
         
+        }else{
+    
+           TmpSpecificDate= getSpecificDate("{{week_to_add}}");
+    
+        }
+
 
         $("#datepicker").datepicker({
             dateFormat: 'dd-mm-yy', // Set the date format
             changeMonth: true,
-            defaultDate: specificDate,
+            defaultDate: TmpSpecificDate,
             changeYear: true,
             showOn: "button", // Show the Datepicker when clicking the button
             buttonText: "",
