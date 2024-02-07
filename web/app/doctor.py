@@ -248,8 +248,8 @@ def pathology():
 
                 new_entry = Rizoartrosi(
                     id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_pathology=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"),  # Replace with the actual type ID
-                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY.value,"0"), #TODO da cambiare con id patologia
+                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
+                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"), #TODO da cambiare con id patologia
                     id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
                     next_control_date=next_control_date,
                     next_control_time= next_control_time,
