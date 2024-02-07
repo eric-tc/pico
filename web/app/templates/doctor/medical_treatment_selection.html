@@ -58,7 +58,7 @@
     
     const jsonStringNames ='{{pathology_names_id_options | safe}}';
     var optionsByName = JSON.parse(jsonStringNames);
-    
+    console.log("SelectedPathology",selectedPathologyid);
 
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {
@@ -75,16 +75,21 @@
         var name_array = selectedOptions["name"];
         var id_array= selectedOptions["id"];
 
+        selectedPathologyid= selectedCategory;
+
+        changeDefaultDate();
+        console.log("UPDATE TIMELINE",selectedCategory);
+        
         for (var i =0; i < id_array.length; i++){
 
           const option = document.createElement('option');
           option.value = id_array[i];
+          
           option.textContent = name_array[i];
           itemSelect.appendChild(option);
           
         }
 
-        
         additionalFieldContainer.style.display = (itemSelect.value === 'Altro') ? 'block' : 'none';
     }
   

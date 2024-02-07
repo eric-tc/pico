@@ -17,6 +17,12 @@
 
 <script>
 
+
+  var TmpSpecificDate=null;
+
+  var selectedPathologyid="1";
+  console.log("selectedPathology");
+
   
   const jsonTimeline= '{{timeline_pathology | safe}}';
   var timelineByName=null;
@@ -25,10 +31,40 @@
 
     timelineByName = JSON.parse(jsonTimeline);
   }
-  
 
-  //di default la patologia selezionata è la prima dell'elenco
-  var currentSelectedPathologyid=1;
+
+  function createDatePicker(){
+
+    $("#datepicker").datepicker({
+      dateFormat: 'dd-mm-yy', // Set the date format
+      changeMonth: true,
+      defaultDate: TmpSpecificDate,
+      changeYear: true,
+      showOn: "button", // Show the Datepicker when clicking the button
+      buttonText: "",
+      beforeShow: function (input, inst) {
+        // Prevent the calendar from showing on focus
+        if (!$("#datepicker").prop("disabled")) {
+          $.datepicker._clearDate(input);
+        }
+      },
+      beforeShowDay: customBeforeShowDay
+      // Add more options as needed
+  });
+    
+  }
+  function changeDefaultDate(){
+
+    console.log("CHANGE DEFAULT DATE");
+
+    TmpSpecificDate= getSpecificDate(timelineByName[selectedPathologyid]);
+    
+    //Rimuove tutte le impostazioni di default. In questo modo il calendario si posiziona nella data
+    //TmpSpecificDate
+    $("#datepicker").datepicker("destroy");  
+    createDatePicker();
+
+  }
 
   function getSpecificDate(week_to_add) {
     // Function body
@@ -81,15 +117,21 @@
     return specificDate;
   }
 
+  
+
   function customBeforeShowDay(d){
     var daysBefore= 3;
     var daysAfter=  4;
-    var TmpSpecificDate=null;
+    
 
     if(timelineByName !=null ){
       //quando creo il primo controllo, i valori delle settimane da aggiungere sono dinamici in base
-       //a quello che sceglie l'utente dal form  
-       TmpSpecificDate= getSpecificDate(timelineByName["1"]);
+       //a quello che sceglie l'utente dal form
+       
+       console.log("SELECT DATE TIMELINE ",timelineByName[selectedPathologyid]);
+           console.log("SELECT DATE TIMELINE ",timelineByName); 
+           console.log("SELECT DATE TIMELINE ",selectedPathologyid);
+       TmpSpecificDate= getSpecificDate(timelineByName[selectedPathologyid]);
     
     }else{
 
@@ -98,7 +140,6 @@
     }
    
 
-    
     //Devo inizializzare il valore delle date con la data specifica dell'intervento altrimenti non funziona
     //Inizializzando la data con new Date() viene preso il mese di riferimento corrente e non quello futuro
     var beforeDate = new Date(TmpSpecificDate);
@@ -122,8 +163,12 @@
         if(timelineByName !=null ){
           
           //quando creo il primo controllo, i valori delle settimane da aggiungere sono dinamici in base
-           //a quello che sceglie l'utente dal form  
-           TmpSpecificDate= getSpecificDate(timelineByName["1"]);
+           //a quello che sceglie l'utente dal form 
+
+           console.log("SELECT DATE TIMELINE ",timelineByName[selectedPathologyid]);
+           console.log("SELECT DATE TIMELINE ",timelineByName); 
+           console.log("SELECT DATE TIMELINE ",selectedPathologyid);
+           TmpSpecificDate= getSpecificDate(timelineByName[selectedPathologyid]);
         
         }else{
     
@@ -131,23 +176,8 @@
     
         }
 
-
-        $("#datepicker").datepicker({
-            dateFormat: 'dd-mm-yy', // Set the date format
-            changeMonth: true,
-            defaultDate: TmpSpecificDate,
-            changeYear: true,
-            showOn: "button", // Show the Datepicker when clicking the button
-            buttonText: "",
-            beforeShow: function (input, inst) {
-              // Prevent the calendar from showing on focus
-              if (!$("#datepicker").prop("disabled")) {
-                $.datepicker._clearDate(input);
-              }
-            },
-            beforeShowDay: customBeforeShowDay
-            // Add more options as needed
-        });
+        createDatePicker();
+       
     });
     $(function () {
     
