@@ -41,17 +41,13 @@
             Selezionare i controlli futuri
           </h4>
         </div>
-        {{default_date}}
         {% include 'general/select_date.html' %}
       </div>
        
         
         <button type="submit" class="btn btn-primary">Prosegui per inserimento valori</button>
       </form>
-    </div>  
-
-
-    
+    </div>      
   </div>
 
   <script>
@@ -76,7 +72,8 @@
         var id_array= selectedOptions["id"];
 
         selectedPathologyid= selectedCategory;
-
+        //Funzione presente nel file select_date. In pratica cambia la 
+        //defaultDate del datepicker con quella selezionata dal paziente
         changeDefaultDate();
         console.log("UPDATE TIMELINE",selectedCategory);
         

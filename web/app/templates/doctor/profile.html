@@ -16,8 +16,8 @@
 </div>
 <!-- --------------------------ROW 1 ASSOCIAZIONI PAZIENTI ------------------------------- -->
 <div class="row mt-3 mb-5">
-  <div class="col-md-2 mb-2 col-lg-3"></div>
-  <div class="col-md-8 mb-8 col-lg-6">
+  <div class="col-md-1 mb-1 col-lg-2"></div>
+  <div class="col-md-10 mb-10 col-lg-8">
       
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -65,7 +65,7 @@
     </table>
   </div>
 
-  <div class="col-md-2 mb-2 col-lg-3"></div>
+  <div class="col-md-1 mb-1 col-lg-2"></div>
 </div>
 
 
@@ -103,14 +103,15 @@
 
 <div class="row">
 
-  <div class="col-md-2 mb-2 col-lg-3"></div>
-  <div class="col-md-8 mb-8 col-lg-6">
+  <div class="col-md-1 mb-1 col-lg-2"></div>
+  <div class="col-md-10 mb-10 col-lg-8">
    
     
     <table id="nextControlsTable" class="table">
       <thead>
           <tr class="text-center">
             <th>Numero Controllo </th>
+            <th>Nome Intervento </th>
             <th>Nome Paziente</th>
             <th>Data Intervento</th>
             <th>Azioni</th>
@@ -118,9 +119,10 @@
           </tr>
       </thead>
       <tbody>
-        {% for pathology, username,week_to_add in next_treatments %}
+        {% for pathology, username,pathology_type,week_to_add in next_treatments %}
         <tr class="notificationRow text-center" data-item-id="{{pathology.id}}_{{ week_to_add }}_{{pathology.created_at}}">
             <td >{{ pathology.next_control_number }}</td>
+            <td >{{ pathology_type }}</td>
             <td >{{ username }}</td>
             <td class="editable" data-field="next_control_date">
               <span class="content">{{ pathology.next_control_date }}</span>
@@ -137,7 +139,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-2 mb-2 col-lg-3"></div>
+  <div class="col-md-1 mb-2 col-lg-2"></div>
 </div>
 
 

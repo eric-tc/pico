@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS
-from .models import User,DoctorPatient,Notification,Rizoartrosi,PathologyType,Pathology
+from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf
-from sqlalchemy import cast, Integer
+from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
@@ -26,38 +26,49 @@ def profile():
     .all()
     )
 
-    #sent_notifications= Notification.query.filter_by(id_doctor=current_user.id)
-
     # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
     next_treatments=[]
     for patient_query in patients_list:
         #in base all'id paziente 
         print("value")
         doctorPatient, name = patient_query
-        #TODO: Qui invece di ritornare la prima data ritorno tutte le date del paziente ordinate in modo ascendete
-        patients_row = db.session.query(Rizoartrosi,User.name).join(User,Rizoartrosi.id_patient==User.id).filter(Rizoartrosi.id_patient == doctorPatient.id_patient,Rizoartrosi.next_control_date>= db.func.now()).order_by(Rizoartrosi.next_control_date).all()
+
+        #recupero tutte le patologie a cui il paziente è associato il dottore
+
+        pathology_ids = [value for (value,) in db.session.query(PathologyData.id_pathology_type).filter(PathologyData.id_patient == doctorPatient.id_patient).distinct().all()]
+        
+        print(pathology_ids)
+
+        for pathology_id_type in pathology_ids:
+
+            print(pathology_id_type)
+       
+            #TODO: Qui invece di ritornare la prima data ritorno tutte le date del paziente ordinate in modo ascendete
+            patients_row = db.session.query(PathologyData,User.name,PathologyType.name).join(User,PathologyData.id_patient==User.id).join(PathologyType,PathologyType.id==pathology_id_type).filter(PathologyData.id_patient == doctorPatient.id_patient,PathologyData.id_pathology_type==pathology_id_type,PathologyData.next_control_date>= db.func.now()).order_by(PathologyData.next_control_date).all()
+            
         #successivamente creo un ciclo for su tutte le date
-        # la prima volta che trovo un id < 2(Data chiusa) fermo il ciclo for e prendo quella data
-        #faccio questo per tutti i pazienti associati al dottore
+            # la prima volta che trovo un id < 2(Data chiusa) fermo il ciclo for e prendo quella data
+            #faccio questo per tutti i pazienti associati al dottore
 
-        #In questo modo mostro solo gli appuntamenti non ancora conclusi e successivi alla data attuale.
+            #In questo modo mostro solo gli appuntamenti non ancora conclusi e successivi alla data attuale.
+            print(patients_row)
 
-        #Verfico che la row recuperata della patologia non è None
-        if patients_row is not None:
-            for row in patients_row:
-                #trovo il prossimo controllo in linea temporale non chiuso
-                if(row[0].id_control_status == CONTROL_STATUS.ACTIVE.value[0]):
-                    print(row)
-                    time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
-                    # Create a datetime object with today's date and the extracted time
-                    row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
-                    #TODO: Dovrò controllare per tipologia di patologia. La week serve per evidenziare i giorni
-                    #corretti nella modal del cambio data
-                    week_to_add , check_if_last = RizoartrosiControlsTimeline.get_week(control_number = int(row[0].next_control_number))
-                    row_with_week=(row[0],row[1],week_to_add)
-                    next_treatments.append(row_with_week)
-                    #appena trovo un controllo non chiuso interrompo il ciclo di ricerca
-                    break
+            #Verfico che la row recuperata della patologia non è None
+            if patients_row is not None:
+                for row in patients_row:
+                    #trovo il prossimo controllo in linea temporale non chiuso
+                    if(row[0].id_control_status == CONTROL_STATUS.ACTIVE.value[0]):
+                        print(row)
+                        time_object = datetime.strptime(row[0].next_control_time, "%H:%M").time()
+                        # Create a datetime object with today's date and the extracted time
+                        row[0].next_control_date = datetime.combine(row[0].next_control_date, time_object)
+                        #TODO: Dovrò controllare per tipologia di patologia. La week serve per evidenziare i giorni
+                        #corretti nella modal del cambio data
+                        week_to_add , check_if_last = RizoartrosiControlsTimeline.get_week(control_number = int(row[0].next_control_number))
+                        row_with_week=(row[0],row[1],row[2],week_to_add)
+                        next_treatments.append(row_with_week)
+                        #appena trovo un controllo non chiuso interrompo il ciclo di ricerca
+                        break
 
             
     return render_template('doctor/profile.html', 
@@ -90,25 +101,25 @@ def change_date():
     print(pathology_id_row)
     print(pathology_type)
     
-    if pathology_type == PATHOLOGY.RIZOARTROSI.value[0]:
-        value_to_update= Rizoartrosi.query.filter_by(id=pathology_id_row).first()
-        
-        value_to_update.next_control_date= datetime.strptime(str(date),"%d-%m-%Y")
-        value_to_update.next_control_time= str(time)
+    
+    value_to_update= PathologyData.query.filter_by(id=pathology_id_row).first()
+    
+    value_to_update.next_control_date= datetime.strptime(str(date),"%d-%m-%Y")
+    value_to_update.next_control_time= str(time)
 
-        try:
-            # Commit the changes to the database
-            db.session.commit()
-            flash('DATA  AGGIORNATA CORRETTAMENTE')
-            # If no exception is raised, the update was successful
-            return redirect(url_for('doctor.profile'))
-        
+    try:
+        # Commit the changes to the database
+        db.session.commit()
+        flash('DATA  AGGIORNATA CORRETTAMENTE')
+        # If no exception is raised, the update was successful
+        return redirect(url_for('doctor.profile'))
+    
 
-        except Exception as e:
-            # Handle the exception (e.g., log the error, display an error message)
-            print(f"Error updating record: {e}")
-            flash('DATA NON AGGIORNATA CORRETTAMENTE')
-            return redirect(url_for('doctor.profile'))
+    except Exception as e:
+        # Handle the exception (e.g., log the error, display an error message)
+        print(f"Error updating record: {e}")
+        flash('DATA NON AGGIORNATA CORRETTAMENTE')
+        return redirect(url_for('doctor.profile'))
 
 
     flash('DATA NON AGGIORNATA CORRETTAMENTE')
@@ -214,72 +225,70 @@ def pathology():
         tipo_cicatrice = request.form.get(CONTROLS.TIPO_CICATRICE.value)
         modena = request.form.get(CONTROLS.MODENA.value)
 
-        #Controllo quale tipologia di malattia ha selezionato il dottore
-        #Per ogni patologia avrò un controllo specifico
-        if(PATHOLOGY.RIZOARTROSI.value[0]== int(session.get(DoctorData.ID_PATHOLOGY.value))):
-            #inserimento tabella rizoartrosi
-            print("inserimento rizoartrosi")
+        
+        #inserimento tabella rizoartrosi
+        print("inserimento rizoartrosi")
 
-            for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
+        for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
 
-                next_control_date= datetime.utcnow() + timedelta(weeks=weeks_to_add)
-                next_control_time = "12:00"
-                
-                is_date_accepted= 0
-                
-                #Se il numero del controllo corrisponde al controllo successivo verifico
-                # se la data del prossimo incontro è stata accettata dal paziente
-                print("CONTROL NUMBER")
+            next_control_date= datetime.utcnow() + timedelta(weeks=weeks_to_add)
+            next_control_time = "12:00"
+            
+            is_date_accepted= 0
+            
+            #Se il numero del controllo corrisponde al controllo successivo verifico
+            # se la data del prossimo incontro è stata accettata dal paziente
+            print("CONTROL NUMBER")
+            print(control_number)
+            if(control_number == int(session.get(DoctorData.NUM_CONTROL.value))):
                 print(control_number)
-                if(control_number == int(session.get(DoctorData.NUM_CONTROL.value))):
-                    print(control_number)
 
-                    if(session.get(DoctorData.CONTROL_DATE.value)!=""):
-                        print(session.get(DoctorData.CONTROL_DATE.value))
-                        next_control_date= datetime.strptime(str(session.get(DoctorData.CONTROL_DATE.value)),"%d-%m-%Y")
-                        print("DATE ACCEPTED")
-                        print(next_control_date)
-                        is_date_accepted=1
-                        
+                if(session.get(DoctorData.CONTROL_DATE.value)!=""):
+                    print(session.get(DoctorData.CONTROL_DATE.value))
+                    next_control_date= datetime.strptime(str(session.get(DoctorData.CONTROL_DATE.value)),"%d-%m-%Y")
+                    print("DATE ACCEPTED")
+                    print(next_control_date)
+                    is_date_accepted=1
+                    
 
-                    if(session.get(DoctorData.CONTROL_TIME.value)!=""):
-                        next_control_time= session.get(DoctorData.CONTROL_TIME.value)
-                        is_date_accepted=1
+                if(session.get(DoctorData.CONTROL_TIME.value)!=""):
+                    next_control_time= session.get(DoctorData.CONTROL_TIME.value)
+                    is_date_accepted=1
 
-                new_entry = Rizoartrosi(
-                    id_doctor=current_user.id,  # Replace with the actual doctor ID
-                    id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
-                    id_pathology_type=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"), #TODO da cambiare con id patologia
-                    id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
-                    next_control_date=next_control_date,
-                    next_control_time= next_control_time,
-                    is_date_accepted= is_date_accepted,
-                    next_control_number=control_number +1,
-                    id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-                    nprs_vas=nprs_vas,  # Replace with the actual value
-                    prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
-                    prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
-                    abduzione=abduzione,  # Replace with the actual value
-                    anteposizione=anteposizione,  # Replace with the actual value
-                    kapandji=kapandji,  # Replace with the actual value
-                    pinch=pinch,  # Replace with the actual value
-                    grip=grip,  # Replace with the actual value
-                    dash=dash,  # Replace with the actual value
-                    prwhe=prwhe,  # Replace with the actual value
-                    eaton_littler=eaton_littler,  # Replace with the actual value
-                    tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
-                    stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-                    modena=modena # Replace with the actual value
-                )
+            new_entry = PathologyData(
+                id_doctor=current_user.id,  # Replace with the actual doctor ID
+                id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
+                id_pathology_type=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"), #TODO da cambiare con id patologia
+                id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
+                next_control_date=next_control_date,
+                next_control_time= next_control_time,
+                is_date_accepted= is_date_accepted,
+                next_control_number=control_number +1,
+                id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+                nprs_vas=nprs_vas,  # Replace with the actual value
+                prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
+                prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
+                abduzione=abduzione,  # Replace with the actual value
+                anteposizione=anteposizione,  # Replace with the actual value
+                kapandji=kapandji,  # Replace with the actual value
+                pinch=pinch,  # Replace with the actual value
+                grip=grip,  # Replace with the actual value
+                dash=dash,  # Replace with the actual value
+                prwhe=prwhe,  # Replace with the actual value
+                eaton_littler=eaton_littler,  # Replace with the actual value
+                tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
+                stato_cicatrice=stato_cicatrice,  # Replace with the actual value
+                modena=modena # Replace with the actual value
+            )
 
-                        # Add the instance to the session
-                db.session.add(new_entry)
+                    # Add the instance to the session
+            db.session.add(new_entry)
 
-            # Commit the session to persist the changes to the database
-            db.session.commit()
+        # Commit the session to persist the changes to the database
+        db.session.commit()
 
-            flash('Inserimento terapia con successo')
-            return redirect(url_for('doctor.profile'))
+        flash('Inserimento terapia con successo')
+        return redirect(url_for('doctor.profile'))
 
 
     #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
@@ -325,12 +334,12 @@ def next_control(patient_id,patient_name,next_control_number,row_id_to_update,de
     if form.submit_rizoartrosi.data and form.validate_on_submit():
 
         print(row_id_to_update)
-        pathology_row_to_update = Rizoartrosi.query.get(row_id_to_update)
+        pathology_row_to_update = PathologyData.query.get(row_id_to_update)
         
         #se è ultimo controllo non aggiorno la data del controllo successivo
         if(not check_if_last):
             #per trovare unicamente una row trovo id_patient,id_pathology_type, e prossimo controllo = next_control_number + 1
-            pathology_row_to_update_for_next_control= Rizoartrosi.query.filter(Rizoartrosi.id_patient == pathology_row_to_update.id_patient,Rizoartrosi.id_pathology_type==pathology_row_to_update.id_pathology_type,Rizoartrosi.next_control_number==int(next_control_number)+1).first()
+            pathology_row_to_update_for_next_control= PathologyData.query.filter(PathologyData.id_patient == pathology_row_to_update.id_patient,PathologyData.id_pathology_type==pathology_row_to_update.id_pathology_type,PathologyData.next_control_number==int(next_control_number)+1).first()
        
             #TODO: Per qualche motivo la data non è formattata secondo la regola del javascript
             next_date= get_date(request.form.get("selected_date"))
@@ -404,17 +413,17 @@ def patient_treatment_list(patient_id,patient_name):
     #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
     # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
 
-    pathology_list=(db.session.query(Rizoartrosi.id_patient,
+    pathology_list=(db.session.query(PathologyData.id_patient,
                                      User.name,
                                      Pathology.id,
                                      Pathology.name,
                                      PathologyType.id,
                                      PathologyType.name)
-    .join(Pathology, Pathology.id == Rizoartrosi.id_pathology)
-    .join(PathologyType, PathologyType.id == Rizoartrosi.id_pathology_type)
+    .join(Pathology, Pathology.id == PathologyData.id_pathology)
+    .join(PathologyType, PathologyType.id == PathologyData.id_pathology_type)
     .join(User,User.id==patient_id)
-    .filter(Rizoartrosi.id_patient.in_(patients_id_list), 
-            Rizoartrosi.next_control_number==1).all()
+    .filter(PathologyData.id_patient.in_(patients_id_list), 
+            PathologyData.next_control_number==1).all()
     )
     
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
@@ -435,9 +444,9 @@ def patient_history(id_pathology,id_pathology_type):
     print(id_pathology)
     print(id_pathology_type)
 
-    all_pathology_row = db.session.query(Rizoartrosi).filter(Rizoartrosi.id_patient == session.get(DoctorData.ID_PATIENT.value),
-                                          Rizoartrosi.id_pathology==id_pathology ,
-                                          Rizoartrosi.id_pathology_type== id_pathology_type).order_by(Rizoartrosi.next_control_date.asc()).all()
+    all_pathology_row = db.session.query(PathologyData).filter(PathologyData.id_patient == session.get(DoctorData.ID_PATIENT.value),
+                                          PathologyData.id_pathology==id_pathology ,
+                                          PathologyData.id_pathology_type== id_pathology_type).order_by(PathologyData.next_control_date.asc()).all()
     
     #Associa ad ogni controllo la propria lista di controlli attivi 
     pathology_and_control_maps=[]

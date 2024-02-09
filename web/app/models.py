@@ -21,7 +21,6 @@ class User(UserMixin, db.Model):
 
 
 class Pathology(db.Model):
-    pathology_list= [PATHOLOGY.RIZOARTROSI.value[1]]
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(120))
 
@@ -31,7 +30,7 @@ class Pathology(db.Model):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY:
-                id,name= row.value
+                id,name,timeline= row.value
                 new_instance = cls(name=name)
                 db.session.add(new_instance)
             
@@ -56,7 +55,7 @@ class PathologyType(db.Model):
             for row in PATHOLOGY_TYPE:
 
                 id,type,name= row.value
-                new_instance = cls(name=name,type=type)
+                new_instance = cls(name=name,type=type.value[0])
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -66,12 +65,11 @@ class PathologyType(db.Model):
 
 
 """
-This class will contains all data releated to
-doctor patients and all value from rizoartrosi based on
-different timestamp
+
+Classe che contiene tutti i dati degli interventi
 
 """
-class Rizoartrosi(db.Model):
+class PathologyData(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     
