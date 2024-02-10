@@ -1,7 +1,51 @@
 {% extends "base.html" %}
 
 
+
 {% block content %}
+
+
+<div class="row">
+    <h2> notifiche Paziente </h2>
+    <h5> Qui puoi gestire le richieste ricevute dai dottori </h5>
+    <p>
+        Accettando una richiesta permetterai al dottore di vedere la tua storia
+        clinica per aiutarlo nella scelta migliore della terapia per il tuo caso
+    </p>
+    
+    <p>
+       Una volta accetta la richiesta potrai rimuoverla in ogni momento impedendo al dottore
+       di prescriverti nuove terapie. 
+       Ricorda una volta eliminato il dottore non potrai più essere seguito. Solo il dottore potrà inviarti una 
+       nuova richiesta.
+    </p>
+
+    <table id="patientRequests" class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for notification, name in current_notifications_list %}
+                <tr class="patientRequest" data-id-doctor="{{ notification.id_doctor}}" data-id-notification="{{notification.id}}" >
+                    <td>Il {{name }}</td>
+                    {% if notification.status == 1 %}
+                        <td><button class="btn btn-success sendLinkPatient" >Accetta</button></td>
+                    {% endif %}
+                    {% if notification.status == 2 %}
+                        <td><button class="btn btn-danger removeLinkPatient" >Rimuovi</button></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+notifiche Paziente
+
 
 <!-- --------------------------ROW 2 NOTIFICHE ------------------------------- -->
 <h1 class="title mb-3">

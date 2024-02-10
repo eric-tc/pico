@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template,request,jsonify
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS
-from .models import User,DoctorPatient,Notification
+from .internal_data import ROLE,NOTIFICATION_STATUS,CONTROL_STATUS,RizoartrosiControlsTimeline
+from .models import User,DoctorPatient,Notification,PathologyData,PathologyType
 from sqlalchemy import or_, and_
 from . import db
+from datetime import datetime
+from .query_sql import select_next_treatments
 
 patient = Blueprint('patient', __name__)
 
@@ -23,9 +25,14 @@ def profile_patient():
         )
     ).all()
 
-    print(len(current_notifications_list))
+    #recupero la lista degli interventi successivi associati al paziente
+    next_treatments=[]
+    select_next_treatments(current_user.id,next_treatments)
 
-    return render_template('patient/profile_patient.html', name=current_user.name,current_notifications_list=current_notifications_list)
+    return render_template('patient/profile_patient.html', 
+                           name=current_user.name,
+                           current_notifications_list=current_notifications_list,
+                           next_treatments=next_treatments)
 
 
 """
