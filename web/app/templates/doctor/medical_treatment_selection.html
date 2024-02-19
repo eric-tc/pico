@@ -60,35 +60,15 @@
 
 
         <!-- Fratture Metacarpali -->
-        <div id="fratture_metacarpali_step1" style="display: none;" >
 
-          <label for="fratture_metacarpali_step1_valore" class="form-label">Tipo Classificazione</label>
-          <input type="number" name="fratture_metacarpali_step1_valore"  id="fratture_metacarpali_step1_valore" class="form-control" >
-
-          <label for="fratture_metacarpali_type" class="form-label">Seleziona Tipo</label>
-          <select class="form-select" id="fratture_metacarpali_type" name="fratture_metacarpali_type">
-              
-            <option value="1">Chirurgico</option>
-            <option value="2">Non Chirurgico</option>
-            
-          </select>
-          
-        </div>
-
-        <div id="fratture_metacarpali_classificazione_radiografica" style="display: none;" >
-          
-          <label for="fratture_metacarpali_classificazione_radiografica_value" class="form-label">Viti</label>
-          <select class="form-select" id="fratture_metacarpali_classificazione_radiografica_value" name="fratture_metacarpali_classificazione_radiografica_value">
-              
-            <option value="prossimale">Prossimale </option>
-            <option value="diafisaria">Diafisaria</option>
-            <option value="sottocapitata">Sottocapitata </option>
-            <option value="distale_articolare">Distale articolare</option>
-          </select>
-        </div>
+       
 
         
         <div id="fratture_metacarpali_non_chirurgico" style="display: none;" >
+
+          <h4>Non Chirurgico</h4>
+
+          
           <select class="form-select" id="fratture_metacarpali_chirurgico_type" name="fratture_metacarpali_chirurgico_type">
               
             <option value="1">Gesso Chiuso</option>
@@ -97,20 +77,20 @@
             
           </select>
           
-          <label for="non_chirirgico_polso">Polso</label>
-          <select id="non_chirirgico_polso" name="non_chirirgico_polso">
+          <label  class="form-label" for="non_chirirgico_polso">Polso</label>
+          <select class="form-select" id="non_chirirgico_polso" name="non_chirirgico_polso">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
 
-          <label for="non_chirirgico_mcpj">MCPj</label>
-          <select id="non_chirirgico_mcpj" name="non_chirirgico_mcpj">
+          <label  class="form-label"for="non_chirirgico_mcpj">MCPj</label>
+          <select class="form-select"  id="non_chirirgico_mcpj" name="non_chirirgico_mcpj">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
 
-          <label for="non_chirirgico_pipj">PIPj</label>
-          <select id="non_chirirgico_pipj" name="non_chirirgico_pipj">
+          <label  class="form-label" for="non_chirirgico_pipj">PIPj</label>
+          <select class="form-select" id="non_chirirgico_pipj" name="non_chirirgico_pipj">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
@@ -119,7 +99,7 @@
 
         <div id="fratture_metacarpali_chirurgico" style="display: none;" >
           
-          
+          <h4>Chirurgico</h4>
           <label for="fratture_metacarpali_chirurgico_data" class="form-label">Inserire Data Intervento</label>
           <p><input type="text" name="fratture_metacarpali_chirurgico_data"  id="radio_distale_datepicker" class="form-control-custom" ></p>
           
@@ -143,7 +123,25 @@
         </div>
 
 
-      
+        <div id="fratture_metacarpali_classificazione_radiografica" style="display: none;" >
+          
+          
+          <h4>
+            Classificazione
+          </h4>
+
+          <input type="number" name="fratture_metacarpali_step1_valore"  id="fratture_metacarpali_step1_valore" class="form-control" >
+
+
+          <label for="fratture_metacarpali_classificazione_radiografica_value" class="form-label">Classificazione Radiografica</label>
+          <select class="form-select" id="fratture_metacarpali_classificazione_radiografica_value" name="fratture_metacarpali_classificazione_radiografica_value">
+              
+            <option value="prossimale">Prossimale </option>
+            <option value="diafisaria">Diafisaria</option>
+            <option value="sottocapitata">Sottocapitata </option>
+            <option value="distale_articolare">Distale articolare</option>
+          </select>
+        </div>
 
         <div class="mb-3">
 
@@ -177,13 +175,11 @@
 
         if(categorySelect.value==3){
 
-          fratture_metacarpali_step1
-          $("#fratture_metacarpali_step1").show();
           $("#fratture_metacarpali_classificazione_radiografica").show();
         }
         else{
 
-          $("#fratture_metacarpali_step1").hide();
+         
           $("#fratture_metacarpali_classificazione_radiografica").hide();
         
           
@@ -198,15 +194,8 @@
           $("#classificazione_radiografica").hide();
 
         }
+        
 
-        if(categorySelect.value==3){
-          
-          fratture_metacarpali_step1
-          $("#fratture_metacarpali_step1").show();
-        }else{
-
-          $("#fratture_metacarpali_step1").hide();
-        }
         // Clear existing options
         itemSelect.innerHTML = '';
   
@@ -261,28 +250,25 @@
 
       }
 
-    }
-  
-    
-    function frattura_metacarpale_add_fields(){
+      //Fratture Metacarpali
 
-      const itemSelect = document.getElementById('fratture_metacarpali_type');
-      
-      //Chirurgico
-      if(itemSelect.value==1){
+            //Chirurgico
+      if(itemSelect.value==7){
 
         $("#fratture_metacarpali_non_chirurgico").hide();
         $("#fratture_metacarpali_chirurgico").show();
       
       }
 
-      if(itemSelect.value==2){
+      if(itemSelect.value==8){
         $("#fratture_metacarpali_chirurgico").hide();
         $("#fratture_metacarpali_non_chirurgico").show();
 
       }
 
     }
+
+
     // Attach the function to the "change" event of the "pathology" select
     document.getElementById('pathology').addEventListener('change', updateItemOptions);
   
@@ -290,8 +276,6 @@
      document.getElementById('pathology_type').addEventListener('change', show_additional_field);
     
 
-     document.getElementById('fratture_metacarpali_type').addEventListener('change', frattura_metacarpale_add_fields);
-  
   
     updateItemOptions();
     
