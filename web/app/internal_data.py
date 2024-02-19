@@ -177,6 +177,94 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         CONTROLS.TIPO_CICATRICE.value,
     ]
 
+class FratturaLesioneTendineaTimeline(PathologyTimline):
+    
+    #Questi sono i dati per ogni controllo
+    timeline= [0,4,6,8,12,26,52,154,520,1040]
+
+    first_control={
+        CONTROLS.NPRS_VAS.value: False,
+        CONTROLS.PROM_APROM_MCPJ.value: False,
+        CONTROLS.PROM_APROM_IPJ.value: False,
+        CONTROLS.ABDUZIONE.value: False,
+        CONTROLS.ANTEPOSIZIONE.value: False,
+        CONTROLS.KAPANDJI.value: False,
+        CONTROLS.PINCH.value: False,
+        CONTROLS.GRIP.value: False,
+        CONTROLS.DASH.value: False,
+        CONTROLS.PRWHE.value: False,
+        CONTROLS.EATON_LITTLER.value: False,
+        CONTROLS.MODENA.value: False
+    }
+
+    second_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value
+        ]
+
+    third_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.MODENA.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value,
+    ]
+
+class FrattureFalangeProssimaleTimeline(PathologyTimline):
+    
+    #Questi sono i dati per ogni controllo
+    timeline= [0,4,6,8,12,26,52,154,520,1040]
+
+    first_control={
+        CONTROLS.NPRS_VAS.value: False,
+        CONTROLS.PROM_APROM_MCPJ.value: False,
+        CONTROLS.PROM_APROM_IPJ.value: False,
+        CONTROLS.ABDUZIONE.value: False,
+        CONTROLS.ANTEPOSIZIONE.value: False,
+        CONTROLS.KAPANDJI.value: False,
+        CONTROLS.PINCH.value: False,
+        CONTROLS.GRIP.value: False,
+        CONTROLS.DASH.value: False,
+        CONTROLS.PRWHE.value: False,
+        CONTROLS.EATON_LITTLER.value: False,
+        CONTROLS.MODENA.value: False
+    }
+
+    second_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value
+        ]
+
+    third_control = [
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.MODENA.value,
+        CONTROLS.STATO_CICATRICE.value,
+        CONTROLS.TIPO_CICATRICE.value,
+    ]
+
 
 class FrattureRadioDistaliTimeline(PathologyTimline):
     
@@ -297,6 +385,8 @@ class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"Rizoartrosi",RizoartrosiControlsTimeline)
     FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale",FrattureRadioDistaliTimeline)
     FRATTURE_METACARPALI = (3,"Frattura Metacarpale",FratturaMetaCarpaleTimeline)
+    FRATTURE_FALANGE_PROSSIMALE = (4, "Fratture Falange Prossimale",FrattureFalangeProssimaleTimeline)
+    FERITA_LESIONE_TENDINEA = (5, "Ferita Lesione Tendinea",FratturaLesioneTendineaTimeline)
     
 class PATHOLOGY_TYPE(Enum):
     RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI,"Trapeziectomia e artoplastica in sospensione con APL")
@@ -307,6 +397,10 @@ class PATHOLOGY_TYPE(Enum):
     FRATTURA_RADIO_DISTALE_PLACCA_ALTRO= (6,PATHOLOGY.FRATTURA_RADIO_DISTALE,"Altro Frattura radio distale")
     FRATTURE_METACARPALI_CHIRURGICO = (7,PATHOLOGY.FRATTURE_METACARPALI,"Chirurgico")
     FRATTURE_METACARPALI_NON_CHIRURGICO = (8,PATHOLOGY.FRATTURE_METACARPALI,"Non Chirurgico")
+    FRATTURE_FALANGE_PROSSIMALE_CHIRURGICO=(9,PATHOLOGY.FRATTURE_FALANGE_PROSSIMALE,"Chirurgico")
+    FRATTURE_FALANGE_PROSSIMALE_NON_CHIRURGICO=(10,PATHOLOGY.FRATTURE_FALANGE_PROSSIMALE,"Non Chirurgico")
+    FERITA_LESIONE_TENDINEA_TENDINE_FLESSORE = (11,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Flessore")
+    FERITA_LESIONE_TENDINEA_TENDINE_ESTENSORE = (12,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Estensore")
     
 
 
