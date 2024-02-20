@@ -401,7 +401,34 @@ class PATHOLOGY_TYPE(Enum):
     FRATTURE_FALANGE_PROSSIMALE_NON_CHIRURGICO=(10,PATHOLOGY.FRATTURE_FALANGE_PROSSIMALE,"Non Chirurgico")
     FERITA_LESIONE_TENDINEA_TENDINE_FLESSORE = (11,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Flessore")
     FERITA_LESIONE_TENDINEA_TENDINE_ESTENSORE = (12,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Estensore")
+
+
+
+
+'''
+Questa classe contiene tutte le chiavi 
+del form utilizzato per la selezione delle patologie
+'''
+class PATHOLOGY_KEY_SELECTION_FORM:
+    #RADIO DISTALE
     
+    radio_distale_giorni_value= "radio_distale_giorni_value"
+    classificazione_radiografica_tipo_valore= "classificazione_radiografica_tipo_valore"
+    classificazione_radiografica_numero_valore= "classificazione_radiografica_numero_valore"
+    
+    #METACARPALI
+    fratture_metacarpali_non_chirurgico_type= "fratture_metacarpali_non_chirurgico_type"
+    fratture_metacarpali_non_chirirgico_polso= "fratture_metacarpali_non_chirirgico_polso"
+    fratture_metacarpali_non_chirirgico_mcpj = "fratture_metacarpali_non_chirirgico_mcpj"
+    fratture_metacarpali_non_chirirgico_mcpj_yes_value="fratture_metacarpali_non_chirirgico_mcpj_yes_value"
+    fratture_metacarpali_non_chirirgico_pipj="fratture_metacarpali_non_chirirgico_pipj"
+    fratture_metacarpali_non_chirirgico_pipj_yes="fratture_metacarpali_non_chirirgico_pipj_yes"
+    fratture_metacarpali_chirurgico_data="fratture_metacarpali_chirurgico_data"
+    fratture_metacarpali_fili_kirschner="fratture_metacarpali_fili_kirschner"
+    fratture_metacarpali_viti="fratture_metacarpali_viti"
+    fratture_metacarpali_step1_valore="fratture_metacarpali_step1_valore"
+    fratture_metacarpali_classificazione_radiografica_value="fratture_metacarpali_classificazione_radiografica_value"
+    fratture_metacarpali_diafisaria_value="fratture_metacarpali_diafisaria_value"
 
 
 def get_pathology_type_dict():

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer,func
@@ -158,6 +158,7 @@ def medical_treatment(patient_id,patient_name):
                             patient_name=patient_name,
                             pathology=PATHOLOGY,
                             pathology_type=PATHOLOGY_TYPE,
+                            form_keys=PATHOLOGY_KEY_SELECTION_FORM,
                             form=medicalForm,
                             pathology_names_id_options=pathology_names_id_options,
                             timeline_pathology=timeline_pathology,
