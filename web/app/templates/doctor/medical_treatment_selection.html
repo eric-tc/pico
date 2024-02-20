@@ -36,6 +36,10 @@
           <input type="text" class="form-control" id="additionalField" name="additionalField">
         </div>
 
+
+         <!-- Fratture Radio Distalu -->
+
+
         <div id="radio_distale_giorni" style="display: none;" >
 
           <label for="radio_distale_giorni_value" class="form-label">Inserire Data Intervento</label>
@@ -50,10 +54,10 @@
           </h4>
 
           <label for="classificazione_radiografica_tipo_valore" class="form-label">Tipo Classificazione</label>
-          <input type="text" name="classificazione_radiografica_tipo_valore"  id="classificazione_radiografica_tipo_valore" class="form-control-custom" >
+          <input type="text" name="classificazione_radiografica_tipo_valore"  id="classificazione_radiografica_tipo_valore" class="form-control" >
           
           <label for="classificazione_radiografica_numero_valore" class="form-label">Numero Classificazione</label>
-          <input type="text" name="classificazione_radiografica_numero_valore"  id="classificazione_radiografica_numero_valore" class="form-control-custom" >
+          <input type="text" name="classificazione_radiografica_numero_valore"  id="classificazione_radiografica_numero_valore" class="form-control" >
           
         </div>
 
@@ -69,7 +73,7 @@
           <h4>Non Chirurgico</h4>
 
           
-          <select class="form-select" id="fratture_metacarpali_chirurgico_type" name="fratture_metacarpali_chirurgico_type">
+          <select class="form-select" id="fratture_metacarpali_non_chirurgico_type" name="fratture_metacarpali_non_chirurgico_type">
               
             <option value="1">Gesso Chiuso</option>
             <option value="2">Valva Gessata</option>
@@ -77,24 +81,42 @@
             
           </select>
           
-          <label  class="form-label" for="non_chirirgico_polso">Polso</label>
-          <select class="form-select" id="non_chirirgico_polso" name="non_chirirgico_polso">
+          <label  class="form-label" for="fratture_metacarpali_non_chirirgico_polso">Polso</label>
+          <select class="form-select" id="fratture_metacarpali_non_chirirgico_polso" name="fratture_metacarpali_non_chirirgico_polso">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
 
-          <label  class="form-label"for="non_chirirgico_mcpj">MCPj</label>
-          <select class="form-select"  id="non_chirirgico_mcpj" name="non_chirirgico_mcpj">
-            <option value="0">Si</option>
-            <option value="1">No</option>
-          </select>
+          
 
-          <label  class="form-label" for="non_chirirgico_pipj">PIPj</label>
-          <select class="form-select" id="non_chirirgico_pipj" name="non_chirirgico_pipj">
-            <option value="0">Si</option>
-            <option value="1">No</option>
+          <label  class="form-label"for="fratture_metacarpali_non_chirirgico_mcpj">MCPj</label>
+          <select class="form-select"  id="fratture_metacarpali_non_chirirgico_mcpj" name="fratture_metacarpali_non_chirirgico_mcpj">
+            <option value="0">No</option>
+            <option value="1">Si</option>
           </select>
           
+
+          <div id="fratture_metacarpali_non_chirirgico_mcpj_yes" style="display:none">
+            <label  class="form-label" for="fratture_metacarpali_non_chirirgico_mcpj_yes">Valore</label>
+            <select class="form-select"  id="fratture_metacarpali_non_chirirgico_mcpj_yes_value" name="fratture_metacarpali_non_chirirgico_mcpj_yes_value">
+              <option value="Flesse">Flesse</option>
+              <option value="Estese">Estese</option>
+            </select>
+          </div>
+
+          <label  class="form-label" for="fratture_metacarpali_non_chirirgico_pipj">PIPj</label>
+          <select class="form-select" id="fratture_metacarpali_non_chirirgico_pipj" name="fratture_metacarpali_non_chirirgico_pipj">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+          </select>
+
+          <div id="fratture_metacarpali_non_chirirgico_pipj_yes" style="display:none">
+            <label  class="form-label" for="fratture_metacarpali_non_chirirgico_pipj_yes">Valore</label>
+            <select class="form-select"  id="fratture_metacarpali_non_chirirgico_pipj_yes_value" name="fratture_metacarpali_non_chirirgico_pipj_yes_value">
+              <option value="Flesse">Flesse</option>
+              <option value="Estese">Estese</option>
+            </select>
+          </div>
         </div>
 
         <div id="fratture_metacarpali_chirurgico" style="display: none;" >
@@ -268,12 +290,49 @@
 
     }
 
+    //Fratture Metacarpali Non chirurgico
+    function value_mcpj(){
+      const itemSelect = document.getElementById('fratture_metacarpali_non_chirirgico_mcpj');
+
+      if(itemSelect.value==0){
+
+        $("#fratture_metacarpali_non_chirirgico_mcpj_yes").hide();
+
+      }
+      else{
+
+        $("#fratture_metacarpali_non_chirirgico_mcpj_yes").show();
+      }
+
+    }
+
+    function value_pipj(){
+      
+      const itemSelect = document.getElementById('fratture_metacarpali_non_chirirgico_pipj');
+
+      if(itemSelect.value==0){
+
+        $("#fratture_metacarpali_non_chirirgico_pipj_yes").hide();
+
+      }
+      else{
+
+        $("#fratture_metacarpali_non_chirirgico_pipj_yes").show();
+      }
+
+    }
+
+
 
     // Attach the function to the "change" event of the "pathology" select
     document.getElementById('pathology').addEventListener('input', updateItemOptions);
   
-     // Attach the function to the "change" event of the "pathology_type" select
-     document.getElementById('pathology_type').addEventListener('input', show_additional_field);
+    // Attach the function to the "change" event of the "pathology_type" select
+    document.getElementById('pathology_type').addEventListener('input', show_additional_field);
+
+    document.getElementById('fratture_metacarpali_non_chirirgico_mcpj').addEventListener('input', value_mcpj);
+    
+    document.getElementById('fratture_metacarpali_non_chirirgico_pipj').addEventListener('input', value_pipj);
     
 
   
