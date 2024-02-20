@@ -271,6 +271,13 @@ def pathology():
 
     print(request.form.get("selected_date"))
     print(request.form.get("selected_time"))
+
+    print("FRATTURE METACARPALI")
+    print(request.form.get("fratture_metacarpali_step1_valore"))
+    print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
+
+    
+
     print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
     print(f"PRIMO INTERVENTO TEMPO SELEZIONATA {session.get(DoctorData.CONTROL_TIME.value)}")
     

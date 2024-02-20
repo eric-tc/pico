@@ -11,7 +11,7 @@
       </h4>
 
 
-      <form action="{{ url_for('doctor.pathology') }}" method="post">
+      <form id="pathology_selection" action="{{ url_for('doctor.pathology') }}" method="post">
         
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="mb-3 mt-4">
@@ -152,7 +152,7 @@
             Classificazione
           </h4>
 
-          <input type="number" name="fratture_metacarpali_step1_valore"  id="fratture_metacarpali_step1_valore" class="form-control" >
+          <input type="text" name="fratture_metacarpali_step1_valore"  id="fratture_metacarpali_step1_valore" class="form-control" >
 
 
           <label for="fratture_metacarpali_classificazione_radiografica_value" class="form-label">Classificazione Radiografica</label>
@@ -163,6 +163,18 @@
             <option value="sottocapitata">Sottocapitata </option>
             <option value="distale_articolare">Distale articolare</option>
           </select>
+
+          <div id="fratture_metacarpali_diafisaria" style="display: none;">
+            
+            <label for="fratture_metacarpali_diafisaria_value" class="form-label">Diafisaria Valore</label>
+
+            <select class="form-select" id="fratture_metacarpali_diafisaria_value" name="fratture_metacarpali_diafisaria_value">
+              <option value="Trasversa">Trasversa </option>
+              <option value="Obliqua">Obliqua</option>
+              <option value="multiframmentaria">Multiframmentaria </option>
+            </select>
+
+          </div>
         </div>
 
         <div class="mb-3">
@@ -322,6 +334,21 @@
 
     }
 
+    function metacarpale_diafisaria(){
+      
+      const itemSelect = document.getElementById('fratture_metacarpali_classificazione_radiografica_value');
+      
+      if(itemSelect.value=="diafisaria"){
+
+        $("#fratture_metacarpali_diafisaria").show();
+      }
+      else{
+        
+        $("#fratture_metacarpali_diafisaria").hide();
+
+      }
+    }
+
 
 
     // Attach the function to the "change" event of the "pathology" select
@@ -329,15 +356,29 @@
   
     // Attach the function to the "change" event of the "pathology_type" select
     document.getElementById('pathology_type').addEventListener('input', show_additional_field);
-
-    document.getElementById('fratture_metacarpali_non_chirirgico_mcpj').addEventListener('input', value_mcpj);
     
+    //Metacarpali
+    document.getElementById('fratture_metacarpali_non_chirirgico_mcpj').addEventListener('input', value_mcpj);
     document.getElementById('fratture_metacarpali_non_chirirgico_pipj').addEventListener('input', value_pipj);
+    document.getElementById('fratture_metacarpali_classificazione_radiografica_value').addEventListener('input', metacarpale_diafisaria);
     
 
   
     updateItemOptions();
     
+
+    function removeHiddenFormElements() {
+      $('form input[type="text"], form select').each(function() {
+          if (!$(this).is(':visible')) {
+              $(this).remove();
+          }
+      });
+    }
+
+    // Attach event listener to form submit event
+    $('form').submit(function() {
+        removeHiddenFormElements();
+    });
 
 
     $("#radio_distale_datepicker").datepicker({
