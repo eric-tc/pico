@@ -9,7 +9,7 @@ import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime
 from werkzeug.security import generate_password_hash
-
+import json
 from .internal_data import get_pathology_type_dict
 from .query_sql import select_next_treatments
 
@@ -140,7 +140,10 @@ def patients_list():
 @doctor.route('/medical_treatment/<patient_id>/<patient_name>/',methods=["GET"])
 @login_required
 def medical_treatment(patient_id,patient_name):
-    
+
+
+    session.pop(DoctorData.OPTIONS_FIELD.value, None)
+
     medicalForm= MedicalTreatmentForm()
 
     session[DoctorData.ID_PATIENT.value]=patient_id
@@ -165,6 +168,8 @@ def medical_treatment(patient_id,patient_name):
                             default_date= datetime.utcnow()
                           )
 
+
+
 # From used to setup pathology parameters
 @doctor.route('/pathology/',methods=["POST"])
 @login_required
@@ -176,6 +181,9 @@ def pathology():
     print(f'Form Errors: {form.errors}')
     print(f'Form Errors: {form.validate_on_submit()}')
 
+    session_value = session.get(DoctorData.ID_PATIENT.value, None)
+    print(session_value)
+    
     if form.submit_rizoartrosi.data and form.validate_on_submit():
         print("SUBMIT RIZOARTROSI")
         # Extract form data from the request
@@ -223,6 +231,11 @@ def pathology():
                 if(session.get(DoctorData.CONTROL_TIME.value)!=""):
                     next_control_time= session.get(DoctorData.CONTROL_TIME.value)
                     is_date_accepted=1
+            
+            session_value = session.get(DoctorData.OPTIONS_FIELD.value, None)
+            print("session Value")
+
+           
 
             new_entry = PathologyData(
                 id_doctor=current_user.id,  # Replace with the actual doctor ID
@@ -247,8 +260,16 @@ def pathology():
                 eaton_littler=eaton_littler,  # Replace with the actual value
                 tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
                 stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-                modena=modena # Replace with the actual value
-            )
+                modena=modena, # Replace with the actual value
+                field1= json.dumps(session_value[0]) if 0 < len(session_value)  else None,
+                field2= json.dumps(session_value[1]) if 1 < len(session_value)  else None,
+                field3= json.dumps(session_value[2]) if 2 < len(session_value)  else None,
+                field4= json.dumps(session_value[3]) if 3 < len(session_value)  else None,
+                field5= json.dumps(session_value[4]) if 4 < len(session_value)  else None,
+                field6= json.dumps(session_value[5]) if 5 < len(session_value)  else None,
+                field7= json.dumps(session_value[6]) if 6 < len(session_value)  else None
+                )
+        
 
                     # Add the instance to the session
             db.session.add(new_entry)
@@ -274,11 +295,22 @@ def pathology():
     print(request.form.get("selected_time"))
 
     print("FRATTURE METACARPALI")
-    
+
+    for key in PATHOLOGY_KEY_SELECTION_FORM:
+        
+        if(request.form.get(key.value)):
+
+            if(DoctorData.OPTIONS_FIELD.value in session):
+                session[DoctorData.OPTIONS_FIELD.value].append({key.value : request.form.get(key.value)})
+            else:
+                session[DoctorData.OPTIONS_FIELD.value]=[{key.value : request.form.get(key.value)}]
+
+    print("array valori opzionali")
+    print (session[DoctorData.OPTIONS_FIELD.value])
 
 
-    print(request.form.get("fratture_metacarpali_step1_valore"))
-    print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
+    # print(request.form.get("fratture_metacarpali_step1_valore"))
+    # print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
 
     
 

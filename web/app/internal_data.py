@@ -379,6 +379,7 @@ class DoctorData(Enum):
     CONTROL_TIME = "first_control_time"
     #questa chiave tiene traccia dell'appuntamento del controllo successivo
     NUM_CONTROL = "control_number"
+    OPTIONS_FIELD= "options_field"
         
 
 class PATHOLOGY(Enum):
@@ -422,6 +423,7 @@ class PATHOLOGY_KEY_SELECTION_FORM(Enum):
     fratture_metacarpali_non_chirirgico_mcpj_yes_value="fratture_metacarpali_non_chirirgico_mcpj_yes_value"
     fratture_metacarpali_non_chirirgico_pipj="fratture_metacarpali_non_chirirgico_pipj"
     fratture_metacarpali_non_chirirgico_pipj_yes="fratture_metacarpali_non_chirirgico_pipj_yes"
+    fratture_metacarpali_non_chirirgico_pipj_yes_value="fratture_metacarpali_non_chirirgico_pipj_yes_value"
     fratture_metacarpali_chirurgico_data="fratture_metacarpali_chirurgico_data"
     fratture_metacarpali_fili_kirschner="fratture_metacarpali_fili_kirschner"
     fratture_metacarpali_viti="fratture_metacarpali_viti"
@@ -432,11 +434,12 @@ class PATHOLOGY_KEY_SELECTION_FORM(Enum):
     #FALANGE_PROSSIMALE
 
     fratture_falange_prossimale_non_chirurgico_type= "fratture_falange_prossimale_non_chirurgico_type"
-    fratture_falanage_prossimale_non_chirirgico_polso= "fratture_falange_prossimale_non_chirirgico_polso"
+    fratture_falange_prossimale_non_chirirgico_polso= "fratture_falange_prossimale_non_chirirgico_polso"
     fratture_falange_prossimale_non_chirirgico_mcpj = "fratture_falange_prossimale_non_chirirgico_mcpj"
     fratture_falange_prossimale_non_chirirgico_mcpj_yes_value="fratture_falange_prossimale_non_chirirgico_mcpj_yes_value"
     fratture_falange_prossimale_non_chirirgico_pipj="fratture_falange_prossimale_non_chirirgico_pipj"
     fratture_falange_prossimale_non_chirirgico_pipj_yes="fratture_falange_prossimale_non_chirirgico_pipj_yes"
+    fratture_falange_prossimale_non_chirirgico_pipj_yes_value="fratture_falange_prossimale_non_chirirgico_pipj_yes_value"
     fratture_falange_prossimale_chirurgico_data="fratture_falange_prossimale_chirurgico_data"
     fratture_falange_prossimale_fili_kirschner="fratture_falange_prossimale_fili_kirschner"
     fratture_falange_prossimale_viti="fratture_falange_prossimale_viti"
