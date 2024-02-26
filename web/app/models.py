@@ -118,7 +118,15 @@ class PathologyData(db.Model):
     eaton_littler=db.Column(db.Integer)
     tipo_cicatrice= db.Column(db.String(100))
     stato_cicatrice = db.Column(db.String(100))
-    modena = db.Column(db.String(100)) 
+    modena = db.Column(db.String(100))
+
+    #Campi utilizzati per salvare i diversi parametri 
+    #in base alla tipologia di intervento selezionato
+    field1 = db.Column(db.String(30))
+    field2 = db.Column(db.String(30))
+    field3 = db.Column(db.String(30))
+    field4 = db.Column(db.String(30))
+    field5 = db.Column(db.String(30))
     
 
 

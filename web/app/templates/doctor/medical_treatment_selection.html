@@ -39,11 +39,13 @@
           
          <!-- Fratture Radio Distalu -->
 
+        
+
 
         <div id="radio_distale_giorni" style="display: none;" >
 
           <label for="radio_distale_giorni_value" class="form-label">Inserire Data Intervento</label>
-          <p><input type="text" name="{{form_keys.radio_distale_giorni_value}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
+          <p><input type="text" name="{{form_keys.radio_distale_giorni_value.value}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
           
         </div>
 
@@ -54,10 +56,10 @@
           </h4>
 
           <label for="classificazione_radiografica_tipo_valore" class="form-label">Tipo Classificazione</label>
-          <input type="text" name="{{form_keys.classificazione_radiografica_tipo_valore}}"  id="{{form_keys.classificazione_radiografica_tipo_valore}}" class="form-control" >
+          <input type="text" name="{{form_keys.classificazione_radiografica_tipo_valore.value}}"  id="{{form_keys.classificazione_radiografica_tipo_valore.value}}" class="form-control" >
           
           <label for="classificazione_radiografica_numero_valore" class="form-label">Numero Classificazione</label>
-          <input type="text" name="{{form_keys.classificazione_radiografica_numero_valore}}"  id="{{form_keys.classificazione_radiografica_numero_valore}}" class="form-control" >
+          <input type="text" name="{{form_keys.classificazione_radiografica_numero_valore.value}}"  id="{{form_keys.classificazione_radiografica_numero_valore.value}}" class="form-control" >
           
         </div>
 
@@ -73,7 +75,7 @@
           <h4>Non Chirurgico</h4>
 
           
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirurgico_type}}" name="{{form_keys.fratture_metacarpali_non_chirurgico_type}}">
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirurgico_type.value}}" name="{{form_keys.fratture_metacarpali_non_chirurgico_type.value}}">
               
             <option value="1">Gesso Chiuso</option>
             <option value="2">Valva Gessata</option>
@@ -82,7 +84,7 @@
           </select>
           
           <label  class="form-label" for="fratture_metacarpali_non_chirirgico_polso">Polso</label>
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirirgico_polso}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_polso}}">
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirirgico_polso.value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_polso.value}}">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
@@ -90,7 +92,7 @@
           
 
           <label  class="form-label"for="fratture_metacarpali_non_chirirgico_mcpj">MCPj</label>
-          <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj}}">
+          <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj.value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj.value}}">
             <option value="0">No</option>
             <option value="1">Si</option>
           </select>
@@ -98,21 +100,21 @@
 
           <div id="fratture_metacarpali_non_chirirgico_mcpj_yes" style="display:none">
             <label  class="form-label" for="fratture_metacarpali_non_chirirgico_mcpj_yes">Valore</label>
-            <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj_yes_value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj_yes_value}}">
+            <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj_yes_value.value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_mcpj_yes_value.value}}">
               <option value="Flesse">Flesse</option>
               <option value="Estese">Estese</option>
             </select>
           </div>
 
-          <label  class="form-label" for="fratture_metacarpali_non_chirirgico_pipj">PIPj</label>
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_pipj}}">
+          <label  class="form-label" for="{{form_keys.fratture_metacarpali_non_chirirgico_pipj.value}}">PIPj</label>
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj.value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_pipj.value}}">
             <option value="0">No</option>
             <option value="1">Si</option>
           </select>
 
-          <div id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes}}" style="display:none">
-            <label  class="form-label" for="fratture_metacarpali_non_chirirgico_pipj_yes">Valore</label>
-            <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes_value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes_value}}">
+          <div id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes.value}}" style="display:none">
+            <label  class="form-label" for="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes_value.value}}">Valore</label>
+            <select class="form-select"  id="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes_value.value}}" name="{{form_keys.fratture_metacarpali_non_chirirgico_pipj_yes_value.value}}">
               <option value="Flesse">Flesse</option>
               <option value="Estese">Estese</option>
             </select>
@@ -122,12 +124,12 @@
         <div id="fratture_metacarpali_chirurgico" style="display: none;" >
           
           <h4>Chirurgico</h4>
-          <label for="fratture_metacarpali_chirurgico_data" class="form-label">Inserire Data Intervento</label>
-          <p><input type="text" name="{{form_keys.fratture_metacarpali_chirurgico_data}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
+          <label for="{{form_keys.fratture_metacarpali_chirurgico_data.value}}" class="form-label">Inserire Data Intervento</label>
+          <p><input type="text" name="{{form_keys.fratture_metacarpali_chirurgico_data.value}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
           
 
-          <label for="fratture_metacarpali_fili_kirschner" class="form-label">Fili Kirschner</label>
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_fili_kirschner}}" name="{{form_keys.fratture_metacarpali_fili_kirschner}}">
+          <label for="{{form_keys.fratture_metacarpali_fili_kirschner.value}}" class="form-label">Fili Kirschner</label>
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_fili_kirschner.value}}" name="{{form_keys.fratture_metacarpali_fili_kirschner.value}}">
               
             <option value="endomidollari_anterogradi">Endomidollari anterogradi</option>
             <option value="endomidollari_retrogradi">Endomidollari retrogradi</option>
@@ -135,8 +137,8 @@
             
           </select>
 
-          <label for="fratture_metacarpali_viti" class="form-label">Viti</label>
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_viti}}" name="{{form_keys.fratture_metacarpali_viti}}">
+          <label for="{{form_keys.fratture_metacarpali_viti.value}}" class="form-label">Viti</label>
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_viti.value}}" name="{{form_keys.fratture_metacarpali_viti.value}}">
               
             <option value="endomidollari">Endomidollari </option>
             <option value="lag">lag</option>
@@ -152,11 +154,11 @@
             Classificazione
           </h4>
 
-          <input type="text" name="{{form_keys.fratture_metacarpali_step1_valore}}"  id="{{form_keys.fratture_metacarpali_step1_valore}}" class="form-control" >
+          <input type="text" name="{{form_keys.fratture_metacarpali_step1_valore.value}}"  id="{{form_keys.fratture_metacarpali_step1_valore.value}}" class="form-control" >
 
 
-          <label for="fratture_metacarpali_classificazione_radiografica_value" class="form-label">Classificazione Radiografica</label>
-          <select class="form-select" id="{{form_keys.fratture_metacarpali_classificazione_radiografica_value}}" name="{{form_keys.fratture_metacarpali_classificazione_radiografica_value}}">
+          <label for="{{form_keys.fratture_metacarpali_classificazione_radiografica_value.value}}" class="form-label">Classificazione Radiografica</label>
+          <select class="form-select" id="{{form_keys.fratture_metacarpali_classificazione_radiografica_value.value}}" name="{{form_keys.fratture_metacarpali_classificazione_radiografica_value.value}}">
               
             <option value="prossimale">Prossimale </option>
             <option value="diafisaria">Diafisaria</option>
@@ -166,9 +168,9 @@
 
           <div id="fratture_metacarpali_diafisaria" style="display: none;">
             
-            <label for="fratture_metacarpali_diafisaria_value" class="form-label">Diafisaria Valore</label>
+            <label for="{{form_keys.fratture_metacarpali_diafisaria_value.value}}" class="form-label">Diafisaria Valore</label>
 
-            <select class="form-select" id="{{form_keys.fratture_metacarpali_diafisaria_value}}" name="{{form_keys.fratture_metacarpali_diafisaria_value}}">
+            <select class="form-select" id="{{form_keys.fratture_metacarpali_diafisaria_value.value}}" name="{{form_keys.fratture_metacarpali_diafisaria_value.value}}">
               <option value="Trasversa">Trasversa </option>
               <option value="Obliqua">Obliqua</option>
               <option value="multiframmentaria">Multiframmentaria </option>
@@ -185,7 +187,7 @@
           <h4>Non Chirurgico Falange</h4>
 
           
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirurgico_type}}" name="{{form_keys.fratture_falange_prossimale_non_chirurgico_type}}">
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirurgico_type.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirurgico_type.value}}">
               
             <option value="1">Gesso Chiuso</option>
             <option value="2">Valva Gessata</option>
@@ -193,8 +195,8 @@
             
           </select>
           
-          <label  class="form-label" for="fratture_falange_prossimale_non_chirirgico_polso">Polso</label>
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirirgico_polso}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_polso}}">
+          <label  class="form-label" for="{{form_keys.fratture_falange_prossimale_non_chirirgico_polso.value}}">Polso</label>
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirirgico_polso.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_polso.value}}">
             <option value="0">Si</option>
             <option value="1">No</option>
           </select>
@@ -202,29 +204,29 @@
           
 
           <label  class="form-label"for="fratture_falange_prossimale_non_chirirgico_mcpj">MCPj</label>
-          <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj}}">
+          <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj.value}}">
             <option value="0">No</option>
             <option value="1">Si</option>
           </select>
           
 
           <div id="fratture_falange_prossimale_non_chirirgico_mcpj_yes" style="display:none">
-            <label  class="form-label" for="fratture_falange_prossimale_non_chirirgico_mcpj_yes">Valore</label>
-            <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj_yes_value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj_yes_value}}">
+            <label  class="form-label" for="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj_yes_value.value}}">Valore</label>
+            <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj_yes_value.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_mcpj_yes_value.value}}">
               <option value="Flesse">Flesse</option>
               <option value="Estese">Estese</option>
             </select>
           </div>
 
-          <label  class="form-label" for="fratture_falange_prossimale_non_chirirgico_pipj">PIPj</label>
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj}}">
+          <label  class="form-label" for="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj.value}}">PIPj</label>
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj.value}}">
             <option value="0">No</option>
             <option value="1">Si</option>
           </select>
 
           <div id="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes}}" style="display:none">
-            <label  class="form-label" for="fratture_falange_prossimale_non_chirirgico_pipj_yes">Valore</label>
-            <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes_value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes_value}}">
+            <label  class="form-label" for="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes_value.value}}">Valore</label>
+            <select class="form-select"  id="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes_value.value}}" name="{{form_keys.fratture_falange_prossimale_non_chirirgico_pipj_yes_value.value}}">
               <option value="Flesse">Flesse</option>
               <option value="Estese">Estese</option>
             </select>
@@ -234,12 +236,12 @@
         <div id="fratture_falange_prossimale_chirurgico" style="display: none;" >
           
           <h4>Chirurgico Falange</h4>
-          <label for="fratture_falange_prossimale_chirurgico_data" class="form-label">Inserire Data Intervento</label>
-          <p><input type="text" name="{{form_keys.fratture_falange_prossimale_chirurgico_data}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
+          <label for="{{form_keys.fratture_falange_prossimale_chirurgico_data.value}}" class="form-label">Inserire Data Intervento</label>
+          <p><input type="text" name="{{form_keys.fratture_falange_prossimale_chirurgico_data.value}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
           
 
-          <label for="fratture_falange_prossimale_fili_kirschner" class="form-label">Fili Kirschner</label>
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_fili_kirschner}}" name="{{form_keys.fratture_falange_prossimale_fili_kirschner}}">
+          <label for="{{form_keys.fratture_falange_prossimale_fili_kirschner.value}}" class="form-label">Fili Kirschner</label>
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_fili_kirschner.value}}" name="{{form_keys.fratture_falange_prossimale_fili_kirschner.value}}">
               
             <option value="endomidollari_anterogradi">Endomidollari anterogradi</option>
             <option value="endomidollari_retrogradi">Endomidollari retrogradi</option>
@@ -247,8 +249,8 @@
             
           </select>
 
-          <label for="fratture_falange_prossimale_viti" class="form-label">Viti</label>
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_viti}}" name="{{form_keys.fratture_falange_prossimale_viti}}">
+          <label for="{{form_keys.fratture_falange_prossimale_viti.value}}" class="form-label">Viti</label>
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_viti.value}}" name="{{form_keys.fratture_falange_prossimale_viti.value}}">
               
             <option value="endomidollari">Endomidollari </option>
             <option value="lag">lag</option>
@@ -263,11 +265,11 @@
             Classificazione
           </h4>
 
-          <input type="text" name="{{form_keys.fratture_falange_prossimale_step1_valore}}"  id="{{form_keys.fratture_falange_prossimale_step1_valore}}" class="form-control" >
+          <input type="text" name="{{form_keys.fratture_falange_prossimale_step1_valore.value}}"  id="{{form_keys.fratture_falange_prossimale_step1_valore.value}}" class="form-control" >
 
 
-          <label for="fratture_falange_prossimale_classificazione_radiografica_value" class="form-label">Classificazione Radiografica</label>
-          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_classificazione_radiografica_value}}" name="{{form_keys.fratture_falange_prossimale_classificazione_radiografica_value}}">
+          <label for="{{form_keys.fratture_falange_prossimale_classificazione_radiografica_value.value}}" class="form-label">Classificazione Radiografica</label>
+          <select class="form-select" id="{{form_keys.fratture_falange_prossimale_classificazione_radiografica_value.value}}" name="{{form_keys.fratture_falange_prossimale_classificazione_radiografica_value.value}}">
               
             <option value="prossimale">Prossimale </option>
             <option value="diafisaria">Diafisaria</option>
@@ -277,9 +279,9 @@
 
           <div id="fratture_falange_prossimale_diafisaria" style="display: none;">
             
-            <label for="fratture_falange_prossimale_diafisaria_value" class="form-label">Diafisaria Valore</label>
+            <label for="{{form_keys.fratture_falange_prossimale_diafisaria_value.value}}" class="form-label">Diafisaria Valore</label>
 
-            <select class="form-select" id="{{form_keys.fratture_falange_prossimale_diafisaria_value}}" name="{{form_keys.fratture_falange_prossimale_diafisaria_value}}">
+            <select class="form-select" id="{{form_keys.fratture_falange_prossimale_diafisaria_value.value}}" name="{{form_keys.fratture_falange_prossimale_diafisaria_value.value}}">
               <option value="Trasversa">Trasversa </option>
               <option value="Obliqua">Obliqua</option>
               <option value="multiframmentaria">Multiframmentaria </option>

@@ -274,6 +274,9 @@ def pathology():
     print(request.form.get("selected_time"))
 
     print("FRATTURE METACARPALI")
+    
+
+
     print(request.form.get("fratture_metacarpali_step1_valore"))
     print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
 

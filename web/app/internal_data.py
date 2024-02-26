@@ -409,13 +409,12 @@ class PATHOLOGY_TYPE(Enum):
 Questa classe contiene tutte le chiavi 
 del form utilizzato per la selezione delle patologie
 '''
-class PATHOLOGY_KEY_SELECTION_FORM:
+class PATHOLOGY_KEY_SELECTION_FORM(Enum):
     #RADIO DISTALE
     
     radio_distale_giorni_value= "radio_distale_giorni_value"
     classificazione_radiografica_tipo_valore= "classificazione_radiografica_tipo_valore"
     classificazione_radiografica_numero_valore= "classificazione_radiografica_numero_valore"
-    
     #METACARPALI
     fratture_metacarpali_non_chirurgico_type= "fratture_metacarpali_non_chirurgico_type"
     fratture_metacarpali_non_chirirgico_polso= "fratture_metacarpali_non_chirirgico_polso"
@@ -443,7 +442,7 @@ class PATHOLOGY_KEY_SELECTION_FORM:
     fratture_falange_prossimale_viti="fratture_falange_prossimale_viti"
     fratture_falange_prossimale_step1_valore="fratture_falange_prossimale_step1_valore"
     fratture_falange_prossimale_classificazione_radiografica_value="fratture_falange_prossimale_classificazione_radiografica_value"
-    fratture_falange_prossimale_diafisaria_value="fratture_falange_prossimale_diafisaria_value"
+    fratture_falange_prossimale_diafisaria_value="fratture_falange_prossimale_diafisaria_value" 
 
 def get_pathology_type_dict():
 
