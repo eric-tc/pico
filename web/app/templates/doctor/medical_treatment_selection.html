@@ -182,7 +182,7 @@
         
         <div id="fratture_falange_prossimale_non_chirurgico" style="display: none;" >
 
-          <h4>Non Chirurgico</h4>
+          <h4>Non Chirurgico Falange</h4>
 
           
           <select class="form-select" id="{{form_keys.fratture_falange_prossimale_non_chirurgico_type}}" name="{{form_keys.fratture_falange_prossimale_non_chirurgico_type}}">
@@ -233,7 +233,7 @@
 
         <div id="fratture_falange_prossimale_chirurgico" style="display: none;" >
           
-          <h4>Chirurgico</h4>
+          <h4>Chirurgico Falange</h4>
           <label for="fratture_falange_prossimale_chirurgico_data" class="form-label">Inserire Data Intervento</label>
           <p><input type="text" name="{{form_keys.fratture_falange_prossimale_chirurgico_data}}"  id="radio_distale_datepicker" class="form-control-custom" ></p>
           
@@ -309,7 +309,16 @@
     const jsonStringNames ='{{pathology_names_id_options | safe}}';
     var optionsByName = JSON.parse(jsonStringNames);
     console.log("SelectedPathology",selectedPathologyid);
+    
+    //Funzione che serve per nascondere a schermo i controlli non necessari
+    //quando cambio patologia
+    function hide_common_field(){
+      $("#fratture_metacarpali_non_chirurgico").hide();
+      $("#fratture_metacarpali_chirurgico").hide();
+      $("#fratture_falange_prossimale_non_chirurgico").hide();
+      $("#fratture_falange_prossimale_chirurgico").hide();
 
+    }
     // Function to update options in the "Item" select based on the selected category
     function updateItemOptions() {
         const categorySelect = document.getElementById('pathology');
@@ -317,9 +326,18 @@
         const additionalFieldContainer = document.getElementById('additionalFieldContainer');
         const selectedCategory = categorySelect.value;
 
+        hide_common_field();
 
-        
+        if(categorySelect.value==4){
 
+          $("#fratture_falange_prossimale_classificazione_radiografica").show();
+        }
+        else{
+
+         
+          $("#fratture_falange_prossimale_classificazione_radiografica").hide();
+          
+        }
 
         if(categorySelect.value==3){
 
@@ -357,7 +375,15 @@
         changeDefaultDate();
         console.log("UPDATE TIMELINE",selectedCategory);
         
-        for (var i =0; i < id_array.length; i++){
+        //il primo elemento della select è sempre l'opzione scegli
+        const option = document.createElement('option');
+        option.value = "";
+          
+        option.textContent = "---Scegli----";
+        itemSelect.appendChild(option);
+
+
+        for (var i =0; i < id_array.length + 1; i++){
 
           const option = document.createElement('option');
           option.value = id_array[i];
@@ -413,19 +439,19 @@
 
       }
 
+      
       if(itemSelect.value==9){
 
         $("#fratture_falange_prossimale_non_chirurgico").hide();
         $("#fratture_falange_prossimale_chirurgico").show();
-      
       }
+    
 
       if(itemSelect.value==10){
         $("#fratture_falange_prossimale_chirurgico").hide();
         $("#fratture_falange_prossimale_non_chirurgico").show();
 
       }
-
     }
 
     //Fratture Metacarpali Non chirurgico
