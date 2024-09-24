@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
-from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS
+from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS,PATHOLOGY_STATUS
 
 class User(UserMixin, db.Model):
 
@@ -40,6 +40,32 @@ class Pathology(db.Model):
             print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
 
 
+"""
+Tabella per gestire lo stato di una patologia
+
+1: Prima intervento
+2: Trattamento
+3: Post Intervento
+
+"""
+class PathologyStatus(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(120))
+
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for row in PATHOLOGY_STATUS:
+                id,name= row.value
+                new_instance = cls(name=name)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
 
 class PathologyType(db.Model):
    
@@ -84,6 +110,10 @@ class PathologyData(db.Model):
     
     id_pathology_type= db.Column(db.Integer,db.ForeignKey('pathology_type.id'),nullable=False)
     pathology_type = db.relationship('PathologyType', foreign_keys=[id_pathology_type])
+    
+    #Tiene traccia dello stato della patologia (PRE,TRATTAMENTO PROGRAMMATO,POST)
+    id_pathology_status= db.Column(db.Integer,db.ForeignKey('pathology_status.id'),nullable=False)
+    pathology_status = db.relationship('PathologyStatus', foreign_keys=[id_pathology_status])
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     #Data prossimo incontro

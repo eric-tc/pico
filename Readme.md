@@ -3,11 +3,11 @@
 Questo comando crea l'image per la parte web senza nginx. Una volta create e lanciato il container 
 posso sviluppare con VsCode e estensione dei container.
 
-docker-compose -f docker-compsoe-dev.yaml build
-docker-compose -f docker-compsoe-dev.yaml up
+docker-compose -f docker-compose-dev.yaml build
+docker-compose -f docker-compose-dev.yaml up
 
 ## Rimuovere i container
-docker-compose -f docker-compsoe-dev.yaml down
+docker-compose -f docker-compose-dev.yaml down
 
 
 # Production

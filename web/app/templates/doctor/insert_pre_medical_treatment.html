@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="row">
+
+    <div class="col-md-6 mb-6 col-lg-6">
+  
+      <h4 class="title mt-3">
+        Seleziona la patologia da trattare
+      </h4>
+
+
+      <form id="pathology_selection" action="{{ url_for('doctor.insert_pre_medical_treatment') }}" method="post">
+        
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="mb-3 mt-4">
+            <label for="category" class="form-label">Patologia</label>
+            <select class="form-select" id="pathology" name="pathology">
+
+              {% for member in pathology %}
+                <option value="{{member.value[0]}}">{{member.value[1]}}</option>
+              {% endfor %}
+            </select>
+        </div>
+        <button type="submit" form="pathology_selection" class="btn btn-primary">Seleziona</button>
+
+      </form>
+    </div>
+</div>
+    
+{% endblock %}

@@ -137,6 +137,23 @@ def patients_list():
 
 # -------------------------ROUTE PER DEFINIRE un nuovo controllo paziente---------------------------------------------------
 
+"""
+Route che crea nella tabella patology data una riga con la patologia inserita
+
+"""
+@doctor.route('/insert_pre_medical_treatment/<patient_id>/<patient_name>/',methods=["GET"])
+@login_required
+def insert_pre_medical_treatment(patient_id,patient_name):
+
+    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
+                            patient_name=patient_name,
+                            pathology=PATHOLOGY,
+                            pathology_type=PATHOLOGY_TYPE,
+                            form_keys=PATHOLOGY_KEY_SELECTION_FORM,
+                            default_date= datetime.utcnow()
+                          )
+
+
 @doctor.route('/medical_treatment/<patient_id>/<patient_name>/',methods=["GET"])
 @login_required
 def medical_treatment(patient_id,patient_name):
