@@ -14,7 +14,7 @@ services:
     image: handrehab_dev:latest
     container_name: handrehab_web_dev
     volumes:
-      - D:/Develop/HandRehabilitation/web:/home/  
+      - E:/Develop/HandRehabilitation/web:/home/  
     links:
       - postgres:postgres
     secrets:
