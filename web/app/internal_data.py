@@ -29,6 +29,7 @@ class EMAIL_STATUS(Enum):
 
 class CONTROLS(Enum):
 
+    DATA_FRATTURA= "data_frattura"
     NPRS_VAS = "nprs_vas"
     PROM_APROM_MCPJ = "prom_aprom_mcpj"
     PROM_APROM_IPJ = "prom_aprom_ipj"
@@ -563,15 +564,11 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         CONTROLS.NPRS_VAS.value,
         CONTROLS.PROM_APROM_MCPJ.value,
         CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
         CONTROLS.PINCH.value,
         CONTROLS.GRIP.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
         CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
     ]
 
     first_control=[
@@ -652,9 +649,9 @@ class PATHOLOGY(Enum):
 
 
 class PATHOLOGY_STATUS(Enum):
-    PRIMA= (0,"Prima del Trattamento")
-    DURANTE= (1,"Trattamento")
-    DOPO = (2,"Post Trattamento")
+    PRIMA= (1,"Prima del Trattamento")
+    DURANTE= (2,"Trattamento")
+    DOPO = (3,"Post Trattamento")
     
 class PATHOLOGY_TYPE(Enum):
     RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI,"Trapeziectomia e artoplastica in sospensione con APL")

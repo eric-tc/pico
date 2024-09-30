@@ -1,0 +1,18 @@
+<form  method="POST">
+    {{ form.csrf_token }}
+
+
+{% if controls_map.selected_date %}
+
+    {{ form.selected_date.label }}
+    {{ form.selected_date }}
+
+{% endif %}
+
+    
+    {% include 'general/pathology_form_fields.html' %}
+ 
+
+</form>
+
+

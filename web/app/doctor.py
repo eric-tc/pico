@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer,func
-from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm
+from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime
@@ -153,7 +153,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     print(patient_name)
     print(pathology_id)
 
-    form= RizoartrosiForm()
+    form= PreTreamentForm()
 
     controls_map=None
     
@@ -166,7 +166,9 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     
     
     if request.method == 'POST':
+        
 
+        data_frattura = request.form.get('selected_date')
 
         nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
         prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
@@ -184,49 +186,50 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         modena = request.form.get(CONTROLS.MODENA.value)
 
         
-
-        # # Form was submitted
-        # form_data = request.form  # Access form data
-        # new_entry = PathologyData(
-        # id_doctor=current_user.id,  # Replace with the actual doctor ID
-        # id_pathology=session.get(current_user.id,"0"),  # Replace with the actual type ID
-        # id_pathology_type=0, #TODO da cambiare con id patologia
-        # id_patient=session.patient_id,  # Replace with the actual patient ID
-        # next_control_date=next_control_date,
-        # next_control_time= None,
-        # is_date_accepted= 0,
-        # next_control_number=0,
-        # id_control_status=CONTROL_STATUS.ACTIVE,  # Replace with the actual value
-        # nprs_vas=nprs_vas,  # Replace with the actual value
-        # prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
-        # prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
-        # abduzione=abduzione,  # Replace with the actual value
-        # anteposizione=anteposizione,  # Replace with the actual value
-        # kapandji=kapandji,  # Replace with the actual value
-        # pinch=pinch,  # Replace with the actual value
-        # grip=grip,  # Replace with the actual value
-        # dash=dash,  # Replace with the actual value
-        # prwhe=prwhe,  # Replace with the actual value
-        # eaton_littler=eaton_littler,  # Replace with the actual value
-        # tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
-        # stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-        # modena=modena, # Replace with the actual value
-        # field1=  None,
-        # field2=  None,
-        # field3=  None,
-        # field4=  None,
-        # field5=  None,
-        # field6=  None,
-        # field7=  None
-        # )
         
-        #db.session.add(new_entry)
+
+        # Form was submitted
+        # Access form data
+        new_entry = PathologyData(
+        id_doctor=current_user.id,
+        id_pathology=pathology_id,  
+        id_pathology_type=pathology_id, # Non conosco ancora il tipo di intervento che sceglierà il dottore
+        id_pathology_status= PATHOLOGY_STATUS.PRIMA.value[0], 
+        id_patient=patient_id,  
+        next_control_date=datetime.utcnow() if data_frattura is None else data_frattura,
+        next_control_time= "12:00",
+        is_date_accepted= 0,
+        next_control_number=0,
+        id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+        nprs_vas=nprs_vas,  # Replace with the actual value
+        prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
+        prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
+        abduzione=abduzione,  # Replace with the actual value
+        anteposizione=anteposizione,  # Replace with the actual value
+        kapandji=kapandji,  # Replace with the actual value
+        pinch=pinch,  # Replace with the actual value
+        grip=grip,  # Replace with the actual value
+        dash=dash,  # Replace with the actual value
+        prwhe=prwhe,  # Replace with the actual value
+        eaton_littler=eaton_littler,  # Replace with the actual value
+        tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
+        stato_cicatrice=stato_cicatrice,  # Replace with the actual value
+        modena=modena, # Replace with the actual value
+        field1=  None,
+        field2=  None,
+        field3=  None,
+        field4=  None,
+        field5=  None,
+        field6=  None,
+        field7=  None
+        )
+        
+        db.session.add(new_entry)
 
         # Commit the session to persist the changes to the database
-        #db.session.commit()
+        db.session.commit()
 
-
-        #return redirect(url_for('doctor.profile'))
+        return redirect(url_for('doctor.profile'))
 
 
 
