@@ -69,9 +69,57 @@
 </div>
 
 
- 
 
-<!-- --------------------------ROW 3 PROSSIMI INTERVENTI ------------------------------- -->
+<!-- --------------------------ROW 3 FISSARE APPUNTAMENTO CHIRURGO ------------------------------- -->
+
+
+<h1 class="title mb-3" data-toggle="tooltip" data-placement="top" title="Qui sono visualizzati i prossimi controlli ordinati per paziente">
+  
+  Da Fissare per Intervento
+
+</h1>
+
+<div class="row">
+  <div class="col-md-1 mb-1 col-lg-2"></div>
+  <div class="col-md-10 mb-10 col-lg-8">
+
+    <table id="patientTable" class="table">
+      <thead>
+          <tr class="text-center">
+             
+              <th>Nome</th>
+              <th>Patologia Intervento</th>
+              <th>Aggiungi Intervento</th>
+              <th>Data inserimento</th>
+
+          </tr>
+      </thead>
+      <tbody>
+          {% for pathology_data, patient_name, pathology_name in interventi_da_fissare %}
+              <tr class="patientRow text-center" data-patient-id="{{ pathology_data.id}}">
+                 
+                  <td>{{ patient_name }}</td>
+                  <td>
+                      {{ pathology_name }}
+                  </td>
+                  <td>
+                    <form method="get" action="{{ url_for('doctor.medical_treatment', patient_id=pathology_data.id_patient, patient_name=patient_name) }}">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="btn btn-success" type="submit">Crea</button>
+                    </form>
+                  </td>
+                  <td>{{pathology_data.next_control_date.strftime('%d-%m-%Y')}}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+  <div class="col-md-1 mb-1 col-lg-2"></div>
+</div>
+
+
+<!-- --------------------------ROW 4 PROSSIMI INTERVENTI ------------------------------- -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="changeDateModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -27,6 +27,20 @@ def profile():
     .filter(DoctorPatient.id_doctor == current_user.id)
     .all()
     )
+    
+
+    print(patients_list)
+
+    #Ritorna tutti le patologie aggiunte dal dottore per le quali non è ancora stato fissato intervento
+    #(pathology_row,patient_name,pathology_name)
+    interventi_da_fissare= db.session.query(PathologyData,User.name,Pathology.name)\
+    .join(User, PathologyData.id_patient == User.id)\
+    .join(Pathology,PathologyData.id_pathology==Pathology.id)\
+    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).all()
+    print("INTERVENTI DA FISSARE")
+    print(interventi_da_fissare)
+
+    
 
     # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
     next_treatments=[]
@@ -38,10 +52,12 @@ def profile():
         #recupero tutte le patologie a cui il paziente è associato il dottore
         select_next_treatments(doctorPatient.id_patient,next_treatments)
 
+
             
     return render_template('doctor/profile.html', 
                            name=current_user.name,
-                           patients_list=patients_list, 
+                           patients_list=patients_list,
+                           interventi_da_fissare=interventi_da_fissare, 
                            next_treatments=next_treatments)
                           
 
