@@ -73,14 +73,17 @@ class PathologyTimline:
         CONTROLS.MODENA.value: False
     }
 
+    pre_treatment_controls=None
+
     @classmethod
     def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
 
-        for key in control_map.keys():
-            # Check if the value of the key is present in the array
-            if key in control_array:
-                # Change the value in the map to True
-                control_map[key] = True
+        if(control_array is not None):
+            for key in control_map.keys():
+                # Check if the value of the key is present in the array
+                if key in control_array:
+                    # Change the value in the map to True
+                    control_map[key] = True
         
         return control_map
 
@@ -116,6 +119,13 @@ class PathologyTimline:
         #avrei una stessa struttura dati condivisa e questo non andrebbe bene
         # copio i dati in una mappa temporanera
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        print(cls)
+        print(cls.pre_treatment_controls)
+
+        if(int(control_number)==0):
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.pre_treatment_controls)
 
         if(int(control_number)==1):
             tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
@@ -549,6 +559,21 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     #Ultimo Controllo
     LAST_CONTROL=9
 
+    pre_treatment_controls=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
+
     first_control=[
         CONTROLS.NPRS_VAS.value,
         CONTROLS.PROM_APROM_MCPJ.value,
@@ -618,11 +643,11 @@ class PATHOLOGY(Enum):
     FRATTURE_METACARPALI = (3,"Frattura Metacarpale",FratturaMetaCarpaleTimeline)
     FRATTURE_FALANGE_PROSSIMALE = (4, "Fratture Falange Prossimale",FrattureFalangeProssimaleTimeline)
     FERITA_LESIONE_TENDINEA = (5, "Ferita Lesione Tendinea",LesioneTendineaTimeline)
-    RESEZIONE_FILIERA= (5, "Resezione di Filiera",ResezioneFilieraTimeline)
-    DUPUYTREN= (6, "Dupytren",DupuytrenTimeline)
-    LESIONE_NERVOSA=(7, "Lesione Nervosa",LesioneNervosaTimeline)
-    SCAFOIDE= (8, "Scafoide",ScafoideTimeline)
-    LESIONE_LIGAMENTOSA= (9, "Lesione Ligamentosa",LesioneLigamentosaTimeline)
+    RESEZIONE_FILIERA= (6, "Resezione di Filiera",ResezioneFilieraTimeline)
+    DUPUYTREN= (7, "Dupytren",DupuytrenTimeline)
+    LESIONE_NERVOSA=(8, "Lesione Nervosa",LesioneNervosaTimeline)
+    SCAFOIDE= (9, "Scafoide",ScafoideTimeline)
+    LESIONE_LIGAMENTOSA= (10, "Lesione Ligamentosa",LesioneLigamentosaTimeline)
 
 
 

@@ -142,12 +142,29 @@ def patients_list():
 Inserimento della patologia nella fase PRE INTERVENTO e ritorno in home
 
 """
-@doctor.route('/insert_pre_medical_treatment_finish/<patient_id>/<patient_name>/',methods=["GET","POST"])
+@doctor.route('/parameters_pre_treatment_selection/<patient_id>/<patient_name>/<pathology_id>',methods=["GET","POST"])
 @login_required
-def insert_pre_medical_treatment_finish(patient_id,patient_name):
+def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
 
     
-    print(request.method)
+    print("PARAMETERS_PRE_TREATMENT_SELECTION")
+    
+    print(patient_id)
+    print(patient_name)
+    print(pathology_id)
+
+    form= RizoartrosiForm()
+
+    controls_map=None
+    
+    #In base alla patologia selezionata ritorno le terapie associate a quella patologia
+    for pathology in PATHOLOGY:
+        if pathology.value[0] == int(pathology_id):
+            controls_map= pathology.value[2].get_controls(control_number = 0)
+            print(controls_map)
+            break
+    
+    
     if request.method == 'POST':
 
 
@@ -168,40 +185,40 @@ def insert_pre_medical_treatment_finish(patient_id,patient_name):
 
         
 
-        # Form was submitted
-        form_data = request.form  # Access form data
-        new_entry = PathologyData(
-        id_doctor=current_user.id,  # Replace with the actual doctor ID
-        id_pathology=session.get(current_user.id,"0"),  # Replace with the actual type ID
-        id_pathology_type=0, #TODO da cambiare con id patologia
-        id_patient=session.patient_id,  # Replace with the actual patient ID
-        next_control_date=next_control_date,
-        next_control_time= None,
-        is_date_accepted= 0,
-        next_control_number=0,
-        id_control_status=CONTROL_STATUS.ACTIVE,  # Replace with the actual value
-        nprs_vas=nprs_vas,  # Replace with the actual value
-        prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
-        prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
-        abduzione=abduzione,  # Replace with the actual value
-        anteposizione=anteposizione,  # Replace with the actual value
-        kapandji=kapandji,  # Replace with the actual value
-        pinch=pinch,  # Replace with the actual value
-        grip=grip,  # Replace with the actual value
-        dash=dash,  # Replace with the actual value
-        prwhe=prwhe,  # Replace with the actual value
-        eaton_littler=eaton_littler,  # Replace with the actual value
-        tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
-        stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-        modena=modena, # Replace with the actual value
-        field1=  None,
-        field2=  None,
-        field3=  None,
-        field4=  None,
-        field5=  None,
-        field6=  None,
-        field7=  None
-        )
+        # # Form was submitted
+        # form_data = request.form  # Access form data
+        # new_entry = PathologyData(
+        # id_doctor=current_user.id,  # Replace with the actual doctor ID
+        # id_pathology=session.get(current_user.id,"0"),  # Replace with the actual type ID
+        # id_pathology_type=0, #TODO da cambiare con id patologia
+        # id_patient=session.patient_id,  # Replace with the actual patient ID
+        # next_control_date=next_control_date,
+        # next_control_time= None,
+        # is_date_accepted= 0,
+        # next_control_number=0,
+        # id_control_status=CONTROL_STATUS.ACTIVE,  # Replace with the actual value
+        # nprs_vas=nprs_vas,  # Replace with the actual value
+        # prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
+        # prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
+        # abduzione=abduzione,  # Replace with the actual value
+        # anteposizione=anteposizione,  # Replace with the actual value
+        # kapandji=kapandji,  # Replace with the actual value
+        # pinch=pinch,  # Replace with the actual value
+        # grip=grip,  # Replace with the actual value
+        # dash=dash,  # Replace with the actual value
+        # prwhe=prwhe,  # Replace with the actual value
+        # eaton_littler=eaton_littler,  # Replace with the actual value
+        # tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
+        # stato_cicatrice=stato_cicatrice,  # Replace with the actual value
+        # modena=modena, # Replace with the actual value
+        # field1=  None,
+        # field2=  None,
+        # field3=  None,
+        # field4=  None,
+        # field5=  None,
+        # field6=  None,
+        # field7=  None
+        # )
         
         #db.session.add(new_entry)
 
@@ -210,14 +227,16 @@ def insert_pre_medical_treatment_finish(patient_id,patient_name):
 
 
         #return redirect(url_for('doctor.profile'))
-    
 
 
-    return render_template('doctor/pre_treatment/only_date.html',doctor_id=current_user.id,
+
+    return render_template('doctor/pre_treatment/parameters_pre_treatment_selection.html',doctor_id=current_user.id,
                             patient_name=patient_name,
                             patient_id=patient_id,
                             pathology=PATHOLOGY,
-                            form_keys=PATHOLOGY_KEY_SELECTION_FORM
+                            form_keys=PATHOLOGY_KEY_SELECTION_FORM,
+                            form=form,
+                            controls_map=controls_map
                           )
 
 
@@ -226,21 +245,26 @@ def insert_pre_medical_treatment_finish(patient_id,patient_name):
 Route che crea nella tabella patology data una riga con la patologia inserita
 
 """
-@doctor.route('/insert_pre_medical_treatment/<patient_id>/<patient_name>/',methods=["GET","POST"])
+@doctor.route('/insert_pre_medical_treatment/<patient_id>/<patient_name>/>',methods=["GET","POST"])
 @login_required
 def insert_pre_medical_treatment(patient_id,patient_name):
 
-
-    print(request.method)
+    print("INSERT_PRE_MEDICAL_TREATMENT")
+    
     if request.method == 'POST':
-        # Form was submitted
-        form_data = request.form.get("pathology")  # Access form data
+        
+        pathology_id = request.form.get("pathology")
+        print(pathology_id)
+        #in base alla patologia selezionata creo dei campi da compilare e alcuni vuoti
+        # return render_template('doctor/pre_treatment/parameters_pre_treatment_selection.html',
+        #                        doctor_id=current_user.id,
+        #                        patient_id=patient_id,
+        #                        patient_name=patient_name)
 
-        print(form_data)
-        return render_template('doctor/pre_treatment/only_date.html',
-                               doctor_id=current_user.id,
-                               patient_id=patient_id,
-                               patient_name=patient_name)
+        return redirect(url_for('doctor.parameters_pre_treatment_selection', 
+                        patient_id=patient_id, 
+                        patient_name=patient_name, 
+                        pathology_id=pathology_id))
     
 
 

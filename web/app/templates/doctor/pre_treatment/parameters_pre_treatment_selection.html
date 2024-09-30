@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+
+    <h2 class="title mt-3">
+        Configuratore guida Inserimento Terapia
+      </h2>
+
+      <h2 class="title mt-3"></h2>
+        Step 2: Compila i parametri e fai click su Aggiungi per concludere l'inserimento della terapia
+      </h2>
+
+    <div class="mb-3">
+    <!-- Add each field to the form -->
+    <p class="mb-2 mt-2"> Seleziona Data Frattura </p>
+     <p><input class="form-control-custom" placeholder="nuova data" type="text" name="selected_date" id="datepicker" ></p>
+   </div>
+
+   {% include 'general/pathology_form.html' %}
+</div>
+
+<script src="{{ url_for('static', filename='js/datepicker_event.js') }}"></script>
+
+{% endblock %}
