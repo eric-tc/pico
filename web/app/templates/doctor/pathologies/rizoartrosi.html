@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+<h2> Rizoartrosi </h2>
+
+</div>
+
+<div class="row">
+
+
+<div class="col-md-6 mb-6 col-lg-6">
+
+    <form  method="POST">
+        {{ form.csrf_token }}
+    
+       
+        {{ form.selected_date.label }}
+        {{ form.selected_date() }}
+
+        {{ form.treatment_options.label }}
+        {{ form.treatment_options }}
+
+        {{ form.altro.label }}
+        {{ form.altro }}
+         
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
+
+        {{ form.submit_rizoartrosi_chirurgico() }}
+    
+    </form>    
+      
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

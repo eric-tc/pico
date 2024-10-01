@@ -2,6 +2,7 @@
 
 from enum import Enum
 import copy
+from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm
 # Define an enumeration class
 class ROLE(Enum):
     DOCTOR = 1
@@ -632,19 +633,20 @@ class DoctorData(Enum):
 
 """
 Enum utilizzato per associare ad ogni patologia la propria timeline di decorso operatorio
+Le lables sono utilizzate per caricare il file html corrispondente in doctor/patologie/
 """
 
 class PATHOLOGY(Enum):
-    RIZOARTROSI= (1,"Rizoartrosi",RizoartrosiControlsTimeline)
-    FRATTURA_RADIO_DISTALE= (2,"Frattura Radio Distale",FrattureRadioDistaliTimeline)
-    FRATTURE_METACARPALI = (3,"Frattura Metacarpale",FratturaMetaCarpaleTimeline)
-    FRATTURE_FALANGE_PROSSIMALE = (4, "Fratture Falange Prossimale",FrattureFalangeProssimaleTimeline)
-    FERITA_LESIONE_TENDINEA = (5, "Ferita Lesione Tendinea",LesioneTendineaTimeline)
-    RESEZIONE_FILIERA= (6, "Resezione di Filiera",ResezioneFilieraTimeline)
-    DUPUYTREN= (7, "Dupytren",DupuytrenTimeline)
-    LESIONE_NERVOSA=(8, "Lesione Nervosa",LesioneNervosaTimeline)
-    SCAFOIDE= (9, "Scafoide",ScafoideTimeline)
-    LESIONE_LIGAMENTOSA= (10, "Lesione Ligamentosa",LesioneLigamentosaTimeline)
+    RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm)
+    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline)
+    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline)
+    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline)
+    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline)
+    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline)
+    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline)
+    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline)
+    SCAFOIDE= (9, "scafoide",ScafoideTimeline)
+    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline)
 
 
 

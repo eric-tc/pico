@@ -7,11 +7,12 @@ from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm
 import datetime
 from datetime import datetime, timedelta,time
-from .mutils import get_date,get_date_from_datetime
+from .mutils import get_date,get_date_from_datetime,get_pathology_enum
 from werkzeug.security import generate_password_hash
 import json
 from .internal_data import get_pathology_type_dict
 from .query_sql import select_next_treatments
+
 
 
 doctor = Blueprint('doctor', __name__)
@@ -295,12 +296,12 @@ def insert_pre_medical_treatment(patient_id,patient_name):
                           )
 
 
-@doctor.route('/medical_treatment/<patient_id>/<patient_name>/',methods=["GET","POST"])
+@doctor.route('/medical_treatment/<patient_id>/<patient_name>/<pathology_id>',methods=["GET","POST"])
 @login_required
-def medical_treatment(patient_id,patient_name):
+def medical_treatment(patient_id,patient_name,pathology_id):
 
 
-    session.pop(DoctorData.OPTIONS_FIELD.value, None)
+    #session.pop(DoctorData.OPTIONS_FIELD.value, None)
 
     medicalForm= MedicalTreatmentForm()
 
@@ -313,18 +314,39 @@ def medical_treatment(patient_id,patient_name):
 
    
     #ogni chiave rappresenta id patologia
-    pathology_names_id_options,timeline_pathology = get_pathology_type_dict()
+    #pathology_names_id_options,timeline_pathology = get_pathology_type_dict()
 
-    return render_template('doctor/medical_treatment_selection.html',doctor_id=current_user.id,
-                            patient_name=patient_name,
-                            pathology=PATHOLOGY,
-                            pathology_type=PATHOLOGY_TYPE,
-                            form_keys=PATHOLOGY_KEY_SELECTION_FORM,
-                            form=medicalForm,
-                            pathology_names_id_options=pathology_names_id_options,
-                            timeline_pathology=timeline_pathology,
-                            default_date= datetime.utcnow()
-                          )
+    # ritorna il nome del template da renderizzare in base alla patologia selezionata
+    pathology_enum = get_pathology_enum(pathology_id)
+    form= pathology_enum.value[3]()
+    print("PATHOLOGY ID")
+    print(pathology_id)
+
+    if form.validate_on_submit():
+
+        form_data = {field.label.text: field.data for field in form}
+        print(form_data)
+        
+
+
+
+
+    return render_template(f'doctor/pathologies/{pathology_enum.value[1]}.html',
+                           doctor_id=current_user.id,
+                           patient_id=patient_id,
+                           pathology_id=pathology_id,
+                           form=form)
+
+    # return render_template(f'doctor/{template_to_render}.html',doctor_id=current_user.id,
+    #                         patient_name=patient_name,
+    #                         pathology=PATHOLOGY,
+    #                         pathology_type=PATHOLOGY_TYPE,
+    #                         form_keys=PATHOLOGY_KEY_SELECTION_FORM,
+    #                         form=medicalForm,
+    #                         pathology_names_id_options=pathology_names_id_options,
+    #                         timeline_pathology=timeline_pathology,
+    #                         default_date= datetime.utcnow()
+    #                       )
 
 
 
