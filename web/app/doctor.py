@@ -337,8 +337,87 @@ def medical_treatment():
         if(pathology_enum.value[0]==PATHOLOGY.RIZOARTROSI.value[0]):
 
             form_data = {field.label.text: field.data for field in form}
+            
+            #chiudo il controllo corrente la data intervento è stata fissata
 
-            print(form_data)
+            pathology_row_to_update = PathologyData.query.get(row_id_to_update)
+            pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
+
+            # convert to datetime 
+            pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
+            db.session.commit()
+
+            #inserimento tabella rizoartrosi
+            print("inserimento rizoartrosi")
+
+            pathology_id_type = request.form.get("treatment_options")
+
+            for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
+                
+                data_prossimo_controllo=None
+                orario_prossimo_controllo= None
+                #indica se è stata concordata la data con il paziente
+                is_date_accepted= 0
+                #Solo il primo controllo ha la data dell'intervento
+                if control_number==0:
+                    data_prossimo_controllo= request.form.get("data_primo_controllo")
+                    orario_prossimo_controllo= request.form.get("orario_primo_controllo")
+
+                    if(data_prossimo_controllo is not None):
+                        data_prossimo_controllo= get_date(data_prossimo_controllo)
+                        is_date_accepted=1
+                    else:
+                        data_prossimo_controllo= datetime.utcnow() + timedelta(weeks=weeks_to_add)
+
+                else:
+                    data_prossimo_controllo= datetime.utcnow() + timedelta(weeks=weeks_to_add)
+                    orario_prossimo_controllo= "12:00"               
+
+                # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
+                new_entry = PathologyData(
+                    id_doctor=current_user.id,  # Replace with the actual doctor ID
+                    id_pathology=pathology_id,  # Replace with the actual type ID
+                    id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
+                    id_patient=patient_id,  # Replace with the actual patient ID
+                    id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+                    next_control_date=data_prossimo_controllo,
+                    next_control_time= orario_prossimo_controllo,
+                    is_date_accepted= is_date_accepted,
+                    next_control_number=control_number,
+                    id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+                    nprs_vas=None,  # Replace with the actual value
+                    prom_aprom_mcpj=None,  # Replace with the actual value
+                    prom_aprom_ipj=None,  # Replace with the actual value
+                    abduzione=None,  # Replace with the actual value
+                    anteposizione=None,  # Replace with the actual value
+                    kapandji=None,  # Replace with the actual value
+                    pinch=None,  # Replace with the actual value
+                    grip=None,  # Replace with the actual value
+                    dash=None,  # Replace with the actual value
+                    prwhe=None,  # Replace with the actual value
+                    eaton_littler=None,  # Replace with the actual value
+                    tipo_cicatrice=None,  # Replace with the actual value
+                    stato_cicatrice=None,  # Replace with the actual value
+                    modena=None, # Replace with the actual value
+                    field1= None,
+                    field2= None,
+                    field3= None,
+                    field4= None,
+                    field5= None,
+                    field6= None,
+                    field7= None
+                    )
+            
+
+                        # Add the instance to the session
+                db.session.add(new_entry)
+
+            # Commit the session to persist the changes to the database
+            db.session.commit()
+
+            flash('Inserimento terapia con successo')
+            return redirect(url_for('doctor.profile'))
+            
 
     
 

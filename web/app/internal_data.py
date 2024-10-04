@@ -552,8 +552,8 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
 class RizoartrosiControlsTimeline(PathologyTimline):
 
     #The values set number of weeks after first meeting
-    #0 serve perchè al primo incontro paziente/dottore la data è quella corrente
-    timeline= [0,2,6,12,26,52,154,520,1040]
+    #Contiene solo i valori dei controlli da programmare
+    timeline= [2,6,12,26,52,154,520,1040]
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1
