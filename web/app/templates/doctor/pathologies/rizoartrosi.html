@@ -59,9 +59,15 @@
     // Pass Jinja variable to JavaScript
     const week_to_add = "{{ week_to_add }}";
 
+    DataIntervento = new Date();
+
+
+
+
 </script>
 
-<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
 <script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
+
 
 {% endblock %}
