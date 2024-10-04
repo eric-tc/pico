@@ -33,4 +33,12 @@ class RizoartrosiChirurgicoForm(FlaskForm):
     data_primo_controllo = StringField('Data Primo Controllo', render_kw={'class': 'form-control-custom'}, validators=None)
     orario_primo_controllo = StringField('Orario Primo Controllo', render_kw={'class': 'form-control'}, validators=None)
 
+    # Hidden Input to handle variable
+
+    pathology_id = HiddenField('Pathology ID', render_kw={'class': 'form-control'}, validators=None)
+    patient_id = HiddenField('Patient ID', render_kw={'class': 'form-control'}, validators=None)
+    row_id = HiddenField('Row ID', render_kw={'class': 'form-control'}, validators=None)
+    patient_name = HiddenField('Patient Name', render_kw={'class': 'form-control'}, validators=None)
+
+
     submit_rizoartrosi_chirurgico = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})

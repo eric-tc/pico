@@ -1,3 +1,5 @@
+//Datepicker: Input parameter week_to_add. Need to be defined before calling this file
+
 document.addEventListener('DOMContentLoaded', function () {
 
 

@@ -36,7 +36,14 @@
 
         {{ form.data_primo_controllo.label(style="display:block;") }}
         {{ form.data_primo_controllo(id='datepicker') }}
+        
 
+        {{ form.row_id(value=pathology_id)}}
+        {{ form.patient_id(value=patient_id)}}
+        {{ form.patient_name(value=patient_name)}}
+        {{ form.pathology_id(value=pathology_id)}}
+        
+        
 
         {{ form.submit_rizoartrosi_chirurgico(style="display:block; margin-top:15px;") }}
     

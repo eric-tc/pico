@@ -296,27 +296,37 @@ def insert_pre_medical_treatment(patient_id,patient_name):
                           )
 
 
-@doctor.route('/medical_treatment/<patient_id>/<patient_name>/<pathology_id>',methods=["GET","POST"])
+@doctor.route('/medical_treatment/',methods=["POST"])
 @login_required
-def medical_treatment(patient_id,patient_name,pathology_id):
+def medical_treatment():
 
 
     #session.pop(DoctorData.OPTIONS_FIELD.value, None)
 
     medicalForm= MedicalTreatmentForm()
 
-    session[DoctorData.ID_PATIENT.value]=patient_id
-    #Quando crea un nuovo controllo l'appuntamento successivo è sempre il secondo
-    session[DoctorData.NUM_CONTROL.value]= 1
+    # session[DoctorData.ID_PATIENT.value]=patient_id
+    # #Quando crea un nuovo controllo l'appuntamento successivo è sempre il secondo
+    # session[DoctorData.NUM_CONTROL.value]= 1
 
-    print("PATIENT ID")
-    print(session.get(DoctorData.ID_PATIENT.value))
+    # print("PATIENT ID")
+    # print(session.get(DoctorData.ID_PATIENT.value))
 
-   
+    patient_id= request.form.get('patient_id')
+    pathology_id = request.form.get('pathology_id')
+    patient_name = request.form.get('patient_name')
+    row_id_to_update = request.form.get('row_id')
+
+
+    print(f"PATIENT ID {patient_id}")
+    print(f"PATHOLOGY ID {pathology_id}")
+    print(f"PATIENT NAME {patient_name}")
+    print(f"ROW ID {row_id_to_update}")
+
     #ogni chiave rappresenta id patologia
     #pathology_names_id_options,timeline_pathology = get_pathology_type_dict()
 
-    # ritorna il nome del template da renderizzare in base alla patologia selezionata
+    # ritorna la pathologia selezionata
     pathology_enum = get_pathology_enum(pathology_id)
     form= pathology_enum.value[3]()
     print("PATHOLOGY ID")
@@ -324,11 +334,13 @@ def medical_treatment(patient_id,patient_name,pathology_id):
 
     if form.validate_on_submit():
 
-        form_data = {field.label.text: field.data for field in form}
-        print(form_data)
-        
+        if(pathology_enum.value[0]==PATHOLOGY.RIZOARTROSI.value[0]):
 
+            form_data = {field.label.text: field.data for field in form}
 
+            print(form_data)
+
+    
 
 
     return render_template(f'doctor/pathologies/{pathology_enum.value[1]}.html',
