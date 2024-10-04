@@ -30,7 +30,8 @@ class Pathology(db.Model):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY:
-                id,name,timeline= row.value
+                print(row.value)
+                id,name,timeline,form= row.value
                 new_instance = cls(name=name)
                 db.session.add(new_instance)
             
@@ -116,6 +117,9 @@ class PathologyData(db.Model):
     pathology_status = db.relationship('PathologyStatus', foreign_keys=[id_pathology_status])
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    #Data in cui è stato fissato intervento 
+    surgery_date = db.Column(db.DateTime,nullable=True)
     #Data prossimo incontro
     next_control_date= db.Column(db.DateTime,nullable=False)
     #Ora prossimo incontro

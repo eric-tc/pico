@@ -638,15 +638,15 @@ Le lables sono utilizzate per caricare il file html corrispondente in doctor/pat
 
 class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm)
-    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline)
-    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline)
-    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline)
-    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline)
-    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline)
-    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline)
-    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline)
-    SCAFOIDE= (9, "scafoide",ScafoideTimeline)
-    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline)
+    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,None)
+    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,None)
+    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None)
+    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None)
+    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None)
+    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline,None)
+    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline,None)
+    SCAFOIDE= (9, "scafoide",ScafoideTimeline,None)
+    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline,None)
 
 
 

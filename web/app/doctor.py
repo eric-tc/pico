@@ -335,7 +335,8 @@ def medical_treatment(patient_id,patient_name,pathology_id):
                            doctor_id=current_user.id,
                            patient_id=patient_id,
                            pathology_id=pathology_id,
-                           form=form)
+                           form=form,
+                           week_to_add=2)
 
     # return render_template(f'doctor/{template_to_render}.html',doctor_id=current_user.id,
     #                         patient_name=patient_name,

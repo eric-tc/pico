@@ -12,15 +12,15 @@
 
 
 <div class="col-md-6 mb-6 col-lg-6">
-
+    
     <form  method="POST">
         {{ form.csrf_token }}
     
        
-        {{ form.selected_date.label }}
-        {{ form.selected_date() }}
+        {{ form.data_intervento.label(style="display:block;") }}
+        {{ form.data_intervento(id='generic-datepicker') }}
 
-        {{ form.treatment_options.label }}
+        {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
         {{ form.treatment_options }}
 
         {{ form.altro.label }}
@@ -29,8 +29,16 @@
         {% if form.errors %}
         {{ form.errors }}
         {% endif %}
+        
+        {{ form.orario_primo_controllo.label }}
+        {{ form.orario_primo_controllo(id='timepicker') }}
 
-        {{ form.submit_rizoartrosi_chirurgico() }}
+
+        {{ form.data_primo_controllo.label(style="display:block;") }}
+        {{ form.data_primo_controllo(id='datepicker') }}
+
+
+        {{ form.submit_rizoartrosi_chirurgico(style="display:block; margin-top:15px;") }}
     
     </form>    
       
@@ -40,5 +48,13 @@
 
 </div>
 
+<script>
+    // Pass Jinja variable to JavaScript
+    const week_to_add = "{{ week_to_add }}";
+
+</script>
+
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
+<script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
 
 {% endblock %}

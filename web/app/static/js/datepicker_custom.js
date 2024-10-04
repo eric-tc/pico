@@ -1,32 +1,8 @@
-
-  <div class="mb-3">
-   <!-- Add each field to the form -->
-   {% if default_date %}
-
-    {% set check_if_default = 1 %}
-
-   {% else %}
-    {% set check_if_default = 0 %}
-    {% set default_date = "" %}
-   {% endif %}
-   <p class="mb-2 mt-2"> Seleziona Data Prossimo Controllo </p>
-    <p><input class="form-control-custom" placeholder="nuova data" type="text" name="selected_date" id="datepicker" ></p>
-    <p class="mb-2 mt-2"> Seleziona orario Prossimo Controllo </p>
-    <div><input type="text" class="form-control-custom" placeholder="nuovo orario" name="selected_time" id="timepicker"> <img src="/static/img/clock.png" height="32" width="32" alt=""></div>
-  </div>
+document.addEventListener('DOMContentLoaded', function() {
+    
 
 
-
-<script src="{{ url_for('static', filename='js/datepicker_custom.js') }}"></script>
-
-<script>
-
-
-  // Include file datepicker_custom.js
-  
-
-
-  var TmpSpecificDate=null;
+    var TmpSpecificDate=null;
 
   var selectedPathologyid="1";
   console.log("selectedPathology");
@@ -35,6 +11,7 @@
   const jsonTimeline= '{{timeline_pathology | safe}}';
   var timelineByName=null;
   
+  console.log("jsonTimeline",jsonTimeline);
   if(jsonTimeline.length>0){
 
     timelineByName = JSON.parse(jsonTimeline);
@@ -202,4 +179,5 @@
       showMicrosec: false,
       });
     });
-</script>
+
+});

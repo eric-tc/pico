@@ -10,7 +10,7 @@ from wtforms.fields import DateField,TimeField,SelectField,HiddenField
 
 class RizoartrosiChirurgicoForm(FlaskForm):
     #il formato della data deve essere in questo modo altrimenti ho un errore
-    selected_date = DateField("data_intervento", format='%Y-%m-%d', render_kw={'class': 'form-control'}, validators=None)
+    data_intervento = StringField('Data Intervento', render_kw={'class': 'form-control-custom'}, validators=None)
     
     treatment_options = SelectField(
         'Seleziona Intervento',
@@ -28,5 +28,9 @@ class RizoartrosiChirurgicoForm(FlaskForm):
     )
 
     altro= StringField('Altro', render_kw={'class': 'form-control'}, validators=None)
+
+    #Questo valore è associato il campo datepicker
+    data_primo_controllo = StringField('Data Primo Controllo', render_kw={'class': 'form-control-custom'}, validators=None)
+    orario_primo_controllo = StringField('Orario Primo Controllo', render_kw={'class': 'form-control'}, validators=None)
 
     submit_rizoartrosi_chirurgico = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
