@@ -11,7 +11,7 @@ class PreTreamentForm(FlaskForm):
     # I valori del campo del form devono avere lo stesso valore delle chiavi di CONTROLS
     #in questo modo nella UI posso verificare quando un campo è attivo o meno utilizzando una map dove la chiave
     # è la label:True,False. Vedere pagina next_control
-    selected_date = DateField(CONTROLS.DATA_FRATTURA.value, format='%Y-%m-%d', render_kw={'class': 'form-control'}, validators=None)
+    data_frattura = DateField(CONTROLS.DATA_FRATTURA.value, format='%Y-%m-%d', render_kw={'class': 'form-control'}, validators=None)
     nprs_vas = IntegerField(CONTROLS.NPRS_VAS.value, render_kw={'class': 'form-control'}, validators=None)
     prom_aprom_mcpj = IntegerField(CONTROLS.PROM_APROM_MCPJ.value, render_kw={'class': 'form-control'}, validators=None)
     prom_aprom_ipj = IntegerField(CONTROLS.PROM_APROM_IPJ.value, render_kw={'class': 'form-control'}, validators=None)
@@ -29,6 +29,7 @@ class PreTreamentForm(FlaskForm):
     submit_rizoartrosi = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
 
+#Form vecchio probabilmente posso eliminarlo
 class RizoartrosiForm(FlaskForm):
     # I valori del campo del form devono avere lo stesso valore delle chiavi di CONTROLS
     #in questo modo nella UI posso verificare quando un campo è attivo o meno utilizzando una map dove la chiave

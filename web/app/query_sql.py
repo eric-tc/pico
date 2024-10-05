@@ -1,7 +1,7 @@
 #Questo file contiente le querySql comuni tra paziente e dottore
 
 from .models import PathologyData,PathologyType,Pathology,User
-from .internal_data import CONTROL_STATUS, CONTROLS,RizoartrosiControlsTimeline
+from .internal_data import CONTROL_STATUS, CONTROLS,RizoartrosiControlsTimeline,PATHOLOGY_STATUS
 from . import db
 from datetime import datetime
 
@@ -19,7 +19,13 @@ def select_next_treatments(id_patient:int, next_treatment_list):
         print(pathology_id_type)
     
         #TODO: Qui invece di ritornare la prima data ritorno tutte le date del paziente ordinate in modo ascendete
-        patients_row = db.session.query(PathologyData,User.name,PathologyType.name).join(User,PathologyData.id_patient==User.id).join(PathologyType,PathologyType.id==pathology_id_type).filter(PathologyData.id_patient == id_patient,PathologyData.id_pathology_type==pathology_id_type,PathologyData.next_control_date>= db.func.now()).order_by(PathologyData.next_control_date).all()
+        patients_row = db.session.query(PathologyData,User.name,PathologyType.name)\
+        .join(User,PathologyData.id_patient==User.id)\
+        .join(PathologyType,PathologyType.id==pathology_id_type)\
+        .filter(PathologyData.id_patient == id_patient,
+                PathologyData.id_pathology_type==pathology_id_type,
+                PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
+                PathologyData.next_control_date>= db.func.now()).order_by(PathologyData.next_control_date).all()
         
     #successivamente creo un ciclo for su tutte le date
         # la prima volta che trovo un id < 2(Data chiusa) fermo il ciclo for e prendo quella data

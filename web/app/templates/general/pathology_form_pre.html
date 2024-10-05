@@ -2,10 +2,10 @@
     {{ form.csrf_token }}
 
 
-{% if controls_map.selected_date %}
+{% if controls_map.data_frattura %}
 
-    {{ form.selected_date.label }}
-    {{ form.selected_date }}
+    <label for="data_frattura">Data Frattura</label>  
+    {{ form.data_frattura }}
 
 {% endif %}
 

@@ -41,7 +41,6 @@ def profile():
     print("INTERVENTI DA FISSARE")
     print(interventi_da_fissare)
 
-    
 
     # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
     next_treatments=[]
@@ -178,6 +177,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_id):
             controls_map= pathology.value[2].get_controls(control_number = 0)
+            print("CONTROLS MAP")
             print(controls_map)
             break
     
@@ -185,7 +185,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     if request.method == 'POST':
         
 
-        data_frattura = request.form.get('selected_date')
+        data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value)
 
         nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
         prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
@@ -329,8 +329,7 @@ def medical_treatment():
     # ritorna la pathologia selezionata
     pathology_enum = get_pathology_enum(pathology_id)
     form= pathology_enum.value[3]()
-    print("PATHOLOGY ID")
-    print(pathology_id)
+
 
     if form.validate_on_submit():
 
@@ -350,7 +349,7 @@ def medical_treatment():
         #Pathology_Enum è enum PATHOLOGY che contiene tutte le patologie. 
         # Il valore 2 ad esempio è RizoartrosiControlsTimeline.timeline che contiene le settimane dei controlli successivi 
         
-        for control_number,weeks_to_add in enumerate(pathology_enum[2].timeline):
+        for control_number,weeks_to_add in enumerate(pathology_enum.value[2].timeline):
             
             #indica se è stata concordata la data con il paziente
                     
@@ -409,6 +408,8 @@ def medical_treatment():
                            doctor_id=current_user.id,
                            patient_id=patient_id,
                            pathology_id=pathology_id,
+                           patient_name=patient_name,
+                           row_id=row_id_to_update,
                            form=form,
                            week_to_add=2)
 
