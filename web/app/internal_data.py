@@ -2,7 +2,7 @@
 
 from enum import Enum
 import copy
-from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm
+from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm
 # Define an enumeration class
 class ROLE(Enum):
     DOCTOR = 1
@@ -462,7 +462,11 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
 class FratturaMetaCarpaleTimeline(PathologyTimline):
     
     #Questi sono i dati per ogni controllo
-    timeline= [0,4,6,8,12,26,52,154,520,1040]
+    timeline= [4,6,8,12,26,52,154,520,1040]
+
+    pre_treatment_controls=[
+       CONTROLS.DATA_FRATTURA.value,
+    ]
 
     first_control={
         CONTROLS.NPRS_VAS.value: False,
@@ -645,7 +649,7 @@ Le lables sono utilizzate per caricare il file html corrispondente in doctor/pat
 class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm)
     FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm)
-    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,None)
+    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm)
     FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None)
     FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None)
     RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None)

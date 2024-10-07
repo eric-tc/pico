@@ -4,8 +4,189 @@
 
 <div class="row">
 
-<h2> Fratture Metacarpali </h2>
+<h2> Frattura MetaCarpali </h2>
 
 </div>
+
+<div class="row">
+
+
+<div class="col-md-6 mb-6 col-lg-6">
+    
+    <form  method="POST">
+        {{ form.csrf_token }}
+    
+       
+        {{ form.data_intervento.label(style="display:block;") }}
+        {{ form.data_intervento(id='generic-datepicker') }}
+
+        {{ form.rottura_metacarpo.label(style="display:block;margin-top:15px;") }}
+        {{ form.rottura_metacarpo }}
+
+        {{ form.tipologia_trattamento.label(style="display:block;margin-top:15px;") }}
+        {{ form.tipologia_trattamento(id="tipologia_trattamento") }}
+        
+        <div id="non_chirurgico">
+            {{ form.tipologia.label(style="display:block;margin-top:15px;") }}
+            {{ form.tipologia }}
+
+            {{ form.polso_incluso.label(style="display:block;margin-top:15px;") }}
+            {{ form.polso_incluso }}
+
+            {{ form.mcpj_incluso.label(style="display:block;margin-top:15px;") }}
+            {{ form.mcpj_incluso(id="mcpj_incluso") }}
+            
+            <div id="mcpj_si">
+                {{ form.mcpj_estese_incluso.label(style="display:block;margin-top:15px;") }}
+                {{ form.mcpj_estese_incluso }}
+            </div>
+            
+            {{ form.pipj_incluso.label(style="display:block;margin-top:15px;") }}
+            {{ form.pipj_incluso(id="pipj_incluso") }}
+            
+            <div id="pipj_si">
+                {{ form.pipj_estese_incluso.label(style="display:block;margin-top:15px;") }}
+                {{ form.pipj_estese_incluso }}
+            </div>
+        </div>
+
+        <div id="chirurgico">
+            {{ form.fili_kirschner.label(style="display:block;margin-top:15px;") }}
+            {{ form.fili_kirschner }}
+
+            {{ form.viti.label(style="display:block;margin-top:15px;") }}
+            {{ form.viti }}
+
+            {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
+            {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
+            
+            <div id="classificazione_radiografica_diafisaria">   
+                {{ form.diafisaria.label(style="display:block;margin-top:15px;") }}
+                {{ form.diafisaria }}
+            </div>
+        </div>
+       
+        
+        {{ form.orario_primo_controllo.label }}
+        {{ form.orario_primo_controllo(id='timepicker') }}
+
+
+        {{ form.data_primo_controllo.label(style="display:block;") }}
+        {{ form.data_primo_controllo(id='datepicker') }}
+        
+
+        {{ form.row_id(value=row_id)}}
+        {{ form.patient_id(value=patient_id)}}
+        {{ form.patient_name(value=patient_name)}}
+        {{ form.pathology_id(value=pathology_id)}}
+        
+        
+
+        {{ form.submit_chirurgico_form(style="display:block; margin-top:15px;") }}
+        
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+    </form>    
+      
+
+
+</div>
+
+</div>
+
+<script>
+    // Pass Jinja variable to JavaScript
+    const week_to_add = "{{ week_to_add }}";
+    DataIntervento = new Date();
+
+    //Script per gestire dinamicamente i campi del form
+    $(document).ready(function() {
+
+        function toggleChirurgico(){
+
+            var selectedValue = $("#tipologia_trattamento").val();
+            // 1= Chirurgico, 2=Non Chirurgico
+            if(selectedValue == "1"){
+                $("#chirurgico").show();
+                $("#non_chirurgico").hide();
+            }
+            if(selectedValue == "2"){
+                $("#non_chirurgico").show();
+                $("#chirurgico").hide();
+            }
+        }
+
+        function toggle_mcpj(){
+            var selectedValue = $("#mcpj_incluso").val();
+            
+            $("#mcpj_si").hide();
+
+            if(selectedValue == "2"){
+                $("#mcpj_si").show();
+            }
+            if(selectedValue == "1"){
+                $("#mcpj_si").hide();
+            }
+        }
+
+        function toggle_ipcj(){
+            var selectedValue = $("#pipj_incluso").val();
+            
+            $("#pipj_si").hide();
+
+            if(selectedValue == "2"){
+                $("#pipj_si").show();
+            }
+            if(selectedValue == "1"){
+                $("#pipj_si").hide();
+            }    
+        }
+
+        function classificazione_radiografica_diafisaria(){
+            var selectedValue = $("#classificazione_radiografica").val();
+            
+            $("#classificazione_radiografica_diafisaria").hide();
+
+            if(selectedValue == "2"){
+                $("#classificazione_radiografica_diafisaria").show();
+            }
+            if(selectedValue == "1"){
+                $("#classificazione_radiografica_diafisaria").hide();
+            }    
+        }
+
+        //Sono eseguiti al caricamento della pagina
+        toggleChirurgico();
+        toggle_mcpj();
+        toggle_ipcj();
+        classificazione_radiografica_diafisaria();
+
+
+        $("#tipologia_trattamento").change(function() {
+            toggleChirurgico();
+        });
+
+        //Non Chirurgico
+        $("#mcpj_incluso").change(function() {
+            toggle_mcpj();
+        });
+
+        $("#pipj_incluso").change(function() {
+            toggle_ipcj();
+        });
+
+        $("#classificazione_radiografica").change(function() {
+            classificazione_radiografica_diafisaria();
+        });
+
+    });
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
+
 
 {% endblock %}
