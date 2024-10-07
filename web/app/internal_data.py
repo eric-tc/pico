@@ -471,8 +471,9 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     #Questa funzione serve perchè per alcune patologie il decorso post operatorio 
     # segue una timeline diversa per cui in base alle opzioni selezionate della patologia ritorna
     # un valore diverso
-
-    def getTimeline(self,tipo_intervento:str):
+    
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
             timeline= [4,8,12,26,52,154,520,1040]
@@ -539,10 +540,11 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
     timeline= [2,4,8,12,26,52,154,520,1040]
 
     # se non ho differenze nel post operatorio la timeline è la stessa
-    def getTimeline(self,tipo_intervento:None):
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
         
         if(tipo_intervento is None):
-            return self.timeline
+            return cls.timeline
        
 
     weeks_to_first_control={
@@ -601,10 +603,11 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     timeline= [2,6,12,26,52,154,520,1040]
 
     # se non ho differenze nel post operatorio la timeline è la stessa
-    def getTimeline(self,tipo_intervento:None):
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
         
         if(tipo_intervento is None):
-            return self.timeline
+            return cls.timeline
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1
