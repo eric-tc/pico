@@ -829,7 +829,7 @@ def get_events():
         #patient_name = "test"
         #pathology_name = "pathology_name"
         event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
-        event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d")
+        event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
         event_dict["row_id"]= pathology_row.id
         
 
