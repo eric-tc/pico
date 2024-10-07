@@ -75,7 +75,7 @@ class FratturaRadioDistaleForm(ChirurgicoForm):
     )
 
     classificazione_radiografica_a = SelectField(
-        'Seleziona Intervento',
+        'Classificazione Radiografica',
         choices=[
             ('1', 'A'),
             ('2', 'B'),
@@ -86,7 +86,7 @@ class FratturaRadioDistaleForm(ChirurgicoForm):
     )
 
     classificazione_radiografica_numero = SelectField(
-        'Seleziona Intervento',
+        'Classificazione Radiografica Numero',
         choices=[
             ('1', '1'),
             ('2', '2'),

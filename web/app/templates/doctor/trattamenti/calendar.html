@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id='calendar'></div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: '/treatments_events',
+            locale: 'it', // Fetch events from Flask endpoint
+            height: 'auto',
+            eventDidMount: function(info) {
+                // Attach a tooltip to show full event title on hover
+                $(info.el).tooltip({
+                    title: info.event.title,
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body'
+                });
+            }
+        });
+        calendar.render();
+        
+        // Add event listener for mousewheel to scroll through months
+        calendarEl.addEventListener('wheel', function(event) {
+            if (event.deltaY < 0) {
+                calendar.prev(); // Scroll up to go to the previous month
+            } else if (event.deltaY > 0) {
+                calendar.next(); // Scroll down to go to the next month
+            }
+            event.preventDefault(); // Prevent the default scroll behavior
+        });
+    });
+</script>
+
+{% endblock %}
+

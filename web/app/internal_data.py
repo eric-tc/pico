@@ -543,8 +543,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
         
-        if(tipo_intervento is None):
-            return cls.timeline
+        return cls.timeline
        
 
     weeks_to_first_control={
@@ -605,9 +604,8 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
-        
-        if(tipo_intervento is None):
-            return cls.timeline
+        print(cls.timeline)
+        return cls.timeline
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1

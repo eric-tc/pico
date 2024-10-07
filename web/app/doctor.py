@@ -44,13 +44,13 @@ def profile():
 
     # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
     next_treatments=[]
-    for patient_query in patients_list:
-        #in base all'id paziente 
-        print("value")
-        doctorPatient, name = patient_query
+    # for patient_query in patients_list:
+    #     #in base all'id paziente 
+    #     print("value")
+    #     doctorPatient, name = patient_query
 
-        #recupero tutte le patologie a cui il paziente è associato il dottore
-        select_next_treatments(doctorPatient.id_patient,next_treatments)
+    #     #recupero tutte le patologie a cui il paziente è associato il dottore
+    #     select_next_treatments(doctorPatient.id_patient,next_treatments)
 
 
             
@@ -335,10 +335,10 @@ def medical_treatment():
 
         
         #Aggiornamento riga patologia con la data dell'intervento
-        # pathology_row_to_update = PathologyData.query.get(row_id_to_update)
-        # pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
-        # pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
-        # db.session.commit()
+        pathology_row_to_update = PathologyData.query.get(row_id_to_update)
+        pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
+        pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
+        db.session.commit()
 
         # variabili comun a tutte le patologie
         data_prossimo_controllo=None
@@ -735,6 +735,7 @@ associarlo senza passare dalle notifiche
 """
 
 @doctor.route('/create_new_patient',methods=["GET"])
+@login_required
 def create_patient():
     
     return render_template("doctor/create_new_patient.html")
@@ -743,6 +744,7 @@ def create_patient():
 Il metodo post serve per gestire i dati derivati dal form
 """
 @doctor.route('/create_new_patient',methods=["POST"])
+@login_required
 def create_patient_post():
 
     email = request.form.get('email')
@@ -768,3 +770,76 @@ def create_patient_post():
             db.session.commit()
 
     return redirect(url_for('doctor.profile'))
+
+
+# CALENDARIO TRATTAMENTI POST OPERATORIO
+
+@doctor.route('/calendar',methods=["GET"])
+@login_required
+def calendar():
+
+    return render_template("doctor/trattamenti/calendar.html")
+
+
+# Ritorna tutti i trattamenti di tutti i pazienti associati a quel dottore.
+# Posso usare questi campi per popolare il calendario con diversi filtri
+@doctor.route('/treatments_events')
+def get_events():
+    # events = [
+    # {"title": "Event 1", "start": "2024-10-10"},
+    # {"title": "Event 2", "start": "2024-10-15"},
+    # ]
+
+    # patients_row = db.session.query(PathologyData,User.name,PathologyType.name)\
+    #     .join(User,PathologyData.id_patient==User.id)\
+    #     .join(PathologyType,PathologyType.id==pathology_id_type)\
+    #     .filter(PathologyData.id_patient == id_patient,
+    #             PathologyData.id_pathology_type==pathology_id_type,
+    #             PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
+    #             PathologyData.next_control_date>= db.func.now()).order_by(PathologyData.next_control_date).all()
+
+    #Prendo solo gli eventi entro tot mesi. Per rendere la query più veloce
+
+    today = datetime.today()
+
+    # 3 Mesi
+    months_to_retrieve=3
+    date_after_x_months = today + timedelta(days=months_to_retrieve*30)
+
+    treatments= db.session.query(PathologyData,User.name,Pathology.name)\
+    .join(User,PathologyData.id_patient==User.id)\
+    .join(Pathology,PathologyData.id_pathology==Pathology.id)\
+    .filter(PathologyData.id_doctor == current_user.id,
+            PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
+            PathologyData.next_control_date<date_after_x_months).all()
+    
+    events=[]
+
+    #LEGENDA COLORI
+    """
+    isDateAccepted=0 -> colore grigio
+    isDateAccepted=1 -> colore verde
+    eventoPassato -> colore rosso
+
+    """
+    for treatment in treatments:
+        event_dict={}
+
+        pathology_row,patient_name,pathology_name = treatment
+        #patient_name = "test"
+        #pathology_name = "pathology_name"
+        event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
+        event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d")
+        event_dict["row_id"]= pathology_row.id
+        
+
+        if(pathology_row.is_date_accepted==0):
+            event_dict["color"]= "#D3D3D3" 
+        elif(pathology_row.is_date_accepted==1):
+            event_dict["color"]= "#00FF00"
+
+        events.append(event_dict)
+
+    print(len(events))    
+
+    return jsonify(events)
