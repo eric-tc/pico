@@ -3,6 +3,8 @@
 from enum import Enum
 import copy
 from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum
+
 # Define an enumeration class
 class ROLE(Enum):
     DOCTOR = 1
@@ -459,10 +461,31 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
     ]
 
 
+
+
 class FratturaMetaCarpaleTimeline(PathologyTimline):
     
     #Questi sono i dati per ogni controllo
-    timeline= [4,6,8,12,26,52,154,520,1040]
+    timeline= None
+
+    #Questa funzione serve perchè per alcune patologie il decorso post operatorio 
+    # segue una timeline diversa per cui in base alle opzioni selezionate della patologia ritorna
+    # un valore diverso
+
+    def getTimeline(self,tipo_intervento:str):
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
+            timeline= [4,8,12,26,52,154,520,1040]
+            return timeline
+        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            timeline= [1,4,8,12,26,52,154,520,1040]
+            return timeline
+
+    #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono alla timeline[0]
+    weeks_to_first_control={
+        FrattureMetaCarpaliEnum.CHIRURGICO.value:1,
+        FrattureMetaCarpaliEnum.NON_CHIRURGICO.value:4
+    }
 
     pre_treatment_controls=[
        CONTROLS.DATA_FRATTURA.value,
@@ -508,11 +531,23 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     ]
 
 
+
+
 class FrattureRadioDistaliTimeline(PathologyTimline):
     
     #Questi sono i dati per ogni controllo
     timeline= [2,4,8,12,26,52,154,520,1040]
 
+    # se non ho differenze nel post operatorio la timeline è la stessa
+    def getTimeline(self,tipo_intervento:None):
+        
+        if(tipo_intervento is None):
+            return self.timeline
+       
+
+    weeks_to_first_control={
+        "1":2
+    }
 
     pre_treatment_controls=[
        CONTROLS.DATA_FRATTURA.value,
@@ -564,9 +599,21 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     #The values set number of weeks after first meeting
     #Contiene solo i valori dei controlli da programmare
     timeline= [2,6,12,26,52,154,520,1040]
+
+    # se non ho differenze nel post operatorio la timeline è la stessa
+    def getTimeline(self,tipo_intervento:None):
+        
+        if(tipo_intervento is None):
+            return self.timeline
     
     #quante settimane aspettare se il paziente non risponde alla mail
     waiting_weeks= 1
+
+    # Settimane per il primo controllo. Serve per quando devo gestire il calendario
+    # per trattamenti che hanno un decorso post operatorio diverso
+    weeks_to_first_control={
+        "1":2
+    }
     
     #Ultimo Controllo
     LAST_CONTROL=9
@@ -644,12 +691,21 @@ class DoctorData(Enum):
 """
 Enum utilizzato per associare ad ogni patologia la propria timeline di decorso operatorio
 Le lables sono utilizzate per caricare il file html corrispondente in doctor/patologie/
+
+Descrizione parameteri
+
+value[0]: id della patologia
+value[1]: nome della patologia
+value[2]: classe della timeline
+value[3]: form chirurgico
+value[4]: enum per le opzioni chirurgiche
+
 """
 
 class PATHOLOGY(Enum):
-    RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm)
-    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm)
-    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm)
+    RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None)
+    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None)
+    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum)
     FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None)
     FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None)
     RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None)
@@ -657,7 +713,7 @@ class PATHOLOGY(Enum):
     LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline,None)
     SCAFOIDE= (9, "scafoide",ScafoideTimeline,None)
     LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline,None)
-
+        
 
 
 class PATHOLOGY_STATUS(Enum):

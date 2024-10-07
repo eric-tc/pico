@@ -335,10 +335,10 @@ def medical_treatment():
 
         
         #Aggiornamento riga patologia con la data dell'intervento
-        pathology_row_to_update = PathologyData.query.get(row_id_to_update)
-        pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
-        pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
-        db.session.commit()
+        # pathology_row_to_update = PathologyData.query.get(row_id_to_update)
+        # pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
+        # pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
+        # db.session.commit()
 
         # variabili comun a tutte le patologie
         data_prossimo_controllo=None
@@ -349,53 +349,55 @@ def medical_treatment():
         #Pathology_Enum è enum PATHOLOGY che contiene tutte le patologie. 
         # Il valore 2 ad esempio è RizoartrosiControlsTimeline.timeline che contiene le settimane dei controlli successivi 
         
-        for control_number,weeks_to_add in enumerate(pathology_enum.value[2].timeline):
+        for control_number,weeks_to_add in enumerate(pathology_enum.value[2].getTimeline(pathology_id_type)):
             
+
+            print(weeks_to_add)
             #indica se è stata concordata la data con il paziente
                     
-            data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(request,control_number,weeks_to_add)
+        #     data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(request,control_number,weeks_to_add)
 
-            # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
-            new_entry = PathologyData(
-                id_doctor=current_user.id,  # Replace with the actual doctor ID
-                id_pathology=pathology_id,  # Replace with the actual type ID
-                id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
-                id_patient=patient_id,  # Replace with the actual patient ID
-                id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
-                next_control_date=data_prossimo_controllo,
-                next_control_time= orario_prossimo_controllo,
-                is_date_accepted= is_date_accepted,
-                next_control_number=control_number,
-                id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-                nprs_vas=None,  # Replace with the actual value
-                prom_aprom_mcpj=None,  # Replace with the actual value
-                prom_aprom_ipj=None,  # Replace with the actual value
-                abduzione=None,  # Replace with the actual value
-                anteposizione=None,  # Replace with the actual value
-                kapandji=None,  # Replace with the actual value
-                pinch=None,  # Replace with the actual value
-                grip=None,  # Replace with the actual value
-                dash=None,  # Replace with the actual value
-                prwhe=None,  # Replace with the actual value
-                eaton_littler=None,  # Replace with the actual value
-                tipo_cicatrice=None,  # Replace with the actual value
-                stato_cicatrice=None,  # Replace with the actual value
-                modena=None, # Replace with the actual value
-                field1= None,
-                field2= None,
-                field3= None,
-                field4= None,
-                field5= None,
-                field6= None,
-                field7= None
-                )
+        #     # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
+        #     new_entry = PathologyData(
+        #         id_doctor=current_user.id,  # Replace with the actual doctor ID
+        #         id_pathology=pathology_id,  # Replace with the actual type ID
+        #         id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
+        #         id_patient=patient_id,  # Replace with the actual patient ID
+        #         id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+        #         next_control_date=data_prossimo_controllo,
+        #         next_control_time= orario_prossimo_controllo,
+        #         is_date_accepted= is_date_accepted,
+        #         next_control_number=control_number,
+        #         id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+        #         nprs_vas=None,  # Replace with the actual value
+        #         prom_aprom_mcpj=None,  # Replace with the actual value
+        #         prom_aprom_ipj=None,  # Replace with the actual value
+        #         abduzione=None,  # Replace with the actual value
+        #         anteposizione=None,  # Replace with the actual value
+        #         kapandji=None,  # Replace with the actual value
+        #         pinch=None,  # Replace with the actual value
+        #         grip=None,  # Replace with the actual value
+        #         dash=None,  # Replace with the actual value
+        #         prwhe=None,  # Replace with the actual value
+        #         eaton_littler=None,  # Replace with the actual value
+        #         tipo_cicatrice=None,  # Replace with the actual value
+        #         stato_cicatrice=None,  # Replace with the actual value
+        #         modena=None, # Replace with the actual value
+        #         field1= None,
+        #         field2= None,
+        #         field3= None,
+        #         field4= None,
+        #         field5= None,
+        #         field6= None,
+        #         field7= None
+        #         )
         
 
-                    # Add the instance to the session
-            db.session.add(new_entry)
+        #             # Add the instance to the session
+        #     db.session.add(new_entry)
 
-        # Commit the session to persist the changes to the database
-        db.session.commit()
+        # # Commit the session to persist the changes to the database
+        # db.session.commit()
 
         flash('Inserimento terapia con successo')
         return redirect(url_for('doctor.profile'))
@@ -411,7 +413,7 @@ def medical_treatment():
                            patient_name=patient_name,
                            row_id=row_id_to_update,
                            form=form,
-                           week_to_add=2)
+                           week_to_add=pathology_enum.value[2].weeks_to_first_control)
 
     # return render_template(f'doctor/{template_to_render}.html',doctor_id=current_user.id,
     #                         patient_name=patient_name,

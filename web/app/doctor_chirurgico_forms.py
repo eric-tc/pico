@@ -2,8 +2,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField
-
-
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -12,6 +11,11 @@ from wtforms.fields import DateField,TimeField,SelectField,HiddenField
 class ChirurgicoForm(FlaskForm):
     """
     Questi campi sono comuni a tutte le patologie
+    
+    ATTENZIONE TUTTI I FORM CHE DERIVANO DA QUESTO DEVONO AVERE LA PROPRIETA treatment_options.
+
+    treatment_options è usata per gestire il decorso post operatorio in base alla 
+    scelta fatta dall'utente
     
     """
     #il formato della data deve essere in questo modo altrimenti ho un errore
@@ -28,7 +32,7 @@ class ChirurgicoForm(FlaskForm):
     row_id = HiddenField('Row ID', render_kw={'class': 'form-control'}, validators=None)
     patient_name = HiddenField('Patient Name', render_kw={'class': 'form-control'}, validators=None)
 
-
+    
     submit_chirurgico_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
 
@@ -109,11 +113,11 @@ class FratturaMetaCarpaliForm(ChirurgicoForm):
         ,render_kw={'class': 'form-control'}
     )
 
-    tipologia_trattamento = SelectField(
+    treatment_options = SelectField(
         'Seleziona Intervento',
         choices=[
-            ('1', 'Chirurgico'),
-            ('2', 'Non Chirurgico'), 
+            (FrattureMetaCarpaliEnum.CHIRURGICO.value, 'Chirurgico'),
+            (FrattureMetaCarpaliEnum.NON_CHIRURGICO.value, 'Non Chirurgico'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}

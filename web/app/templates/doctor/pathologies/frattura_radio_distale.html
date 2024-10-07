@@ -62,8 +62,8 @@
 
 <script>
     // Pass Jinja variable to JavaScript
-    const week_to_add = "{{ week_to_add }}";
-
+    const week_to_add = "{{ week_to_add['1'] }}";
+    console.log("week to add",week_to_add);
     DataIntervento = new Date();
 
 

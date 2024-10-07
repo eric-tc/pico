@@ -23,8 +23,8 @@
         {{ form.rottura_metacarpo.label(style="display:block;margin-top:15px;") }}
         {{ form.rottura_metacarpo }}
 
-        {{ form.tipologia_trattamento.label(style="display:block;margin-top:15px;") }}
-        {{ form.tipologia_trattamento(id="tipologia_trattamento") }}
+        {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
+        {{ form.treatment_options(id="tipologia_trattamento") }}
         
         <div id="non_chirurgico">
             {{ form.tipologia.label(style="display:block;margin-top:15px;") }}
@@ -97,7 +97,7 @@
 
 <script>
     // Pass Jinja variable to JavaScript
-    const week_to_add = "{{ week_to_add }}";
+    week_to_add = "{{ week_to_add['1'] }}";
     DataIntervento = new Date();
 
     //Script per gestire dinamicamente i campi del form
@@ -110,10 +110,12 @@
             if(selectedValue == "1"){
                 $("#chirurgico").show();
                 $("#non_chirurgico").hide();
+                week_to_add= "{{ week_to_add['1'] }}";
             }
             if(selectedValue == "2"){
                 $("#non_chirurgico").show();
                 $("#chirurgico").hide();
+                week_to_add= "{{ week_to_add['2'] }}";
             }
         }
 
