@@ -13,10 +13,33 @@
             events: '/treatments_events', //Endpoit per recuperare gli eventi da mostrare nel calendario
             eventClick:function(info){
                 
-                console.log(info.event);
-                alert('Clicked on: ' + info.event.id);
+                var currentDate = new Date();  // Current date
+                var eventDate = new Date(info.event.start);  // Event date
+                
+                // Calculate 5 days before and after today
+                var fiveDaysBefore = new Date(currentDate);
+                
+                //10 è la base del sistema numerico
+                fiveDaysBefore.setDate(currentDate.getDate() - parseInt("{{days_before}}",10));
 
-                window.location.href = '/next_controls/'+info.event.id;
+                var fiveDaysAfter = new Date(currentDate);
+                fiveDaysAfter.setDate(currentDate.getDate() + parseInt("{{days_after}}",10));
+                
+
+                // Check if event date is within 5 days before or after today
+                if (eventDate >= fiveDaysBefore && eventDate <= fiveDaysAfter) {
+                    // Event is within the range, so handle the click
+                    var eventId = info.event.id;
+                    window.location.href = '/next_controls/'+info.event.id;
+                    
+                }else{
+
+                    if (eventDate < currentDate) {
+                        alert("Evento già trascorso");
+                    } else if (eventDate > currentDate) {
+                        alert("Evento non ancora selezionabile");
+                    }
+                }
             },
             locale: 'it', // Fetch events from Flask endpoint
             height: 'auto',

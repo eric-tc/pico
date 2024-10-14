@@ -1,0 +1,18 @@
+<form  method="POST">
+    {{ form.csrf_token }}
+    
+
+    {{ form.data_controllo.label }}
+    {{ form.data_controllo(id='datepicker') }}
+
+    {{ form.orario_controllo.label }}
+    {{ form.orario_controllo(id='timepicker') }}
+
+
+    
+    {% include 'general/pathology_form_fields.html' %}
+ 
+
+</form>
+
+

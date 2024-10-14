@@ -4,7 +4,7 @@ from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer,func
-from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm
+from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control
@@ -250,7 +250,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
 
 
 
-    return render_template('doctor/pre_treatment/parameters_pre_treatment_selection.html',doctor_id=current_user.id,
+    return render_template('doctor/trattamenti/parameters_pre_treatment_selection.html',doctor_id=current_user.id,
                             patient_name=patient_name,
                             patient_id=patient_id,
                             pathology=PATHOLOGY,
@@ -778,26 +778,19 @@ def create_patient_post():
 @login_required
 def calendar():
 
-    return render_template("doctor/trattamenti/calendar.html")
+    #Abilitano click su evento del calendario
+    days_before=20
+    days_after=20
+    return render_template("doctor/trattamenti/calendar.html",
+                           days_before=days_before,
+                           days_after=days_after)
 
 
 # Ritorna tutti i trattamenti di tutti i pazienti associati a quel dottore.
 # Posso usare questi campi per popolare il calendario con diversi filtri
 @doctor.route('/treatments_events')
 def get_events():
-    # events = [
-    # {"title": "Event 1", "start": "2024-10-10"},
-    # {"title": "Event 2", "start": "2024-10-15"},
-    # ]
-
-    # patients_row = db.session.query(PathologyData,User.name,PathologyType.name)\
-    #     .join(User,PathologyData.id_patient==User.id)\
-    #     .join(PathologyType,PathologyType.id==pathology_id_type)\
-    #     .filter(PathologyData.id_patient == id_patient,
-    #             PathologyData.id_pathology_type==pathology_id_type,
-    #             PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
-    #             PathologyData.next_control_date>= db.func.now()).order_by(PathologyData.next_control_date).all()
-
+    
     #Prendo solo gli eventi entro tot mesi. Per rendere la query più veloce
 
     today = datetime.today()
@@ -853,4 +846,19 @@ def event_details(row_id):
     """
     print(row_id)
 
-    return render_template('doctor/trattamenti/next_control.html',row_id=row_id)
+    form= PostTreatmentForm()
+
+    controls_map=None
+    
+    #In base alla patologia selezionata ritorno le terapie associate a quella patologia
+    for pathology in PATHOLOGY:
+        if pathology.value[0] == int(1):
+            controls_map= pathology.value[2].get_controls(control_number = 1)
+            print("CONTROLS MAP")
+            print(controls_map)
+            break
+
+    return render_template('doctor/trattamenti/parameters_post_treatment_selection.html',
+                           row_id=row_id,
+                           form=form,
+                           controls_map=controls_map)
