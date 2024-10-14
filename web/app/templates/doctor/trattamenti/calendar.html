@@ -10,7 +10,14 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            events: '/treatments_events',
+            events: '/treatments_events', //Endpoit per recuperare gli eventi da mostrare nel calendario
+            eventClick:function(info){
+                
+                console.log(info.event);
+                alert('Clicked on: ' + info.event.id);
+
+                window.location.href = '/next_controls/'+info.event.id;
+            },
             locale: 'it', // Fetch events from Flask endpoint
             height: 'auto',
             eventDidMount: function(info) {

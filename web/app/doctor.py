@@ -830,7 +830,7 @@ def get_events():
         #pathology_name = "pathology_name"
         event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
         event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
-        event_dict["row_id"]= pathology_row.id
+        event_dict["id"]= pathology_row.id
         
 
         if(pathology_row.is_date_accepted==0):
@@ -843,3 +843,14 @@ def get_events():
     print(len(events))    
 
     return jsonify(events)
+
+@doctor.route('/next_controls/<row_id>')
+@login_required
+def event_details(row_id):
+    """
+    row_id : id della riga della tabella patology_data
+    
+    """
+    print(row_id)
+
+    return render_template('doctor/trattamenti/next_control.html',row_id=row_id)
