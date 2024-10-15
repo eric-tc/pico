@@ -213,7 +213,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         id_pathology_type=pathology_id, # Non conosco ancora il tipo di intervento che sceglierà il dottore
         id_pathology_status= PATHOLOGY_STATUS.PRIMA.value[0], 
         id_patient=patient_id,  
-        next_control_date=datetime.utcnow() if data_frattura is None else data_frattura,
+        next_control_date=datetime.utcnow() if data_frattura is None else get_date(data_frattura),
         next_control_time= "12:00",
         is_date_accepted= 0,
         next_control_number=0,
@@ -344,6 +344,7 @@ def medical_treatment():
         pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
         pathology_row_to_update.surgery_date= surgery_date
         pathology_row_to_update.id_pathology_status= PATHOLOGY_STATUS.DURANTE.value[0]
+        
         db.session.commit()
 
         # variabili comun a tutte le patologie
@@ -355,14 +356,21 @@ def medical_treatment():
 
         #Pathology_Enum è enum PATHOLOGY che contiene tutte le patologie. 
         # Il valore 2 ad esempio è RizoartrosiControlsTimeline.timeline che contiene le settimane dei controlli successivi 
-        
+        print(form.data_primo_controllo.data)
+        print(form.orario_primo_controllo.data)
+        print("VALORI FORM")
+        #indica se è stata concordata la data con il paziente
+        data_primo_controllo=form.data_primo_controllo.data
+        orario_primo_controllo=form.orario_primo_controllo.data
+
         for control_number,weeks_to_add in enumerate(pathology_enum.value[2].getTimeline(pathology_id_type)):
             
 
-            print(weeks_to_add)
-            #indica se è stata concordata la data con il paziente
-                    
-            data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(request,control_number,weeks_to_add)
+            data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(data_primo_controllo,
+                                                                                                           orario_primo_controllo,
+                                                                                                           control_number,
+                                                                                                           weeks_to_add,
+                                                                                                           surgery_date)
 
             # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
             new_entry = PathologyData(
@@ -845,7 +853,7 @@ def get_events():
 
     return jsonify(events)
 
-@doctor.route('/next_controls/<row_id>/<event_in_range>')
+@doctor.route('/next_controls/<row_id>/<event_in_range>',methods=["GET","POST"])
 @login_required
 def event_details(row_id,event_in_range):
     """
@@ -895,7 +903,12 @@ def event_details(row_id,event_in_range):
 
         #Verifico se utente ha cambiato data e ora del controllo successivo
         if form.submit_change_date.data:
-            
+
+            next_control_date= getDateInYMD(form.data_controllo.data)
+            print(next_control_date)
+            next_control_time= form.orario_controllo.data
+            print(next_control_time)
+
             return redirect(url_for('doctor.calendar'))
         if form.submit_form.data:
             print("SUBMITTED")
