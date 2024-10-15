@@ -22,12 +22,12 @@ chace = None
 def create_app():
     global csrf
     global cache
-    
+
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SECRET_KEY'] = os.urandom(24)
     app.config["CACHE_TYPE"] = "SimpleCache"
-    app.config["CACHE_DEFAULT_TIMEOUT"] = 300
+    app.config["CACHE_DEFAULT_TIMEOUT"] = 60
     
     csrf = CSRFProtect(app)
     CORS(app)

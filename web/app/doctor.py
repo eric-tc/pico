@@ -893,14 +893,15 @@ def event_details(row_id,event_in_range):
     #In base alla patologia selezionata ritorno le terapie associate a quella patologia
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_db.id_pathology):
-
+            
+            #dizionario con i controlli attivi
             controls_map= pathology.value[2].get_next_control(control_number = pathology_db.next_control_number,
                                                           tipo_intervento=pathology_db.id_pathology_type)
-            
+            #settimane 
             timeline= pathology.value[2].getTimeline(str(pathology_db.id_pathology_type))    
             
             print(f"TIMELINE {timeline}")
-
+            #settimana in base al numero del controllo
             week_to_add= timeline[pathology_db.next_control_number]
             
             
@@ -935,6 +936,17 @@ def event_details(row_id,event_in_range):
             return redirect(url_for('doctor.calendar'))
         
         if form.submit_form.data:
+
+            for key in controls_map.keys():
+                #escludi per data_frattura perchè esiste come controllo, ma nel POST non è mai presente
+                if(key != CONTROLS.DATA_FRATTURA.value):
+                    setattr(pathology_db, key, form.data[key])
+            
+            # una volta inserito i valori il controllo si chiude e non può essere modificato
+            pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
+            #Aggiornamento della row
+            db.session.commit()
+
             print("SUBMITTED")
             print(form.data)
             print(form.errors)

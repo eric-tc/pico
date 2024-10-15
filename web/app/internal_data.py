@@ -141,7 +141,24 @@ class PathologyTimline:
     @classmethod
     def get_next_control(cls,control_number:int,tipo_intervento=None)->int:
         """
-        Ritorna il prossimo controllo da effettuare
+
+        control_number: numero controllo
+        tipo_intervento: tipo di intervento selezionato. Serve per alcune patologie che hanno un decorso post operatorio diverso
+
+
+        Ritorna un dict con solo i campi da visualizzare per il controllo successivo
+        Esempio:
+        control_number=0
+        tipo_intervento=1
+        return {
+            "nprs_vas":True,
+            "prom_aprom_mcpj":True,
+            "prom_aprom_ipj":False
+            ....
+        }
+
+        Il dizionario è preso sempre da cls.Controls_Map
+        
         """
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
