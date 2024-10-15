@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,SessionDataDoctor
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf
 from sqlalchemy import cast, Integer,func
@@ -13,14 +13,18 @@ import json
 from .internal_data import get_pathology_type_dict
 from .query_sql import select_next_treatments
 
-
-
 doctor = Blueprint('doctor', __name__)
 
+
+def remove_session_data():
+    session.pop(SessionDataDoctor.CALENDAR_EVENTS.value, None)
+    
 
 @doctor.route('/profile')
 @login_required
 def profile():
+
+    remove_session_data()
 
     patients_list=(
     db.session.query(DoctorPatient, User.name)
@@ -804,54 +808,62 @@ def calendar():
 
 # Ritorna tutti i trattamenti di tutti i pazienti associati a quel dottore.
 # Posso usare questi campi per popolare il calendario con diversi filtri
+
 @doctor.route('/treatments_events')
 def get_events():
-    
+
+
     #Prendo solo gli eventi entro tot mesi. Per rendere la query più veloce
 
-    today = datetime.today()
-
-    # 3 Mesi
-    months_to_retrieve=3
-    date_after_x_months = today + timedelta(days=months_to_retrieve*30)
-
-    treatments= db.session.query(PathologyData,User.name,Pathology.name)\
-    .join(User,PathologyData.id_patient==User.id)\
-    .join(Pathology,PathologyData.id_pathology==Pathology.id)\
-    .filter(PathologyData.id_doctor == current_user.id,
-            PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
-            PathologyData.next_control_date<date_after_x_months).all()
+    if(SessionDataDoctor.CALENDAR_EVENTS.value in session):
+        print("EVENT FROM SESSION")
+        return jsonify(session[SessionDataDoctor.CALENDAR_EVENTS.value])
+    else:
     
-    events=[]
+        today = datetime.today()
 
-    #LEGENDA COLORI
-    """
-    isDateAccepted=0 -> colore grigio
-    isDateAccepted=1 -> colore verde
-    eventoPassato -> colore rosso
+        # 3 Mesi
+        months_to_retrieve=3
+        date_after_x_months = today + timedelta(days=months_to_retrieve*30)
 
-    """
-    for treatment in treatments:
-        event_dict={}
-
-        pathology_row,patient_name,pathology_name = treatment
-        #patient_name = "test"
-        #pathology_name = "pathology_name"
-        event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
-        event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
-        event_dict["id"]= pathology_row.id
+        treatments= db.session.query(PathologyData,User.name,Pathology.name)\
+        .join(User,PathologyData.id_patient==User.id)\
+        .join(Pathology,PathologyData.id_pathology==Pathology.id)\
+        .filter(PathologyData.id_doctor == current_user.id,
+                PathologyData.id_pathology_status==PATHOLOGY_STATUS.DOPO.value[0],
+                PathologyData.next_control_date<date_after_x_months).all()
         
+        events=[]
 
-        if(pathology_row.is_date_accepted==0):
-            event_dict["color"]= "#D3D3D3" 
-        elif(pathology_row.is_date_accepted==1):
-            event_dict["color"]= "#00FF00"
+        #LEGENDA COLORI
+        """
+        isDateAccepted=0 -> colore grigio
+        isDateAccepted=1 -> colore verde
+        eventoPassato -> colore rosso
 
-        events.append(event_dict)
+        """
+        for treatment in treatments:
+            event_dict={}
 
-    print(len(events))    
+            pathology_row,patient_name,pathology_name = treatment
+            #patient_name = "test"
+            #pathology_name = "pathology_name"
+            event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
+            event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
+            event_dict["id"]= pathology_row.id
+            
 
-    return jsonify(events)
+            if(pathology_row.is_date_accepted==0):
+                event_dict["color"]= "#D3D3D3" 
+            elif(pathology_row.is_date_accepted==1):
+                event_dict["color"]= "#00FF00"
+
+            events.append(event_dict)
+
+            
+        session[SessionDataDoctor.CALENDAR_EVENTS.value]=events
+
+        return jsonify(events)
 
 @doctor.route('/next_controls/<row_id>/<event_in_range>',methods=["GET","POST"])
 @login_required
@@ -900,7 +912,7 @@ def event_details(row_id,event_in_range):
     
 
     if form.is_submitted():
-
+        remove_session_data()
         #Verifico se utente ha cambiato data e ora del controllo successivo
         if form.submit_change_date.data:
 
@@ -909,7 +921,12 @@ def event_details(row_id,event_in_range):
             next_control_time= form.orario_controllo.data
             print(next_control_time)
 
+            pathology_db.next_control_date= next_control_date
+            pathology_db.next_control_time= next_control_time
+            pathology_db.is_date_accepted=1
+            db.session.commit()
             return redirect(url_for('doctor.calendar'))
+        
         if form.submit_form.data:
             print("SUBMITTED")
             print(form.data)
