@@ -30,14 +30,15 @@
                 if (eventDate >= fiveDaysBefore && eventDate <= fiveDaysAfter) {
                     // Event is within the range, so handle the click
                     var eventId = info.event.id;
-                    window.location.href = '/next_controls/'+info.event.id;
+                    window.location.href = '/next_controls/'+info.event.id+ "/1";
                     
                 }else{
 
                     if (eventDate < currentDate) {
                         alert("Evento già trascorso");
                     } else if (eventDate > currentDate) {
-                        alert("Evento non ancora selezionabile");
+                        
+                        window.location.href = '/next_controls/'+info.event.id+ "/0";
                     }
                 }
             },

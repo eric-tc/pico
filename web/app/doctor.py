@@ -845,14 +845,16 @@ def get_events():
 
     return jsonify(events)
 
-@doctor.route('/next_controls/<row_id>')
+@doctor.route('/next_controls/<row_id>/<event_in_range>')
 @login_required
-def event_details(row_id):
+def event_details(row_id,event_in_range):
     """
     row_id : id della riga della tabella patology_data
-    
+    event_in_range: indica se l'evento è nel range di compilazione
     """
     print(row_id)
+    print("EVENT IN RANGE")
+    print(event_in_range)
 
     form= PostTreatmentForm()
 
@@ -908,4 +910,5 @@ def event_details(row_id):
                            controls_map=controls_map,
                            week_to_add=week_to_add,
                            data_intervento=data_intervento,
-                           data_controllo=data_controllo)
+                           data_controllo=data_controllo,
+                           event_in_range=event_in_range)

@@ -11,9 +11,13 @@
     {{form.submit_change_date()}}
 
 
-    
+    {{event_in_range}}
+
+    {% if event_in_range=="1" %}
+
     {% include 'general/pathology_form_fields.html' %}
- 
+    
+    {% endif %}
 
 </form>
 
