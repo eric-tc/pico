@@ -1,3 +1,4 @@
+// Datepicker event for the datepicker in the form
 $(document).ready(function() {
     $("#datepicker").datepicker({
         dateFormat: 'dd-mm-yy',

@@ -81,7 +81,9 @@ class PathologyTimline:
 
     @classmethod
     def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
-
+        
+        print(control_array)
+        print(control_map)
         if(control_array is not None):
             for key in control_map.keys():
                 # Check if the value of the key is present in the array
@@ -110,7 +112,7 @@ class PathologyTimline:
         return cls.timeline[control_number-1],False
 
     @classmethod
-    def get_controls(cls,control_number)->dict:
+    def get_controls(cls,control_number,tipo_intervento=None)->dict:
         """
         Ritorna la mappa per il controllo indicato in control_number
         Questa mappa serve per visualizzare nell'interfaccia grafica solo i campi
@@ -131,42 +133,55 @@ class PathologyTimline:
             tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
                                                     cls.pre_treatment_controls)
 
-        if(int(control_number)==1):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.first_control)
-        if(int(control_number)==2):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.second_control)
-        if(int(control_number)==3):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.third_control)
-
-        if(int(control_number)>3):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.third_control)
+        
+       
         
         return tmp_ControlMap
+    
+    @classmethod
+    def get_next_control(cls,control_number:int,tipo_intervento=None)->int:
+        """
+        Ritorna il prossimo controllo da effettuare
+        """
 
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        print(control_number)
+        print(tipo_intervento)
+        print("NEXT CONTROL")
 
+        if(int(control_number)==0):
+            #Se il decorso non è unico della classe allora devo fare un controllo
+            # In base al tipo di intervento selezionato dovrò mostrare diverse opzioni
+            print(cls.decorso_unico)
+
+            if(cls.decorso_unico):
+                tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.first_control)
+            else:
+                tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.getFirstControl(tipo_intervento))
+        if(int(control_number)==1):
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.second_control)
+        if(int(control_number)==2):
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.third_control)
+
+        if(int(control_number)>2):
+            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
+                                                    cls.third_control)
+
+        return tmp_ControlMap
 class LesioneLigamentosaTimeline(PathologyTimline):
     
     #Settimane per il controllo
     timeline= [0,3,6,12,26,52,104,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -197,20 +212,11 @@ class ScafoideTimeline(PathologyTimline):
     #Settimane per il controllo
     timeline= [0,2,6,26,52,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+       
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -242,20 +248,10 @@ class LesioneNervosaTimeline(PathologyTimline):
     #Settimane per il controllo
     timeline= [0,4,12,26,52,104,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -287,20 +283,10 @@ class DupuytrenTimeline(PathologyTimline):
     #Settimane per il controllo
     timeline= [0,2,6,12,26,52,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -332,20 +318,20 @@ class ResezioneFilieraTimeline(PathologyTimline):
     #Settimane per il controllo
     timeline= [0,2,6,12,26,52,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -377,20 +363,20 @@ class LesioneTendineaTimeline(PathologyTimline):
     #Questi sono i dati per ogni controllo
     timeline= [0,4,6,8,12,26,52,154,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -421,20 +407,20 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
     #Questi sono i dati per ogni controllo
     timeline= [0,4,6,8,12,26,52,154,520,1040]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -465,6 +451,8 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
 
 class FratturaMetaCarpaleTimeline(PathologyTimline):
     
+    decorso_unico=False
+
     #Questi sono i dati per ogni controllo
     timeline= None
 
@@ -474,7 +462,9 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
-
+        print(tipo_intervento)
+        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value)
+        
         if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
             timeline= [4,8,12,26,52,154,520,1040]
             return timeline
@@ -492,20 +482,27 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
        CONTROLS.DATA_FRATTURA.value,
     ]
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    #Siccome il decorso è diverso per il primo intervento devo usare un metodo
+    @classmethod
+    def getFirstControl(cls,tipo_intervento):
+        tipo_intervento=str(tipo_intervento)
+        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
+            return[ 
+                CONTROLS.NPRS_VAS.value,
+                CONTROLS.PROM_APROM_MCPJ.value,
+                CONTROLS.PROM_APROM_IPJ.value,
+                CONTROLS.PINCH.value,
+                CONTROLS.GRIP.value,
+                CONTROLS.DASH.value,
+                CONTROLS.PRWHE.value,
+                CONTROLS.EATON_LITTLER.value,
+            ]
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            return [
+                CONTROLS.NPRS_VAS.value,
+                CONTROLS.PROM_APROM_MCPJ.value,
+            ]
+    
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -536,6 +533,8 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
 
 class FrattureRadioDistaliTimeline(PathologyTimline):
     
+    decorso_unico=True
+
     #Questi sono i dati per ogni controllo
     timeline= [2,4,8,12,26,52,154,520,1040]
 
@@ -555,20 +554,20 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
     ]
 
 
-    first_control={
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.MODENA.value: False
-    }
+    first_control=[
+        CONTROLS.NPRS_VAS.value,
+        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.ABDUZIONE.value,
+        CONTROLS.ANTEPOSIZIONE.value,
+        CONTROLS.KAPANDJI.value,
+        CONTROLS.PINCH.value,
+        CONTROLS.GRIP.value,
+        CONTROLS.DASH.value,
+        CONTROLS.PRWHE.value,
+        CONTROLS.EATON_LITTLER.value,
+        CONTROLS.MODENA.value
+    ]
 
     second_control = [
         CONTROLS.NPRS_VAS.value,
@@ -597,6 +596,9 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
 
 class RizoartrosiControlsTimeline(PathologyTimline):
 
+    #Variabile definita per ogni controllo. Indica se il percorso
+    #post operatorio è unico o no
+    decorso_unico=True
     #The values set number of weeks after first meeting
     #Contiene solo i valori dei controlli da programmare
     timeline= [2,6,12,26,52,154,520,1040]
@@ -644,6 +646,8 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         CONTROLS.EATON_LITTLER.value,
         CONTROLS.MODENA.value
     ]
+
+    
 
 
     #Questi valori rappresentano le chiavi che saranno attivate nella control MAP

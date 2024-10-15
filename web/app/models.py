@@ -109,6 +109,8 @@ class PathologyData(db.Model):
     id_pathology= db.Column(db.Integer,db.ForeignKey('pathology.id'),nullable=False)
     pathology = db.relationship('Pathology', foreign_keys=[id_pathology])
     
+    #Valore utilizzato per salvare a db quale tipo di sotto patologia è stato selezionato
+    #Utilzzato inoltre per capire se la patologia ha un post trattamento diverso in termini di settimane
     id_pathology_type= db.Column(db.Integer,db.ForeignKey('pathology_type.id'),nullable=False)
     pathology_type = db.relationship('PathologyType', foreign_keys=[id_pathology_type])
     

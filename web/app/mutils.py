@@ -15,6 +15,12 @@ def get_date_from_datetime(datetime:datetime,)->datetime:
     formatted_date = datetime.strftime('%d-%m-%Y')
     return datetime.strptime(formatted_date,'%d-%m-%Y')
 
+"""
+date: è in formato %d-%m-%Y
+return: è in formato %Y-%m-%d
+"""
+def getDateInYMD(date:datetime):
+    return datetime.strptime(date, "%d-%m-%Y").strftime("%Y-%m-%d")
 
 def get_pathology_enum(pathology_id):
     for pathology in PATHOLOGY:

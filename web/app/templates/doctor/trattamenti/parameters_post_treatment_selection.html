@@ -28,14 +28,34 @@
 <script>
     // Pass Jinja variable to JavaScript
 
-    const week_to_add= "2";
+    const week_to_add= "{{ week_to_add }}";
+    console.log(week_to_add);
     
     //La Data intervento deve essere quella originaria intervento
-    DataIntervento = new Date();
+    DataIntervento = new Date("{{data_intervento}}");
+
+
 </script>
 
 <script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
 
+<script>
+  // Write a date to the input field
+  var dateInput = document.getElementById('datepicker');
+  
+  // Example: Set the input date to today's date
+  var date = new Date("{{data_controllo}}");
+  //convert date to DD--MM-YYYY
+
+  var day = String(date.getDate()).padStart(2, '0'); // Pad day with leading zero if necessary
+  var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+  var year = date.getFullYear();
+
+// Format the date as dd-mm-yyyy
+var formattedDate = day + '-' + month + '-' + year;
+
+dateInput.value = formattedDate;
+</script>
 
 
 {% endblock %}

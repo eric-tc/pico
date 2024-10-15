@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dateFormat: 'dd-mm-yy', // Set the date format
         showOn: "button", // Show the Datepicker when clicking the button
         buttonText: "",
+        minDate:new Date(),
         beforeShow: function (input, inst) {
             // Prevent the calendar from showing on focus
             console.log("beforeShow");

@@ -28,7 +28,7 @@ class PreTreamentForm(TreatmentForm):
     # I valori del campo del form devono avere lo stesso valore delle chiavi di CONTROLS
     #in questo modo nella UI posso verificare quando un campo è attivo o meno utilizzando una map dove la chiave
     # è la label:True,False. Vedere pagina next_control
-    data_frattura = DateField(CONTROLS.DATA_FRATTURA.value, format='%Y-%m-%d', render_kw={'class': 'form-control'}, validators=None)
+    data_frattura = StringField('Data Frattura', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
     
 
 #Form vecchio probabilmente posso eliminarlo
@@ -41,6 +41,9 @@ class PostTreatmentForm(TreatmentForm):
     data_controllo = StringField('Data Controllo', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
     orario_controllo = StringField('Orario Controllo', render_kw={'class': 'form-control'}, validators=None)
     
+    #Nei controlli posso anche cambiare solo la data
+    submit_change_date = SubmitField("Cambia Data", render_kw={'class': 'btn btn-info'})
+
 
     # Hidden Input to handle variable
     pathology_id = HiddenField('Pathology ID', render_kw={'class': 'form-control'}, validators=None)

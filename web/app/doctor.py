@@ -7,7 +7,7 @@ from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
-from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control
+from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
 from werkzeug.security import generate_password_hash
 import json
 from .internal_data import get_pathology_type_dict
@@ -334,17 +334,24 @@ def medical_treatment():
     if form.validate_on_submit():
 
         
+        surgery_date = getDateInYMD(request.form.get("data_intervento"))
+        pathology_id_type =  request.form.get("treatment_options")
+
         #Aggiornamento riga patologia con la data dell'intervento
         pathology_row_to_update = PathologyData.query.get(row_id_to_update)
+        #Id tipo patologia
+        pathology_row_to_update.id_pathology_type= pathology_id_type        
         pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
-        pathology_row_to_update.surgery_date= get_date(request.form.get("data_intervento"))
+        pathology_row_to_update.surgery_date= surgery_date
+        pathology_row_to_update.id_pathology_status= PATHOLOGY_STATUS.DURANTE.value[0]
         db.session.commit()
 
         # variabili comun a tutte le patologie
         data_prossimo_controllo=None
         orario_prossimo_controllo= None
 
-        pathology_id_type = request.form.get("treatment_options")
+        print(f"PATHOLOGY ID TYPE {pathology_id_type}")
+        
 
         #Pathology_Enum è enum PATHOLOGY che contiene tutte le patologie. 
         # Il valore 2 ad esempio è RizoartrosiControlsTimeline.timeline che contiene le settimane dei controlli successivi 
@@ -367,8 +374,9 @@ def medical_treatment():
                 next_control_date=data_prossimo_controllo,
                 next_control_time= orario_prossimo_controllo,
                 is_date_accepted= is_date_accepted,
-                next_control_number=control_number,
+                next_control_number=control_number, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
                 id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+                surgery_date=surgery_date,
                 nprs_vas=None,  # Replace with the actual value
                 prom_aprom_mcpj=None,  # Replace with the actual value
                 prom_aprom_ipj=None,  # Replace with the actual value
@@ -383,7 +391,7 @@ def medical_treatment():
                 tipo_cicatrice=None,  # Replace with the actual value
                 stato_cicatrice=None,  # Replace with the actual value
                 modena=None, # Replace with the actual value
-                field1= None,
+                field1= row_id_to_update,
                 field2= None,
                 field3= None,
                 field4= None,
@@ -849,16 +857,55 @@ def event_details(row_id):
     form= PostTreatmentForm()
 
     controls_map=None
+    week_to_add=None
+    # Serve per impostare il valore di default per poi aggiungere le settimane
+    data_intervento=None
+    data_controllo=None
+    pathology_db = db.session.query(PathologyData).filter(PathologyData.id==row_id).first()
+
     
     #In base alla patologia selezionata ritorno le terapie associate a quella patologia
     for pathology in PATHOLOGY:
-        if pathology.value[0] == int(1):
-            controls_map= pathology.value[2].get_controls(control_number = 1)
-            print("CONTROLS MAP")
+        if pathology.value[0] == int(pathology_db.id_pathology):
+
+            controls_map= pathology.value[2].get_next_control(control_number = pathology_db.next_control_number,
+                                                          tipo_intervento=pathology_db.id_pathology_type)
+            
+            timeline= pathology.value[2].getTimeline(str(pathology_db.id_pathology_type))    
+            
+            print(f"TIMELINE {timeline}")
+
+            week_to_add= timeline[pathology_db.next_control_number]
+            
+            
+            data_intervento= pathology_db.surgery_date
+            data_controllo= pathology_db.next_control_date
             print(controls_map)
+            print(week_to_add)
+            print(data_intervento)
+            print(data_controllo)
             break
+    
+    # Siccome alcune patologie possono avere un decorso diverso devo tenere in considerazione anche il pathology type
+    
+
+    if form.is_submitted():
+
+        #Verifico se utente ha cambiato data e ora del controllo successivo
+        if form.submit_change_date.data:
+            
+            return redirect(url_for('doctor.calendar'))
+        if form.submit_form.data:
+            print("SUBMITTED")
+            print(form.data)
+            print(form.errors)
+
+            return redirect(url_for('doctor.calendar'))
 
     return render_template('doctor/trattamenti/parameters_post_treatment_selection.html',
                            row_id=row_id,
                            form=form,
-                           controls_map=controls_map)
+                           controls_map=controls_map,
+                           week_to_add=week_to_add,
+                           data_intervento=data_intervento,
+                           data_controllo=data_controllo)

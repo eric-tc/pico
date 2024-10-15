@@ -4,14 +4,14 @@
 
 {% if controls_map.data_frattura %}
 
-    <label for="data_frattura">Data Frattura</label>  
-    {{ form.data_frattura }}
+    {{ form.data_frattura.label }}
+    {{ form.data_frattura(id='generic-datepicker') }}
 
 {% endif %}
 
     
     {% include 'general/pathology_form_fields.html' %}
- 
+    
 
 </form>
 
