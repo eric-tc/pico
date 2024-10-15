@@ -682,8 +682,8 @@ class RizoartrosiControlsTimeline(PathologyTimline):
 Chiavi utilizzate per salvare i dati nella sessione user dottore
 """
 
-class SessionDataDoctor(Enum):
-    
+class CacheDataDoctor(Enum):
+
     #utilizzati per salvare gli eventi del calendario in modo da non eseguire delle query inutili
     CALENDAR_EVENTS= "calendar_events"
 

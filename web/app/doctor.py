@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,SessionDataDoctor
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
-from . import db,csrf
+from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm
 import datetime
@@ -12,13 +12,16 @@ from werkzeug.security import generate_password_hash
 import json
 from .internal_data import get_pathology_type_dict
 from .query_sql import select_next_treatments
+import sys
 
 doctor = Blueprint('doctor', __name__)
 
 
 def remove_session_data():
-    session.pop(SessionDataDoctor.CALENDAR_EVENTS.value, None)
     
+    cache.delete(CacheDataDoctor.CALENDAR_EVENTS.value)
+    
+
 
 @doctor.route('/profile')
 @login_required
@@ -814,10 +817,11 @@ def get_events():
 
 
     #Prendo solo gli eventi entro tot mesi. Per rendere la query più veloce
-
-    if(SessionDataDoctor.CALENDAR_EVENTS.value in session):
-        print("EVENT FROM SESSION")
-        return jsonify(session[SessionDataDoctor.CALENDAR_EVENTS.value])
+    events = cache.get(CacheDataDoctor.CALENDAR_EVENTS.value)
+    
+    if(events):
+        print(f"BYTES EVNET {sys.getsizeof(cache.get(CacheDataDoctor.CALENDAR_EVENTS.value))}")
+        return jsonify(events)
     else:
     
         today = datetime.today()
@@ -860,8 +864,8 @@ def get_events():
 
             events.append(event_dict)
 
-            
-        session[SessionDataDoctor.CALENDAR_EVENTS.value]=events
+        print(f"BYTES EVNET {sys.getsizeof(events)}")
+        cache.set(CacheDataDoctor.CALENDAR_EVENTS.value,events)
 
         return jsonify(events)
 
@@ -922,7 +926,10 @@ def event_details(row_id,event_in_range):
             print(next_control_time)
 
             pathology_db.next_control_date= next_control_date
-            pathology_db.next_control_time= next_control_time
+            if(next_control_time):
+                pathology_db.next_control_time= next_control_time
+            else:
+                pathology_db.next_control_time= "12:00"
             pathology_db.is_date_accepted=1
             db.session.commit()
             return redirect(url_for('doctor.calendar'))

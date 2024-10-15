@@ -9,6 +9,7 @@ from enum import Enum
 
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_cors import CORS
+from flask_caching import Cache
 #ROLE 1 = DOCTOR
 #ROLE 2 = PATIENT
 
@@ -16,19 +17,25 @@ from flask_cors import CORS
 db = SQLAlchemy()
 boostrap= None
 csrf = None
+chace = None
 
 def create_app():
     global csrf
-
+    global cache
+    
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SECRET_KEY'] = os.urandom(24)
-    
+    app.config["CACHE_TYPE"] = "SimpleCache"
+    app.config["CACHE_DEFAULT_TIMEOUT"] = 300
     
     csrf = CSRFProtect(app)
     CORS(app)
     
     db.init_app(app)
+
+    #Init Cache
+    cache = Cache(app)
     
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
