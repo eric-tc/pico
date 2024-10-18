@@ -45,7 +45,7 @@ class AromPromPolsoForm(AromPromForm):
 
     Arom_Supinazione = FloatField("Arom Supinazione", validators=[NumberRange(min=0.0, max=100.0)])
     Arom_Pronazione = FloatField("Arom Pronazione", validators=[NumberRange(min=0.0, max=100.0)])
-    Prom_Supizazione = FloatField("Prom Supinazione", validators=[NumberRange(min=0.0, max=100.0)])
+    Prom_Supinazione = FloatField("Prom Supinazione", validators=[NumberRange(min=0.0, max=100.0)])
     Prom_Pronazione = FloatField("Prom Pronazione", validators=[NumberRange(min=0.0, max=100.0)])
 
 class TrapezioMetacarpicaForm(FlaskForm):
@@ -77,18 +77,18 @@ class TreatmentForm(FlaskForm):
     #1
     mpcj_list = FieldList(FormField(AromPromForm),label="MCPJ", min_entries=5, max_entries=5)
     
-    # dipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
-    # pipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
-    # ipcj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
+    dipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
+    pipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
+    ipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
     
-    # #2
-    # polso_list = FormField(AromPromPolsoForm)
+    #2
+    polso_list = FormField(AromPromPolsoForm)
 
     # #3
-    # vas = FloatField('VAS', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
+    vas = FloatField('vas', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
 
     # #4
-    # forza= FormField(ForzaForm)
+    forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
     # #5
     # dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
     # #6
@@ -101,29 +101,56 @@ class TreatmentForm(FlaskForm):
     # edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
     # #10
     # cicatrice = FormField(CicatriceForm)
-    # #11
+    # # #11
     # tutore = SelectField('Tutore', choices=[(1, 'Yes'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
-    # #12
+    # # #12
     # altro = FormField(AltroForm)
 
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
-    def __init__(self, selected_indices=None, *args, **kwargs):
+    def __init__(self, selected_indices=None,controls_map=None, *args, **kwargs):
         super(TreatmentForm, self).__init__(*args, **kwargs)
         self.selected_indices = selected_indices or []
+        self.controls_map = controls_map
+        self.max_indeces = [] #indici non esclusi di default
 
-
-    def validate(self, extra_validators=None):
-        """
-        Usato per rendere la validazione attiva solo sugli indici selezionati
-        """
-        valid = super(TreatmentForm, self).validate()
+    #Metodo definito da flask_form per la validazione dei campi
+    def validate_forza(self,value=None):
         
-        print("VALIDATE")
+        for index, subform in enumerate(self.forza):
 
-        # Loop through all subforms in the FieldList and apply validation only to visible ones
-        for index, subform in enumerate(self.mpcj_list):
-            if index not in range(0, len(self.selected_indices)):
+            # Remove validators for fields that are not rendered (not visible)
+            subform.key_pinch.validators = []
+            subform.tip_to_pinch.validators = []
+            subform.three_fingers_pinch.validators = []
+            subform.grip.validators = []
+
+    def validate_polso(self, polso_list):
+
+        
+        # Remove validators for fields that are not rendered (not visible)
+        polso_list.form.Arom_Supinazione.validators = []
+        polso_list.form.Arom_Pronazione.validators = []
+        polso_list.form.Prom_Supinazione.validators = []
+        polso_list.form.Prom_Pronazione.validators = []
+        polso_list.form.Arom_Estensione.validators = []
+        polso_list.form.Arom_Flessione.validators = []
+        polso_list.form.Prom_Estensione.validators = []
+        polso_list.form.Prom_Flessione.validators = []
+
+
+    def validate_list(self, mpcj_list,selected_indices):
+
+         for index, subform in enumerate(mpcj_list):
+            """
+            Quando eseguo la validazione gli indici non seguono i campi selezionati, ma partono sempre dallo 0
+            per cui se ho selezionato gli indici selected_indices= [2,3] i campi a cui dovrò togliere la validazione saranno tutti quelli dopo la lunghezza dell'array
+            cioè [2,3,4]. Infatti gli indici partono da 0 e contano il numero di elementi presenti.
+
+            In pratica i valori di ritorno sono una lista che parte sempre da indice 0. Tutti gli altri significa che non sono stati visualizzati
+
+            """
+            if index not in range(0, len(selected_indices)):
                 print("Index not in selected_indices: ", index)
                 # Remove validators for fields that are not rendered (not visible)
                 subform.Arom_Estensione.validators = []
@@ -131,6 +158,46 @@ class TreatmentForm(FlaskForm):
                 subform.Prom_Estensione.validators = []
                 subform.Prom_Flessione.validators = []
 
+    def validate(self, extra_validators=None):
+        """
+        Usato per rendere la validazione attiva solo sugli indici selezionati
+        """
+        valid = super(TreatmentForm, self).validate()
+
+        #in base alla lista delle controls_map devo disabilitare i validatori
+
+        for key, value in self.controls_map.items():
+            if value == False:
+                print("Disabilito il campo: ", key)
+                
+                if key == "mpcj":
+
+                    self.validate_list(self.mpcj_list,self.max_indeces)   
+                elif key == "dipj":
+                    self.validate_list(self.dipj_list,self.max_indeces)
+                elif key == "pipj":
+                    self.validate_list(self.pipj_list,self.max_indeces)
+                elif key == "ipj":
+                    self.validate_list(self.ipj_list,self.max_indeces)
+                elif key == "polso":
+                    print("POLSO")
+                    self.validate_polso(self.polso_list)
+                elif key == "vas":
+                    self.vas.validators = []
+                elif key == "forza":
+                    self.validate_forza()
+            
+            elif value:
+                # Se true devo disabilitare gli indici non selezionati
+                if key == "mpcj":
+                    self.validate_list(self.mpcj_list,self.selected_indices)
+                elif key == "dipj":
+                    self.validate_list(self.dipj_list,self.selected_indices)
+                elif key == "pipj":
+                    self.validate_list(self.pipj_list,self.selected_indices)
+                elif key == "ipj":
+                    self.validate_list(self.ipj_list,self.selected_indices)
+                
         # Perform another validation after updating the validators
         return super(TreatmentForm, self).validate()
 

@@ -967,28 +967,24 @@ from wtforms.validators import DataRequired, Length,NumberRange
 @doctor.route('/test_controls/',methods=["GET","POST"])
 def test_controls():
 
-    selected_indices = [1,2,3]
-    form= TreatmentForm(selected_indices=selected_indices)
-    #indicano le dita da selezionare
-    
-    print("BEFORE")
-
-   
-
-    print("AFTER")
-    # Step 2: Remove validators for fields not in selected_indices
-    
-
+    selected_indices = [1]
     controls_map= {"mpcj":True,
                    "pipj":False,
                    "dipj":False,
-                   "ipj":False,}
+                   "ipj":False,
+                   "polso":False,
+                   "vas":False,
+                   "forza":False,
+                   }
     
-
-    print("VALIDATE ON SUBMIT")
+    form= TreatmentForm(selected_indices=selected_indices,
+                        controls_map=controls_map)
+   
+    
     if form.validate_on_submit():
         
-        print("VALIDATE ON SUBMIT 2")
+        print("VALIDATE ENTER")
+        print("MPCJ")
         mpcj_data = {}
         
         for index in selected_indices:
@@ -1000,8 +996,45 @@ def test_controls():
                 'Prom_Flessione': form.mpcj_list[int(index)].Prom_Flessione.data
             }
 
+        print("DIPJ")
+        dipj_data = {}
 
-        print(mpcj_data)  
+        for index in selected_indices:
+            # Dynamically retrieve the data for each subform
+            dipj_data[int(index)] = {
+                'Arom_Estensione': form.dipj_list[int(index)].Arom_Estensione.data,
+                'Arom_Flessione': form.dipj_list[int(index)].Arom_Flessione.data,
+                'Prom_Estensione': form.dipj_list[int(index)].Prom_Estensione.data,
+                'Prom_Flessione': form.dipj_list[int(index)].Prom_Flessione.data
+            }
+
+        print("PIPJ")
+        pipj_data = {}
+
+        for index in selected_indices:
+            # Dynamically retrieve the data for each subform
+            pipj_data[int(index)] = {
+                'Arom_Estensione': form.pipj_list[int(index)].Arom_Estensione.data,
+                'Arom_Flessione': form.pipj_list[int(index)].Arom_Flessione.data,
+                'Prom_Estensione': form.pipj_list[int(index)].Prom_Estensione.data,
+                'Prom_Flessione': form.pipj_list[int(index)].Prom_Flessione.data
+            }
+
+
+        print("IPJ")
+        ipj_data = {}
+
+        for index in selected_indices:
+            # Dynamically retrieve the data for each subform
+            ipj_data[int(index)] = {
+                'Arom_Estensione': form.ipj_list[int(index)].Arom_Estensione.data,
+                'Arom_Flessione': form.ipj_list[int(index)].Arom_Flessione.data,
+                'Prom_Estensione': form.ipj_list[int(index)].Prom_Estensione.data,
+                'Prom_Flessione': form.ipj_list[int(index)].Prom_Flessione.data
+            }
+                
+
+
 
 
     return render_template('doctor/test_controls.html',
