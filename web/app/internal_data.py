@@ -6,31 +6,6 @@ from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDist
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum
 
 
-
-mpcj={"mpcj":
-      {1:{
-    "Arom_Estensione": "Arom MCPJ",
-    "Arom_Flessione": "Arom MCPJ",
-    "Prom_Estensione": "Prom MCPJ",
-    "Prom_Flessione": "Prom MCPJ"
-    },
-    2:{
-    "Arom_Estensione": "Arom MCPJ",
-    "Arom_Flessione": "Arom MCPJ",
-    "Prom_Estensione": "Prom MCPJ",
-    "Prom_Flessione": "Prom MCPJ"
-    },
-    3:{
-    "Arom_Estensione": "Arom MCPJ",
-    "Arom_Flessione": "Arom MCPJ",
-    "Prom_Estensione": "Prom MCPJ",
-    "Prom_Flessione": "Prom MCPJ"
-    }
-    
-    }
-    }
-
-
 # Define an enumeration class
 class ROLE(Enum):
     DOCTOR = 1

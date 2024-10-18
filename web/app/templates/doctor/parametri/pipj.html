@@ -1,0 +1,32 @@
+{% for index in range(form.pipj_list | length) %}
+    {% if index in selected_indices %}
+        <fieldset>
+            <legend>Misurazione Pipj Dito {{ index }}</legend>
+            
+            <label>{{ form.pipj_list[index].Arom_Estensione.label }}</label>
+            {{ form.pipj_list[index].Arom_Estensione }}
+            {% for error in form.pipj_list[index].Arom_Estensione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+            <label>{{ form.pipj_list[index].Arom_Flessione.label }}</label>
+            {{ form.pipj_list[index].Arom_Flessione }}
+            {% for error in form.pipj_list[index].Arom_Flessione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+            <label>{{ form.pipj_list[index].Prom_Estensione.label }}</label>
+            {{ form.pipj_list[index].Prom_Estensione }}
+            {% for error in form.pipj_list[index].Prom_Estensione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+            <label>{{ form.pipj_list[index].Prom_Flessione.label }}</label>
+            {{ form.pipj_list[index].Prom_Flessione }}
+            {% for error in form.pipj_list[index].Prom_Flessione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </fieldset>
+        <hr>
+    {% endif %}
+{% endfor %}

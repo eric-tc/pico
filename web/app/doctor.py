@@ -4,7 +4,7 @@ from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
-from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm
+from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
@@ -961,3 +961,50 @@ def event_details(row_id,event_in_range):
                            data_intervento=data_intervento,
                            data_controllo=data_controllo,
                            event_in_range=event_in_range)
+
+from wtforms.validators import DataRequired, Length,NumberRange
+
+@doctor.route('/test_controls/',methods=["GET","POST"])
+def test_controls():
+
+    selected_indices = [1,2,3]
+    form= TreatmentForm(selected_indices=selected_indices)
+    #indicano le dita da selezionare
+    
+    print("BEFORE")
+
+   
+
+    print("AFTER")
+    # Step 2: Remove validators for fields not in selected_indices
+    
+
+    controls_map= {"mpcj":True,
+                   "pipj":False,
+                   "dipj":False,
+                   "ipj":False,}
+    
+
+    print("VALIDATE ON SUBMIT")
+    if form.validate_on_submit():
+        
+        print("VALIDATE ON SUBMIT 2")
+        mpcj_data = {}
+        
+        for index in selected_indices:
+            # Dynamically retrieve the data for each subform
+            mpcj_data[int(index)] = {
+                'Arom_Estensione': form.mpcj_list[int(index)].Arom_Estensione.data,
+                'Arom_Flessione': form.mpcj_list[int(index)].Arom_Flessione.data,
+                'Prom_Estensione': form.mpcj_list[int(index)].Prom_Estensione.data,
+                'Prom_Flessione': form.mpcj_list[int(index)].Prom_Flessione.data
+            }
+
+
+        print(mpcj_data)  
+
+
+    return render_template('doctor/test_controls.html',
+                           form=form,
+                           controls_map=controls_map,
+                           selected_indices=selected_indices) 

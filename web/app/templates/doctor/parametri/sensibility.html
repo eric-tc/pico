@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Select Areas on Image</h2>
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid black; cursor: crosshair;"></canvas>
+    <button id="submit">Submit Selection</button>
+
+    <form id="areaForm" method="POST" action="/submit_areas">
+        <input type="hidden" name="areas" id="areasInput">
+    </form>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const areas = [];
+        let startX, startY, isDrawing = false;
+
+        // Load the image onto the canvas
+        const image = new Image();
+        image.src = 'path_to_your_image.jpg'; // Change this to your image path
+        image.onload = () => {
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+
+        // Mouse events for drawing rectangles
+        canvas.addEventListener('mousedown', (e) => {
+            startX = e.offsetX;
+            startY = e.offsetY;
+            isDrawing = true;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDrawing) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Redraw the image
+
+                const currentX = e.offsetX;
+                const currentY = e.offsetY;
+
+                // Draw the rectangle
+                ctx.strokeStyle = 'red';
+                ctx.strokeRect(startX, startY, currentX - startX, currentY - startY);
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            isDrawing = false;
+            const rect = {
+                x: startX,
+                y: startY,
+                width: e.offsetX - startX,
+                height: e.offsetY - startY,
+            };
+            areas.push(rect);
+        });
+
+        // Submit the area data
+        document.getElementById('submit').addEventListener('click', () => {
+            event.preventDefault();
+            document.getElementById('areasInput').value = JSON.stringify(areas);
+            //Questo id deve avere id del form dei trattamenti
+            document.getElementById('areaForm').submit();
+        });
+    </script>
+
+{% endblock %}
