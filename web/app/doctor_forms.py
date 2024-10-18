@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
-from wtforms.fields import DateField,TimeField,SelectField,HiddenField
+from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField
 from .internal_data import CONTROLS
 
 
@@ -80,3 +80,15 @@ class RizoartrosiForm(FlaskForm):
     tipo_cicatrice = StringField(CONTROLS.TIPO_CICATRICE.value, render_kw={'class': 'form-control'},  validators=None)
     modena = StringField(CONTROLS.MODENA.value,render_kw={'class': 'form-control'},  validators=None)
     submit_rizoartrosi = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
+
+
+# FORM TO HANDLE PARAMETERS
+
+class MPCJSubForm(FlaskForm):
+    Arom_Estensione = StringField("Arom Estensione", validators=[DataRequired()])
+    Arom_Flessione = StringField("Arom Flessione", validators=[DataRequired()])
+    Prom_Estensione = StringField("Prom Estensione", validators=[DataRequired()])
+    Prom_Flessione = StringField("Prom Flessione", validators=[DataRequired()])
+
+class MPCJForm(FlaskForm):
+    mpcj_list = FieldList(FormField(MPCJSubForm), min_entries=5, max_entries=5)
