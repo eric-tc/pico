@@ -34,20 +34,21 @@ class EMAIL_STATUS(Enum):
 class CONTROLS(Enum):
 
     DATA_FRATTURA= "data_frattura"
-    NPRS_VAS = "nprs_vas"
-    PROM_APROM_MCPJ = "prom_aprom_mcpj"
-    PROM_APROM_IPJ = "prom_aprom_ipj"
-    ABDUZIONE = "abduzione"
-    ANTEPOSIZIONE = "anteposizione"
-    KAPANDJI = "kapandji"
-    PINCH = "pinch"
-    GRIP = "grip"
+    MPCJ = "mpcj"
+    PIPJ = "pipj"
+    DIPJ = "dipj"
+    IPJ = "ipj"
+    POLSO = "polso"
+    VAS = "vas"
+    TRAPEZIO_METACARPALE = "trapezio_metacarpale"
+    FORZA = "forza"
     DASH = "dash"
     PRWHE = "prwhe"
     EATON_LITTLER = "eaton_littler"
-    TIPO_CICATRICE = "tipo_cicatrice"
-    STATO_CICATRICE= "stato_cicatrice"
-    MODENA = "modena"
+    EDEMA = "edema"
+    CICATRICE = "cicatrice"
+    TUTORE= "tutore"
+    ALTRO = "altro"
 
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
@@ -61,21 +62,54 @@ class CONTROLS(Enum):
 class PathologyTimline:
     
     Controls_Map={
-        CONTROLS.DATA_FRATTURA.value: False,
-        CONTROLS.NPRS_VAS.value: False,
-        CONTROLS.PROM_APROM_MCPJ.value: False,
-        CONTROLS.PROM_APROM_IPJ.value: False,
-        CONTROLS.ABDUZIONE.value: False,
-        CONTROLS.ANTEPOSIZIONE.value: False,
-        CONTROLS.KAPANDJI.value: False,
-        CONTROLS.PINCH.value: False,
-        CONTROLS.GRIP.value: False,
-        CONTROLS.DASH.value: False,
-        CONTROLS.PRWHE.value: False,
-        CONTROLS.EATON_LITTLER.value: False,
-        CONTROLS.STATO_CICATRICE.value: False,
-        CONTROLS.TIPO_CICATRICE.value: False,
-        CONTROLS.MODENA.value: False
+        CONTROLS.DATA_FRATTURA.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.MPCJ.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.PIPJ.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.DIPJ.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.IPJ.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.POLSO.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.VAS.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.TRAPEZIO_METACARPALE.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.FORZA.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.DASH.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.PRWHE.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.EATON_LITTLER.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.EDEMA.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.CICATRICE.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.TUTORE.value: {"active":False,
+                           "indices":[0]
+                           },
+        CONTROLS.ALTRO.value: {"active":False,
+                           "indices":[0]
+                           }
     }
 
     pre_treatment_controls=None
@@ -196,33 +230,33 @@ class LesioneLigamentosaTimeline(PathologyTimline):
     timeline= [0,3,6,12,26,52,104,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 class ScafoideTimeline(PathologyTimline):
@@ -231,33 +265,33 @@ class ScafoideTimeline(PathologyTimline):
     timeline= [0,2,6,26,52,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
        
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -267,32 +301,32 @@ class LesioneNervosaTimeline(PathologyTimline):
     timeline= [0,4,12,26,52,104,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -302,32 +336,32 @@ class DupuytrenTimeline(PathologyTimline):
     timeline= [0,2,6,12,26,52,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -337,42 +371,42 @@ class ResezioneFilieraTimeline(PathologyTimline):
     timeline= [0,2,6,12,26,52,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
         CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
+        CONTROLS.PIPJ.value
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -382,42 +416,42 @@ class LesioneTendineaTimeline(PathologyTimline):
     timeline= [0,4,6,8,12,26,52,154,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
         CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
+        CONTROLS.PIPJ.value
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 class FrattureFalangeProssimaleTimeline(PathologyTimline):
@@ -426,42 +460,42 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
     timeline= [0,4,6,8,12,26,52,154,520,1040]
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
         CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
+        CONTROLS.PIPJ.value
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -506,44 +540,44 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tipo_intervento=str(tipo_intervento)
         if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
             return[ 
-                CONTROLS.NPRS_VAS.value,
-                CONTROLS.PROM_APROM_MCPJ.value,
-                CONTROLS.PROM_APROM_IPJ.value,
-                CONTROLS.PINCH.value,
-                CONTROLS.GRIP.value,
+                CONTROLS.PIPJ.value,
+                CONTROLS.PIPJ.value,
+                CONTROLS.PIPJ.value,
+                CONTROLS.PIPJ.value,
+                CONTROLS.PIPJ.value,
                 CONTROLS.DASH.value,
                 CONTROLS.PRWHE.value,
                 CONTROLS.EATON_LITTLER.value,
             ]
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
             return [
-                CONTROLS.NPRS_VAS.value,
-                CONTROLS.PROM_APROM_MCPJ.value,
+                CONTROLS.PIPJ.value,
+                CONTROLS.PIPJ.value,
             ]
     
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -573,42 +607,35 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
 
 
     first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
         CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
+        CONTROLS.PIPJ.value
     ]
 
     second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value
         ]
 
     third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
         CONTROLS.DASH.value,
         CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
+        CONTROLS.PIPJ.value,
     ]
 
 
@@ -619,7 +646,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     decorso_unico=True
     #The values set number of weeks after first meeting
     #Contiene solo i valori dei controlli da programmare
-    timeline= [2,6,12,26,52,154,520,1040]
+    timeline= [3,6,12,26,52,154,520,1040]
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -639,60 +666,75 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     #Ultimo Controllo
     LAST_CONTROL=9
 
-    pre_treatment_controls=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-    ]
+    @classmethod
+    def get_pre(cls):
+        
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-    first_control=[
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-        CONTROLS.MODENA.value
-    ]
+        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
+        tmp_ControlMap[CONTROLS.EATON_LITTLER]["active"]=True
 
+        #Setto i valori per il primo controllo
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_one(cls):
+
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+
+        return tmp_ControlMap
+
+    @classmethod
+    def get_two(cls):
+
+          #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
     
 
 
-    #Questi valori rappresentano le chiavi che saranno attivate nella control MAP
-    second_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value
-    ]
+    @classmethod
+    def get_next(cls):
+        """
+        Se i controlli sucessivi sono tutti uguali uso una sola funzione
+        """
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-    third_control = [
-        CONTROLS.NPRS_VAS.value,
-        CONTROLS.PROM_APROM_MCPJ.value,
-        CONTROLS.PROM_APROM_IPJ.value,
-        CONTROLS.ABDUZIONE.value,
-        CONTROLS.ANTEPOSIZIONE.value,
-        CONTROLS.KAPANDJI.value,
-        CONTROLS.PINCH.value,
-        CONTROLS.GRIP.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.MODENA.value,
-        CONTROLS.STATO_CICATRICE.value,
-        CONTROLS.TIPO_CICATRICE.value,
-    ]
-    
+        tmp_ControlMap[CONTROLS.VAS]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
+
+        return tmp_ControlMap
+   
 
    
 
@@ -738,13 +780,13 @@ class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None)
     FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None)
     FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum)
-    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None)
-    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None)
-    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None)
-    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline,None)
-    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline,None)
-    SCAFOIDE= (9, "scafoide",ScafoideTimeline,None)
-    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline,None)
+    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None,None)
+    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None,None)
+    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None,None)
+    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline,None,None)
+    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline,None,None)
+    SCAFOIDE= (9, "scafoide",ScafoideTimeline,None,None)
+    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline,None,None)
         
 
 

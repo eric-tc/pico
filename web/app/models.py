@@ -31,7 +31,7 @@ class Pathology(db.Model):
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY:
                 print(row.value)
-                id,name,timeline,form= row.value
+                id,name,timeline,form,enum= row.value
                 new_instance = cls(name=name)
                 db.session.add(new_instance)
             
@@ -141,30 +141,26 @@ class PathologyData(db.Model):
 
     #I valori di queste variabili devono corrispondere ai valori di RIZOARTROSI_CONTROLS dentro internal Data.
     #In questo modo posso accedere a queste variabili utilizzando setattr(myinstance,RIZOARTROSI_CONTROLS....value)  
-    nprs_vas=db.Column(db.Integer)
-    prom_aprom_mcpj= db.Column(db.Integer)
-    prom_aprom_ipj=db.Column(db.Integer)
-    abduzione=db.Column(db.Integer)
-    anteposizione=db.Column(db.Integer)
-    kapandji=db.Column(db.Integer)
-    pinch=db.Column(db.Integer)
-    grip=db.Column(db.Integer)
+    mpcj=db.Column(db.JSON)
+    pipj= db.Column(db.JSON)
+    dipj=db.Column(db.JSON)
+    ipj=db.Column(db.JSON)
+    polso=db.Column(db.JSON)
+    vas=db.Column(db.Float)
+    trapezio_metacarpale=db.Column(db.JSON)
+    forza=db.Column(db.JSON)
     dash=db.Column(db.Integer)
     prwhe=db.Column(db.Integer)
     eaton_littler=db.Column(db.Integer)
-    tipo_cicatrice= db.Column(db.String(100))
-    stato_cicatrice = db.Column(db.String(100))
-    modena = db.Column(db.String(100))
+    edema=db.Column(db.String(10))
+    cicatrice= db.Column(db.JSON)
+    tutore = db.Column(db.String(10))
+    altro = db.Column(db.JSON)
 
-    #Campi utilizzati per salvare i diversi parametri 
+    #Campo utilizzati per salvare i diversi parametri 
     #in base alla tipologia di intervento selezionato
-    field1 = db.Column(db.String(100))
-    field2 = db.Column(db.String(100))
-    field3 = db.Column(db.String(100))
-    field4 = db.Column(db.String(100))
-    field5 = db.Column(db.String(100))
-    field6 = db.Column(db.String(100))
-    field7 = db.Column(db.String(100)) 
+    field1 = db.Column(db.JSON)
+    
     
 
 
