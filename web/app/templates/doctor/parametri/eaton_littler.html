@@ -1,0 +1,6 @@
+<fieldset>
+    <legend>Classificazione radiografica di Eaton Littler</legend>
+{{ form.eaton_littler }}
+{% for error in form.eaton_littler.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+{% endfor %}

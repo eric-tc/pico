@@ -1,0 +1,6 @@
+<fieldset>
+    <legend>Dash</legend>
+{{ form.dash }}
+{% for error in form.dash.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+{% endfor %}

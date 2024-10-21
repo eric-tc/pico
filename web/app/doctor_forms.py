@@ -33,33 +33,41 @@ mpcj={"mpcj":
     }
     }
 
+    
+ATTENZIONE Affinchè il NumberRange funzioni correttamente bisogna inserire 'type': 'number', 'max': '120.0'
 """
 #Form per gestire i valori
 class AromPromForm(FlaskForm):
-    arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'max': '120.0'}, validators=[NumberRange(min=-120.0, max=120.0)])
-    arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
-    prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
-    prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
+    arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number','min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
 
 class AromPromPolsoForm(AromPromForm):
 
-    arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
-    arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
-    prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
-    prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
+    arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control','type': 'number','min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
 
 class TrapezioMetacarpicaForm(FlaskForm):
 
-    anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
-    abduzione = FloatField('Abduzione', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
-    kapandji = FloatField('Pinch',render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
+    anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
+    abduzione = FloatField('Abduzione', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
+    kapandji = FloatField('Pinch',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=10.0)])
 
 class ForzaForm(FlaskForm):
 
-    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=100.0)])
-    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=100.0)])
-    three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=100.0)])
-    grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=100.0)])
+    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_1_finger = FloatField('Misurazione 1 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_2_finger = FloatField('Misurazione 2 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_3_finger = FloatField('Misurazione 3 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_1_grip= FloatField('Misurazione 1 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_2_grip = FloatField('Misurazione 2 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
     
 
 class CicatriceForm(FlaskForm):
@@ -68,7 +76,7 @@ class CicatriceForm(FlaskForm):
     tinel = SelectField('Tinel', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
 class AltroForm(FlaskForm):
-    complicanze = SelectField('Complicanze', choices=[(0, 'CRPS'), (1, 'infenzione'),(2, 'problematiche nervose'),(3, 'problematiche tendinee')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    complicanze = SelectField('Complicanze', choices=[('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="CRPS", render_kw={'class': 'form-control'}, validators=None)
     note= StringField('Note', render_kw={'class': 'form-control'}, validators=None)
 
 
@@ -85,31 +93,34 @@ class TreatmentForm(FlaskForm):
     polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
 
     #3
-    vas = FloatField('vas', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
+    vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.1, max=10.0)])
 
     #
     trapezio_metacarpale= FieldList(FormField(TrapezioMetacarpicaForm),min_entries=1, max_entries=1)
 
     #5
-    #forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
-    #6
-    #dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
+    forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
     
-
     #6
-    # prwhe = IntegerField(CONTROLS.PRWHE.value, render_kw={'class': 'form-control'},  validators=None)
-    # #7
-    # eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control'}, validators=None )
+    dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},  validators=None)
+    
+    #7
+    prwhe = FloatField(CONTROLS.PRWHE.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},  validators=None)
+    #8
+    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '4.0Float'}, validators=[NumberRange(min=0.0, max=4.0)] )
     # #8
     # #sensibilty = Gestita attraverso un canvas e salvata direttamente a database. Vedere il file sensibilitu.html
-    # #9
-    # edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
-    # #10
-    # cicatrice = FormField(CicatriceForm)
-    # # #11
-    # tutore = SelectField('Tutore', choices=[(1, 'Yes'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
-    # # #12
-    # altro = FormField(AltroForm)
+    
+    #10
+    edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    
+    #11
+    cicatrice =  FieldList(FormField(CicatriceForm),min_entries=1, max_entries=1)
+    
+    #12
+    tutore = SelectField('Tutore', choices=[(1, 'Yes'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
+    #13
+    altro = FieldList(FormField(AltroForm),min_entries=1, max_entries=1)
 
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
@@ -117,6 +128,11 @@ class TreatmentForm(FlaskForm):
         super(TreatmentForm, self).__init__(*args, **kwargs)
         self.controls_map = controls_map
         self.max_indeces = [] #indici non esclusi di default
+
+
+    def validate_eaton_littler(self,value=None):
+            
+            self.eaton_littler.validators = []
 
     def validate_vas(self,value=None):
 
@@ -139,7 +155,13 @@ class TreatmentForm(FlaskForm):
             # Remove validators for fields that are not rendered (not visible)
             subform.key_pinch.validators = []
             subform.tip_to_pinch.validators = []
+            subform.misurazione_1_finger.validators = []
+            subform.misurazione_2_finger.validators = []
+            subform.misurazione_3_finger.validators = []
             subform.three_fingers_pinch.validators = []
+            subform.misurazione_1_grip.validators = []
+            subform.misurazione_2_grip.validators = []
+            subform.misurazione_3_grip.validators = []
             subform.grip.validators = []
 
     def validate_polso(self,value=None):
@@ -211,7 +233,9 @@ class TreatmentForm(FlaskForm):
                     self.validate_vas()
                 elif key == "forza":
                     print("Disabilito il forza")
-                    #self.validate_forza()
+                    self.validate_forza()
+                elif key == "eaton_littler":
+                    self.validate_eaton_littler()
             
             elif value:
                 # Se true devo disabilitare gli indici non selezionati

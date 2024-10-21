@@ -1,0 +1,6 @@
+<fieldset>
+    <legend>Edema</legend>
+{{ form.edema }}
+{% for error in form.edema.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+{% endfor %}
