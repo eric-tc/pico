@@ -1,0 +1,61 @@
+{% for index in range(form.polso | length) %}
+    {% if index in controls_map.polso.indices %}
+    <fieldset>
+        <legend>Misurazione Polso</legend>
+
+        <label>{{ form.polso[index].arom_estensione.label }}</label>
+        {{ form.polso[index].arom_estensione }}
+        
+        {% for error in form.polso[index].arom_estensione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        
+        <label>{{ form.polso[index].arom_flessione.label }}</label>
+        {{ form.polso[index].arom_flessione }}
+        {% for error in form.polso[index].arom_flessione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        
+
+        <label>{{ form.polso[index].arom_supinazione.label }}</label>
+        {{ form.polso[index].arom_supinazione }}
+        {% for error in form.polso[index].arom_supinazione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+
+        <label>{{ form.polso[index].prom_estensione.label }}</label>
+        {{ form.polso[index].prom_estensione }}
+        {% for error in form.polso[index].prom_estensione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+
+        <label>{{ form.polso[index].arom_pronazione.label }}</label>
+        {{ form.polso[index].arom_pronazione }}
+        {% for error in form.polso[index].arom_pronazione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        
+        <label>{{ form.polso[index].prom_flessione.label }}</label>
+        {{ form.polso[index].prom_flessione }}
+        {% for error in form.polso[index].prom_flessione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        
+        <label>{{ form.polso[index].prom_supinazione.label }}</label>
+        {{ form.polso[index].prom_supinazione }}
+        {% for error in form.polso[index].prom_supinazione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <label>{{ form.polso[index].prom_pronazione.label }}</label>
+        {{ form.polso[index].prom_pronazione }}
+        {% for error in form.polso[index].prom_pronazione.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+    </fieldset>
+        <hr>
+    {% endif %}
+{% endfor %}

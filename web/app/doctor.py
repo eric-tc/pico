@@ -967,77 +967,131 @@ from wtforms.validators import DataRequired, Length,NumberRange
 @doctor.route('/test_controls/',methods=["GET","POST"])
 def test_controls():
 
-    selected_indices = [1]
-    controls_map= {"mpcj":True,
-                   "pipj":False,
-                   "dipj":False,
-                   "ipj":False,
-                   "polso":False,
-                   "vas":False,
-                   "forza":False,
+    
+    controls_map= {"mpcj":{"active":False,
+                           "indices":[1,2]
+                           }
+                           ,
+                   "pipj":{"active":False,
+                           "indices":[3]
+                           },
+                   "dipj":{"active":False,
+                           "indices":[2]
+                           },
+                   "ipj":{"active":False,
+                           "indices":[1]
+                           },
+                   "polso":{"active":True,
+                           "indices":[0]
+                           },
+                   "vas":{"active":True,
+                           "indices":[0]
+                           },
+                   "trapezio_metacarpale":{"active":False,
+                           "indices":[0]
+                           },
+                   "forza":{"active":False,
+                           "indices":[0]
+                           },
                    }
     
-    form= TreatmentForm(selected_indices=selected_indices,
-                        controls_map=controls_map)
+    form= TreatmentForm(controls_map=controls_map)
    
-    
+
     if form.validate_on_submit():
         
         print("VALIDATE ENTER")
-        print("MPCJ")
-        mpcj_data = {}
         
-        for index in selected_indices:
-            # Dynamically retrieve the data for each subform
-            mpcj_data[int(index)] = {
-                'Arom_Estensione': form.mpcj_list[int(index)].Arom_Estensione.data,
-                'Arom_Flessione': form.mpcj_list[int(index)].Arom_Flessione.data,
-                'Prom_Estensione': form.mpcj_list[int(index)].Prom_Estensione.data,
-                'Prom_Flessione': form.mpcj_list[int(index)].Prom_Flessione.data
-            }
+        mpcj_data = {}
+        if controls_map["mpcj"]["active"]:
+            for index in controls_map["mpcj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                mpcj_data[int(index)] = {
+                    'arom_estensione': form.mpcj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.mpcj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.mpcj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.mpcj_list[int(index)].prom_flessione.data
+                }
 
-        print("DIPJ")
+        print("MPCJ")
+        print(mpcj_data)
+
+        
         dipj_data = {}
+        if controls_map["dipj"]["active"]:
+            for index in controls_map["dipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                dipj_data[int(index)] = {
+                    'arom_estensione': form.dipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.dipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.dipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.dipj_list[int(index)].prom_flessione.data
+                }
+        print("DIPJ")
+        print(dipj_data)
 
-        for index in selected_indices:
-            # Dynamically retrieve the data for each subform
-            dipj_data[int(index)] = {
-                'Arom_Estensione': form.dipj_list[int(index)].Arom_Estensione.data,
-                'Arom_Flessione': form.dipj_list[int(index)].Arom_Flessione.data,
-                'Prom_Estensione': form.dipj_list[int(index)].Prom_Estensione.data,
-                'Prom_Flessione': form.dipj_list[int(index)].Prom_Flessione.data
-            }
+        
+        pipj_data = {}
+        if controls_map["pipj"]["active"]:
+            for index in controls_map["pipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                pipj_data[int(index)] = {
+                    'arom_estensione': form.pipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.pipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.pipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.pipj_list[int(index)].prom_flessione.data
+                }
 
         print("PIPJ")
-        pipj_data = {}
-
-        for index in selected_indices:
-            # Dynamically retrieve the data for each subform
-            pipj_data[int(index)] = {
-                'Arom_Estensione': form.pipj_list[int(index)].Arom_Estensione.data,
-                'Arom_Flessione': form.pipj_list[int(index)].Arom_Flessione.data,
-                'Prom_Estensione': form.pipj_list[int(index)].Prom_Estensione.data,
-                'Prom_Flessione': form.pipj_list[int(index)].Prom_Flessione.data
-            }
-
+        print(pipj_data)
+        
+        ipj_data = {}
+        if controls_map["ipj"]["active"]:
+            for index in controls_map["ipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                ipj_data[int(index)] = {
+                    'arom_estensione': form.ipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.ipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.ipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.ipj_list[int(index)].prom_flessione.data
+                }
 
         print("IPJ")
-        ipj_data = {}
+        print(ipj_data)
 
-        for index in selected_indices:
-            # Dynamically retrieve the data for each subform
-            ipj_data[int(index)] = {
-                'Arom_Estensione': form.ipj_list[int(index)].Arom_Estensione.data,
-                'Arom_Flessione': form.ipj_list[int(index)].Arom_Flessione.data,
-                'Prom_Estensione': form.ipj_list[int(index)].Prom_Estensione.data,
-                'Prom_Flessione': form.ipj_list[int(index)].Prom_Flessione.data
-            }
-                
+        trapezio_metacarpale = {}
 
+        if controls_map["trapezio_metacarpale"]["active"]:
+            for index in controls_map["trapezio_metacarpale"]["indices"]:
+                trapezio_metacarpale[int(index)] = {
+                    'arom_estensione': form.trapezio_metacarpale[int(index)].anteposizione.data,
+                    'arom_flessione': form.trapezio_metacarpale[int(index)].abduzione.data,
+                    'prom_estensione': form.trapezio_metacarpale[int(index)].kapandji.data,
+                }
+        
+        print("TRAPEZIO METACARPALE")
+        print(trapezio_metacarpale)
+
+
+        polso={}
+        if controls_map["polso"]["active"]:
+            for index in controls_map["polso"]["indices"]:
+                polso[int(index)] = {
+                    'arom_estensione': form.polso[int(index)].arom_estensione.data,
+                    'arom_flessione': form.polso[int(index)].arom_flessione.data,
+                    'prom_estensione': form.polso[int(index)].prom_estensione.data,
+                    'prom_flessione': form.polso[int(index)].prom_flessione.data,
+                    'arom_supinazione': form.polso[int(index)].arom_supinazione.data,
+                    'arom_pronazione': form.polso[int(index)].arom_pronazione.data,
+                    'prom_supinazione': form.polso[int(index)].prom_supinazione.data,
+                    'prom_pronazione': form.polso[int(index)].prom_pronazione.data
+                }     
+
+        print("POLSO")
+        print(polso)
 
 
 
     return render_template('doctor/test_controls.html',
                            form=form,
-                           controls_map=controls_map,
-                           selected_indices=selected_indices) 
+                           controls_map=controls_map) 

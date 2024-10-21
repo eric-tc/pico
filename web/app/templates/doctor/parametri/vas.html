@@ -1,0 +1,7 @@
+
+<h3><label>{{ form.vas.label }}</label></h3>
+{{ form.vas }}
+{% for error in form.vas.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+

@@ -36,23 +36,23 @@ mpcj={"mpcj":
 """
 #Form per gestire i valori
 class AromPromForm(FlaskForm):
-    Arom_Estensione = FloatField("Arom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    Arom_Flessione = FloatField("Arom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    Prom_Estensione = FloatField("Prom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    Prom_Flessione = FloatField("Prom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
+    arom_estensione = FloatField("Arom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
+    arom_flessione = FloatField("Arom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
+    prom_estensione = FloatField("Prom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
+    prom_flessione = FloatField("Prom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
 
 class AromPromPolsoForm(AromPromForm):
 
-    Arom_Supinazione = FloatField("Arom Supinazione", validators=[NumberRange(min=0.0, max=100.0)])
-    Arom_Pronazione = FloatField("Arom Pronazione", validators=[NumberRange(min=0.0, max=100.0)])
-    Prom_Supinazione = FloatField("Prom Supinazione", validators=[NumberRange(min=0.0, max=100.0)])
-    Prom_Pronazione = FloatField("Prom Pronazione", validators=[NumberRange(min=0.0, max=100.0)])
+    arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
+    arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
+    prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
+    prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control'},validators=[NumberRange(min=0.0, max=100.0)])
 
 class TrapezioMetacarpicaForm(FlaskForm):
 
-    Anteposizione = FloatField('Anteposizione', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
-    Abduzione = FloatField('Abduzione', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
-    Pinch = FloatField('Pinch', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
+    anteposizione = FloatField('Anteposizione', validators=[NumberRange(min=0.0, max=120.0)])
+    abduzione = FloatField('Abduzione',  validators=[NumberRange(min=0.0, max=120.0)])
+    kapandji = FloatField('Pinch', validators=[NumberRange(min=0.0, max=10.0)])
 
 class ForzaForm(FlaskForm):
 
@@ -77,21 +77,26 @@ class TreatmentForm(FlaskForm):
     #1
     mpcj_list = FieldList(FormField(AromPromForm),label="MCPJ", min_entries=5, max_entries=5)
     
-    dipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
-    pipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
-    ipj_list = FieldList(FormField(AromPromForm), min_entries=5, max_entries=5)
+    dipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
+    pipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
+    ipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
     
     #2
-    polso_list = FormField(AromPromPolsoForm)
+    polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
 
-    # #3
+    #3
     vas = FloatField('vas', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
 
-    # #4
-    forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
-    # #5
-    # dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
-    # #6
+    #
+    trapezio_metacarpale= FieldList(FormField(TrapezioMetacarpicaForm),min_entries=1, max_entries=1)
+
+    #5
+    #forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
+    #6
+    #dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control'},  validators=None)
+    
+
+    #6
     # prwhe = IntegerField(CONTROLS.PRWHE.value, render_kw={'class': 'form-control'},  validators=None)
     # #7
     # eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control'}, validators=None )
@@ -110,9 +115,21 @@ class TreatmentForm(FlaskForm):
 
     def __init__(self, selected_indices=None,controls_map=None, *args, **kwargs):
         super(TreatmentForm, self).__init__(*args, **kwargs)
-        self.selected_indices = selected_indices or []
         self.controls_map = controls_map
         self.max_indeces = [] #indici non esclusi di default
+
+    def validate_vas(self,value=None):
+
+        self.vas.validators = []     
+
+    def validate_trapezio_metacarpale(self,value=None):
+
+         for index, subform in enumerate(self.trapezio_metacarpale):
+
+            # Remove validators for fields that are not rendered (not visible)
+            subform.anteposizione.validators = []
+            subform.abduzione.validators = []
+            subform.kapandji.validators = []
 
     #Metodo definito da flask_form per la validazione dei campi
     def validate_forza(self,value=None):
@@ -125,23 +142,25 @@ class TreatmentForm(FlaskForm):
             subform.three_fingers_pinch.validators = []
             subform.grip.validators = []
 
-    def validate_polso(self, polso_list):
+    def validate_polso(self,value=None):
 
         
-        # Remove validators for fields that are not rendered (not visible)
-        polso_list.form.Arom_Supinazione.validators = []
-        polso_list.form.Arom_Pronazione.validators = []
-        polso_list.form.Prom_Supinazione.validators = []
-        polso_list.form.Prom_Pronazione.validators = []
-        polso_list.form.Arom_Estensione.validators = []
-        polso_list.form.Arom_Flessione.validators = []
-        polso_list.form.Prom_Estensione.validators = []
-        polso_list.form.Prom_Flessione.validators = []
+        for index, subform in enumerate(self.polso):
+
+            # Remove validators for fields that are not rendered (not visible)
+            subform.form.arom_supinazione.validators = []
+            subform.form.arom_pronazione.validators = []
+            subform.form.prom_supinazione.validators = []
+            subform.form.prom_pronazione.validators = []
+            subform.form.arom_estensione.validators = []
+            subform.form.arom_flessione.validators = []
+            subform.form.prom_estensione.validators = []
+            subform.form.prom_flessione.validators = []
 
 
-    def validate_list(self, mpcj_list,selected_indices):
+    def validate_list(self, value_list,selected_indices):
 
-         for index, subform in enumerate(mpcj_list):
+         for index, subform in enumerate(value_list):
             """
             Quando eseguo la validazione gli indici non seguono i campi selezionati, ma partono sempre dallo 0
             per cui se ho selezionato gli indici selected_indices= [2,3] i campi a cui dovrò togliere la validazione saranno tutti quelli dopo la lunghezza dell'array
@@ -150,13 +169,16 @@ class TreatmentForm(FlaskForm):
             In pratica i valori di ritorno sono una lista che parte sempre da indice 0. Tutti gli altri significa che non sono stati visualizzati
 
             """
+
+            print("selected_indices: ", selected_indices)
+            print("len(selected_indices): ", len(selected_indices))
             if index not in range(0, len(selected_indices)):
                 print("Index not in selected_indices: ", index)
                 # Remove validators for fields that are not rendered (not visible)
-                subform.Arom_Estensione.validators = []
-                subform.Arom_Flessione.validators = []
-                subform.Prom_Estensione.validators = []
-                subform.Prom_Flessione.validators = []
+                subform.arom_estensione.validators = []
+                subform.arom_flessione.validators = []
+                subform.prom_estensione.validators = []
+                subform.prom_flessione.validators = []
 
     def validate(self, extra_validators=None):
         """
@@ -167,11 +189,10 @@ class TreatmentForm(FlaskForm):
         #in base alla lista delle controls_map devo disabilitare i validatori
 
         for key, value in self.controls_map.items():
-            if value == False:
+            if value["active"] == False:
                 print("Disabilito il campo: ", key)
                 
                 if key == "mpcj":
-
                     self.validate_list(self.mpcj_list,self.max_indeces)   
                 elif key == "dipj":
                     self.validate_list(self.dipj_list,self.max_indeces)
@@ -180,23 +201,28 @@ class TreatmentForm(FlaskForm):
                 elif key == "ipj":
                     self.validate_list(self.ipj_list,self.max_indeces)
                 elif key == "polso":
-                    print("POLSO")
-                    self.validate_polso(self.polso_list)
+                    print("Disabilito il polso")
+                    self.validate_polso()
+                elif key == "trapezio_metacarpale":
+                    print("Disabilito il trapezio_metacarpale")
+                    self.validate_trapezio_metacarpale()
                 elif key == "vas":
-                    self.vas.validators = []
+                    print("Disabilito il vas")
+                    self.validate_vas()
                 elif key == "forza":
-                    self.validate_forza()
+                    print("Disabilito il forza")
+                    #self.validate_forza()
             
             elif value:
                 # Se true devo disabilitare gli indici non selezionati
                 if key == "mpcj":
-                    self.validate_list(self.mpcj_list,self.selected_indices)
+                    self.validate_list(self.mpcj_list,self.controls_map[key]["indices"])
                 elif key == "dipj":
-                    self.validate_list(self.dipj_list,self.selected_indices)
+                    self.validate_list(self.dipj_list,self.controls_map[key]["indices"])
                 elif key == "pipj":
-                    self.validate_list(self.pipj_list,self.selected_indices)
+                    self.validate_list(self.pipj_list,self.controls_map[key]["indices"])
                 elif key == "ipj":
-                    self.validate_list(self.ipj_list,self.selected_indices)
+                    self.validate_list(self.ipj_list,self.controls_map[key]["indices"])
                 
         # Perform another validation after updating the validators
         return super(TreatmentForm, self).validate()

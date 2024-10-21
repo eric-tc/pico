@@ -1,29 +1,30 @@
 {% for index in range(form.dipj_list | length) %}
-    {% if index in selected_indices %}
-        <fieldset>
-            <legend>Misurazione Dipj Dito {{ index }}</legend>
+    {% if index in controls_map.dipj.indices %}
+         <fieldset>
+            <legend>Misurazione dipj Dito {{ index }}</legend>
+
+            <label>{{ form.dipj_list[index].arom_estensione.label }}</label>
+            {{ form.dipj_list[index].arom_estensione }}
             
-            <label>{{ form.dipj_list[index].Arom_Estensione.label }}</label>
-            {{ form.dipj_list[index].Arom_Estensione }}
-            {% for error in form.dipj_list[index].Arom_Estensione.errors %}
+            {% for error in form.dipj_list[index].arom_estensione.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
             
-            <label>{{ form.dipj_list[index].Arom_Flessione.label }}</label>
-            {{ form.dipj_list[index].Arom_Flessione }}
-            {% for error in form.dipj_list[index].Arom_Flessione.errors %}
+            <label>{{ form.dipj_list[index].arom_flessione.label }}</label>
+            {{ form.dipj_list[index].arom_flessione }}
+            {% for error in form.dipj_list[index].arom_flessione.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
             
-            <label>{{ form.dipj_list[index].Prom_Estensione.label }}</label>
-            {{ form.dipj_list[index].Prom_Estensione }}
-            {% for error in form.dipj_list[index].Prom_Estensione.errors %}
+            <label>{{ form.dipj_list[index].prom_estensione.label }}</label>
+            {{ form.dipj_list[index].prom_estensione }}
+            {% for error in form.dipj_list[index].prom_estensione.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
             
-            <label>{{ form.dipj_list[index].Prom_Flessione.label }}</label>
-            {{ form.dipj_list[index].Prom_Flessione }}
-            {% for error in form.dipj_list[index].Prom_Flessione.errors %}
+            <label>{{ form.dipj_list[index].prom_flessione.label }}</label>
+            {{ form.dipj_list[index].prom_flessione }}
+            {% for error in form.dipj_list[index].prom_flessione.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </fieldset>

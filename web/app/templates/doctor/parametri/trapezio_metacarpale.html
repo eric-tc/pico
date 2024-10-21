@@ -1,0 +1,27 @@
+{% for index in range(form.trapezio_metacarpale | length) %}
+    {% if index in controls_map.trapezio_metacarpale.indices %}
+        <fieldset>
+            <legend>Misurazione Trapezione Metacarpale</legend>
+            
+            <label>{{ form.trapezio_metacarpale[index].anteposizione.label }}</label>
+            {{ form.trapezio_metacarpale[index].anteposizione }}
+            {% for error in form.trapezio_metacarpale[index].anteposizione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+            <label>{{ form.trapezio_metacarpale[index].abduzione.label }}</label>
+            {{ form.trapezio_metacarpale[index].abduzione }}
+            {% for error in form.trapezio_metacarpale[index].abduzione.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+            <label>{{ form.trapezio_metacarpale[index].kapandji.label }}</label>
+            {{ form.trapezio_metacarpale[index].kapandji }}
+            {% for error in form.trapezio_metacarpale[index].kapandji.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+        </fieldset>
+        <hr>
+    {% endif %}
+{% endfor %}
