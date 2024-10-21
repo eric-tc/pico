@@ -36,10 +36,10 @@ mpcj={"mpcj":
 """
 #Form per gestire i valori
 class AromPromForm(FlaskForm):
-    arom_estensione = FloatField("Arom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    arom_flessione = FloatField("Arom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    prom_estensione = FloatField("Prom Estensione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
-    prom_flessione = FloatField("Prom Flessione", validators=[NumberRange(min=-120.0, max=120.0)],render_kw={'type': 'number', 'max': '120.0'})
+    arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'max': '120.0'}, validators=[NumberRange(min=-120.0, max=120.0)])
+    arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
+    prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
+    prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'max': '120.0'},validators=[NumberRange(min=-120.0, max=120.0)])
 
 class AromPromPolsoForm(AromPromForm):
 
@@ -50,9 +50,9 @@ class AromPromPolsoForm(AromPromForm):
 
 class TrapezioMetacarpicaForm(FlaskForm):
 
-    anteposizione = FloatField('Anteposizione', validators=[NumberRange(min=0.0, max=120.0)])
-    abduzione = FloatField('Abduzione',  validators=[NumberRange(min=0.0, max=120.0)])
-    kapandji = FloatField('Pinch', validators=[NumberRange(min=0.0, max=10.0)])
+    anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
+    abduzione = FloatField('Abduzione', render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=120.0)])
+    kapandji = FloatField('Pinch',render_kw={'class': 'form-control'}, validators=[NumberRange(min=0.0, max=10.0)])
 
 class ForzaForm(FlaskForm):
 

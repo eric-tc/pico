@@ -3,25 +3,34 @@
         <fieldset>
             <legend>Misurazione Trapezione Metacarpale</legend>
             
-            <label>{{ form.trapezio_metacarpale[index].anteposizione.label }}</label>
-            {{ form.trapezio_metacarpale[index].anteposizione }}
-            {% for error in form.trapezio_metacarpale[index].anteposizione.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            <label>{{ form.trapezio_metacarpale[index].abduzione.label }}</label>
-            {{ form.trapezio_metacarpale[index].abduzione }}
-            {% for error in form.trapezio_metacarpale[index].abduzione.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            <label>{{ form.trapezio_metacarpale[index].kapandji.label }}</label>
-            {{ form.trapezio_metacarpale[index].kapandji }}
-            {% for error in form.trapezio_metacarpale[index].kapandji.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
+            <div class="form-grid">
+                <!-- Field 1 -->
+                <div class="grid-item">
+                    <label>{{ form.trapezio_metacarpale[index].anteposizione.label }}</label>
+                    {{ form.trapezio_metacarpale[index].anteposizione }}
+                    {% for error in form.trapezio_metacarpale[index].anteposizione.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>    
+
+                <!-- Field 2 -->
+                <div class="grid-item">
+                    <label>{{ form.trapezio_metacarpale[index].abduzione.label }}</label>
+                    {{ form.trapezio_metacarpale[index].abduzione }}
+                    {% for error in form.trapezio_metacarpale[index].abduzione.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <!-- Field 3 -->
+                <div class="grid-item">
+                    <label>{{ form.trapezio_metacarpale[index].kapandji.label }}</label>
+                    {{ form.trapezio_metacarpale[index].kapandji }}
+                    {% for error in form.trapezio_metacarpale[index].kapandji.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
         </fieldset>
-        <hr>
     {% endif %}
 {% endfor %}

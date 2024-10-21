@@ -221,3 +221,19 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+
+
+/*
+Grid Layout per rendere i parametri più ordinati
+*/
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
+  gap: 15px; /* Adds space between grid items */
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+}

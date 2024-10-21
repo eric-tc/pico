@@ -968,7 +968,7 @@ from wtforms.validators import DataRequired, Length,NumberRange
 def test_controls():
 
     
-    controls_map= {"mpcj":{"active":False,
+    controls_map= {"mpcj":{"active":True,
                            "indices":[1,2]
                            }
                            ,
@@ -987,7 +987,7 @@ def test_controls():
                    "vas":{"active":True,
                            "indices":[0]
                            },
-                   "trapezio_metacarpale":{"active":False,
+                   "trapezio_metacarpale":{"active":True,
                            "indices":[0]
                            },
                    "forza":{"active":False,

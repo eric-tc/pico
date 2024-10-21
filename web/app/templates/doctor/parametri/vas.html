@@ -1,7 +1,6 @@
-
-<h3><label>{{ form.vas.label }}</label></h3>
+<fieldset>
+    <legend>Vas</legend>
 {{ form.vas }}
 {% for error in form.vas.errors %}
     <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
-
