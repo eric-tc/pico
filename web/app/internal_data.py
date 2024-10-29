@@ -50,6 +50,18 @@ class CONTROLS(Enum):
     TUTORE= "tutore"
     ALTRO = "altro"
 
+class CONTROLSNUMBER(Enum):
+    ONE = (1,"one")
+    TWO = (2,"two")
+    THREE = (3,"three")
+    FOUR= (4,"four")
+    FIVE= (5,"five")
+    SIX= (6,"six")
+    SEVEN= (7,"seven")
+    EIGHT= (8,"eight")
+    NINE= (9,"nine")
+    TEN= (10,"ten")
+    next= (11,"next")
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
 
@@ -832,9 +844,12 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     #Variabile definita per ogni controllo. Indica se il percorso
     #post operatorio è unico o no
     decorso_unico=True
-    #The values set number of weeks after first meeting
-    #Contiene solo i valori dei controlli da programmare
-    timeline= [3,6,12,26,52,154,520,1040]
+    #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
+    timeline= [0,3,6,12,26,52,154,520,1040]
+
+    # Numero che corrisponde al numero di controlli implementati
+    # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
+    last_control_number_before_next=2
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -846,9 +861,11 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     waiting_weeks= 1
 
     # Settimane per il primo controllo. Serve per quando devo gestire il calendario
-    # per trattamenti che hanno un decorso post operatorio diverso
+    # per trattamenti che hanno un decorso post operatorio diverso. 
+    # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
+    # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
     weeks_to_first_control={
-        "1":2
+        "1":3
     }
     
     #Ultimo Controllo
@@ -873,8 +890,11 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         return tmp_ControlMap
     
     @classmethod
-    def get_one(cls):
-
+    def get_one(cls,pathology_type=None):
+        """
+        pathology_type serve perchè in alcuni controlli devo fare delle distinzioni
+        Quando metto il valore di defautl None significa che non ho bisogno di fare distinzioni
+        """
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 

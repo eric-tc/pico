@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
@@ -339,6 +339,7 @@ def medical_treatment():
         surgery_date = getDateInYMD(request.form.get("data_intervento"))
         pathology_id_type =  request.form.get("treatment_options")
 
+        
         #Aggiornamento riga patologia con la data dell'intervento
         pathology_row_to_update = PathologyData.query.get(row_id_to_update)
         #Id tipo patologia
@@ -367,7 +368,7 @@ def medical_treatment():
             form_data.pop("row_id")
         if "patient_name" in form_data:
             form_data.pop("patient_name")
-            
+
         pathology_row_to_update.field1= json.dumps(form_data)
         db.session.commit()
 
@@ -406,7 +407,7 @@ def medical_treatment():
                 next_control_date=data_prossimo_controllo,
                 next_control_time= orario_prossimo_controllo,
                 is_date_accepted= is_date_accepted,
-                next_control_number=control_number, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
+                next_control_number=control_number +1, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
                 id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                 surgery_date=surgery_date,
                 mpcj=None,
@@ -449,172 +450,161 @@ def medical_treatment():
                            form=form,
                            week_to_add=pathology_enum.value[2].weeks_to_first_control)
 
-    # return render_template(f'doctor/{template_to_render}.html',doctor_id=current_user.id,
-    #                         patient_name=patient_name,
-    #                         pathology=PATHOLOGY,
-    #                         pathology_type=PATHOLOGY_TYPE,
-    #                         form_keys=PATHOLOGY_KEY_SELECTION_FORM,
-    #                         form=medicalForm,
-    #                         pathology_names_id_options=pathology_names_id_options,
-    #                         timeline_pathology=timeline_pathology,
-    #                         default_date= datetime.utcnow()
-    #                       )
 
 
+# # From used to setup pathology parameters
+# @doctor.route('/pathology/',methods=["POST"])
+# @login_required
+# def pathology():
 
-# From used to setup pathology parameters
-@doctor.route('/pathology/',methods=["POST"])
-@login_required
-def pathology():
+#     form= RizoartrosiForm()
+#     print(f'Request Method: {request.method}')
+#     print(f'Form Data: {request.form}')
+#     print(f'Form Errors: {form.errors}')
+#     print(f'Form Errors: {form.validate_on_submit()}')
 
-    form= RizoartrosiForm()
-    print(f'Request Method: {request.method}')
-    print(f'Form Data: {request.form}')
-    print(f'Form Errors: {form.errors}')
-    print(f'Form Errors: {form.validate_on_submit()}')
-
-    session_value = session.get(DoctorData.ID_PATIENT.value, None)
-    print(session_value)
+#     session_value = session.get(DoctorData.ID_PATIENT.value, None)
+#     print(session_value)
     
-    if form.submit_rizoartrosi.data and form.validate_on_submit():
-        print("SUBMIT RIZOARTROSI")
-        # Extract form data from the request
-        nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
-        prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
-        prom_arom_Ipj = request.form.get(CONTROLS.PROM_APROM_IPJ.value)
-        abduzione = request.form.get(CONTROLS.ABDUZIONE.value)
-        anteposizione = request.form.get(CONTROLS.ANTEPOSIZIONE.value)
-        kapandji = request.form.get(CONTROLS.KAPANDJI.value)
-        pinch = request.form.get(CONTROLS.PINCH.value)
-        grip = request.form.get(CONTROLS.GRIP.value)
-        dash = request.form.get(CONTROLS.DASH.value)
-        prwhe = request.form.get(CONTROLS.PRWHE.value)
-        eaton_littler = request.form.get(CONTROLS.EATON_LITTLER.value)
-        stato_cicatrice = request.form.get(CONTROLS.STATO_CICATRICE.value)
-        tipo_cicatrice = request.form.get(CONTROLS.TIPO_CICATRICE.value)
-        modena = request.form.get(CONTROLS.MODENA.value)
+#     if form.submit_rizoartrosi.data and form.validate_on_submit():
+#         print("SUBMIT RIZOARTROSI")
+#         # Extract form data from the request
+#         nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
+#         prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
+#         prom_arom_Ipj = request.form.get(CONTROLS.PROM_APROM_IPJ.value)
+#         abduzione = request.form.get(CONTROLS.ABDUZIONE.value)
+#         anteposizione = request.form.get(CONTROLS.ANTEPOSIZIONE.value)
+#         kapandji = request.form.get(CONTROLS.KAPANDJI.value)
+#         pinch = request.form.get(CONTROLS.PINCH.value)
+#         grip = request.form.get(CONTROLS.GRIP.value)
+#         dash = request.form.get(CONTROLS.DASH.value)
+#         prwhe = request.form.get(CONTROLS.PRWHE.value)
+#         eaton_littler = request.form.get(CONTROLS.EATON_LITTLER.value)
+#         stato_cicatrice = request.form.get(CONTROLS.STATO_CICATRICE.value)
+#         tipo_cicatrice = request.form.get(CONTROLS.TIPO_CICATRICE.value)
+#         modena = request.form.get(CONTROLS.MODENA.value)
 
         
-        #inserimento tabella rizoartrosi
-        print("inserimento rizoartrosi")
+#         #inserimento tabella rizoartrosi
+#         print("inserimento rizoartrosi")
 
-        for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
+#         for control_number,weeks_to_add in enumerate(RizoartrosiControlsTimeline.timeline):
 
-            next_control_date= datetime.utcnow() + timedelta(weeks=weeks_to_add)
-            next_control_time = "12:00"
+#             next_control_date= datetime.utcnow() + timedelta(weeks=weeks_to_add)
+#             next_control_time = "12:00"
             
-            is_date_accepted= 0
+#             is_date_accepted= 0
             
-            #Se il numero del controllo corrisponde al controllo successivo verifico
-            # se la data del prossimo incontro è stata accettata dal paziente
-            print("CONTROL NUMBER")
-            print(control_number)
-            if(control_number == int(session.get(DoctorData.NUM_CONTROL.value))):
-                print(control_number)
+#             #Se il numero del controllo corrisponde al controllo successivo verifico
+#             # se la data del prossimo incontro è stata accettata dal paziente
+#             print("CONTROL NUMBER")
+#             print(control_number)
+#             if(control_number == int(session.get(DoctorData.NUM_CONTROL.value))):
+#                 print(control_number)
 
-                if(session.get(DoctorData.CONTROL_DATE.value)!=""):
-                    print(session.get(DoctorData.CONTROL_DATE.value))
-                    next_control_date= datetime.strptime(str(session.get(DoctorData.CONTROL_DATE.value)),"%d-%m-%Y")
-                    print("DATE ACCEPTED")
-                    print(next_control_date)
-                    is_date_accepted=1
+#                 if(session.get(DoctorData.CONTROL_DATE.value)!=""):
+#                     print(session.get(DoctorData.CONTROL_DATE.value))
+#                     next_control_date= datetime.strptime(str(session.get(DoctorData.CONTROL_DATE.value)),"%d-%m-%Y")
+#                     print("DATE ACCEPTED")
+#                     print(next_control_date)
+#                     is_date_accepted=1
                     
 
-                if(session.get(DoctorData.CONTROL_TIME.value)!=""):
-                    next_control_time= session.get(DoctorData.CONTROL_TIME.value)
-                    is_date_accepted=1
+#                 if(session.get(DoctorData.CONTROL_TIME.value)!=""):
+#                     next_control_time= session.get(DoctorData.CONTROL_TIME.value)
+#                     is_date_accepted=1
             
-            session_value = session.get(DoctorData.OPTIONS_FIELD.value, None)
-            print("session Value")
+#             session_value = session.get(DoctorData.OPTIONS_FIELD.value, None)
+#             print("session Value")
 
            
 
-            new_entry = PathologyData(
-                id_doctor=current_user.id,  # Replace with the actual doctor ID
-                id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
-                id_pathology_type=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"), #TODO da cambiare con id patologia
-                id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
-                next_control_date=next_control_date,
-                next_control_time= next_control_time,
-                is_date_accepted= is_date_accepted,
-                next_control_number=control_number +1,
-                id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-                nprs_vas=nprs_vas,  # Replace with the actual value
-                prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
-                prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
-                abduzione=abduzione,  # Replace with the actual value
-                anteposizione=anteposizione,  # Replace with the actual value
-                kapandji=kapandji,  # Replace with the actual value
-                pinch=pinch,  # Replace with the actual value
-                grip=grip,  # Replace with the actual value
-                dash=dash,  # Replace with the actual value
-                prwhe=prwhe,  # Replace with the actual value
-                eaton_littler=eaton_littler,  # Replace with the actual value
-                tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
-                stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-                modena=modena, # Replace with the actual value
-                field1= json.dumps(session_value[0]) if 0 < len(session_value)  else None,
-                field2= json.dumps(session_value[1]) if 1 < len(session_value)  else None,
-                field3= json.dumps(session_value[2]) if 2 < len(session_value)  else None,
-                field4= json.dumps(session_value[3]) if 3 < len(session_value)  else None,
-                field5= json.dumps(session_value[4]) if 4 < len(session_value)  else None,
-                field6= json.dumps(session_value[5]) if 5 < len(session_value)  else None,
-                field7= json.dumps(session_value[6]) if 6 < len(session_value)  else None
-                )
+#             new_entry = PathologyData(
+#                 id_doctor=current_user.id,  # Replace with the actual doctor ID
+#                 id_pathology=session.get(DoctorData.ID_PATHOLOGY.value,"0"),  # Replace with the actual type ID
+#                 id_pathology_type=session.get(DoctorData.ID_PATHOLOGY_TYPE.value,"0"), #TODO da cambiare con id patologia
+#                 id_patient=session.get(DoctorData.ID_PATIENT.value,"0"),  # Replace with the actual patient ID
+#                 next_control_date=next_control_date,
+#                 next_control_time= next_control_time,
+#                 is_date_accepted= is_date_accepted,
+#                 next_control_number=control_number +1,
+#                 id_control_status=CONTROL_STATUS.CLOSED.value[0] if control_number==0 else CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+#                 nprs_vas=nprs_vas,  # Replace with the actual value
+#                 prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
+#                 prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
+#                 abduzione=abduzione,  # Replace with the actual value
+#                 anteposizione=anteposizione,  # Replace with the actual value
+#                 kapandji=kapandji,  # Replace with the actual value
+#                 pinch=pinch,  # Replace with the actual value
+#                 grip=grip,  # Replace with the actual value
+#                 dash=dash,  # Replace with the actual value
+#                 prwhe=prwhe,  # Replace with the actual value
+#                 eaton_littler=eaton_littler,  # Replace with the actual value
+#                 tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
+#                 stato_cicatrice=stato_cicatrice,  # Replace with the actual value
+#                 modena=modena, # Replace with the actual value
+#                 field1= json.dumps(session_value[0]) if 0 < len(session_value)  else None,
+#                 field2= json.dumps(session_value[1]) if 1 < len(session_value)  else None,
+#                 field3= json.dumps(session_value[2]) if 2 < len(session_value)  else None,
+#                 field4= json.dumps(session_value[3]) if 3 < len(session_value)  else None,
+#                 field5= json.dumps(session_value[4]) if 4 < len(session_value)  else None,
+#                 field6= json.dumps(session_value[5]) if 5 < len(session_value)  else None,
+#                 field7= json.dumps(session_value[6]) if 6 < len(session_value)  else None
+#                 )
         
 
-                    # Add the instance to the session
-            db.session.add(new_entry)
+#                     # Add the instance to the session
+#             db.session.add(new_entry)
 
-        # Commit the session to persist the changes to the database
-        db.session.commit()
+#         # Commit the session to persist the changes to the database
+#         db.session.commit()
 
-        flash('Inserimento terapia con successo')
-        return redirect(url_for('doctor.profile'))
+#         flash('Inserimento terapia con successo')
+#         return redirect(url_for('doctor.profile'))
 
 
-    #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
-    # A meno che la patologia non sia inserita correttamente
-    session[DoctorData.ID_PATHOLOGY.value] = request.form.get('pathology')
-    session[DoctorData.ID_PATHOLOGY_TYPE.value] = request.form.get('pathology_type')
-    session[DoctorData.CONTROL_DATE.value] = request.form.get("selected_date")
-    session[DoctorData.CONTROL_TIME.value] = request.form.get("selected_time")
+#     #Questi valori arrivano dal form della pagina precedente e non dovrebbero essere sovrascritti
+#     # A meno che la patologia non sia inserita correttamente
+#     session[DoctorData.ID_PATHOLOGY.value] = request.form.get('pathology')
+#     session[DoctorData.ID_PATHOLOGY_TYPE.value] = request.form.get('pathology_type')
+#     session[DoctorData.CONTROL_DATE.value] = request.form.get("selected_date")
+#     session[DoctorData.CONTROL_TIME.value] = request.form.get("selected_time")
 
-    print(request.form.get('pathology'))
-    print(request.form.get('pathology_type'))
+#     print(request.form.get('pathology'))
+#     print(request.form.get('pathology_type'))
 
-    print(request.form.get("selected_date"))
-    print(request.form.get("selected_time"))
+#     print(request.form.get("selected_date"))
+#     print(request.form.get("selected_time"))
 
-    print("FRATTURE METACARPALI")
+#     print("FRATTURE METACARPALI")
 
-    for key in PATHOLOGY_KEY_SELECTION_FORM:
+#     for key in PATHOLOGY_KEY_SELECTION_FORM:
         
-        if(request.form.get(key.value)):
+#         if(request.form.get(key.value)):
 
-            if(DoctorData.OPTIONS_FIELD.value in session):
-                session[DoctorData.OPTIONS_FIELD.value].append({key.value : request.form.get(key.value)})
-            else:
-                session[DoctorData.OPTIONS_FIELD.value]=[{key.value : request.form.get(key.value)}]
+#             if(DoctorData.OPTIONS_FIELD.value in session):
+#                 session[DoctorData.OPTIONS_FIELD.value].append({key.value : request.form.get(key.value)})
+#             else:
+#                 session[DoctorData.OPTIONS_FIELD.value]=[{key.value : request.form.get(key.value)}]
 
-    print("array valori opzionali")
-    print (session[DoctorData.OPTIONS_FIELD.value])
+#     print("array valori opzionali")
+#     print (session[DoctorData.OPTIONS_FIELD.value])
 
 
-    # print(request.form.get("fratture_metacarpali_step1_valore"))
-    # print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
+#     # print(request.form.get("fratture_metacarpali_step1_valore"))
+#     # print(request.form.get("fratture_metacarpali_classificazione_radiografica_value"))
 
     
 
-    print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
-    print(f"PRIMO INTERVENTO TEMPO SELEZIONATA {session.get(DoctorData.CONTROL_TIME.value)}")
+#     print(f"PRIMO INTERVENTO DATA SELEZIONATA {session.get(DoctorData.CONTROL_DATE.value)}")
+#     print(f"PRIMO INTERVENTO TEMPO SELEZIONATA {session.get(DoctorData.CONTROL_TIME.value)}")
     
-    #Quando il dottore crea il primo intervento il numero del controllo è sempre 1
-    controls_map = RizoartrosiControlsTimeline.get_controls(control_number = 1)
+#     #Quando il dottore crea il primo intervento il numero del controllo è sempre 1
+#     controls_map = RizoartrosiControlsTimeline.get_controls(control_number = 1)
 
-    print(controls_map)
+#     print(controls_map)
     
-    return render_template('doctor/patology.html',form=form,controls_map=controls_map)
+#     return render_template('doctor/patology.html',form=form,controls_map=controls_map)
 
 
 #---------------------------------ROUTE PER GESTIRE I CONTROLLI SUCCESSIVI DEL PAZIENTE-----------------------------
@@ -884,6 +874,8 @@ def get_events():
 @login_required
 def event_details(row_id,event_in_range):
     """
+    Route quando clicco su evento del calendario a cui passo la row_id della tabella patology_data
+
     row_id : id della riga della tabella patology_data
     event_in_range: indica se l'evento è nel range di compilazione
     """
@@ -906,8 +898,23 @@ def event_details(row_id,event_in_range):
         if pathology.value[0] == int(pathology_db.id_pathology):
             
             #dizionario con i controlli attivi
-            controls_map= pathology.value[2].get_next_control(control_number = pathology_db.next_control_number,
-                                                          tipo_intervento=pathology_db.id_pathology_type)
+            control_key= None
+            for value in CONTROLSNUMBER:
+                if pathology_db.next_control_number >pathology.value[2].last_control_number_before_next:
+                    control_key= "next"
+                    break
+                if value.value[0] == pathology_db.next_control_number:
+                    control_key= value.value[1]
+                    break
+            
+            print(f" NEXT CONTROL NUMBER {pathology_db.next_control_number}")
+            print(f"CONTROL KEY {control_key}")
+            controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type)
+            
+            print(f"CONTROLS MAP {controls_map}")
+            # controls_map= pathology.value[2].get_next_control(control_number = pathology_db.next_control_number,
+            #                                               tipo_intervento=pathology_db.id_pathology_type)
+            
             #settimane 
             timeline= pathology.value[2].getTimeline(str(pathology_db.id_pathology_type))    
             
