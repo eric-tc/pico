@@ -669,13 +669,13 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
             tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
             # In questo controllo sono attivii tutti i campi
-            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
             tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
             tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
 
             return tmp_ControlMap
     @classmethod
-    def get_second(cls,tipo_intervento,metacarpo_rotto=1):
+    def get_two(cls,tipo_intervento,metacarpo_rotto=1):
 
         tipo_intervento=str(tipo_intervento)
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -686,7 +686,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
         tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
@@ -708,7 +708,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
         tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices

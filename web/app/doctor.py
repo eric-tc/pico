@@ -597,8 +597,8 @@ def create_patient_post():
 def calendar():
 
     #Abilitano click su evento del calendario
-    days_before=20
-    days_after=20
+    days_before=40
+    days_after=40
     return render_template("doctor/trattamenti/calendar.html",
                            days_before=days_before,
                            days_after=days_after)
