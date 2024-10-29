@@ -304,7 +304,7 @@ def medical_treatment():
 
 
     #session.pop(DoctorData.OPTIONS_FIELD.value, None)
-
+    #POSSO ELIMINARE?
     medicalForm= MedicalTreatmentForm()
 
     # session[DoctorData.ID_PATIENT.value]=patient_id
@@ -346,7 +346,29 @@ def medical_treatment():
         pathology_row_to_update.id_control_status=CONTROL_STATUS.CLOSED.value[0]
         pathology_row_to_update.surgery_date= surgery_date
         pathology_row_to_update.id_pathology_status= PATHOLOGY_STATUS.DURANTE.value[0]
-        
+
+        form_data= form.data
+        #Elimino i campi che non sono legati alla patologia per evitare di riempire troppo il db
+        if "csrf_token" in form_data:
+            form_data.pop("csrf_token")
+        if "data_intervento" in form_data:
+            form_data.pop("data_intervento")
+        if "data_primo_controllo" in form_data:
+            form_data.pop("data_primo_controllo")
+        if "orario_primo_controllo" in form_data:
+            form_data.pop("orario_primo_controllo")
+        if "patient_id" in form_data:
+            form_data.pop("patient_id")
+        if "pathology_id" in form_data:
+            form_data.pop("pathology_id")
+        if "submit_chirurgico_form" in form_data:
+            form_data.pop("submit_chirurgico_form")
+        if "row_id" in form_data:
+            form_data.pop("row_id")
+        if "patient_name" in form_data:
+            form_data.pop("patient_name")
+            
+        pathology_row_to_update.field1= json.dumps(form_data)
         db.session.commit()
 
         # variabili comun a tutte le patologie
@@ -387,27 +409,21 @@ def medical_treatment():
                 next_control_number=control_number, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
                 id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
                 surgery_date=surgery_date,
-                nprs_vas=None,  # Replace with the actual value
-                prom_aprom_mcpj=None,  # Replace with the actual value
-                prom_aprom_ipj=None,  # Replace with the actual value
-                abduzione=None,  # Replace with the actual value
-                anteposizione=None,  # Replace with the actual value
-                kapandji=None,  # Replace with the actual value
-                pinch=None,  # Replace with the actual value
-                grip=None,  # Replace with the actual value
-                dash=None,  # Replace with the actual value
-                prwhe=None,  # Replace with the actual value
-                eaton_littler=None,  # Replace with the actual value
-                tipo_cicatrice=None,  # Replace with the actual value
-                stato_cicatrice=None,  # Replace with the actual value
-                modena=None, # Replace with the actual value
-                field1= row_id_to_update,
-                field2= None,
-                field3= None,
-                field4= None,
-                field5= None,
-                field6= None,
-                field7= None
+                mpcj=None,
+                pipj=None,
+                dipj=None,
+                ipj=None,
+                polso=None,
+                vas=None,
+                trapezio_metacarpale=None,
+                forza=None,
+                dash=None,
+                prwhe=None,
+                eaton_littler=None,
+                edema=None,
+                cicatrice=None,
+                tutore=None,
+                altro=None,
                 )
         
 
