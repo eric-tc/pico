@@ -314,19 +314,7 @@ class PathologyTimline:
 
         return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,cicatrice,tutore_data,altro_data
 
-    @classmethod
-    def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
-        
-        print(control_array)
-        print(control_map)
-        if(control_array is not None):
-            for key in control_map.keys():
-                # Check if the value of the key is present in the array
-                if key in control_array:
-                    # Change the value in the map to True
-                    control_map[key] = True
-        
-        return control_map
+   
 
     @classmethod
     def get_week(cls,control_number):
@@ -345,85 +333,8 @@ class PathologyTimline:
             return cls.timeline[control_number-1],True
         
         return cls.timeline[control_number-1],False
-
-    @classmethod
-    def get_controls(cls,control_number,tipo_intervento=None)->dict:
-        """
-        Ritorna la mappa per il controllo indicato in control_number
-        Questa mappa serve per visualizzare nell'interfaccia grafica solo i campi
-        specifici per il numero di controllo selezionato
-        """
-        #TODO: Da aggiungere per ogni controllo previsto dalla terapia
-
-        
-        #Non posso modificare i dati interni della mappa altrimenti per ogni utente
-        #avrei una stessa struttura dati condivisa e questo non andrebbe bene
-        # copio i dati in una mappa temporanera
-        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-
-        print(cls)
-        print(cls.pre_treatment_controls)
-
-        if(int(control_number)==0):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.pre_treatment_controls)
-
-        
-       
-        
-        return tmp_ControlMap
     
-    @classmethod
-    def get_next_control(cls,control_number:int,tipo_intervento=None)->int:
-        """
-
-        control_number: numero controllo
-        tipo_intervento: tipo di intervento selezionato. Serve per alcune patologie che hanno un decorso post operatorio diverso
-
-
-        Ritorna un dict con solo i campi da visualizzare per il controllo successivo
-        Esempio:
-        control_number=0
-        tipo_intervento=1
-        return {
-            "nprs_vas":True,
-            "prom_aprom_mcpj":True,
-            "prom_aprom_ipj":False
-            ....
-        }
-
-        Il dizionario è preso sempre da cls.Controls_Map
-        
-        """
-
-        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        print(control_number)
-        print(tipo_intervento)
-        print("NEXT CONTROL")
-
-        if(int(control_number)==0):
-            #Se il decorso non è unico della classe allora devo fare un controllo
-            # In base al tipo di intervento selezionato dovrò mostrare diverse opzioni
-            print(cls.decorso_unico)
-
-            if(cls.decorso_unico):
-                tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.first_control)
-            else:
-                tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.getFirstControl(tipo_intervento))
-        if(int(control_number)==1):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.second_control)
-        if(int(control_number)==2):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.third_control)
-
-        if(int(control_number)>2):
-            tmp_ControlMap= cls.setup_map_key_value(tmp_ControlMap,
-                                                    cls.third_control)
-
-        return tmp_ControlMap
+    
 class LesioneLigamentosaTimeline(PathologyTimline):
     
     #Settimane per il controllo
