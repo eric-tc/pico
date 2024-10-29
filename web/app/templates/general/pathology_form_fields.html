@@ -1,108 +1,105 @@
-{% if controls_map.nprs_vas %}
+{% if controls_map.mpcj.active %}
 
-    {{ form.nprs_vas.label }}
-    {{ form.nprs_vas }}
-
-{% endif %}
-
-{% if controls_map.prom_aprom_mcpj %}
-
-    {{ form.prom_aprom_mcpj.label }}
-    {{ form.prom_aprom_mcpj }}
+{% include 'doctor/parametri/mpcj.html' %}
 
 {% endif %}
 
-{% if controls_map.prom_aprom_ipj %}
+{% if controls_map.dipj.active %}
 
-    {{ form.prom_aprom_ipj.label }}
-    {{ form.prom_aprom_ipj }}
-
-{% endif %}
-
-{% if controls_map.abduzione %}
-      
-    {{ form.abduzione.label }}
-    {{ form.abduzione }}
-
-{% endif %}
-
-{% if controls_map.anteposizione %}
-      
-    {{ form.anteposizione.label }}
-    {{ form.anteposizione }}
-
-{% endif %}
-
-{% if controls_map.kapandji %}
-      
-    {{ form.kapandji.label }}
-    {{ form.kapandji }}
-
-{% endif %}
-
-{% if controls_map.pinch  %}
-      
-    {{ form.pinch.label }}
-    {{ form.pinch }}
-
-{% endif %}
-
-{% if controls_map.grip  %}
-      
-    {{ form.grip.label }}
-    {{ form.grip }}
-
-{% endif %}
-
-{% if controls_map.dash  %}
-      
-    {{ form.dash.label }}
-    {{ form.dash }}
-
-{% endif %}
-
-{% if controls_map.prwhe  %}
-      
-    {{ form.prwhe.label }}
-    {{ form.prwhe }}
-
-{% endif %}
-
-{% if controls_map.eaton_littler  %}
-        
-    {{ form.eaton_littler.label }}
-    {{ form.eaton_littler }}
+{% include 'doctor/parametri/dipj.html' %}
 
 {% endif %}
 
 
-{% if controls_map.tipo_cicatrice  %}
-        
-    {{ form.tipo_cicatrice.label }}
-    {{ form.tipo_cicatrice }}
+{% if controls_map.pipj.active %}
+
+{% include 'doctor/parametri/pipj.html' %}
 
 {% endif %}
 
-{% if controls_map.stato_cicatrice  %}
-        
-    {{ form.stato_cicatrice.label }}
-    {{ form.stato_cicatrice }}
 
-{% endif %} 
+{% if controls_map.ipj.active %}
 
-{% if controls_map.modena  %}
-        
-    {{ form.modena.label }}
-    {{ form.modena }}
+{% include 'doctor/parametri/ipj.html' %}
 
-{% endif %} 
+{% endif %}
+
+{% if controls_map.trapezio_metacarpale.active %}
+
+{% include 'doctor/parametri/trapezio_metacarpale.html' %}
+
+{% endif %}
+
+{% if controls_map.vas.active %}
+
+{% include 'doctor/parametri/vas.html' %}
+
+{% endif %}
+
+
+{% if controls_map.polso.active %}
+
+{% include 'doctor/parametri/polso.html' %}
+
+{% endif %}
+
+
+{% if controls_map.forza.active %}
+
+{% include 'doctor/parametri/forza.html' %}
+
+{% endif %}
+
+{% if controls_map.dash.active %}
+
+{% include 'doctor/parametri/dash.html' %}
+
+{% endif %}
+
+
+{% if controls_map.prwhe.active %}
+
+{% include 'doctor/parametri/prwhe.html' %}
+
+{% endif %}
+
+
+{% if controls_map.eaton_littler.active %}
+
+{% include 'doctor/parametri/eaton_littler.html' %}
+
+{% endif %}
+
+
+{% if controls_map.edema.active %}
+
+{% include 'doctor/parametri/edema.html' %}
+
+{% endif %}
+
+{% if controls_map.cicatrice.active %}
+
+{% include 'doctor/parametri/cicatrice.html' %}
+
+{% endif %}
+
+{% if controls_map.tutore.active %}
+
+{% include 'doctor/parametri/tutore.html' %}
+
+{% endif %}
+
+
+{% if controls_map.altro.active %}
+
+{% include 'doctor/parametri/altro.html' %}
+
+{% endif %}
+
 
 {% if form.errors %}
-    {{ form.errors }}
+{{ form.errors }}
 {% endif %}
 
-<!-- Repeat the above lines for each form field -->
-{% if next_control_jinja is defined %}
-{% include 'general/select_date.html' %}
-{% endif %}
-{{ form.submit_form() }}
+
+{{form.submit_form()}}

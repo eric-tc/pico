@@ -114,6 +114,194 @@ class PathologyTimline:
 
     pre_treatment_controls=None
 
+
+    @classmethod
+    def process_parameters(cls, controls_map,form):
+        """
+        Funzione usata per processare i parametri passati dal form e renderli nel formato adatto 
+        per il database
+
+        controls_map: mappa aggiornata con i valori attivi per il controllo specifico
+        form: data del form passato
+        """
+
+        mpcj_data = {}
+        if controls_map["mpcj"]["active"]:
+            for index in controls_map["mpcj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                mpcj_data[int(index)] = {
+                    'arom_estensione': form.mpcj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.mpcj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.mpcj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.mpcj_list[int(index)].prom_flessione.data
+                }
+
+        print("MPCJ")
+        print(mpcj_data)
+
+        
+        dipj_data = {}
+        if controls_map["dipj"]["active"]:
+            for index in controls_map["dipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                dipj_data[int(index)] = {
+                    'arom_estensione': form.dipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.dipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.dipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.dipj_list[int(index)].prom_flessione.data
+                }
+        print("DIPJ")
+        print(dipj_data)
+
+        
+        pipj_data = {}
+        if controls_map["pipj"]["active"]:
+            for index in controls_map["pipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                pipj_data[int(index)] = {
+                    'arom_estensione': form.pipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.pipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.pipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.pipj_list[int(index)].prom_flessione.data
+                }
+
+        print("PIPJ")
+        print(pipj_data)
+        
+        ipj_data = {}
+        if controls_map["ipj"]["active"]:
+            for index in controls_map["ipj"]["indices"]:
+                # Dynamically retrieve the data for each subform
+                ipj_data[int(index)] = {
+                    'arom_estensione': form.ipj_list[int(index)].arom_estensione.data,
+                    'arom_flessione': form.ipj_list[int(index)].arom_flessione.data,
+                    'prom_estensione': form.ipj_list[int(index)].prom_estensione.data,
+                    'prom_flessione': form.ipj_list[int(index)].prom_flessione.data
+                }
+
+        print("IPJ")
+        print(ipj_data)
+
+        trapezio_metacarpale = {}
+
+        if controls_map["trapezio_metacarpale"]["active"]:
+            for index in controls_map["trapezio_metacarpale"]["indices"]:
+                trapezio_metacarpale[int(index)] = {
+                    'anteposizione': form.trapezio_metacarpale[int(index)].anteposizione.data,
+                    'abduzione': form.trapezio_metacarpale[int(index)].abduzione.data,
+                    'kapandji': form.trapezio_metacarpale[int(index)].kapandji.data,
+                }
+        
+        print("TRAPEZIO METACARPALE")
+        print(trapezio_metacarpale)
+
+
+        polso={}
+        if controls_map["polso"]["active"]:
+            for index in controls_map["polso"]["indices"]:
+                polso[int(index)] = {
+                    'arom_estensione': form.polso[int(index)].arom_estensione.data,
+                    'arom_flessione': form.polso[int(index)].arom_flessione.data,
+                    'prom_estensione': form.polso[int(index)].prom_estensione.data,
+                    'prom_flessione': form.polso[int(index)].prom_flessione.data,
+                    'arom_supinazione': form.polso[int(index)].arom_supinazione.data,
+                    'arom_pronazione': form.polso[int(index)].arom_pronazione.data,
+                    'prom_supinazione': form.polso[int(index)].prom_supinazione.data,
+                    'prom_pronazione': form.polso[int(index)].prom_pronazione.data
+                }     
+
+        print("POLSO")
+        print(polso)
+
+        print("VAS")
+        vas_data= None
+        if controls_map["vas"]["active"]:
+            vas_data= form.vas.data
+        print(vas_data)
+
+        print("FORZA")
+        forza={}
+
+        if controls_map["forza"]["active"]:
+            for index in controls_map["forza"]["indices"]:
+                forza[int(index)] = {
+                    'key_pinch': form.forza[int(index)].key_pinch.data,
+                    'tip_to_pinch': form.forza[int(index)].tip_to_pinch.data,
+                    'misurazione_1_finger': form.forza[int(index)].misurazione_1_finger.data,
+                    'misurazione_2_finger': form.forza[int(index)].misurazione_2_finger.data,
+                    'misurazione_3_finger': form.forza[int(index)].misurazione_3_finger.data,
+                    'three_fingers_pinch': form.forza[int(index)].three_fingers_pinch.data,
+                    'misurazione_1_grip': form.forza[int(index)].misurazione_1_grip.data,
+                    'misurazione_2_grip': form.forza[int(index)].misurazione_2_grip.data,
+                    'misurazione_3_grip': form.forza[int(index)].misurazione_3_grip.data,
+                    'grip': form.forza[int(index)].grip.data,
+                    
+                }
+
+        print(forza)
+
+
+        print("Dash")
+        dash_data= None
+        if controls_map["dash"]["active"]:
+            dash_data= form.dash.data
+        print(dash_data)
+
+
+        
+        print("Prwhe")
+        prwhe_data= None
+        if controls_map["prwhe"]["active"]:
+            prwhe_data= form.prwhe.data
+        print(prwhe_data)
+
+        
+        print("eaton littler")
+        eaton_littler_data= None
+        if controls_map["eaton_littler"]["active"]:
+            eaton_littler_data= form.eaton_littler.data
+        print(eaton_littler_data)
+
+
+        print("edema")
+        edema_data= None
+        if controls_map["edema"]["active"]:
+            edema_data= form.edema.data
+        print(edema_data)
+
+
+        cicatrice = {}
+
+        if controls_map["cicatrice"]["active"]:
+            for index in controls_map["cicatrice"]["indices"]:
+                cicatrice[int(index)] = {
+                    'aderente': form.cicatrice[int(index)].aderente.data,
+                    'distasi_ferita': form.cicatrice[int(index)].distasi_ferita.data,
+                    'tinel': form.cicatrice[int(index)].tinel.data,
+                }
+        
+        print("cicatrice")
+        print(cicatrice)
+
+
+        print("tutore")
+        tutore_data= None
+        if controls_map["tutore"]["active"]:
+            tutore_data= form.tutore.data
+        print(tutore_data)
+
+        print("altro")
+        altro_data= {}
+        if controls_map["altro"]["active"]:
+            for index in controls_map["altro"]["indices"]:
+                altro_data[int(index)] = {
+                    'complicanze': form.altro[int(index)].complicanze.data,
+                    'note': form.altro[int(index)].note.data,
+
+        }
+
+        return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,cicatrice,tutore_data,altro_data
+
     @classmethod
     def setup_map_key_value(cls,control_map,control_array:list[str])->dict:
         
@@ -672,13 +860,13 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
-        tmp_ControlMap[CONTROLS.EATON_LITTLER]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EATON_LITTLER.value]["active"]=True
 
         #Setto i valori per il primo controllo
 
@@ -690,10 +878,10 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -703,15 +891,15 @@ class RizoartrosiControlsTimeline(PathologyTimline):
           #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
     
 
 

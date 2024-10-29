@@ -183,7 +183,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     #In base alla patologia selezionata ritorno le terapie associate a quella patologia
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_id):
-            controls_map= pathology.value[2].get_controls(control_number = 0)
+            controls_map= pathology.value[2].get_pre()
             print("CONTROLS MAP")
             print(controls_map)
             break
@@ -193,23 +193,23 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         
 
         data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value)
-
-        nprs_vas = request.form.get(CONTROLS.NPRS_VAS.value)
-        prom_arom_mcpj = request.form.get(CONTROLS.PROM_APROM_MCPJ.value)
-        prom_arom_Ipj = request.form.get(CONTROLS.PROM_APROM_IPJ.value)
-        abduzione = request.form.get(CONTROLS.ABDUZIONE.value)
-        anteposizione = request.form.get(CONTROLS.ANTEPOSIZIONE.value)
-        kapandji = request.form.get(CONTROLS.KAPANDJI.value)
-        pinch = request.form.get(CONTROLS.PINCH.value)
-        grip = request.form.get(CONTROLS.GRIP.value)
-        dash = request.form.get(CONTROLS.DASH.value)
-        prwhe = request.form.get(CONTROLS.PRWHE.value)
-        eaton_littler = request.form.get(CONTROLS.EATON_LITTLER.value)
-        stato_cicatrice = request.form.get(CONTROLS.STATO_CICATRICE.value)
-        tipo_cicatrice = request.form.get(CONTROLS.TIPO_CICATRICE.value)
-        modena = request.form.get(CONTROLS.MODENA.value)
-
         
+        mpcj_data,\
+        pipj_data,\
+        dipj_data,\
+        ipj_data,\
+        trapezio_metacarpale,\
+        polso,\
+        vas_data,\
+        forza,\
+        dash_data,\
+        prwhe_data,\
+        eaton_littler_data,\
+        edema_data,\
+        cicatrice,\
+        tutore_data,\
+        altro_data = pathology.value[2].process_parameters(controls_map=controls_map,
+                                              form=form)
         
 
         # Form was submitted
@@ -225,27 +225,22 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         is_date_accepted= 0,
         next_control_number=0,
         id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-        nprs_vas=nprs_vas,  # Replace with the actual value
-        prom_aprom_mcpj=prom_arom_mcpj,  # Replace with the actual value
-        prom_aprom_ipj=prom_arom_Ipj,  # Replace with the actual value
-        abduzione=abduzione,  # Replace with the actual value
-        anteposizione=anteposizione,  # Replace with the actual value
-        kapandji=kapandji,  # Replace with the actual value
-        pinch=pinch,  # Replace with the actual value
-        grip=grip,  # Replace with the actual value
-        dash=dash,  # Replace with the actual value
-        prwhe=prwhe,  # Replace with the actual value
-        eaton_littler=eaton_littler,  # Replace with the actual value
-        tipo_cicatrice=tipo_cicatrice,  # Replace with the actual value
-        stato_cicatrice=stato_cicatrice,  # Replace with the actual value
-        modena=modena, # Replace with the actual value
+        mpcj=mpcj_data,
+        pipj=pipj_data,
+        dipj=dipj_data,
+        ipj=ipj_data,
+        polso=polso,
+        vas=vas_data,
+        trapezio_metacarpale=trapezio_metacarpale,
+        forza=forza,
+        dash=dash_data,
+        prwhe=prwhe_data,
+        eaton_littler=eaton_littler_data,
+        edema=edema_data,
+        cicatrice=cicatrice,
+        tutore=tutore_data,
+        altro=altro_data,
         field1=  None,
-        field2=  None,
-        field3=  None,
-        field4=  None,
-        field5=  None,
-        field6=  None,
-        field7=  None
         )
         
         db.session.add(new_entry)
@@ -1199,6 +1194,44 @@ def test_controls():
 
                     }
             print(altro_data)
+
+        
+        #insert data into db
+        new_entry = PathologyData(
+                id_doctor=1,  # Replace with the actual doctor ID
+                id_pathology=1,  # Replace with the actual type ID
+                id_pathology_type=1, #TODO da cambiare con id patologia
+                id_patient=1,  # Replace with the actual patient ID
+                id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+                next_control_date=datetime.utcnow(),
+                next_control_time= "12:00",
+                is_date_accepted= 1,
+                next_control_number=2, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
+                id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+                surgery_date=datetime.utcnow(),
+                mpcj=mpcj_data,
+                pipj=pipj_data,
+                dipj=dipj_data,
+                ipj=ipj_data,
+                polso=polso,
+                vas=vas_data,
+                trapezio_metacarpale=trapezio_metacarpale,
+                forza=forza,
+                dash=dash_data,
+                prwhe=prwhe_data,
+                eaton_littler=eaton_littler_data,
+                edema=edema_data,
+                cicatrice=cicatrice,
+                tutore=tutore_data,
+                altro=altro_data
+                )
+          # Replace with the actual value
+
+        db.session.add(new_entry)
+
+        # Commit the session to persist the changes to the database
+        db.session.commit()
+
 
 
 
