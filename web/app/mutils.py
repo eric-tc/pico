@@ -33,10 +33,12 @@ def get_pathology_enum(pathology_id):
 
 """
 Utilizzata per settare la data del prossimo controllo
+control_check: Verifica se è il primo controllo dopo aver skippato i controlli dove la timeline ha come
+valore di settimane 0. Significa che il controllo è stato skippato e quindi non è stato effettuato
 """
 def pathology_set_next_control(data_primo_controllo,
                                orario_primo_controllo,
-                               control_number:int,
+                               control_check:int,
                                weeks_to_add:int,
                                surgery_date:str):
 
@@ -44,7 +46,7 @@ def pathology_set_next_control(data_primo_controllo,
     orario_prossimo_controllo= "12:00"
     #Le date dei controllo sono in base alla surgery_date
     #Nel primo controllo se presente la data metto controllo come accettato
-    if control_number==0:
+    if control_check:
         
         if(data_primo_controllo is not None):
             data_prossimo_controllo= get_date(data_primo_controllo)

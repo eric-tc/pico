@@ -619,20 +619,23 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     #Questi sono i dati per ogni controllo
     timeline= None
 
+    last_control_number_before_next=2
+
     #Questa funzione serve perchè per alcune patologie il decorso post operatorio 
     # segue una timeline diversa per cui in base alle opzioni selezionate della patologia ritorna
     # un valore diverso
-    
+    # Gli indici della timeline corrispondono ai controlli ritornati da get_one,get_two,get_next
+    # Se il valore è 0 significa che il controllo è saltato
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
         print(tipo_intervento)
         print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value)
         
         if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
-            timeline= [4,8,12,26,52,154,520,1040]
+            timeline= [0,0,4,8,12,26,52,154,520,1040]
             return timeline
         if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
-            timeline= [1,4,8,12,26,52,154,520,1040]
+            timeline= [0,1,4,8,12,26,52,154,520,1040]
             return timeline
 
     #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono alla timeline[0]
@@ -641,65 +644,91 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         FrattureMetaCarpaliEnum.NON_CHIRURGICO.value:4
     }
 
-    pre_treatment_controls=[
-       CONTROLS.DATA_FRATTURA.value,
-    ]
-
-    #Siccome il decorso è diverso per il primo intervento devo usare un metodo
     @classmethod
-    def getFirstControl(cls,tipo_intervento):
+    def get_pre(cls):
+        
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+        return tmp_ControlMap
+
+    #Siccome il decorso è diverso per il primo intervento
+    # get_one ritorna una mappa solo quando il tipo_intervento è chirurgico
+    @classmethod
+    def get_one(cls,tipo_intervento,metacarpo_rotto=1):
         tipo_intervento=str(tipo_intervento)
-        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
-            return[ 
-                CONTROLS.PIPJ.value,
-                CONTROLS.PIPJ.value,
-                CONTROLS.PIPJ.value,
-                CONTROLS.PIPJ.value,
-                CONTROLS.PIPJ.value,
-                CONTROLS.DASH.value,
-                CONTROLS.PRWHE.value,
-                CONTROLS.EATON_LITTLER.value,
-            ]
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
-            return [
-                CONTROLS.PIPJ.value,
-                CONTROLS.PIPJ.value,
-            ]
+            pip_j_indices=[]
+            pip_j_indices.append(int(metacarpo_rotto))
+            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+            tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+            # In questo controllo sono attivii tutti i campi
+            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+            tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+            tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+
+            return tmp_ControlMap
+    @classmethod
+    def get_second(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        # In questo controllo sono attivii tutti i campi
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
     
+    @classmethod
+    def get_next(cls,tipo_intervento,metacarpo_rotto=1):
 
-    second_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value
-        ]
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        # In questo controllo sono attivii tutti i campi
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4,5]
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-    third_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-    ]
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
 
 
 
 
 class FrattureRadioDistaliTimeline(PathologyTimline):
     
-    decorso_unico=True
+    decorso_unico=False
 
     #Questi sono i dati per ogni controllo
-    timeline= [2,4,8,12,26,52,154,520,1040]
+    timeline= [0,2,4,8,12,26,52,154,520,1040]
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -712,10 +741,17 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         "1":2
     }
 
-    pre_treatment_controls=[
-       CONTROLS.DATA_FRATTURA.value,
-    ]
 
+
+    @classmethod
+    def get_pre(cls):
+        
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+        return tmp_ControlMap
+  
 
     first_control=[
 
@@ -801,7 +837,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         return tmp_ControlMap
     
     @classmethod
-    def get_one(cls,pathology_type=None):
+    def get_one(cls,pathology_type=None,param=None):
         """
         pathology_type serve perchè in alcuni controlli devo fare delle distinzioni
         Quando metto il valore di defautl None significa che non ho bisogno di fare distinzioni
@@ -817,7 +853,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         return tmp_ControlMap
 
     @classmethod
-    def get_two(cls):
+    def get_two(cls,pathology_type=None,param=None):
 
           #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -835,7 +871,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
 
 
     @classmethod
-    def get_next(cls):
+    def get_next(cls,pathology_type=None,param=None):
         """
         Se i controlli sucessivi sono tutti uguali uso una sola funzione
         """

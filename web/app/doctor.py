@@ -2,6 +2,7 @@ from flask import Blueprint, render_template,request,jsonify,redirect, url_for, 
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
+from .internal_data import FratturaMetaCarpaleTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
@@ -388,48 +389,65 @@ def medical_treatment():
         data_primo_controllo=form.data_primo_controllo.data
         orario_primo_controllo=form.orario_primo_controllo.data
 
+        date_accepted_first_control=True
         for control_number,weeks_to_add in enumerate(pathology_enum.value[2].getTimeline(pathology_id_type)):
             
+            #Aggiungo i controlli solo se hanno una settimana maggiore di 0
+            if(int(weeks_to_add)>0):
+                
+                data_prossimo_controllo=None
+                orario_prossimo_controllo=None
+                is_date_accepted=False
+                if (date_accepted_first_control):
+                    data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(data_primo_controllo,
+                                                                                                            orario_primo_controllo,
+                                                                                                            True,
+                                                                                                            weeks_to_add,
+                                                                                                            surgery_date)
+                else:
+                    data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(data_primo_controllo,
+                                                                                                            orario_primo_controllo,
+                                                                                                            False,
+                                                                                                            weeks_to_add,
+                                                                                                            surgery_date)
+                # in ogni caso dopo il primo controllo il check della data non è più vero. 
+                # I controlli successivi al primo non possono avere la data confermata                                                                                           
+                date_accepted_first_control=False
+                
+                # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
+                new_entry = PathologyData(
+                    id_doctor=current_user.id,  # Replace with the actual doctor ID
+                    id_pathology=pathology_id,  # Replace with the actual type ID
+                    id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
+                    id_patient=patient_id,  # Replace with the actual patient ID
+                    id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+                    next_control_date=data_prossimo_controllo,
+                    next_control_time= orario_prossimo_controllo,
+                    is_date_accepted= is_date_accepted,
+                    next_control_number=control_number, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
+                    id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+                    surgery_date=surgery_date,
+                    mpcj=None,
+                    pipj=None,
+                    dipj=None,
+                    ipj=None,
+                    polso=None,
+                    vas=None,
+                    trapezio_metacarpale=None,
+                    forza=None,
+                    dash=None,
+                    prwhe=None,
+                    eaton_littler=None,
+                    edema=None,
+                    cicatrice=None,
+                    tutore=None,
+                    altro=None,
+                    field1= json.dumps({"row_id":row_id_to_update}) #inserisco la riga di riferimento della patologia
+                    )
+            
 
-            data_prossimo_controllo,orario_prossimo_controllo,is_date_accepted= pathology_set_next_control(data_primo_controllo,
-                                                                                                           orario_primo_controllo,
-                                                                                                           control_number,
-                                                                                                           weeks_to_add,
-                                                                                                           surgery_date)
-
-            # I valori dei parametri sono tutti a None perchè il dottore li dovrà inserire al momento del controllo
-            new_entry = PathologyData(
-                id_doctor=current_user.id,  # Replace with the actual doctor ID
-                id_pathology=pathology_id,  # Replace with the actual type ID
-                id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
-                id_patient=patient_id,  # Replace with the actual patient ID
-                id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
-                next_control_date=data_prossimo_controllo,
-                next_control_time= orario_prossimo_controllo,
-                is_date_accepted= is_date_accepted,
-                next_control_number=control_number +1, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
-                id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-                surgery_date=surgery_date,
-                mpcj=None,
-                pipj=None,
-                dipj=None,
-                ipj=None,
-                polso=None,
-                vas=None,
-                trapezio_metacarpale=None,
-                forza=None,
-                dash=None,
-                prwhe=None,
-                eaton_littler=None,
-                edema=None,
-                cicatrice=None,
-                tutore=None,
-                altro=None,
-                )
-        
-
-                    # Add the instance to the session
-            db.session.add(new_entry)
+                        # Add the instance to the session
+                db.session.add(new_entry)
 
         # Commit the session to persist the changes to the database
         db.session.commit()
@@ -685,7 +703,21 @@ def event_details(row_id,event_in_range):
             
             print(f" NEXT CONTROL NUMBER {pathology_db.next_control_number}")
             print(f"CONTROL KEY {control_key}")
-            controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type)
+
+            param=None
+            #In alcune patologie devo passare dei parametri per visualizzare correttamente i controlli
+            if(pathology.value[2] is FratturaMetaCarpaleTimeline):
+                #devo recuperare la raw id dove sono salvati i dati. Nel controllo attuale non ci sono i paramteri
+                #dell'intervento chirurgico
+                print(pathology_db.field1)
+                row_id= json.loads(pathology_db.field1)["row_id"]
+                print(f"ROW ID {row_id}")
+                pathology_data_original = db.session.query(PathologyData.field1).filter(PathologyData.id==row_id).first()
+                print(pathology_data_original)
+                param= json.loads(pathology_data_original[0])["rottura_metacarpo"]
+
+            print(f"PARAM {param}")
+            controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type,param)
             
             print(f"CONTROLS MAP {controls_map}")
            
