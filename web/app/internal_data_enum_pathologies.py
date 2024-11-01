@@ -6,3 +6,7 @@ from enum import Enum
 class FrattureMetaCarpaliEnum(Enum):
     CHIRURGICO = "1"
     NON_CHIRURGICO = "2"
+
+class FrattureFalangeProssimaleEnum(Enum):
+    CHIRURGICO = "1"
+    NON_CHIRURGICO = "2"

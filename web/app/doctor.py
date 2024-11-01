@@ -2,7 +2,7 @@ from flask import Blueprint, render_template,request,jsonify,redirect, url_for, 
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
-from .internal_data import FratturaMetaCarpaleTimeline
+from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
 from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
@@ -706,7 +706,7 @@ def event_details(row_id,event_in_range):
 
             param=None
             #In alcune patologie devo passare dei parametri per visualizzare correttamente i controlli
-            if(pathology.value[2] is FratturaMetaCarpaleTimeline):
+            if(pathology.value[2] is FratturaMetaCarpaleTimeline or pathology.value[2] is FrattureFalangeProssimaleTimeline):
                 #devo recuperare la raw id dove sono salvati i dati. Nel controllo attuale non ci sono i paramteri
                 #dell'intervento chirurgico
                 print(pathology_db.field1)
@@ -714,7 +714,11 @@ def event_details(row_id,event_in_range):
                 print(f"ROW ID {row_id}")
                 pathology_data_original = db.session.query(PathologyData.field1).filter(PathologyData.id==row_id).first()
                 print(pathology_data_original)
-                param= json.loads(pathology_data_original[0])["rottura_metacarpo"]
+                if(pathology.value[2] is FratturaMetaCarpaleTimeline):
+                    param= json.loads(pathology_data_original[0])["rottura_metacarpo"]
+                elif(pathology.value[2] is FrattureFalangeProssimaleTimeline):
+                    param= json.loads(pathology_data_original[0])["rottura_falange"]
+
 
             print(f"PARAM {param}")
             controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type,param)

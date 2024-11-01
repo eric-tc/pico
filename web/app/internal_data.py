@@ -2,8 +2,8 @@
 
 from enum import Enum
 import copy
-from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm
-from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum
+from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm,FratturaFalangeProssimaleForm
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,FrattureFalangeProssimaleEnum
 
 
 # Define an enumeration class
@@ -567,47 +567,112 @@ class LesioneTendineaTimeline(PathologyTimline):
 
 class FrattureFalangeProssimaleTimeline(PathologyTimline):
     
+    decorso_unico=False
+
     #Questi sono i dati per ogni controllo
-    timeline= [0,4,6,8,12,26,52,154,520,1040]
+    timeline= None
 
-    first_control=[
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-        CONTROLS.PIPJ.value
-    ]
+    last_control_number_before_next=2
 
-    second_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value
-        ]
+    #Questa funzione serve perchè per alcune patologie il decorso post operatorio 
+    # segue una timeline diversa per cui in base alle opzioni selezionate della patologia ritorna
+    # un valore diverso
+    # Gli indici della timeline corrispondono ai controlli ritornati da get_one,get_two,get_next
+    # Se il valore è 0 significa che il controllo è saltato
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
+        print(tipo_intervento)
+        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value)
+        
+        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
+            timeline= [0,0,4,8,12,26,52,154,520,1040]
+            return timeline
+        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            timeline= [0,1,4,8,12,26,52,154,520,1040]
+            return timeline
 
-    third_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-    ]
+    #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono alla timeline[0]
+    weeks_to_first_control={
+        FrattureMetaCarpaliEnum.CHIRURGICO.value:1,
+        FrattureMetaCarpaliEnum.NON_CHIRURGICO.value:4
+    }
+
+    @classmethod
+    def get_pre(cls):
+        
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+        return tmp_ControlMap
+
+    #Siccome il decorso è diverso per il primo intervento
+    # get_one ritorna una mappa solo quando il tipo_intervento è chirurgico
+    @classmethod
+    def get_one(cls,tipo_intervento,metacarpo_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            pip_j_indices=[]
+            pip_j_indices.append(int(metacarpo_rotto))
+            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+            tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+            # In questo controllo sono attivii tutti i campi
+            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+            tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+            tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+
+            return tmp_ControlMap
+    @classmethod
+    def get_two(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        # In questo controllo sono attivii tutti i campi
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_next(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        # In questo controllo sono attivii tutti i campi
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+
 
 
 
@@ -935,7 +1000,7 @@ class PATHOLOGY(Enum):
     RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None)
     FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None)
     FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum)
-    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,None,None)
+    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleForm,FrattureFalangeProssimaleEnum)
     FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None,None)
     RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None,None)
     DUPUYTREN= (7, "dupuytren",DupuytrenTimeline,None,None)
