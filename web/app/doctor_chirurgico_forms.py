@@ -400,3 +400,52 @@ class FratturaFalangeProssimaleForm(ChirurgicoForm):
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
+
+
+
+##------------------------------------------------------------------------------------------------------------------##
+##                          RESEZIONE FILIERA                                                                       ## 
+##------------------------------------------------------------------------------------------------------------------##
+class ResezioneFilieraForm(ChirurgicoForm):
+
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[
+            ('1', 'SNAC'),
+            ('2', 'SLAC'),
+            ('3', 'SCAC'),
+            ('4', 'Kienbock'),
+            ('5', 'Lussazione Inveterata Semilunare'),
+
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    classificazione_watson = SelectField(
+        'classificazione radiografica',
+        choices=[
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    
+    classificazione_lichman = SelectField(
+        'Opzioni Classificazione Radiografica',
+        choices=[
+            ('1', '0'),
+            ('2', '1'),
+            ('3', '2'),
+            ('4', '3A'), 
+            ('5', '3B'),
+            ('6', '3C'), 
+            ('7', '4'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )

@@ -31,7 +31,7 @@ class Pathology(db.Model):
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY:
                 print(row.value)
-                id,name,timeline,form,enum= row.value
+                id,name,timeline,form,enum,pre_options= row.value
                 new_instance = cls(name=name)
                 db.session.add(new_instance)
             
@@ -159,8 +159,8 @@ class PathologyData(db.Model):
 
     #Campo utilizzati per salvare i diversi parametri 
     #in base alla tipologia di intervento selezionato
-    field1 = db.Column(db.JSON)
-    
+    pre_options = db.Column(db.JSON)
+    chirugico_options = db.Column(db.JSON)
     
 
 

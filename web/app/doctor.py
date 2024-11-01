@@ -177,14 +177,21 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     print(patient_name)
     print(pathology_id)
 
-    form= PreTreamentForm()
 
+    pre_controls_map=None
+    #Form per la selezione dei parametri della patologia
+    pre_controls_form=None
+
+    form= PreTreamentForm()
     controls_map=None
     
     #In base alla patologia selezionata ritorno le terapie associate a quella patologia
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_id):
-            controls_map= pathology.value[2].get_pre()
+            
+            controls_map,pre_controls_map= pathology.value[2].get_pre()
+            if(pathology.value[5] is not None):
+                pre_controls_form= pathology.value[5]()
             print("CONTROLS MAP")
             print(controls_map)
             break
@@ -192,6 +199,10 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     
     if request.method == 'POST':
         
+        precontrols_data= pre_controls_form.data
+
+        if "csrf_token" in precontrols_data:
+            precontrols_data.pop("csrf_token")
 
         data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value)
         
@@ -241,7 +252,8 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         cicatrice=cicatrice,
         tutore=tutore_data,
         altro=altro_data,
-        field1=  None,
+        chirugico_options=  None,
+        pre_options= json.dumps(precontrols_data) if precontrols_data else None
         )
         
         db.session.add(new_entry)
@@ -259,7 +271,9 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
                             pathology=PATHOLOGY,
                             form_keys=PATHOLOGY_KEY_SELECTION_FORM,
                             form=form,
-                            controls_map=controls_map
+                            controls_map=controls_map,
+                            controls_map_pre=pre_controls_map,
+                            pre_controls_form=pre_controls_form
                           )
 
 
@@ -370,7 +384,7 @@ def medical_treatment():
         if "patient_name" in form_data:
             form_data.pop("patient_name")
 
-        pathology_row_to_update.field1= json.dumps(form_data)
+        pathology_row_to_update.chirugico_options= json.dumps(form_data)
         db.session.commit()
 
         # variabili comun a tutte le patologie
@@ -442,7 +456,7 @@ def medical_treatment():
                     cicatrice=None,
                     tutore=None,
                     altro=None,
-                    field1= json.dumps({"row_id":row_id_to_update}) #inserisco la riga di riferimento della patologia
+                    chirugico_options= json.dumps({"row_id":row_id_to_update}) #inserisco la riga di riferimento della patologia
                     )
             
 
@@ -709,10 +723,10 @@ def event_details(row_id,event_in_range):
             if(pathology.value[2] is FratturaMetaCarpaleTimeline or pathology.value[2] is FrattureFalangeProssimaleTimeline):
                 #devo recuperare la raw id dove sono salvati i dati. Nel controllo attuale non ci sono i paramteri
                 #dell'intervento chirurgico
-                print(pathology_db.field1)
-                row_id= json.loads(pathology_db.field1)["row_id"]
+                print(pathology_db.chirugico_options)
+                row_id= json.loads(pathology_db.chirugico_options)["row_id"]
                 print(f"ROW ID {row_id}")
-                pathology_data_original = db.session.query(PathologyData.field1).filter(PathologyData.id==row_id).first()
+                pathology_data_original = db.session.query(PathologyData.chirugico_options).filter(PathologyData.id==row_id).first()
                 print(pathology_data_original)
                 if(pathology.value[2] is FratturaMetaCarpaleTimeline):
                     param= json.loads(pathology_data_original[0])["rottura_metacarpo"]

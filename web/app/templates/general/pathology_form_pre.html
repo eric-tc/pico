@@ -2,7 +2,7 @@
     {{ form.csrf_token }}
 
 
-{% if controls_map.data_frattura %}
+{% if controls_map.data_frattura.active %}
 
     {{ form.data_frattura.label }}
     {{ form.data_frattura(id='generic-datepicker') }}
@@ -10,7 +10,13 @@
 {% endif %}
 
     
-    {% include 'general/pathology_form_fields.html' %}
+{% if controls_map_pre.resezione_filiera.active %}
+
+    {% include 'doctor/pre_options/pre_resezione_filiera.html' %}
+
+{% endif %}
+
+{% include 'general/pathology_form_fields.html' %}
     
 
 </form>

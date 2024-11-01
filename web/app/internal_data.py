@@ -3,8 +3,8 @@
 from enum import Enum
 import copy
 from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm,FratturaFalangeProssimaleForm
-from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,FrattureFalangeProssimaleEnum
-
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,FrattureFalangeProssimaleEnum,CONTROLS,CONTROLSNUMBER,PATHOLOGY_LABEL
+from .doctor_forms import PreResezioneFileraForm
 
 # Define an enumeration class
 class ROLE(Enum):
@@ -31,37 +31,7 @@ class EMAIL_STATUS(Enum):
     #il paziente ha confermato appuntamento
     CLOSED = (2,"Confirmed")
 
-class CONTROLS(Enum):
 
-    DATA_FRATTURA= "data_frattura"
-    MPCJ = "mpcj"
-    PIPJ = "pipj"
-    DIPJ = "dipj"
-    IPJ = "ipj"
-    POLSO = "polso"
-    VAS = "vas"
-    TRAPEZIO_METACARPALE = "trapezio_metacarpale"
-    FORZA = "forza"
-    DASH = "dash"
-    PRWHE = "prwhe"
-    EATON_LITTLER = "eaton_littler"
-    EDEMA = "edema"
-    CICATRICE = "cicatrice"
-    TUTORE= "tutore"
-    ALTRO = "altro"
-
-class CONTROLSNUMBER(Enum):
-    ONE = (1,"one")
-    TWO = (2,"two")
-    THREE = (3,"three")
-    FOUR= (4,"four")
-    FIVE= (5,"five")
-    SIX= (6,"six")
-    SEVEN= (7,"seven")
-    EIGHT= (8,"eight")
-    NINE= (9,"nine")
-    TEN= (10,"ten")
-    next= (11,"next")
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
 
@@ -123,8 +93,19 @@ class PathologyTimline:
                            "indices":[0]
                            }
     }
-
-    pre_treatment_controls=None
+    
+    Controls_Map_Pre={
+        PATHOLOGY_LABEL.RIZOARTROSI.value: {"active":False},                    
+        PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value: {"active":False},  
+        PATHOLOGY_LABEL.FRATTURE_METACARPALI.value : {"active":False},  
+        PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value : {"active":False},  
+        PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value : {"active":False},  
+        PATHOLOGY_LABEL.RESEZIONE_FILIERA.value: {"active":False},  
+        PATHOLOGY_LABEL.DUPUYTREN.value: {"active":False},  
+        PATHOLOGY_LABEL.LESIONE_NERVOSA.value:{"active":False},  
+        PATHOLOGY_LABEL.SCAFOIDE.value: {"active":False},  
+        PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value: {"active":False},  
+    }
 
 
     @classmethod
@@ -478,47 +459,109 @@ class DupuytrenTimeline(PathologyTimline):
 
 class ResezioneFilieraTimeline(PathologyTimline):
     
-    #Settimane per il controllo
+    #Variabile definita per ogni controllo. Indica se il percorso
+    #post operatorio è unico o no
+    decorso_unico=True
+    #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
     timeline= [0,2,6,12,26,52,520,1040]
 
-    first_control=[
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-        CONTROLS.PIPJ.value
-    ]
+    # Numero che corrisponde al numero di controlli implementati
+    # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
+    last_control_number_before_next=2
 
-    second_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value
-        ]
+    # se non ho differenze nel post operatorio la timeline è la stessa
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
+        print(cls.timeline)
+        return cls.timeline
+    
+    #quante settimane aspettare se il paziente non risponde alla mail
+    waiting_weeks= 1
 
-    third_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-    ]
+    # Settimane per il primo controllo. Serve per quando devo gestire il calendario
+    # per trattamenti che hanno un decorso post operatorio diverso. 
+    # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
+    # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
+    weeks_to_first_control={
+        "1":3
+    }
+    
+    #Ultimo Controllo
+    LAST_CONTROL=9
+
+    @classmethod
+    def get_pre(cls):
+        
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+        #indica che ci sono dei parametri da inserire oltre a quelli classici
+        pre_controls_map[PATHOLOGY_LABEL.RESEZIONE_FILIERA.value]["active"]=True
+
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        
+        #Setto i valori per il primo controllo
+
+        return tmp_ControlMap,pre_controls_map
+    
+    @classmethod
+    def get_one(cls,pathology_type=None,param=None):
+        """
+        pathology_type serve perchè in alcuni controlli devo fare delle distinzioni
+        Quando metto il valore di defautl None significa che non ho bisogno di fare distinzioni
+        """
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+
+        return tmp_ControlMap
+
+    @classmethod
+    def get_two(cls,pathology_type=None,param=None):
+
+          #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+    
+
+
+    @classmethod
+    def get_next(cls,pathology_type=None,param=None):
+        """
+        Se i controlli sucessivi sono tutti uguali uso una sola funzione
+        """
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
+
+        return tmp_ControlMap
 
 
 class LesioneTendineaTimeline(PathologyTimline):
@@ -600,11 +643,13 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
     @classmethod
     def get_pre(cls):
         
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+        
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
 
-        return tmp_ControlMap
+        return tmp_ControlMap,pre_controls_map
 
     #Siccome il decorso è diverso per il primo intervento
     # get_one ritorna una mappa solo quando il tipo_intervento è chirurgico
@@ -712,11 +757,13 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     @classmethod
     def get_pre(cls):
         
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
 
-        return tmp_ControlMap
+        return tmp_ControlMap,pre_controls_map
 
     #Siccome il decorso è diverso per il primo intervento
     # get_one ritorna una mappa solo quando il tipo_intervento è chirurgico
@@ -811,11 +858,12 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
     @classmethod
     def get_pre(cls):
         
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
 
-        return tmp_ControlMap
+        return tmp_ControlMap,pre_controls_map
   
 
     first_control=[
@@ -883,9 +931,12 @@ class RizoartrosiControlsTimeline(PathologyTimline):
     #Ultimo Controllo
     LAST_CONTROL=9
 
+
     @classmethod
     def get_pre(cls):
         
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
@@ -899,7 +950,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
 
         #Setto i valori per il primo controllo
 
-        return tmp_ControlMap
+        return tmp_ControlMap,pre_controls_map
     
     @classmethod
     def get_one(cls,pathology_type=None,param=None):
@@ -993,20 +1044,25 @@ value[1]: nome della patologia
 value[2]: classe della timeline
 value[3]: form chirurgico
 value[4]: enum per le opzioni chirurgiche
+value[5]: enum per le opzioni pre intervento. Se None non devo salvare nessun dato
 
+PATHOLOGY_LABEL serve per tenere traccia delle label. In questo modo posso usare un enum
+per generare il dict delle patologie pre in modo da avere dei parameteri diversi rispetto
+a quelli generali che posso salvare a seconda della patologia
 """
 
 class PATHOLOGY(Enum):
-    RIZOARTROSI= (1,"rizoartrosi",RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None)
-    FRATTURA_RADIO_DISTALE= (2,"frattura_radio_distale",FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None)
-    FRATTURE_METACARPALI = (3,"fratture_metacarpali",FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum)
-    FRATTURE_FALANGE_PROSSIMALE = (4, "fratture_falange_prossimale",FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleForm,FrattureFalangeProssimaleEnum)
-    FERITA_LESIONE_TENDINEA = (5, "ferita_lesione_tendinea",LesioneTendineaTimeline,None,None)
-    RESEZIONE_FILIERA= (6, "resezione_filiera",ResezioneFilieraTimeline,None,None)
-    DUPUYTREN= (7, "dupuytren",DupuytrenTimeline,None,None)
-    LESIONE_NERVOSA=(8, "lesione_nervosa",LesioneNervosaTimeline,None,None)
-    SCAFOIDE= (9, "scafoide",ScafoideTimeline,None,None)
-    LESIONE_LIGAMENTOSA= (10, "lesione_ligamentosa",LesioneLigamentosaTimeline,None,None)
+    
+    RIZOARTROSI= (1,PATHOLOGY_LABEL.RIZOARTROSI.value,RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None,None)
+    FRATTURA_RADIO_DISTALE= (2,PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None,None)
+    FRATTURE_METACARPALI = (3,PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum,None)
+    FRATTURE_FALANGE_PROSSIMALE = (4, PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value,FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleForm,FrattureFalangeProssimaleEnum,None)
+    FERITA_LESIONE_TENDINEA = (5, PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value,LesioneTendineaTimeline,None,None,None)
+    RESEZIONE_FILIERA= (6, PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,ResezioneFilieraTimeline,None,None,PreResezioneFileraForm)
+    DUPUYTREN= (7, PATHOLOGY_LABEL.DUPUYTREN.value,DupuytrenTimeline,None,None,None)
+    LESIONE_NERVOSA=(8, PATHOLOGY_LABEL.LESIONE_NERVOSA.value,LesioneNervosaTimeline,None,None,None)
+    SCAFOIDE= (9, PATHOLOGY_LABEL.SCAFOIDE.value,ScafoideTimeline,None,None,None)
+    LESIONE_LIGAMENTOSA= (10, PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value,LesioneLigamentosaTimeline,None,None,None)
         
 
 
