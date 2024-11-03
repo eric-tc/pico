@@ -2,7 +2,11 @@
 
 from enum import Enum
 import copy
-from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleForm,FratturaMetaCarpaliForm,FratturaFalangeProssimaleForm
+from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleChirurgicoForm,\
+FratturaMetaCarpaliChirurgicoForm,\
+FratturaFalangeProssimaleChirurgicoForm,\
+ResezioneFilieraChirurgicoForm
+
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,FrattureFalangeProssimaleEnum,CONTROLS,CONTROLSNUMBER,PATHOLOGY_LABEL
 from .doctor_forms import PreResezioneFileraForm
 
@@ -463,7 +467,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
     #post operatorio è unico o no
     decorso_unico=True
     #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
-    timeline= [0,2,6,12,26,52,520,1040]
+    timeline= [0,2,6,48,52,520,1040]
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
@@ -483,7 +487,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
     # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
     # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
     weeks_to_first_control={
-        "1":3
+        "1":2
     }
     
     #Ultimo Controllo
@@ -520,8 +524,8 @@ class ResezioneFilieraTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -533,14 +537,13 @@ class ResezioneFilieraTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
         tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
-    
+
+        return tmp_ControlMap
 
 
     @classmethod
@@ -551,15 +554,13 @@ class ResezioneFilieraTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -984,7 +985,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
     
-
+        return tmp_ControlMap
 
     @classmethod
     def get_next(cls,pathology_type=None,param=None):
@@ -1054,11 +1055,11 @@ a quelli generali che posso salvare a seconda della patologia
 class PATHOLOGY(Enum):
     
     RIZOARTROSI= (1,PATHOLOGY_LABEL.RIZOARTROSI.value,RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None,None)
-    FRATTURA_RADIO_DISTALE= (2,PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,FrattureRadioDistaliTimeline,FratturaRadioDistaleForm,None,None)
-    FRATTURE_METACARPALI = (3,PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,FratturaMetaCarpaleTimeline,FratturaMetaCarpaliForm,FrattureMetaCarpaliEnum,None)
-    FRATTURE_FALANGE_PROSSIMALE = (4, PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value,FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleForm,FrattureFalangeProssimaleEnum,None)
+    FRATTURA_RADIO_DISTALE= (2,PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,FrattureRadioDistaliTimeline,FratturaRadioDistaleChirurgicoForm,None,None)
+    FRATTURE_METACARPALI = (3,PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,FratturaMetaCarpaleTimeline,FratturaMetaCarpaliChirurgicoForm,FrattureMetaCarpaliEnum,None)
+    FRATTURE_FALANGE_PROSSIMALE = (4, PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value,FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleChirurgicoForm,FrattureFalangeProssimaleEnum,None)
     FERITA_LESIONE_TENDINEA = (5, PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value,LesioneTendineaTimeline,None,None,None)
-    RESEZIONE_FILIERA= (6, PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,ResezioneFilieraTimeline,None,None,PreResezioneFileraForm)
+    RESEZIONE_FILIERA= (6, PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,ResezioneFilieraTimeline,ResezioneFilieraChirurgicoForm,None,PreResezioneFileraForm)
     DUPUYTREN= (7, PATHOLOGY_LABEL.DUPUYTREN.value,DupuytrenTimeline,None,None,None)
     LESIONE_NERVOSA=(8, PATHOLOGY_LABEL.LESIONE_NERVOSA.value,LesioneNervosaTimeline,None,None,None)
     SCAFOIDE= (9, PATHOLOGY_LABEL.SCAFOIDE.value,ScafoideTimeline,None,None,None)
