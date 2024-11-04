@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField
-from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,ScafoideFratturaEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -438,3 +438,118 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
+
+
+
+##------------------------------------------------------------------------------------------------------------------##
+##                          SCAFOIDE 
+# Lo scafoide avrà 2 form perchè ci sono diversi decorsi post operatori in base alla frattura e pseudoartrosi       ## 
+##------------------------------------------------------------------------------------------------------------------##
+
+class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
+    
+    treatment_options = SelectField(
+        'Tipologia',
+        choices=[
+            (ScafoideFratturaEnum.CHIRURGICO.value[0],ScafoideFratturaEnum.CHIRURGICO.value[0]),
+            (ScafoideFratturaEnum.CONSERVATIVO.value[0], ScafoideFratturaEnum.CONSERVATIVO.value[0]),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    area = SelectField(
+        'Accesso',
+        choices=[
+            ('terzo_prossimale', 'volare'),
+            ('terzo_medio', 'terzo_medio'),
+            ('terzo_distale', 'terzo_distale'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )   
+    
+    #Se CONSERVATIVO
+
+    conservativo = SelectField(
+        'Conservativo',
+        choices=[
+            ('gesso_chiuso_pollice_incluso', 'gesso chiuso pollice incluso'),
+            ('gesso_chiuso_pollice_escluso', 'gesso chiuso pollice escluso'),
+            ('tutore_termoplastica_pollice_incluso', 'tutore termoplastica pollice incluso'),
+            ('tutore_termoplastica_pollice_escluso', 'tutore termoplastica pollice escluso'),
+            ('altro', 'altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+    #CHIRURGICO
+    chirurgico = SelectField(
+        'Conservativo',
+        choices=[
+            ('vite_percutanea_anterograda', 'vite percutanea anterograda'),
+            ('vite_percutanea_retrograda', 'vite percutanea retrograda'),
+            ('vite_open_anterograda', 'vite open anterograda'),
+            ('vite_open_retrograda', 'vite open retrograda'),
+            ('altro', 'altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
+class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
+
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[
+            ('open', 'open'),
+            ('open_assistenza_artroscopica', 'open assistenza artroscopica'),
+            ('artroscopico', 'artroscopico'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    # SE OPEN o OPEN ASSISTENZA ARTROSCOPICA
+
+    open = SelectField(
+        'Accesso',
+        choices=[
+            ('accesso_volare', 'accesso_volare'),
+            ('accesso_dorsale', 'accesso dorsale'),
+            ('accesso_volare_accesso_dorsale', 'entrambi'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #TUTTI
+    innesto = SelectField(
+        'Innesto',
+        choices=[
+            ('innesto_cresta_iliaca', 'innesto cresta iliaca'),
+            ('innesto_da_radio', 'innesto da radio'),
+            ('innesto_sintetico', 'innesto sintetico'),
+            ('lembo_da_condilo_femorale mediale', 'lembo da condilo femorale mediale'),
+            ('altro', 'altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    tipo_sintesi = SelectField(
+        'Sintesi',
+        choices=[
+            ('fili_kirschner', 'fili kirschner'),
+            ('vite_retrograda', 'vite retrograda'),
+            ('vite_anterograda', 'vite anterograda'),
+            ('placca', 'placca'),
+            ('nessuna_sintesi', 'nessuna sintesi'),
+            ('altro', 'altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+   

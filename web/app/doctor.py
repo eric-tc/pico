@@ -199,10 +199,12 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
     
     if request.method == 'POST':
         
-        precontrols_data= pre_controls_form.data
+        precontrols_data=None
+        if(pre_controls_form is not None):
+            precontrols_data= pre_controls_form.data
 
-        if "csrf_token" in precontrols_data:
-            precontrols_data.pop("csrf_token")
+            if "csrf_token" in precontrols_data:
+                precontrols_data.pop("csrf_token")
 
         data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value)
         
@@ -352,8 +354,16 @@ def medical_treatment():
 
         
         surgery_date = getDateInYMD(request.form.get("data_intervento"))
-        pathology_id_type =  request.form.get("treatment_options")
+        
+        pathology_id_type =None
 
+        #Devo verificare enum per capire quale id patologia devo inserire
+        for key in pathology_enum.value[4]:
+            
+            if(key.value[0] == request.form.get("treatment_options")):
+                pathology_id_type= key.value[1]
+                break
+        
         
         #Aggiornamento riga patologia con la data dell'intervento
         pathology_row_to_update = PathologyData.query.get(row_id_to_update)
@@ -471,7 +481,7 @@ def medical_treatment():
             
 
     
-
+    print(f"week to add {pathology_enum.value[2].weeks_to_first_control}")
 
     return render_template(f'doctor/pathologies/{pathology_enum.value[1]}.html',
                            doctor_id=current_user.id,

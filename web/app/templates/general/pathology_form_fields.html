@@ -96,6 +96,18 @@
 
 {% endif %}
 
+{% if controls_map.guarigione_ossea.active %}
+
+{% include 'doctor/parametri/guarigione_ossea.html' %}
+
+{% endif %}
+
+{% if controls_map.concesso_inizio_mobilizzazione.active %}
+
+{% include 'doctor/parametri/concesso_inizio_mobilizzazione.html' %}
+
+{% endif %}
+
 
 {% if form.errors %}
 {{ form.errors }}

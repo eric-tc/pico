@@ -161,6 +161,8 @@ class PathologyData(db.Model):
     #in base alla tipologia di intervento selezionato
     pre_options = db.Column(db.JSON)
     chirugico_options = db.Column(db.JSON)
+    #Ad esempio nello scafoide dopo 6 mesi devo aggiungere dei parametri aggiuntivi
+    post_options= db.Column(db.JSON)
     
 
 

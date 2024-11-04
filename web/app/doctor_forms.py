@@ -79,6 +79,10 @@ class AltroForm(FlaskForm):
     complicanze = SelectField('Complicanze', choices=[('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="CRPS", render_kw={'class': 'form-control'}, validators=None)
     note= StringField('Note', render_kw={'class': 'form-control'}, validators=None)
 
+class GuarigioneOsseaForm(FlaskForm):
+    guarigione = SelectField('Guarigione Ossea', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    data_guarigione = StringField('Data Guarigione', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
+    options = SelectField('Opzioni', choices=[("radiografia", 'radiografia'), ("tomogragia_computerizzata", 'tomogragia computerizzata'),("risonanza_magnetica", 'risonanza magnetica')], default=0, render_kw={'class': 'form-control'}, validators=None) 
 
 class TreatmentForm(FlaskForm):
 
@@ -121,6 +125,12 @@ class TreatmentForm(FlaskForm):
     tutore = SelectField('Tutore', choices=[(1, 'Yes'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
     #13
     altro = FieldList(FormField(AltroForm),min_entries=1, max_entries=1)
+
+    #14
+    guarigione_ossea = FieldList(FormField(GuarigioneOsseaForm),min_entries=1, max_entries=1)
+
+    #
+    concesso_inizio_mobilizzazione = SelectField('Concesso Inizio Mobilizzazione', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
@@ -353,6 +363,35 @@ class PostTreatmentForm(TreatmentForm):
     patient_id = HiddenField('Patient ID', render_kw={'class': 'form-control'}, validators=None)
     row_id = HiddenField('Row ID', render_kw={'class': 'form-control'}, validators=None)
     patient_name = HiddenField('Patient Name', render_kw={'class': 'form-control'}, validators=None)
+
+
+class PostScafoideForm(FlaskForm):
+    
+    guarigione = SelectField(
+        'Seleziona Intervento',
+        choices=[
+            ('Si', 'Si'),
+            ('No', 'No'),
+            
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    data_controllo = StringField('Data Guarigione', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
+
+    esame = SelectField(
+        'Seleziona Intervento',
+        choices=[
+            ('radiografia', 'radiografia'),
+            ('tomografia_computerizzata', 'tomografia_computerizzata'),
+            ('risonanza_magnetica', 'risonanza_magnetica'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
 
 class MedicalTreatmentForm(FlaskForm):
     """

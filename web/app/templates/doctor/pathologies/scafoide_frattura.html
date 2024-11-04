@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+<h2> Frattura MetaCarpali </h2>
+
+</div>
+
+<div class="row">
+
+
+<div class="col-md-6 mb-6 col-lg-6">
+    
+    <form  method="POST">
+        {{ form.csrf_token }}
+    
+       
+        {{ form.data_intervento.label(style="display:block;") }}
+        {{ form.data_intervento(id='generic-datepicker') }}
+
+        {{ form.area.label(style="display:block;margin-top:15px;") }}
+        {{ form.area }}
+
+        {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
+        {{ form.treatment_options(id="tipologia_trattamento") }}
+        
+        <div id="conservativo">
+            {{ form.conservativo.label(style="display:block;margin-top:15px;") }}
+            {{ form.conservativo }}
+
+        </div>
+
+        <div id="chirurgico">
+            {{ form.chirurgico.label(style="display:block;margin-top:15px;") }}
+            {{ form.chirurgico }}
+        </div>
+       
+        
+        {{ form.orario_primo_controllo.label }}
+        {{ form.orario_primo_controllo(id='timepicker') }}
+
+
+        {{ form.data_primo_controllo.label(style="display:block;") }}
+        {{ form.data_primo_controllo(id='datepicker') }}
+        
+
+        {{ form.row_id(value=row_id)}}
+        {{ form.patient_id(value=patient_id)}}
+        {{ form.patient_name(value=patient_name)}}
+        {{ form.pathology_id(value=pathology_id)}}
+        
+        
+
+        {{ form.submit_chirurgico_form(style="display:block; margin-top:15px;") }}
+        
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+    </form>    
+      
+
+
+</div>
+
+</div>
+
+<script>
+    // Pass Jinja variable to JavaScript
+    week_to_add = "{{ week_to_add['1'] }}";
+    console.log("Week_to_add",week_to_add);
+    DataIntervento = new Date();
+
+    
+
+    //Script per gestire dinamicamente i campi del form
+    $(document).ready(function() {
+
+        function toggleChirurgico(){
+
+            var selectedValue = $("#tipologia_trattamento").val();
+            // 
+            if(selectedValue == "chirurgico"){
+                $("#chirurgico").show();
+                $("#conservativo").hide();
+                week_to_add= "{{ week_to_add['1'] }}";
+            }
+            if(selectedValue == "conservativo"){
+                $("#conservativo").show();
+                $("#chirurgico").hide();
+                week_to_add= "{{ week_to_add['2'] }}";
+            }
+        }
+
+       
+        //Sono eseguiti al caricamento della pagina
+        toggleChirurgico();
+        
+        $("#tipologia_trattamento").change(function() {
+            toggleChirurgico();
+        });
+
+    });
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
+
+
+{% endblock %}

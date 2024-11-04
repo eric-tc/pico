@@ -11,6 +11,14 @@ class FrattureFalangeProssimaleEnum(Enum):
     CHIRURGICO = "1"
     NON_CHIRURGICO = "2"
 
+# In base a questi valori avrò un decorso post operatorio diverso
+class ScafoideFratturaEnum(Enum):
+    """
+    [0]= Nome usato per selezionare il controllo
+    [1]= Valore usato per salvare a db il numero nella tabella pathology_data.id_pathology_type
+    """        
+    CHIRURGICO = ("chirurgico","1")
+    CONSERVATIVO = ("conservativo","2")
 
 class CONTROLS(Enum):
 
@@ -30,6 +38,9 @@ class CONTROLS(Enum):
     CICATRICE = "cicatrice"
     TUTORE= "tutore"
     ALTRO = "altro"
+    GUARIGIONE_OSSEA = "guarigione_ossea"
+    CONCESSO_INIZIO_MOBILIZZAZIONE = "concesso_inizio_mobilizzazione"
+   
 
 class CONTROLSNUMBER(Enum):
     ONE = (1,"one")
@@ -53,5 +64,6 @@ class PATHOLOGY_LABEL(Enum):
     RESEZIONE_FILIERA= "resezione_filiera"
     DUPUYTREN= "dupuytren"
     LESIONE_NERVOSA="lesione_nervosa"
-    SCAFOIDE= "scafoide"
+    SCAFOIDE_FRATTURA= "scafoide_frattura"
+    SCAFOIDE_PSEUDOARTROSI= "scafoide_pseudoartrosi"
     LESIONE_LIGAMENTOSA= "lesione_ligamentosa"

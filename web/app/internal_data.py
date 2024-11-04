@@ -5,9 +5,16 @@ import copy
 from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleChirurgicoForm,\
 FratturaMetaCarpaliChirurgicoForm,\
 FratturaFalangeProssimaleChirurgicoForm,\
-ResezioneFilieraChirurgicoForm
+ResezioneFilieraChirurgicoForm,\
+ScafoideFratturaChirurgicoForm
 
-from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,FrattureFalangeProssimaleEnum,CONTROLS,CONTROLSNUMBER,PATHOLOGY_LABEL
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
+    FrattureFalangeProssimaleEnum,\
+    ScafoideFratturaEnum,\
+    CONTROLS,\
+    CONTROLSNUMBER,\
+    PATHOLOGY_LABEL
+
 from .doctor_forms import PreResezioneFileraForm
 
 # Define an enumeration class
@@ -95,7 +102,13 @@ class PathologyTimline:
                            },
         CONTROLS.ALTRO.value: {"active":False,
                            "indices":[0]
-                           }
+                           },
+        CONTROLS.GUARIGIONE_OSSEA.value: {"active":False,
+                                            "indices":[0]
+                                            },
+        CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+                                                        "indices":[0]
+        }
     }
     
     Controls_Map_Pre={
@@ -107,7 +120,8 @@ class PathologyTimline:
         PATHOLOGY_LABEL.RESEZIONE_FILIERA.value: {"active":False},  
         PATHOLOGY_LABEL.DUPUYTREN.value: {"active":False},  
         PATHOLOGY_LABEL.LESIONE_NERVOSA.value:{"active":False},  
-        PATHOLOGY_LABEL.SCAFOIDE.value: {"active":False},  
+        PATHOLOGY_LABEL.SCAFOIDE_FRATTURA.value: {"active":False},
+        PATHOLOGY_LABEL.SCAFOIDE_PSEUDOARTROSI.value: {"active":False},  
         PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value: {"active":False},  
     }
 
@@ -355,7 +369,9 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         CONTROLS.PIPJ.value,
     ]
 
-class ScafoideTimeline(PathologyTimline):
+
+
+class ScafoidePseudoartrosiTimeline(PathologyTimline):
     
     #Settimane per il controllo
     timeline= [0,2,6,26,52,520,1040]
@@ -389,6 +405,140 @@ class ScafoideTimeline(PathologyTimline):
         CONTROLS.PIPJ.value,
         CONTROLS.PIPJ.value,
     ]
+
+
+class ScafoideFratturaTimeline(PathologyTimline):
+    
+    decorso_unico=False
+
+    #Questi sono i dati per ogni controllo
+    timeline= None
+
+    last_control_number_before_next=4
+
+    #Questa funzione serve perchè per alcune patologie il decorso post operatorio 
+    # segue una timeline diversa per cui in base alle opzioni selezionate della patologia ritorna
+    # un valore diverso
+    # Gli indici della timeline corrispondono ai controlli ritornati da get_one,get_two,get_next
+    # Se il valore è 0 significa che il controllo è saltato
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
+        
+        if(tipo_intervento==ScafoideFratturaEnum.CONSERVATIVO.value[1]):
+            timeline= [0,0,6,12,26,52,520,1040]
+            return timeline
+        if (tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[1]):
+            timeline= [0,2,6,12,26,52,520,1040]
+            return timeline
+
+    #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono al primo numero della timeline !=0
+    weeks_to_first_control={
+        "1":2,
+        "2":6
+    }
+
+    @classmethod
+    def get_pre(cls):
+        
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+        return tmp_ControlMap,pre_controls_map
+
+    #Siccome il decorso è diverso per il primo intervento
+    # get_one ritorna una mappa solo quando il tipo_intervento è chirurgico
+    @classmethod
+    def get_one(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        
+        if(tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[1]):
+           
+            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+            return tmp_ControlMap
+    
+    @classmethod
+    def get_two(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_three(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_four(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value]["active"]=True
+        
+        return tmp_ControlMap
+
+    @classmethod
+    def get_next(cls,tipo_intervento,metacarpo_rotto=1):
+
+        tipo_intervento=str(tipo_intervento)
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        pip_j_indices=[]
+        pip_j_indices.append(int(metacarpo_rotto))
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        # In questo controllo sono attivii tutti i campi
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
 
 
 class LesioneNervosaTimeline(PathologyTimline):
@@ -637,8 +787,8 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
 
     #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono alla timeline[0]
     weeks_to_first_control={
-        FrattureMetaCarpaliEnum.CHIRURGICO.value:1,
-        FrattureMetaCarpaliEnum.NON_CHIRURGICO.value:4
+        "1":1,
+        "2":4
     }
 
     @classmethod
@@ -749,10 +899,10 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
             timeline= [0,1,4,8,12,26,52,154,520,1040]
             return timeline
 
-    #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono alla timeline[0]
+    #ATTENZIONE RICORDARSI  che weeks_to_first_control che corrispondono alla timeline[0]
     weeks_to_first_control={
-        FrattureMetaCarpaliEnum.CHIRURGICO.value:1,
-        FrattureMetaCarpaliEnum.NON_CHIRURGICO.value:4
+        "1":1,
+        "2":4
     }
 
     @classmethod
@@ -1062,8 +1212,9 @@ class PATHOLOGY(Enum):
     RESEZIONE_FILIERA= (6, PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,ResezioneFilieraTimeline,ResezioneFilieraChirurgicoForm,None,PreResezioneFileraForm)
     DUPUYTREN= (7, PATHOLOGY_LABEL.DUPUYTREN.value,DupuytrenTimeline,None,None,None)
     LESIONE_NERVOSA=(8, PATHOLOGY_LABEL.LESIONE_NERVOSA.value,LesioneNervosaTimeline,None,None,None)
-    SCAFOIDE= (9, PATHOLOGY_LABEL.SCAFOIDE.value,ScafoideTimeline,None,None,None)
-    LESIONE_LIGAMENTOSA= (10, PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value,LesioneLigamentosaTimeline,None,None,None)
+    SCAFOIDE_FRATTURA= (9, PATHOLOGY_LABEL.SCAFOIDE_FRATTURA.value,ScafoideFratturaTimeline,ScafoideFratturaChirurgicoForm,ScafoideFratturaEnum,None)
+    SCAFOIDE_PSEUDOARTROSI= (10, PATHOLOGY_LABEL.SCAFOIDE_PSEUDOARTROSI.value,ScafoidePseudoartrosiTimeline,None,None,None)
+    LESIONE_LIGAMENTOSA= (11, PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value,LesioneLigamentosaTimeline,None,None,None)
         
 
 
