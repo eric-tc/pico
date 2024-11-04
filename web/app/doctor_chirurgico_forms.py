@@ -6,7 +6,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         ScafoideFratturaEnum,\
         RizoartrosiEnum,\
         FrattureFalangeProssimaleEnum,\
-        ResezioneFilieraEnum
+        ResezioneFilieraEnum,\
+        ScafoidePseudortrosiEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -491,9 +492,7 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     treatment_options = SelectField(
         'Seleziona Intervento',
         choices=[
-            ('open', 'open'),
-            ('open_assistenza_artroscopica', 'open assistenza artroscopica'),
-            ('artroscopico', 'artroscopico'),
+              (enum.value[0], enum.value[1]) for enum in ScafoidePseudortrosiEnum
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}

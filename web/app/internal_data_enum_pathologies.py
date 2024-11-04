@@ -22,7 +22,7 @@ class FrattureMetaCarpaliEnum(Enum):
     [1]= Visualizzato nel form
     """       
     CHIRURGICO = ("1","chirurgico")
-    NON_CHIRURGICO = ("2","non_chirugico")
+    NON_CHIRURGICO = ("2","non chirugico")
 
 class FrattureFalangeProssimaleEnum(Enum):
     """
@@ -30,7 +30,7 @@ class FrattureFalangeProssimaleEnum(Enum):
     [1]= Visualizzato nel form
     """       
     CHIRURGICO = ("1","chirurgico")
-    NON_CHIRURGICO = ("2","non_chirugico")
+    NON_CHIRURGICO = ("2","non chirugico")
 
 class ResezioneFilieraEnum(Enum):
     """
@@ -48,6 +48,17 @@ class ScafoideFratturaEnum(Enum):
     """        
     CHIRURGICO = ("1","chirurgico")
     CONSERVATIVO = ("2","conservativo")
+
+# In base a questi valori avrò un decorso post operatorio diverso
+class ScafoidePseudortrosiEnum(Enum):
+    """
+    [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
+    [1]= Visualizzato nel form
+    """        
+    OPEN = ("1","open")
+    OPEN_ASSISTENZA = ("2","open assistenza artroscopica")
+    ARTROSCOPICO = ("3","artroscopico")
+
 
 class CONTROLS(Enum):
 
