@@ -11,6 +11,8 @@ ScafoideFratturaChirurgicoForm
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     FrattureFalangeProssimaleEnum,\
     ScafoideFratturaEnum,\
+    ResezioneFilieraEnum,\
+    RizoartrosiEnum,\
     CONTROLS,\
     CONTROLSNUMBER,\
     PATHOLOGY_LABEL
@@ -424,10 +426,10 @@ class ScafoideFratturaTimeline(PathologyTimline):
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
         
-        if(tipo_intervento==ScafoideFratturaEnum.CONSERVATIVO.value[1]):
+        if(tipo_intervento==ScafoideFratturaEnum.CONSERVATIVO.value[0]):
             timeline= [0,0,6,12,26,52,520,1040]
             return timeline
-        if (tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[1]):
+        if (tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[0]):
             timeline= [0,2,6,12,26,52,520,1040]
             return timeline
 
@@ -456,7 +458,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        if(tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[1]):
+        if(tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[0]):
            
             tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
             tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
@@ -535,7 +537,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -776,12 +778,12 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
         print(tipo_intervento)
-        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value)
+        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0])
         
-        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value[0]):
             timeline= [0,0,4,8,12,26,52,154,520,1040]
             return timeline
-        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             timeline= [0,1,4,8,12,26,52,154,520,1040]
             return timeline
 
@@ -810,7 +812,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             pip_j_indices=[]
             pip_j_indices.append(int(metacarpo_rotto))
             tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
@@ -841,7 +843,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -864,7 +866,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -890,12 +892,12 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
         print(tipo_intervento)
-        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value)
+        print(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0])
         
-        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.NON_CHIRURGICO.value[0]):
             timeline= [0,0,4,8,12,26,52,154,520,1040]
             return timeline
-        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if (tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             timeline= [0,1,4,8,12,26,52,154,520,1040]
             return timeline
 
@@ -924,7 +926,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             pip_j_indices=[]
             pip_j_indices.append(int(metacarpo_rotto))
             tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
@@ -955,7 +957,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -978,7 +980,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
-        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value):
+        if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -1204,17 +1206,72 @@ a quelli generali che posso salvare a seconda della patologia
 
 class PATHOLOGY(Enum):
     
-    RIZOARTROSI= (1,PATHOLOGY_LABEL.RIZOARTROSI.value,RizoartrosiControlsTimeline,RizoartrosiChirurgicoForm,None,None)
-    FRATTURA_RADIO_DISTALE= (2,PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,FrattureRadioDistaliTimeline,FratturaRadioDistaleChirurgicoForm,None,None)
-    FRATTURE_METACARPALI = (3,PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,FratturaMetaCarpaleTimeline,FratturaMetaCarpaliChirurgicoForm,FrattureMetaCarpaliEnum,None)
-    FRATTURE_FALANGE_PROSSIMALE = (4, PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value,FrattureFalangeProssimaleTimeline,FratturaFalangeProssimaleChirurgicoForm,FrattureFalangeProssimaleEnum,None)
-    FERITA_LESIONE_TENDINEA = (5, PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value,LesioneTendineaTimeline,None,None,None)
-    RESEZIONE_FILIERA= (6, PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,ResezioneFilieraTimeline,ResezioneFilieraChirurgicoForm,None,PreResezioneFileraForm)
-    DUPUYTREN= (7, PATHOLOGY_LABEL.DUPUYTREN.value,DupuytrenTimeline,None,None,None)
-    LESIONE_NERVOSA=(8, PATHOLOGY_LABEL.LESIONE_NERVOSA.value,LesioneNervosaTimeline,None,None,None)
-    SCAFOIDE_FRATTURA= (9, PATHOLOGY_LABEL.SCAFOIDE_FRATTURA.value,ScafoideFratturaTimeline,ScafoideFratturaChirurgicoForm,ScafoideFratturaEnum,None)
-    SCAFOIDE_PSEUDOARTROSI= (10, PATHOLOGY_LABEL.SCAFOIDE_PSEUDOARTROSI.value,ScafoidePseudoartrosiTimeline,None,None,None)
-    LESIONE_LIGAMENTOSA= (11, PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value,LesioneLigamentosaTimeline,None,None,None)
+    RIZOARTROSI= (1,
+                  PATHOLOGY_LABEL.RIZOARTROSI.value,
+                  RizoartrosiControlsTimeline,
+                  RizoartrosiChirurgicoForm,
+                  RizoartrosiEnum,
+                  None)
+    FRATTURA_RADIO_DISTALE= (2,
+                             PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,
+                             FrattureRadioDistaliTimeline,
+                             FratturaRadioDistaleChirurgicoForm,
+                             None,
+                             None)
+    FRATTURE_METACARPALI = (3,
+                            PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,
+                            FratturaMetaCarpaleTimeline,
+                            FratturaMetaCarpaliChirurgicoForm,
+                            FrattureMetaCarpaliEnum,
+                            None)
+    FRATTURE_FALANGE_PROSSIMALE = (4,
+                                    PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value,
+                                    FrattureFalangeProssimaleTimeline,
+                                    FratturaFalangeProssimaleChirurgicoForm,
+                                    FrattureFalangeProssimaleEnum,
+                                    None)
+    FERITA_LESIONE_TENDINEA = (5,
+                                PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value,
+                                LesioneTendineaTimeline,
+                                None,
+                                None,
+                                None)
+    RESEZIONE_FILIERA= (6,
+                         PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,
+                         ResezioneFilieraTimeline,
+                         ResezioneFilieraChirurgicoForm,
+                         ResezioneFilieraEnum,
+                         PreResezioneFileraForm)
+    DUPUYTREN= (7,
+                 PATHOLOGY_LABEL.DUPUYTREN.value,
+                 DupuytrenTimeline,
+                 None,
+                 None,
+                 None)
+    LESIONE_NERVOSA=(8,
+                      PATHOLOGY_LABEL.LESIONE_NERVOSA.value,
+                      LesioneNervosaTimeline,
+                      None,
+                      None,
+                      None)
+    SCAFOIDE_FRATTURA= (9,
+                         PATHOLOGY_LABEL.SCAFOIDE_FRATTURA.value,
+                         ScafoideFratturaTimeline,
+                         ScafoideFratturaChirurgicoForm,
+                         ScafoideFratturaEnum,
+                        None)
+    SCAFOIDE_PSEUDOARTROSI= (10,
+                              PATHOLOGY_LABEL.SCAFOIDE_PSEUDOARTROSI.value,
+                              ScafoidePseudoartrosiTimeline,
+                              None,
+                              None,
+                              None)
+    LESIONE_LIGAMENTOSA= (11,
+                           PATHOLOGY_LABEL.LESIONE_LIGAMENTOSA.value,
+                           LesioneLigamentosaTimeline,
+                           None,
+                           None,
+                           None)
         
 
 

@@ -356,12 +356,14 @@ def medical_treatment():
         surgery_date = getDateInYMD(request.form.get("data_intervento"))
         
         pathology_id_type =None
+        patholgy_id_label=None
 
         #Devo verificare enum per capire quale id patologia devo inserire
         for key in pathology_enum.value[4]:
             
             if(key.value[0] == request.form.get("treatment_options")):
-                pathology_id_type= key.value[1]
+                pathology_id_type= key.value[0]
+                patholgy_id_label= key.value[1]
                 break
         
         
@@ -393,6 +395,8 @@ def medical_treatment():
             form_data.pop("row_id")
         if "patient_name" in form_data:
             form_data.pop("patient_name")
+        if "treatment_options" in form_data:
+            form_data["treatment_options"]= patholgy_id_label
 
         pathology_row_to_update.chirugico_options= json.dumps(form_data)
         db.session.commit()

@@ -2,7 +2,11 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField
-from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,ScafoideFratturaEnum
+from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
+        ScafoideFratturaEnum,\
+        RizoartrosiEnum,\
+        FrattureFalangeProssimaleEnum,\
+        ResezioneFilieraEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -45,15 +49,7 @@ class RizoartrosiChirurgicoForm(ChirurgicoForm):
     
     treatment_options = SelectField(
         'Seleziona Intervento',
-        choices=[
-            ('1', 'Trapeziectomia più artroplastica in sospensione con abduttore lungo del pollice'),
-            ('2', 'Protesi Touch'),
-            ('3', 'trapeziectomia'),
-            ('4', 'rapeziectomia più artroplastica con flessore radiale del carpo'),
-            ('5', 'rapeziectomia più tight rope'),
-            ('6', 'emitrapeziectomia,'),
-
-        ],
+        choices=[(enum.value[0], enum.value[1]) for enum in RizoartrosiEnum],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
@@ -123,10 +119,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
 
     treatment_options = SelectField(
         'Seleziona Intervento',
-        choices=[
-            (FrattureMetaCarpaliEnum.CHIRURGICO.value, 'Chirurgico'),
-            (FrattureMetaCarpaliEnum.NON_CHIRURGICO.value, 'Non Chirurgico'), 
-        ],
+        choices=[ (enum.value[0], enum.value[1]) for enum in FrattureMetaCarpaliEnum],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
@@ -247,10 +240,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     
     treatment_options = SelectField(
         'Seleziona Intervento',
-        choices=[
-            (FrattureMetaCarpaliEnum.CHIRURGICO.value, 'Chirurgico'),
-            (FrattureMetaCarpaliEnum.NON_CHIRURGICO.value, 'Non Chirurgico'), 
-        ],
+        choices=[ (enum.value[0], enum.value[1]) for enum in FrattureFalangeProssimaleEnum],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
@@ -411,8 +401,7 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
     treatment_options = SelectField(
         'Seleziona Intervento',
         choices=[
-            ('1', 'Chirugico'),
-            ('2', 'Conservativo'),
+           (enum.value[0], enum.value[1]) for enum in ResezioneFilieraEnum
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -451,8 +440,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     treatment_options = SelectField(
         'Tipologia',
         choices=[
-            (ScafoideFratturaEnum.CHIRURGICO.value[0],ScafoideFratturaEnum.CHIRURGICO.value[0]),
-            (ScafoideFratturaEnum.CONSERVATIVO.value[0], ScafoideFratturaEnum.CONSERVATIVO.value[0]),
+           (enum.value[0], enum.value[1]) for enum in ScafoideFratturaEnum   
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
