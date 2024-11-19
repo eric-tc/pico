@@ -289,6 +289,14 @@ class PreTreamentForm(TreatmentForm):
 
 # Per alcune patologie posso aggiungere dei parametri aggiuntivi nei dati pre operatori
 
+class PreDupuytrenForm(FlaskForm):
+
+    numero_interventi = IntegerField('Numero Interventi', render_kw={'class': 'form-control'}, validators=[DataRequired(message="Campo richiesto"),
+            NumberRange(min=1, max=20, message="Value must be between 1 and 20.")])
+    
+    hidden_hand_selection = HiddenField('hidden_hand_selection', render_kw={'class': 'form-control'}, validators=None)
+
+
 class PreResezioneFileraForm(FlaskForm):
 
     surgery = SelectField(

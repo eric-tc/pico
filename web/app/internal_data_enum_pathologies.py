@@ -59,6 +59,15 @@ class ScafoidePseudortrosiEnum(Enum):
     OPEN_ASSISTENZA = ("2","open assistenza artroscopica")
     ARTROSCOPICO = ("3","artroscopico")
 
+class DupuytrenEnum(Enum):
+    """
+    [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
+    [1]= Visualizzato nel form
+    """        
+    APONEVRECTOMIA_OPEN = ("1","aponevrectomia segmentale open")
+    APONEVRECTOMIA_INNESTO = ("2","aponevrectomia con innesto cutaneo")
+    CORDOTOMIA = ("3","Cordotomia")
+    ALTRO = ("4","Altro")
 
 class CONTROLS(Enum):
 

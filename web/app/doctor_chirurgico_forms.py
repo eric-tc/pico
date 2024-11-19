@@ -7,7 +7,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         RizoartrosiEnum,\
         FrattureFalangeProssimaleEnum,\
         ResezioneFilieraEnum,\
-        ScafoidePseudortrosiEnum
+        ScafoidePseudortrosiEnum,\
+        DupuytrenEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -429,6 +430,31 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         ,render_kw={'class': 'form-control'}
     )
 
+##------------------------------------------------------------------------------------------------------------------##
+##                          DupuyTren                                                                      ## 
+##------------------------------------------------------------------------------------------------------------------##
+class DupuytrenChirurgicoForm(ChirurgicoForm):
+
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[
+           (enum.value[0], enum.value[1]) for enum in DupuytrenEnum
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    complicanze = SelectField(
+        'Complicanze',
+        choices=[
+            ('1', 'Lesione Tendinea'),
+            ('2', 'Lesione Nervosa'),
+            ('3', 'Altro'),
+
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
 
 
 ##------------------------------------------------------------------------------------------------------------------##

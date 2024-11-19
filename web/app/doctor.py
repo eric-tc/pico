@@ -1099,3 +1099,8 @@ def test_controls():
     return render_template('doctor/test_controls.html',
                            form=form,
                            controls_map=controls_map) 
+
+@doctor.route('/svg_test/',methods=["GET","POST"])
+def svg_test():
+
+    return render_template('doctor/svg_test.html')
