@@ -22,6 +22,12 @@
 
 {% endif %}
 
+{% if controls_map_pre.lesione_ligamentosa.active %}
+
+    {% include 'doctor/pre_options/pre_lesione_ligamentosa.html' %}
+
+{% endif %}
+
 {% include 'general/pathology_form_fields.html' %}
     
 

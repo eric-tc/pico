@@ -108,6 +108,12 @@
 
 {% endif %}
 
+{% if controls_map.articolazione_stabile.active %}
+
+{% include 'doctor/parametri/articolazione_stabile.html' %}
+
+{% endif %}
+
 
 {% if form.errors %}
 {{ form.errors }}

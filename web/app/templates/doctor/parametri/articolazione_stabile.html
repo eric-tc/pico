@@ -1,0 +1,6 @@
+<fieldset>
+    <legend>Articolazione Stabile</legend>
+{{ form.articolazione_stabile }}
+{% for error in form.articolazione_stabile.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+{% endfor %}

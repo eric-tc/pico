@@ -721,6 +721,7 @@ def event_details(row_id,event_in_range):
             
             #dizionario con i controlli attivi
             control_key= None
+            #verifico i controlli. Se ho raggiunto il valore massimo usi next
             for value in CONTROLSNUMBER:
                 if pathology_db.next_control_number >pathology.value[2].last_control_number_before_next:
                     control_key= "next"
@@ -831,7 +832,7 @@ def test_controls():
                    "pipj":{"active":False,
                            "indices":[3,4]
                            },
-                   "dipj":{"active":True,
+                   "dipj":{"active":False,
                            "indices":[2]
                            },
                    "ipj":{"active":False,
@@ -840,10 +841,10 @@ def test_controls():
                    "polso":{"active":False,
                            "indices":[0]
                            },
-                   "vas":{"active":True,
+                   "vas":{"active":False,
                            "indices":[0]
                            },
-                   "trapezio_metacarpale":{"active":True,
+                   "trapezio_metacarpale":{"active":False,
                            "indices":[0]
                            },
                    "forza":{"active":False,
@@ -852,7 +853,7 @@ def test_controls():
                     "dash":{"active":False,
                            "indices":[0]
                            },       
-                    "prwhe":{"active":False,
+                    "prwhe":{"active":True,
                            "indices":[0]
                            },       
                     "eaton_littler":{"active":False,
@@ -870,6 +871,15 @@ def test_controls():
                     "altro":{"active":False,
                            "indices":[0]
                            },
+                    CONTROLS.GUARIGIONE_OSSEA.value: {"active":False,
+                                            "indices":[0]
+                                            },
+                    CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+                                                        "indices":[0]
+                                                        },
+                    CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
+                                               "indices":[0]
+                                                }      
                    }
     
     form= TreatmentForm(controls_map=controls_map)
@@ -1007,7 +1017,10 @@ def test_controls():
             print("Prwhe")
             prwhe_data= None
             if controls_map["prwhe"]["active"]:
-                prwhe_data= form.prwhe.data
+                prwhe_data = []
+                for entry in form.prwhe.entries:  # Iterate over FieldList
+                    prwhe_entry = {field.name: field.data for field in entry}
+                    prwhe_data.append(prwhe_entry)
             print(prwhe_data)
 
             
@@ -1057,41 +1070,41 @@ def test_controls():
             print(altro_data)
 
         
-        #insert data into db
-        new_entry = PathologyData(
-                id_doctor=1,  # Replace with the actual doctor ID
-                id_pathology=1,  # Replace with the actual type ID
-                id_pathology_type=1, #TODO da cambiare con id patologia
-                id_patient=1,  # Replace with the actual patient ID
-                id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
-                next_control_date=datetime.utcnow(),
-                next_control_time= "12:00",
-                is_date_accepted= 1,
-                next_control_number=2, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
-                id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
-                surgery_date=datetime.utcnow(),
-                mpcj=mpcj_data,
-                pipj=pipj_data,
-                dipj=dipj_data,
-                ipj=ipj_data,
-                polso=polso,
-                vas=vas_data,
-                trapezio_metacarpale=trapezio_metacarpale,
-                forza=forza,
-                dash=dash_data,
-                prwhe=prwhe_data,
-                eaton_littler=eaton_littler_data,
-                edema=edema_data,
-                cicatrice=cicatrice,
-                tutore=tutore_data,
-                altro=altro_data
-                )
-          # Replace with the actual value
+        # #insert data into db
+        # new_entry = PathologyData(
+        #         id_doctor=1,  # Replace with the actual doctor ID
+        #         id_pathology=1,  # Replace with the actual type ID
+        #         id_pathology_type=1, #TODO da cambiare con id patologia
+        #         id_patient=1,  # Replace with the actual patient ID
+        #         id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+        #         next_control_date=datetime.utcnow(),
+        #         next_control_time= "12:00",
+        #         is_date_accepted= 1,
+        #         next_control_number=2, # il primo controllo ha sempre valore 0. Questo serve per recuperare il valore corretto dalla timeline
+        #         id_control_status=CONTROL_STATUS.ACTIVE.value[0],  # Replace with the actual value
+        #         surgery_date=datetime.utcnow(),
+        #         mpcj=mpcj_data,
+        #         pipj=pipj_data,
+        #         dipj=dipj_data,
+        #         ipj=ipj_data,
+        #         polso=polso,
+        #         vas=vas_data,
+        #         trapezio_metacarpale=trapezio_metacarpale,
+        #         forza=forza,
+        #         dash=dash_data,
+        #         prwhe=prwhe_data,
+        #         eaton_littler=eaton_littler_data,
+        #         edema=edema_data,
+        #         cicatrice=cicatrice,
+        #         tutore=tutore_data,
+        #         altro=altro_data
+        #         )
+        #   # Replace with the actual value
 
-        db.session.add(new_entry)
+        # db.session.add(new_entry)
 
-        # Commit the session to persist the changes to the database
-        db.session.commit()
+        # # Commit the session to persist the changes to the database
+        # db.session.commit()
 
 
 

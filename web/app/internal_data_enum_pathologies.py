@@ -69,6 +69,14 @@ class DupuytrenEnum(Enum):
     CORDOTOMIA = ("3","Cordotomia")
     ALTRO = ("4","Altro")
 
+class LesioneLigamentosaEnum(Enum):
+    """
+    [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
+    [1]= Visualizzato nel form
+    """        
+    CHIRURGICO = ("1","chirurgico")
+    CONSERVATIVO = ("2","conservativo")
+
 class CONTROLS(Enum):
 
     DATA_FRATTURA= "data_frattura"
@@ -89,6 +97,7 @@ class CONTROLS(Enum):
     ALTRO = "altro"
     GUARIGIONE_OSSEA = "guarigione_ossea"
     CONCESSO_INIZIO_MOBILIZZAZIONE = "concesso_inizio_mobilizzazione"
+    ARTICOLAZIONE_STABILE = "articolazione_stabile"
    
 
 class CONTROLSNUMBER(Enum):

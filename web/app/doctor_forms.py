@@ -38,36 +38,63 @@ ATTENZIONE Affinchè il NumberRange funzioni correttamente bisogna inserire 'typ
 """
 #Form per gestire i valori
 class AromPromForm(FlaskForm):
-    arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
-    arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
-    prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number','min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
-    prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    #VALIDATORS
+    # arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    # arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    # prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number','min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+    # prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=-120.0, max=120.0)])
+
+    arom_estensione = FloatField("Arom Estensione",render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'})
+    arom_flessione = FloatField("Arom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'})
+    prom_estensione = FloatField("Prom Estensione", render_kw={'class': 'form-control','type': 'number','min':'-120.0', 'max': '120.0'})
+    prom_flessione = FloatField("Prom Flessione", render_kw={'class': 'form-control','type': 'number', 'min':'-120.0', 'max': '120.0'})
 
 class AromPromPolsoForm(AromPromForm):
 
-    arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control','type': 'number','min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control','type': 'number','min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+
+    arom_supinazione = FloatField("Arom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    arom_pronazione = FloatField("Arom Pronazione", render_kw={'class': 'form-control','type': 'number','min':'0.0', 'max': '120.0'})
+    prom_supinazione = FloatField("Prom Supinazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    prom_pronazione = FloatField("Prom Pronazione", render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
 
 class TrapezioMetacarpicaForm(FlaskForm):
 
-    anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
-    abduzione = FloatField('Abduzione', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
-    kapandji = FloatField('Pinch',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=10.0)])
+    # anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
+    # abduzione = FloatField('Abduzione', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=120.0)])
+    # kapandji = FloatField('Pinch',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=10.0)])
+
+    anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    abduzione = FloatField('Abduzione', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    kapandji = FloatField('Pinch',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
 
 class ForzaForm(FlaskForm):
 
-    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_1_finger = FloatField('Misurazione 1 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_2_finger = FloatField('Misurazione 2 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_3_finger = FloatField('Misurazione 3 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_1_grip= FloatField('Misurazione 1 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_2_grip = FloatField('Misurazione 2 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
-    grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_1_finger = FloatField('Misurazione 1 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_2_finger = FloatField('Misurazione 2 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_3_finger = FloatField('Misurazione 3 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_1_grip= FloatField('Misurazione 1 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_2_grip = FloatField('Misurazione 2 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+    # grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+
+
+    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_1_finger = FloatField('Misurazione 1 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_2_finger = FloatField('Misurazione 2 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_3_finger = FloatField('Misurazione 3 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_1_grip= FloatField('Misurazione 1 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_2_grip = FloatField('Misurazione 2 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
     
 
 class CicatriceForm(FlaskForm):
@@ -82,7 +109,62 @@ class AltroForm(FlaskForm):
 class GuarigioneOsseaForm(FlaskForm):
     guarigione = SelectField('Guarigione Ossea', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
     data_guarigione = StringField('Data Guarigione', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
-    options = SelectField('Opzioni', choices=[("radiografia", 'radiografia'), ("tomogragia_computerizzata", 'tomogragia computerizzata'),("risonanza_magnetica", 'risonanza magnetica')], default=0, render_kw={'class': 'form-control'}, validators=None) 
+    options = SelectField('Opzioni', choices=[("radiografia", 'radiografia'), ("tomogragia_computerizzata", 'tomogragia computerizzata'),("risonanza_magnetica", 'risonanza magnetica')], default="radiografia", render_kw={'class': 'form-control'}, validators=None) 
+
+
+class PrwheForm(FlaskForm):
+
+    #DOLORE
+    # dolore_riposo = IntegerField('A riposo [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # dolore_movimenti_ripetuti = IntegerField('Eseguendo Movimenti Ripetuti del polso Mano [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # dolore_sollevando = IntegerField('Sollevando un oggetto pesante [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # dolore_piu_male = IntegerField('Quando fa più male', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # dolore_avverto_dolore = IntegerField('Quanto spesso avverte dolore', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    
+    # #FUNZIONE. Le funzioni sono divise in a e b per il calcolo PRWHE
+    # funzionea_maniglia = IntegerField('Girare la maniglia di una porta usando la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzionea_tagliare = IntegerField('Tagliare la carne tenendo il coltello con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzionea_bottoni = IntegerField('Allacciare i bottoni della camicia [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzionea_sedia = IntegerField('Sollevarsi da una sedia, spingendosi sulla mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzionea_portare_oggetto = IntegerField('Portare un oggetto del peso di circa 5 kg con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzionea_carta_igienica = IntegerField('Usare la carta igienica con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+
+    # funzioneb_cura_persona = IntegerField('Attività di cura della propria persona (vestirsi, lavarsi, etc) [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzioneb_lavori_domestici = IntegerField('Lavori domestici [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzioneb_lavoro = IntegerField('Lavoro (occupazione o lavoro giornaliero) [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    # funzioneb_attivita_ricreative = IntegerField('Attività ricreative e del tempo libero [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+    
+    # #ASPETTO ESTETICO
+    # aderente = SelectField('Quanto è importante l’aspetto estetico del suo polso o mano?', choices=[("molto", 'Molto'), ("per_nulla", 'Per Nulla'),("abbastanza", 'Abbastanza')], default=0, render_kw={'class': 'form-control-grid'}, validators=None)
+    # aspetto_estetico = IntegerField('Aspetto Estetico [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},validators=[DataRequired(),NumberRange(min=1, max=10)])
+
+    # valore_prwhe =FloatField('Valore PRWHE', render_kw={'class': 'form-control-grid','type': 'number', 'min':'0.0', 'max': '100.0'},validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
+
+
+    dolore_riposo = IntegerField('A riposo [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    dolore_movimenti_ripetuti = IntegerField('Eseguendo Movimenti Ripetuti del polso Mano [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    dolore_sollevando = IntegerField('Sollevando un oggetto pesante [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    dolore_piu_male = IntegerField('Quando fa più male', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    dolore_avverto_dolore = IntegerField('Quanto spesso avverte dolore', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    
+    #FUNZIONE. Le funzioni sono divise in a e b per il calcolo PRWHE
+    funzionea_maniglia = IntegerField('Girare la maniglia di una porta usando la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzionea_tagliare = IntegerField('Tagliare la carne tenendo il coltello con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzionea_bottoni = IntegerField('Allacciare i bottoni della camicia [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzionea_sedia = IntegerField('Sollevarsi da una sedia, spingendosi sulla mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzionea_portare_oggetto = IntegerField('Portare un oggetto del peso di circa 5 kg con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzionea_carta_igienica = IntegerField('Usare la carta igienica con la mano malata [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+
+    funzioneb_cura_persona = IntegerField('Attività di cura della propria persona (vestirsi, lavarsi, etc) [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzioneb_lavori_domestici = IntegerField('Lavori domestici [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzioneb_lavoro = IntegerField('Lavoro (occupazione o lavoro giornaliero) [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    funzioneb_attivita_ricreative = IntegerField('Attività ricreative e del tempo libero [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'})
+    
+    #ASPETTO ESTETICO
+    aderente = SelectField('Quanto è importante l’aspetto estetico del suo polso o mano?', choices=[("molto", 'Molto'), ("per_nulla", 'Per Nulla'),("abbastanza", 'Abbastanza')], default=0, render_kw={'class': 'form-control-grid'}, validators=None)
+    aspetto_estetico = IntegerField('Aspetto Estetico [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},)
+
+    valore_prwhe =FloatField('Valore PRWHE', render_kw={'class': 'form-control-grid','type': 'number', 'min':'0.0', 'max': '100.0'})
 
 class TreatmentForm(FlaskForm):
 
@@ -97,7 +179,7 @@ class TreatmentForm(FlaskForm):
     polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
 
     #3
-    vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'}, validators=[DataRequired(),NumberRange(min=0.1, max=10.0)])
+    vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
 
     #
     trapezio_metacarpale= FieldList(FormField(TrapezioMetacarpicaForm),min_entries=1, max_entries=1)
@@ -109,9 +191,10 @@ class TreatmentForm(FlaskForm):
     dash = FloatField(CONTROLS.DASH.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},  validators=None)
     
     #7
-    prwhe = FloatField(CONTROLS.PRWHE.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'},  validators=None)
+    prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
     #8
-    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '4.0Float'}, validators=[NumberRange(min=0.0, max=4.0)] )
+    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
+    
     # #8
     # #sensibilty = Gestita attraverso un canvas e salvata direttamente a database. Vedere il file sensibilitu.html
     
@@ -129,8 +212,11 @@ class TreatmentForm(FlaskForm):
     #14
     guarigione_ossea = FieldList(FormField(GuarigioneOsseaForm),min_entries=1, max_entries=1)
 
-    #
+    #15
     concesso_inizio_mobilizzazione = SelectField('Concesso Inizio Mobilizzazione', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+
+    #16
+    articolazione_stabile = SelectField('Articolazione Stabile', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
 
@@ -212,54 +298,55 @@ class TreatmentForm(FlaskForm):
                 subform.prom_estensione.validators = []
                 subform.prom_flessione.validators = []
 
-    def validate(self, extra_validators=None):
-        """
-        Usato per rendere la validazione attiva solo sugli indici selezionati
-        """
-        valid = super(TreatmentForm, self).validate()
+    #Funzione di validazione sovrascritta per disabilitare i validatori in base alla lista degli indici selezionati
+    # def validate(self, extra_validators=None):
+    #     """
+    #     Usato per rendere la validazione attiva solo sugli indici selezionati
+    #     """
+    #     valid = super(TreatmentForm, self).validate()
 
-        #in base alla lista delle controls_map devo disabilitare i validatori
+    #     #in base alla lista delle controls_map devo disabilitare i validatori
 
-        for key, value in self.controls_map.items():
-            if value["active"] == False:
-                print("Disabilito il campo: ", key)
+    #     for key, value in self.controls_map.items():
+    #         if value["active"] == False:
+    #             print("Disabilito il campo: ", key)
                 
-                if key == "mpcj":
-                    self.validate_list(self.mpcj_list,self.max_indeces)   
-                elif key == "dipj":
-                    self.validate_list(self.dipj_list,self.max_indeces)
-                elif key == "pipj":
-                    self.validate_list(self.pipj_list,self.max_indeces)
-                elif key == "ipj":
-                    self.validate_list(self.ipj_list,self.max_indeces)
-                elif key == "polso":
-                    print("Disabilito il polso")
-                    self.validate_polso()
-                elif key == "trapezio_metacarpale":
-                    print("Disabilito il trapezio_metacarpale")
-                    self.validate_trapezio_metacarpale()
-                elif key == "vas":
-                    print("Disabilito il vas")
-                    self.validate_vas()
-                elif key == "forza":
-                    print("Disabilito il forza")
-                    self.validate_forza()
-                elif key == "eaton_littler":
-                    self.validate_eaton_littler()
+    #             if key == "mpcj":
+    #                 self.validate_list(self.mpcj_list,self.max_indeces)   
+    #             elif key == "dipj":
+    #                 self.validate_list(self.dipj_list,self.max_indeces)
+    #             elif key == "pipj":
+    #                 self.validate_list(self.pipj_list,self.max_indeces)
+    #             elif key == "ipj":
+    #                 self.validate_list(self.ipj_list,self.max_indeces)
+    #             elif key == "polso":
+    #                 print("Disabilito il polso")
+    #                 self.validate_polso()
+    #             elif key == "trapezio_metacarpale":
+    #                 print("Disabilito il trapezio_metacarpale")
+    #                 self.validate_trapezio_metacarpale()
+    #             elif key == "vas":
+    #                 print("Disabilito il vas")
+    #                 self.validate_vas()
+    #             elif key == "forza":
+    #                 print("Disabilito il forza")
+    #                 self.validate_forza()
+    #             elif key == "eaton_littler":
+    #                 self.validate_eaton_littler()
             
-            elif value:
-                # Se true devo disabilitare gli indici non selezionati
-                if key == "mpcj":
-                    self.validate_list(self.mpcj_list,self.controls_map[key]["indices"])
-                elif key == "dipj":
-                    self.validate_list(self.dipj_list,self.controls_map[key]["indices"])
-                elif key == "pipj":
-                    self.validate_list(self.pipj_list,self.controls_map[key]["indices"])
-                elif key == "ipj":
-                    self.validate_list(self.ipj_list,self.controls_map[key]["indices"])
+    #         elif value:
+    #             # Se true devo disabilitare gli indici non selezionati
+    #             if key == "mpcj":
+    #                 self.validate_list(self.mpcj_list,self.controls_map[key]["indices"])
+    #             elif key == "dipj":
+    #                 self.validate_list(self.dipj_list,self.controls_map[key]["indices"])
+    #             elif key == "pipj":
+    #                 self.validate_list(self.pipj_list,self.controls_map[key]["indices"])
+    #             elif key == "ipj":
+    #                 self.validate_list(self.ipj_list,self.controls_map[key]["indices"])
                 
-        # Perform another validation after updating the validators
-        return super(TreatmentForm, self).validate()
+    #     # Perform another validation after updating the validators
+    #     return super(TreatmentForm, self).validate()
 
 
 # class TreatmentForm(FlaskForm):
@@ -295,6 +382,11 @@ class PreDupuytrenForm(FlaskForm):
             NumberRange(min=1, max=20, message="Value must be between 1 and 20.")])
     
     hidden_hand_selection = HiddenField('hidden_hand_selection', render_kw={'class': 'form-control'}, validators=None)
+
+class PreLesioneLigamentosaForm(FlaskForm):
+    
+    hidden_lesione_selection = HiddenField('hidden_lesione_selection', render_kw={'class': 'form-control'}, validators=None)
+
 
 
 class PreResezioneFileraForm(FlaskForm):

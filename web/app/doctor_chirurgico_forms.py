@@ -8,7 +8,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         FrattureFalangeProssimaleEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
-        DupuytrenEnum
+        DupuytrenEnum,\
+        LesioneLigamentosaEnum
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -566,3 +567,45 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     )
 
    
+##------------------------------------------------------------------------------------------------------------------##
+##                          LESIONE LIGAMENTOSA
+## 
+##------------------------------------------------------------------------------------------------------------------##
+
+
+class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
+      
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[
+              (enum.value[0], enum.value[1]) for enum in LesioneLigamentosaEnum
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #Valori trattamento Non chirurgico
+    conservativo = SelectField(
+        'Tipologia',
+        choices=[
+            ('1', 'Valva Gessata'),
+            ('2', 'Tutore Su misura'),
+            ('3', 'Sindattalia'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #chirurgico
+
+    chirurgico = SelectField(
+        'Tipologia',
+        choices=[
+            ('1', 'Reinserzione con ancoretta'),
+            ('2', 'Pull out'),
+            ('3', 'Sutura'),
+            ('4', 'Altro'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )

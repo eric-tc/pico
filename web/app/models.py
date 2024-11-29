@@ -150,12 +150,16 @@ class PathologyData(db.Model):
     trapezio_metacarpale=db.Column(db.JSON)
     forza=db.Column(db.JSON)
     dash=db.Column(db.Integer)
-    prwhe=db.Column(db.Integer)
+    prwhe=db.Column(db.JSON)
     eaton_littler=db.Column(db.Integer)
     edema=db.Column(db.String(10))
     cicatrice= db.Column(db.JSON)
     tutore = db.Column(db.String(10))
     altro = db.Column(db.JSON)
+    guarigione_ossea= db.Column(db.JSON)
+    concesso_inizio_mobilizzazione = db.Column(db.Integer)
+    articolazione_stabile = db.Column(db.Integer)
+    
 
     #Campo utilizzati per salvare i diversi parametri 
     #in base alla tipologia di intervento selezionato
