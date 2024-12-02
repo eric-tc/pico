@@ -149,7 +149,7 @@ class PathologyData(db.Model):
     vas=db.Column(db.Float)
     trapezio_metacarpale=db.Column(db.JSON)
     forza=db.Column(db.JSON)
-    dash=db.Column(db.Integer)
+    dash=db.Column(db.JSON)
     prwhe=db.Column(db.JSON)
     eaton_littler=db.Column(db.Integer)
     edema=db.Column(db.String(10))

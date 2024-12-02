@@ -269,7 +269,10 @@ class PathologyTimline:
         print("Dash")
         dash_data= None
         if controls_map["dash"]["active"]:
-            dash_data= form.dash.data
+            dash_data = []
+            for entry in form.dash.entries:  # Iterate over FieldList
+                dash_entry = {field.name: field.data for field in entry}
+                dash_data.append(dash_entry)
         print(dash_data)
 
 
