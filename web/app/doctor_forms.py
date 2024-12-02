@@ -238,11 +238,12 @@ class TreatmentForm(FlaskForm):
     
     #7
     prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
+    
     #8
     eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
     
-    # #8
-    # #sensibilty = Gestita attraverso un canvas e salvata direttamente a database. Vedere il file sensibilitu.html
+    #9
+    hidden_sensibilita = HiddenField('hidden_sensibilita', render_kw={'class': 'form-control'}, validators=None)
     
     #10
     edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)

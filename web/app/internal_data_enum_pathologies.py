@@ -92,6 +92,7 @@ class CONTROLS(Enum):
     PRWHE = "prwhe"
     EATON_LITTLER = "eaton_littler"
     EDEMA = "edema"
+    SENSIBILITA = "sensibilita"
     CICATRICE = "cicatrice"
     TUTORE= "tutore"
     ALTRO = "altro"

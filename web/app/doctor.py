@@ -850,7 +850,7 @@ def test_controls():
                    "forza":{"active":False,
                            "indices":[0]
                            },
-                    "dash":{"active":True,
+                    "dash":{"active":False,
                            "indices":[0]
                            },       
                     "prwhe":{"active":False,
@@ -879,7 +879,10 @@ def test_controls():
                                                         },
                     CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
                                                "indices":[0]
-                                                }      
+                                                },
+                    CONTROLS.SENSIBILITA.value: {"active":True,
+                                               "indices":[0]
+                                                }       
                    }
     
     form= TreatmentForm(controls_map=controls_map)

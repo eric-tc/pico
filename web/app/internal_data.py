@@ -102,6 +102,9 @@ class PathologyTimline:
         CONTROLS.EDEMA.value: {"active":False,
                            "indices":[0]
                            },
+        CONTROLS.SENSIBILITA.value: {"active":False,
+                           "indices":[0]
+                           },
         CONTROLS.CICATRICE.value: {"active":False,
                            "indices":[0]
                            },
