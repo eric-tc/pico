@@ -1255,7 +1255,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         "1":2
     }
 
-
+    last_control_number_before_next=2
 
     @classmethod
     def get_pre(cls):
@@ -1267,38 +1267,62 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
 
         return tmp_ControlMap,pre_controls_map
   
+    @classmethod
+    def get_one(cls,pathology_type=None,param=None):
+        """
+        pathology_type serve perchè in alcuni controlli devo fare delle distinzioni
+        Quando metto il valore di defautl None significa che non ho bisogno di fare distinzioni
+        """
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-    first_control=[
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-        CONTROLS.PIPJ.value
-    ]
+        return tmp_ControlMap
 
-    second_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value
-        ]
+     
+    @classmethod
+    def get_two(cls,pathology_type=None,param=None):
 
-    third_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-    ]
+          #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+       
+
+    @classmethod
+    def get_next(cls,pathology_type=None,param=None):
+        """
+        Se i controlli sucessivi sono tutti uguali uso una sola funzione
+        """
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        
+        return tmp_ControlMap
 
 
 class RizoartrosiControlsTimeline(PathologyTimline):
