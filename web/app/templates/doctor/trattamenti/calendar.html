@@ -17,17 +17,19 @@
                 var eventDate = new Date(info.event.start);  // Event date
                 
                 // Calculate 5 days before and after today
-                var fiveDaysBefore = new Date(currentDate);
+                var DaysBefore = new Date(currentDate);
                 
                 //10 è la base del sistema numerico
-                fiveDaysBefore.setDate(currentDate.getDate() - parseInt("{{days_before}}",10));
+                DaysBefore.setDate(currentDate.getDate() - parseInt("{{days_before}}",10));
 
-                var fiveDaysAfter = new Date(currentDate);
-                fiveDaysAfter.setDate(currentDate.getDate() + parseInt("{{days_after}}",10));
+                var DaysAfter = new Date(currentDate);
+                DaysAfter.setDate(currentDate.getDate() + parseInt("{{days_after}}",10));
                 
+                console.log("Date Before",DaysBefore);
+                console.log("Date After",DaysAfter);
 
                 // Check if event date is within 5 days before or after today
-                if (eventDate >= fiveDaysBefore && eventDate <= fiveDaysAfter) {
+                if (eventDate >= DaysBefore && eventDate <= DaysAfter) {
                     // Event is within the range, so handle the click
                     var eventId = info.event.id;
                     window.location.href = '/next_controls/'+info.event.id+ "/1";

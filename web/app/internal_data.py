@@ -51,6 +51,12 @@ class EMAIL_STATUS(Enum):
     #il paziente ha confermato appuntamento
     CLOSED = (2,"Confirmed")
 
+# Indicano quanti giorni prima 
+# e dopo è possibile compilare un evento schedulato
+class EVENT_DAYS(Enum):
+
+    DAYS_BEFORE = 5
+    DAYS_AFTER = 80
 
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
@@ -1335,7 +1341,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
-    last_control_number_before_next=2
+    last_control_number_before_next=1
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -1395,7 +1401,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         return tmp_ControlMap
 
     @classmethod
-    def get_two(cls,pathology_type=None,param=None):
+    def get_next(cls,pathology_type=None,param=None):
 
           #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -1408,28 +1414,9 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
     
-        return tmp_ControlMap
-
-    @classmethod
-    def get_next(cls,pathology_type=None,param=None):
-        """
-        Se i controlli sucessivi sono tutti uguali uso una sola funzione
-        """
-        #deepCopy ctrl_map
-        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-
-        tmp_ControlMap[CONTROLS.VAS]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE]["active"]=True
-
         return tmp_ControlMap
    
 

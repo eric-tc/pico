@@ -11,7 +11,7 @@ from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
 from werkzeug.security import generate_password_hash
 import json
-from .internal_data import get_pathology_type_dict
+from .internal_data import get_pathology_type_dict,EVENT_DAYS
 from .query_sql import select_next_treatments
 import sys
 
@@ -627,11 +627,10 @@ def create_patient_post():
 def calendar():
 
     #Abilitano click su evento del calendario
-    days_before=40
-    days_after=40
+   
     return render_template("doctor/trattamenti/calendar.html",
-                           days_before=days_before,
-                           days_after=days_after)
+                           days_before=EVENT_DAYS.DAYS_BEFORE.value,
+                           days_after=EVENT_DAYS.DAYS_AFTER.value)
 
 
 # Ritorna tutti i trattamenti di tutti i pazienti associati a quel dottore.
