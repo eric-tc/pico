@@ -14,7 +14,15 @@ class RizoartrosiEnum(Enum):
     TRAPEZIECTOMIA_FLESSORE= ('4', 'trapeziectomia più artroplastica con flessore radiale del carpo')
     TRAPEZIECTOMIA_TIGHT =('5', 'trapeziectomia più tight rope')
     EMITRAPEZIECOTIMA = ('6', 'emitrapeziectomia,')
-    
+
+
+class FratturaRadioDistaleEnum(Enum):
+    GESSO_CHIUSO= ('1', 'gesso chiuso')
+    PLACCA_VITI= ('2', 'placca e viti')
+    FISSATORE_ESTERNO= ('3', 'fissatore esterno con fili di Kirschner')
+    VITI = ('4', 'viti')
+    VALVA_GESSATA = ('5', 'valva gessata')
+
 # In base a questi valori avrò un decorso post operatorio diverso
 class FrattureMetaCarpaliEnum(Enum):
     """

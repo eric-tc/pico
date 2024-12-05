@@ -220,6 +220,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         prwhe_data,\
         eaton_littler_data,\
         edema_data,\
+        sensibilita_data,\
         cicatrice,\
         tutore_data,\
         altro_data = pathology.value[2].process_parameters(controls_map=controls_map,
@@ -251,6 +252,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         prwhe=prwhe_data,
         eaton_littler=eaton_littler_data,
         edema=edema_data,
+        sensibilita=sensibilita_data,
         cicatrice=cicatrice,
         tutore=tutore_data,
         altro=altro_data,
@@ -1042,6 +1044,14 @@ def test_controls():
             if controls_map["edema"]["active"]:
                 edema_data= form.edema.data
             print(edema_data)
+
+
+
+            print("Sensibilita")
+            sensibilita_data= None
+            if controls_map["sensibilita"]["active"]:
+                sensibilita_data= form.sensibilita.data
+            print(sensibilita_data)
 
 
             cicatrice = {}

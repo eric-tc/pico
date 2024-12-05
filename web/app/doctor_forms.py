@@ -243,7 +243,7 @@ class TreatmentForm(FlaskForm):
     eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
     
     #9
-    hidden_sensibilita = HiddenField('hidden_sensibilita', render_kw={'class': 'form-control'}, validators=None)
+    sensibilita = HiddenField('sensibilita', render_kw={'class': 'form-control'}, validators=None)
     
     #10
     edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
@@ -265,7 +265,7 @@ class TreatmentForm(FlaskForm):
     #16
     articolazione_stabile = SelectField('Articolazione Stabile', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
-    submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary'})
+    submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
 
     def __init__(self, selected_indices=None,controls_map=None, *args, **kwargs):
         super(TreatmentForm, self).__init__(*args, **kwargs)

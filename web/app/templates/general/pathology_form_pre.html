@@ -4,9 +4,14 @@
 
 {% if controls_map.data_frattura.active %}
 
-    {{ form.data_frattura.label }}
-    {{ form.data_frattura(id='generic-datepicker') }}
-
+<div class="row mb-3">
+    
+        <div class="col-md-6 mb-6 col-lg-4">
+            {{ form.data_frattura.label }}
+            {{ form.data_frattura(id='generic-datepicker',style='width:80%') }}
+        
+        </div>
+</div>
 {% endif %}
 
     

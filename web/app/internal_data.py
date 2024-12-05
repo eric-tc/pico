@@ -16,6 +16,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     ScafoideFratturaEnum,\
     ResezioneFilieraEnum,\
     RizoartrosiEnum,\
+    FratturaRadioDistaleEnum,\
     ScafoidePseudortrosiEnum,\
     DupuytrenEnum,\
     LesioneLigamentosaEnum,\
@@ -302,6 +303,11 @@ class PathologyTimline:
             edema_data= form.edema.data
         print(edema_data)
 
+        print("Sensibilita")
+        sensibilita_data= None
+        if controls_map["sensibilita"]["active"]:
+            sensibilita_data= form.sensibilita.data
+        print(sensibilita_data)
 
         cicatrice = {}
 
@@ -333,7 +339,7 @@ class PathologyTimline:
 
         }
 
-        return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,cicatrice,tutore_data,altro_data
+        return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,sensibilita_data,cicatrice,tutore_data,altro_data
 
    
 
@@ -1459,7 +1465,7 @@ class PATHOLOGY(Enum):
                              PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value,
                              FrattureRadioDistaliTimeline,
                              FratturaRadioDistaleChirurgicoForm,
-                             None,
+                             FratturaRadioDistaleEnum,
                              None)
     FRATTURE_METACARPALI = (3,
                             PATHOLOGY_LABEL.FRATTURE_METACARPALI.value,

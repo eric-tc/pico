@@ -5,6 +5,7 @@ from wtforms.fields import DateField,TimeField,SelectField,HiddenField
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         ScafoideFratturaEnum,\
         RizoartrosiEnum,\
+        FratturaRadioDistaleEnum,\
         FrattureFalangeProssimaleEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
@@ -26,10 +27,10 @@ class ChirurgicoForm(FlaskForm):
     
     """
     #il formato della data deve essere in questo modo altrimenti ho un errore
-    data_intervento = StringField('Data Intervento', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
+    data_intervento = StringField('Data Intervento', render_kw={'class': 'form-control-custom','readonly':True,'style':'max-width:80%;'}, validators=None)
     
     #Questo valore è associato il campo datepicker
-    data_primo_controllo = StringField('Data Primo Controllo', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
+    data_primo_controllo = StringField('Data Primo Controllo', render_kw={'class': 'form-control-custom','readonly':True,'style':'max-width:80%;'}, validators=None)
     orario_primo_controllo = StringField('Orario Primo Controllo', render_kw={'class': 'form-control'}, validators=None)
 
 
@@ -66,14 +67,7 @@ class FratturaRadioDistaleChirurgicoForm(ChirurgicoForm):
 
     treatment_options = SelectField(
         'Seleziona Intervento',
-        choices=[
-            ('1', 'Gesso Chiuso'),
-            ('2', 'Placca a viti'),
-            ('3', 'Fissatore esterno fili K'),
-            ('4', 'Viti'),
-            ('5', 'Valva Gessata'),
-            
-        ],
+        choices=[(enum.value[0], enum.value[1]) for enum in FratturaRadioDistaleEnum],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )

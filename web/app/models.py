@@ -153,6 +153,7 @@ class PathologyData(db.Model):
     prwhe=db.Column(db.JSON)
     eaton_littler=db.Column(db.Integer)
     edema=db.Column(db.String(10))
+    sensibilita= db.Column(db.JSON)
     cicatrice= db.Column(db.JSON)
     tutore = db.Column(db.String(10))
     altro = db.Column(db.JSON)
