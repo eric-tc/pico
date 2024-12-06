@@ -1,36 +1,36 @@
-{% for index in range(form.mpcj_list | length) %}
+{% for index in range(form.mpcj | length) %}
     {% if index in controls_map.mpcj.indices %}
         <fieldset>
             <legend>Misurazione Mpcj Dito {{ index }}</legend>
             <div class="form-grid">
 
                 <div class="grid-item">
-                    <label>{{ form.mpcj_list[index].arom_estensione.label }}</label>
-                    {{ form.mpcj_list[index].arom_estensione }}
-                     {% for error in form.mpcj_list[index].arom_estensione.errors %}
+                    <label>{{ form.mpcj[index].arom_estensione.label }}</label>
+                    {{ form.mpcj[index].arom_estensione }}
+                     {% for error in form.mpcj[index].arom_estensione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
                 
                 <div class="grid-item">
-                    <label>{{ form.mpcj_list[index].arom_flessione.label }}</label>
-                    {{ form.mpcj_list[index].arom_flessione }}
-                    {% for error in form.mpcj_list[index].arom_flessione.errors %}
+                    <label>{{ form.mpcj[index].arom_flessione.label }}</label>
+                    {{ form.mpcj[index].arom_flessione }}
+                    {% for error in form.mpcj[index].arom_flessione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
 
                 <div class="grid-item">
-                    <label>{{ form.mpcj_list[index].prom_estensione.label }}</label>
-                    {{ form.mpcj_list[index].prom_estensione }}
-                    {% for error in form.mpcj_list[index].prom_estensione.errors %}
+                    <label>{{ form.mpcj[index].prom_estensione.label }}</label>
+                    {{ form.mpcj[index].prom_estensione }}
+                    {% for error in form.mpcj[index].prom_estensione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
                 <div class="grid-item">
-                    <label>{{ form.mpcj_list[index].prom_flessione.label }}</label>
-                    {{ form.mpcj_list[index].prom_flessione }}
-                    {% for error in form.mpcj_list[index].prom_flessione.errors %}
+                    <label>{{ form.mpcj[index].prom_flessione.label }}</label>
+                    {{ form.mpcj[index].prom_flessione }}
+                    {% for error in form.mpcj[index].prom_flessione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
 

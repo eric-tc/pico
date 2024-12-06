@@ -1,4 +1,4 @@
-{% for index in range(form.pipj_list | length) %}
+{% for index in range(form.pipj | length) %}
     {% if index in controls_map.pipj.indices %}
         <fieldset>
             <legend>Misurazione pipj Dito {{ index }}</legend>
@@ -6,33 +6,33 @@
             <div class="form-grid">
 
                 <div class="grid-item">
-                    <label>{{ form.pipj_list[index].arom_estensione.label }}</label>
-                    {{ form.pipj_list[index].arom_estensione }}
-                    {% for error in form.pipj_list[index].arom_estensione.errors %}
+                    <label>{{ form.pipj[index].arom_estensione.label }}</label>
+                    {{ form.pipj[index].arom_estensione }}
+                    {% for error in form.pipj[index].arom_estensione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
 
                 <div class="grid-item">
-                    <label>{{ form.pipj_list[index].arom_flessione.label }}</label>
-                    {{ form.pipj_list[index].arom_flessione }}
-                    {% for error in form.pipj_list[index].arom_flessione.errors %}
+                    <label>{{ form.pipj[index].arom_flessione.label }}</label>
+                    {{ form.pipj[index].arom_flessione }}
+                    {% for error in form.pipj[index].arom_flessione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>  
 
                 <div class="grid-item">
-                    <label>{{ form.pipj_list[index].prom_estensione.label }}</label>
-                    {{ form.pipj_list[index].prom_estensione }}
-                    {% for error in form.pipj_list[index].prom_estensione.errors %}
+                    <label>{{ form.pipj[index].prom_estensione.label }}</label>
+                    {{ form.pipj[index].prom_estensione }}
+                    {% for error in form.pipj[index].prom_estensione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}    
                 </div>
 
                 <div class="grid-item">
-                    <label>{{ form.pipj_list[index].prom_flessione.label }}</label>
-                    {{ form.pipj_list[index].prom_flessione }}
-                    {% for error in form.pipj_list[index].prom_flessione.errors %}
+                    <label>{{ form.pipj[index].prom_flessione.label }}</label>
+                    {{ form.pipj[index].prom_flessione }}
+                    {% for error in form.pipj[index].prom_flessione.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>

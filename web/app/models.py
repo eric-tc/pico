@@ -120,6 +120,10 @@ class PathologyData(db.Model):
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    #Tiene traccia della riga del database da cui è stato creato il record.
+    #Solitamente fa riferimento al controllo con next_control_number=0. 
+    # Cioè il controllo iniziale di inserimento terapia
+    id_created_from = db.Column(db.Integer, nullable=True)
     #Data in cui è stato fissato intervento 
     surgery_date = db.Column(db.DateTime,nullable=True)
     #Data prossimo incontro
@@ -141,6 +145,7 @@ class PathologyData(db.Model):
 
     #I valori di queste variabili devono corrispondere ai valori di RIZOARTROSI_CONTROLS dentro internal Data.
     #In questo modo posso accedere a queste variabili utilizzando setattr(myinstance,RIZOARTROSI_CONTROLS....value)  
+    
     mpcj=db.Column(db.JSON)
     pipj= db.Column(db.JSON)
     dipj=db.Column(db.JSON)
@@ -160,6 +165,7 @@ class PathologyData(db.Model):
     guarigione_ossea= db.Column(db.JSON)
     concesso_inizio_mobilizzazione = db.Column(db.Integer)
     articolazione_stabile = db.Column(db.Integer)
+    data_inizio_mobilizzazione = db.Column(db.DateTime,nullable=True)
     
 
     #Campo utilizzati per salvare i diversi parametri 

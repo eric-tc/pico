@@ -107,6 +107,7 @@ class CONTROLS(Enum):
     GUARIGIONE_OSSEA = "guarigione_ossea"
     CONCESSO_INIZIO_MOBILIZZAZIONE = "concesso_inizio_mobilizzazione"
     ARTICOLAZIONE_STABILE = "articolazione_stabile"
+    DATA_INIZIO_MOBILIZZAZIONE = "data_inizio_mobilizzazione"
    
 
 class CONTROLSNUMBER(Enum):

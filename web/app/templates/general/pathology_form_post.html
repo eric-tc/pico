@@ -13,14 +13,13 @@
         {{ form.data_controllo.label }}
         
         <div class="mt-3 mb-3">
-        {{ form.data_controllo(id='datepicker',style="max-width:50%") }}
-
+            {{ form.data_controllo(id='datepicker',style="max-width:50%") }}
         </div>
 
         {{form.submit_change_date(style="max-width:30%")}}
 
         <div class="row mt-2">
-            <h4>Evento non ancora aperto. Attendi almeno 5 giorni prima di poter compilare i dati paziente</h4>
+            <h4>Evento non aperto. Puoi compilare solo 5 giorni prima o 5 giorni dopo rispetto alla data indicata</h4>
         </div>
     {% endif %}
    
@@ -30,7 +29,17 @@
     <div class="row">
 
         <h2> Configuratore guidato terapia </h2>
-    
+        
+        {% if data_inizio_mobilizzazione %}
+            
+            {{ form.data_inizio_mobilizzazione.label }}
+        
+            <div class="mt-3 mb-3">
+                {{ form.data_inizio_mobilizzazione(id='generic-datepicker-no-res',style="max-width:50%") }}
+            </div>
+            
+        {% endif %}
+
     </div> 
 
     {% include 'general/pathology_form_fields.html' %}
@@ -39,6 +48,7 @@
 
 </form>
 
+<script src="{{ url_for('static', filename='js/datepicker_custom_no_date_restriction.js') }}"></script>
 
 <script>
     // Function to calculate the mean of the three grip values

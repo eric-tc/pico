@@ -215,11 +215,11 @@ class DashForm(FlaskForm):
 class TreatmentForm(FlaskForm):
 
     #1
-    mpcj_list = FieldList(FormField(AromPromForm),label="MCPJ", min_entries=5, max_entries=5)
+    mpcj = FieldList(FormField(AromPromForm),label="MCPJ", min_entries=5, max_entries=5)
     
-    dipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
-    pipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
-    ipj_list = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
+    pipj = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
+    dipj = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
+    ipj = FieldList(FormField(AromPromForm), render_kw={'class': 'form-control'},min_entries=5, max_entries=5)
     
     #2
     polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
@@ -264,6 +264,9 @@ class TreatmentForm(FlaskForm):
 
     #16
     articolazione_stabile = SelectField('Articolazione Stabile', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+
+    #17
+    data_inizio_mobilizzazione = StringField('Data Inizio Mobilizzazione Attiva', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
 
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
 
@@ -359,13 +362,13 @@ class TreatmentForm(FlaskForm):
     #             print("Disabilito il campo: ", key)
                 
     #             if key == "mpcj":
-    #                 self.validate_list(self.mpcj_list,self.max_indeces)   
+    #                 self.validate_list(self.mpcj,self.max_indeces)   
     #             elif key == "dipj":
-    #                 self.validate_list(self.dipj_list,self.max_indeces)
+    #                 self.validate_list(self.dipj,self.max_indeces)
     #             elif key == "pipj":
-    #                 self.validate_list(self.pipj_list,self.max_indeces)
+    #                 self.validate_list(self.pipj,self.max_indeces)
     #             elif key == "ipj":
-    #                 self.validate_list(self.ipj_list,self.max_indeces)
+    #                 self.validate_list(self.ipj,self.max_indeces)
     #             elif key == "polso":
     #                 print("Disabilito il polso")
     #                 self.validate_polso()
@@ -384,13 +387,13 @@ class TreatmentForm(FlaskForm):
     #         elif value:
     #             # Se true devo disabilitare gli indici non selezionati
     #             if key == "mpcj":
-    #                 self.validate_list(self.mpcj_list,self.controls_map[key]["indices"])
+    #                 self.validate_list(self.mpcj,self.controls_map[key]["indices"])
     #             elif key == "dipj":
-    #                 self.validate_list(self.dipj_list,self.controls_map[key]["indices"])
+    #                 self.validate_list(self.dipj,self.controls_map[key]["indices"])
     #             elif key == "pipj":
-    #                 self.validate_list(self.pipj_list,self.controls_map[key]["indices"])
+    #                 self.validate_list(self.pipj,self.controls_map[key]["indices"])
     #             elif key == "ipj":
-    #                 self.validate_list(self.ipj_list,self.controls_map[key]["indices"])
+    #                 self.validate_list(self.ipj,self.controls_map[key]["indices"])
                 
     #     # Perform another validation after updating the validators
     #     return super(TreatmentForm, self).validate()

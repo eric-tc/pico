@@ -129,7 +129,10 @@ class PathologyTimline:
                                                         },
         CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
                                                "indices":[0]
-                                                }                               
+                                                },
+        CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+                                               "indices":[0]
+                                                },                            
     }
     
     #Controlla i Form aggiuntivi per i controlli per operatori.
@@ -165,10 +168,10 @@ class PathologyTimline:
             for index in controls_map["mpcj"]["indices"]:
                 # Dynamically retrieve the data for each subform
                 mpcj_data[int(index)] = {
-                    'arom_estensione': form.mpcj_list[int(index)].arom_estensione.data,
-                    'arom_flessione': form.mpcj_list[int(index)].arom_flessione.data,
-                    'prom_estensione': form.mpcj_list[int(index)].prom_estensione.data,
-                    'prom_flessione': form.mpcj_list[int(index)].prom_flessione.data
+                    'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
+                    'arom_flessione': form.mpcj[int(index)].arom_flessione.data,
+                    'prom_estensione': form.mpcj[int(index)].prom_estensione.data,
+                    'prom_flessione': form.mpcj[int(index)].prom_flessione.data
                 }
 
         print("MPCJ")
@@ -180,10 +183,10 @@ class PathologyTimline:
             for index in controls_map["dipj"]["indices"]:
                 # Dynamically retrieve the data for each subform
                 dipj_data[int(index)] = {
-                    'arom_estensione': form.dipj_list[int(index)].arom_estensione.data,
-                    'arom_flessione': form.dipj_list[int(index)].arom_flessione.data,
-                    'prom_estensione': form.dipj_list[int(index)].prom_estensione.data,
-                    'prom_flessione': form.dipj_list[int(index)].prom_flessione.data
+                    'arom_estensione': form.dipj[int(index)].arom_estensione.data,
+                    'arom_flessione': form.dipj[int(index)].arom_flessione.data,
+                    'prom_estensione': form.dipj[int(index)].prom_estensione.data,
+                    'prom_flessione': form.dipj[int(index)].prom_flessione.data
                 }
         print("DIPJ")
         print(dipj_data)
@@ -194,10 +197,10 @@ class PathologyTimline:
             for index in controls_map["pipj"]["indices"]:
                 # Dynamically retrieve the data for each subform
                 pipj_data[int(index)] = {
-                    'arom_estensione': form.pipj_list[int(index)].arom_estensione.data,
-                    'arom_flessione': form.pipj_list[int(index)].arom_flessione.data,
-                    'prom_estensione': form.pipj_list[int(index)].prom_estensione.data,
-                    'prom_flessione': form.pipj_list[int(index)].prom_flessione.data
+                    'arom_estensione': form.pipj[int(index)].arom_estensione.data,
+                    'arom_flessione': form.pipj[int(index)].arom_flessione.data,
+                    'prom_estensione': form.pipj[int(index)].prom_estensione.data,
+                    'prom_flessione': form.pipj[int(index)].prom_flessione.data
                 }
 
         print("PIPJ")
@@ -208,10 +211,10 @@ class PathologyTimline:
             for index in controls_map["ipj"]["indices"]:
                 # Dynamically retrieve the data for each subform
                 ipj_data[int(index)] = {
-                    'arom_estensione': form.ipj_list[int(index)].arom_estensione.data,
-                    'arom_flessione': form.ipj_list[int(index)].arom_flessione.data,
-                    'prom_estensione': form.ipj_list[int(index)].prom_estensione.data,
-                    'prom_flessione': form.ipj_list[int(index)].prom_flessione.data
+                    'arom_estensione': form.ipj[int(index)].arom_estensione.data,
+                    'arom_flessione': form.ipj[int(index)].arom_flessione.data,
+                    'prom_estensione': form.ipj[int(index)].prom_estensione.data,
+                    'prom_flessione': form.ipj[int(index)].prom_flessione.data
                 }
 
         print("IPJ")

@@ -451,6 +451,7 @@ def medical_treatment():
                     id_pathology_type=pathology_id_type, #TODO da cambiare con id patologia
                     id_patient=patient_id,  # Replace with the actual patient ID
                     id_pathology_status= PATHOLOGY_STATUS.DOPO.value[0],
+                    id_created_from=row_id_to_update,
                     next_control_date=data_prossimo_controllo,
                     next_control_time= orario_prossimo_controllo,
                     is_date_accepted= is_date_accepted,
@@ -715,7 +716,16 @@ def event_details(row_id,event_in_range):
     data_controllo=None
     pathology_db = db.session.query(PathologyData).filter(PathologyData.id==row_id).first()
 
-    
+    #Verifico se la data di inizio mobilizzazione è già stata inserita
+    pathology_parent= db.session.query(PathologyData).filter(PathologyData.id==pathology_db.id_created_from).first()
+    data_inizio_mobilizzazione=True
+    if(pathology_parent):
+        print("PATHOLOGY PARENT")
+        print(pathology_parent.data_inizio_mobilizzazione)
+        if(pathology_parent.data_inizio_mobilizzazione):
+            #se ho già inserito la data di inizio mobilizzazione non posso più modificarla
+            data_inizio_mobilizzazione=False
+
     #In base alla patologia selezionata ritorno le terapie associate a quella patologia
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_db.id_pathology):
@@ -794,11 +804,16 @@ def event_details(row_id,event_in_range):
             return redirect(url_for('doctor.calendar'))
         
         if form.submit_form.data:
-
+            print("SUBMIT FORM")
+            print(form.data)
             for key in controls_map.keys():
+                
                 #escludi per data_frattura perchè esiste come controllo, ma nel POST non è mai presente
-                if(key != CONTROLS.DATA_FRATTURA.value):
+                if(key != CONTROLS.DATA_FRATTURA.value and key != CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
                     setattr(pathology_db, key, form.data[key])
+                if(key == CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
+                    print("DATA INIZIO MOBILIZZAZIONE")
+                    setattr(pathology_parent, key, form.data[key])
             
             # una volta inserito i valori il controllo si chiude e non può essere modificato
             pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
@@ -811,6 +826,8 @@ def event_details(row_id,event_in_range):
 
             return redirect(url_for('doctor.calendar'))
 
+    print("DATA INIZIO MOBILIZZAZIONE")
+    print(data_inizio_mobilizzazione)
     return render_template('doctor/trattamenti/parameters_post_treatment_selection.html',
                            row_id=row_id,
                            form=form,
@@ -818,7 +835,8 @@ def event_details(row_id,event_in_range):
                            week_to_add=week_to_add,
                            data_intervento=data_intervento,
                            data_controllo=data_controllo,
-                           event_in_range=event_in_range)
+                           event_in_range=event_in_range,
+                           data_inizio_mobilizzazione=data_inizio_mobilizzazione)
 
 from wtforms.validators import DataRequired, Length,NumberRange
 
@@ -899,10 +917,10 @@ def test_controls():
                 for index in controls_map["mpcj"]["indices"]:
                     # Dynamically retrieve the data for each subform
                     mpcj_data[int(index)] = {
-                        'arom_estensione': form.mpcj_list[int(index)].arom_estensione.data,
-                        'arom_flessione': form.mpcj_list[int(index)].arom_flessione.data,
-                        'prom_estensione': form.mpcj_list[int(index)].prom_estensione.data,
-                        'prom_flessione': form.mpcj_list[int(index)].prom_flessione.data
+                        'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
+                        'arom_flessione': form.mpcj[int(index)].arom_flessione.data,
+                        'prom_estensione': form.mpcj[int(index)].prom_estensione.data,
+                        'prom_flessione': form.mpcj[int(index)].prom_flessione.data
                     }
 
             print("MPCJ")
@@ -914,10 +932,10 @@ def test_controls():
                 for index in controls_map["dipj"]["indices"]:
                     # Dynamically retrieve the data for each subform
                     dipj_data[int(index)] = {
-                        'arom_estensione': form.dipj_list[int(index)].arom_estensione.data,
-                        'arom_flessione': form.dipj_list[int(index)].arom_flessione.data,
-                        'prom_estensione': form.dipj_list[int(index)].prom_estensione.data,
-                        'prom_flessione': form.dipj_list[int(index)].prom_flessione.data
+                        'arom_estensione': form.dipj[int(index)].arom_estensione.data,
+                        'arom_flessione': form.dipj[int(index)].arom_flessione.data,
+                        'prom_estensione': form.dipj[int(index)].prom_estensione.data,
+                        'prom_flessione': form.dipj[int(index)].prom_flessione.data
                     }
             print("DIPJ")
             print(dipj_data)
@@ -928,10 +946,10 @@ def test_controls():
                 for index in controls_map["pipj"]["indices"]:
                     # Dynamically retrieve the data for each subform
                     pipj_data[int(index)] = {
-                        'arom_estensione': form.pipj_list[int(index)].arom_estensione.data,
-                        'arom_flessione': form.pipj_list[int(index)].arom_flessione.data,
-                        'prom_estensione': form.pipj_list[int(index)].prom_estensione.data,
-                        'prom_flessione': form.pipj_list[int(index)].prom_flessione.data
+                        'arom_estensione': form.pipj[int(index)].arom_estensione.data,
+                        'arom_flessione': form.pipj[int(index)].arom_flessione.data,
+                        'prom_estensione': form.pipj[int(index)].prom_estensione.data,
+                        'prom_flessione': form.pipj[int(index)].prom_flessione.data
                     }
 
             print("PIPJ")
@@ -942,10 +960,10 @@ def test_controls():
                 for index in controls_map["ipj"]["indices"]:
                     # Dynamically retrieve the data for each subform
                     ipj_data[int(index)] = {
-                        'arom_estensione': form.ipj_list[int(index)].arom_estensione.data,
-                        'arom_flessione': form.ipj_list[int(index)].arom_flessione.data,
-                        'prom_estensione': form.ipj_list[int(index)].prom_estensione.data,
-                        'prom_flessione': form.ipj_list[int(index)].prom_flessione.data
+                        'arom_estensione': form.ipj[int(index)].arom_estensione.data,
+                        'arom_flessione': form.ipj[int(index)].arom_flessione.data,
+                        'prom_estensione': form.ipj[int(index)].prom_estensione.data,
+                        'prom_flessione': form.ipj[int(index)].prom_flessione.data
                     }
 
             print("IPJ")
