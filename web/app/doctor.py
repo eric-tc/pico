@@ -680,12 +680,16 @@ def get_events():
             event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
             event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
             event_dict["id"]= pathology_row.id
+            event_dict["closed"]=pathology_row.id_control_status
             
 
             if(pathology_row.is_date_accepted==0):
                 event_dict["color"]= "#D3D3D3" 
             elif(pathology_row.is_date_accepted==1):
                 event_dict["color"]= "#00FF00"
+
+            if(pathology_row.id_control_status==CONTROL_STATUS.CLOSED.value[0]):
+                event_dict["color"]= "#FF0000"
 
             events.append(event_dict)
 

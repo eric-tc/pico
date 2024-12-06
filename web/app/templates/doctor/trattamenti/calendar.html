@@ -13,40 +13,53 @@
             events: '/treatments_events', //Endpoit per recuperare gli eventi da mostrare nel calendario
             eventClick:function(info){
                 
-                var currentDate = new Date();  // Current date
-                var eventDate = new Date(info.event.start);  // Event date
-                
-                // Calculate 5 days before and after today
-                var DaysBefore = new Date(currentDate);
-                
-                //10 è la base del sistema numerico
-                DaysBefore.setDate(currentDate.getDate() - parseInt("{{days_before}}",10));
 
-                var DaysAfter = new Date(currentDate);
-                DaysAfter.setDate(currentDate.getDate() + parseInt("{{days_after}}",10));
+                console.log("Event infoEvent",info.event.extendedProps.closed);
                 
-                console.log("Date Before",DaysBefore);
-                console.log("Date After",DaysAfter);
-
-                // Check if event date is within 5 days before or after today
-                if (eventDate >= DaysBefore && eventDate <= DaysAfter) {
-                    // Event is within the range, so handle the click
-                    var eventId = info.event.id;
-                    window.location.href = '/next_controls/'+info.event.id+ "/1";
+                if(info.event.extendedProps.closed=="2"){
+                    alert("Evento chiuso");
+                    return;
+                }
+                else{
+                    var currentDate = new Date();  // Current date
+                    var eventDate = new Date(info.event.start);  // Event date
                     
-                }else{
+                    // Calculate 5 days before and after today
+                    var DaysBefore = new Date(currentDate);
+                    
+                    //10 è la base del sistema numerico
+                    DaysBefore.setDate(currentDate.getDate() - parseInt("{{days_before}}",10));
 
-                    if (eventDate < currentDate) {
-                        alert("Evento già trascorso");
-                    } else if (eventDate > currentDate) {
+                    var DaysAfter = new Date(currentDate);
+                    DaysAfter.setDate(currentDate.getDate() + parseInt("{{days_after}}",10));
+                    
+                    console.log("Date Before",DaysBefore);
+                    console.log("Date After",DaysAfter);
+
+                    // Check if event date is within 5 days before or after today
+                    if (eventDate >= DaysBefore && eventDate <= DaysAfter) {
+                        // Event is within the range, so handle the click
+                        var eventId = info.event.id;
+                        window.location.href = '/next_controls/'+info.event.id+ "/1";
                         
-                        window.location.href = '/next_controls/'+info.event.id+ "/0";
+                    }
+                    else{
+
+                        if (eventDate < currentDate) {
+                            alert("Evento già trascorso");
+                        } else if (eventDate > currentDate) {
+                            
+                            window.location.href = '/next_controls/'+info.event.id+ "/0";
+                        }
                     }
                 }
             },
             locale: 'it', // Fetch events from Flask endpoint
             height: 'auto',
             eventDidMount: function(info) {
+
+                
+
                 // Attach a tooltip to show full event title on hover
                 $(info.el).tooltip({
                     title: info.event.title,
