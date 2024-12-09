@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField,IntegerField
+from wtforms import StringField, SubmitField,IntegerField,widgets
 from wtforms.validators import DataRequired, Length
-from wtforms.fields import DateField,TimeField,SelectField,HiddenField
+from wtforms.fields import DateField,TimeField,SelectField,HiddenField,SelectMultipleField
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         ScafoideFratturaEnum,\
         RizoartrosiEnum,\
         FratturaRadioDistaleEnum,\
         FrattureFalangeProssimaleEnum,\
+        LesioneTendineaFlessoriEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
         DupuytrenEnum,\
@@ -388,6 +389,217 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         ,render_kw={'class': 'form-control'}
     )
 
+
+
+##------------------------------------------------------------------------------------------------------------------##
+##                          LESIONE TENDINEA FLESSORI                                                               ## 
+##------------------------------------------------------------------------------------------------------------------##
+class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
+    
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[ (enum.value[0], enum.value[1]) for enum in LesioneTendineaFlessoriEnum],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    tipologia = SelectField(
+        'Tipologia',
+        choices=[
+            ('fds', 'FDS'),
+            ('fdp', 'FDP'),
+            ('fds_fdp', 'FDS e FDP'),
+            ('fpl', 'fpl'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #indica tutti i valori salvati dal disegno
+    map_selected=HiddenField('map_selected', render_kw={'class': 'form-control'}, validators=None)
+
+    #Se FDS Zona 2
+
+    fds_2 = SelectField(
+        'Fds Opzioni',
+        choices=[
+            ('completo', 'completo'),
+            ('bandella_radiale', 'bandella radiale'),
+            ('bandella_ulnare', 'Bandella ulnare'),
+            ('4', 'trasversi'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #fpl_zona 1
+
+    fpl_1_leddy_packer = SelectField(
+        'Classificazione Leddy Packer',
+        choices=[
+            ('leddy_1', '1'),
+            ('leddy_2', '2'),
+            ('leddy_3', '3'),
+            ('leddy_4', '4'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #zona 5 
+
+    # tendini_5 = SelectMultipleField(
+    # 'Fili di Kirschner',
+    # choices=[
+    #     ('fcr', 'FDS'),
+    #     ('pl', 'FDP'),
+    #     ('fcu', 'FDS e FDP'),
+    #     ('fpl', 'FPL'),
+    #     ('fds_II_III_IV_V', 'FDS_II_III_IV_V'),
+    #     ('fdp_II_III_IV_V', 'FDP_II_III_IV_V'), 
+    # ],
+    # coerce=str,  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+    # render_kw={'class': 'form-control'},  # Add custom styling
+    # option_widget=widgets.CheckboxInput(),  # Render each choice as a checkbox
+    # widget=widgets.ListWidget(prefix_label=False)  # ListWidget to group checkboxes
+    # )
+
+    tendini_5=SelectMultipleField(
+        'Tendini lesionati zona 5',
+        choices=[
+          ('fcr', 'FDS'),
+        ('pl', 'FDP'),
+        ('fcu', 'FDS e FDP'),
+        ('fpl', 'FPL'),
+        ('fds_II_III_IV_V', 'FDS_II_III_IV_V'),
+        ('fdp_II_III_IV_V', 'FDP_II_III_IV_V'), 
+        ],
+        widget=widgets.ListWidget(prefix_label=False),  # List layout for checkboxes
+        option_widget=widgets.CheckboxInput(),  # Render as checkboxes
+    )
+
+    #zona 1
+
+    tipo_sutura_1 = SelectField(
+        'Tipo Sutura',
+        choices=[
+            ('singolo_pull_out', 'Singolo pull out'),
+            ('doppio_pull_out', 'Doppio pull out'),
+            ('sutura_termino_terminale', 'Sutura termino terminale'),
+            ('altro', 'Altro'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    tipo_filo_1 = SelectField(
+        'Grandezza Filo',
+        choices=[
+            ('0', '0'),
+            ('1_0', '1.0'),
+            ('2_0', '2.0'),
+            ('3_0', '3.0'),
+            ('4_0', '4.0'),
+            ('5_0', '5.0'),
+            ('6_0', '6.0'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    materiale_filo_1 = SelectField(
+        'Materiale Filo',
+        choices=[
+            ('nylon', 'Nylon'),
+            ('prolene', 'Prolene'),
+            ('vicryl', 'Vicryl'),
+            ('ti_cron', 'Ti-Cron'),
+            ('fiber_wire', 'Fiber wire'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #Altre Zone
+
+    tipo_sutura = SelectField(
+        'Materiale Filo',
+        choices=[
+            ('2_passaggi', '2 passaggi'),
+            ('4_passaggi', '4 passaggi'),
+            ('6_passaggi', '6 passaggi'),
+            ('altro', 'Altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_2 = SelectField(
+        'Tipologia Passaggio 2',
+        choices=[
+            ('kessler_modificata', 'Kessler Modificata'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_4 = SelectField(
+        'Tipologia Passaggio 4',
+        choices=[
+            ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
+            ('adelaide', 'Adelaide'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_6 = SelectField(
+        'Tipologia Passaggio 6',
+        choices=[
+            ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
+            ('m_tang', 'M-Tang'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    altro = SelectField(
+        'Altro',
+        choices=[
+            ('punti_staccati', 'Punti Staccati'),
+            ('punti_u', 'Punti a U'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    tipo_filo_zona_generica = SelectField(
+        'Grandezza Filo',
+        choices=[
+            ('0', '0'),
+            ('1_0', '1.0'),
+            ('2_0', '2.0'),
+            ('3_0', '3.0'),
+            ('4_0', '4.0'),
+            ('5_0', '5.0'),
+            ('6_0', '6.0'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    materiale_filo_zona_generica = SelectField(
+        'Materiale Filo',
+        choices=[
+            ('nylon', 'Nylon'),
+            ('prolene', 'Prolene'),
+            ('vicryl', 'Vicryl'),
+            ('ti_cron', 'Ti-Cron'),
+            ('fiber_wire', 'Fiber wire'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
 
 
 ##------------------------------------------------------------------------------------------------------------------##

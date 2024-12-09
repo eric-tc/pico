@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+<h2> Ferita Lesione Tendinea Flessori </h2>
+
+</div>
+
+
+<div>
+    
+    <div class="row">
+        <!-- SVG on the left -->
+        <div class="col-md-6">
+
+            <div id="colorPalette" style="display: none; position: absolute; z-index: 1000;">
+                <div style="width: 20px; height: 20px; background: rgba(139, 0, 0, 1);" data-color="rgba(139, 0, 0, 1)" data-id="Lesioni" data-grams="Lesioni"></div>
+                <div style="width: 20px; height: 20px; background: rgba(200, 200, 200, 1);" data-color="rgba(200, 200, 200, 1)" data-id="No Valore" data-grams="No Valore"></div>
+            </div>
+
+            <div id="colorPalettePulegge" style="display: none; position: absolute; z-index: 1000;">
+                <div style="width: 20px; height: 20px; background: rgb(0, 255, 2);" data-color="rgba(0, 255, 0, 1)" data-id="Pulegge" data-grams="Pulegge Integre"></div>
+                <div style="width: 20px; height: 20px; background: rgba(200, 200, 200, 1);" data-color="rgba(200, 200, 200, 1)" data-id="No Valore" data-grams="No Valore"></div>
+            </div>
+
+            <svg id="interactiveImage" width="512" height="512" viewBox="0 0 512 512">
+                <image href="{{ url_for('static', filename='tendini_flessori_pulegge_resize.jpg') }}" width="512" height="512" />
+                <!-- Multiple rectangles with unique IDs -->
+                
+                <!-- mignolo -->
+                <rect id="rect1" x="39" y="111" width="16" height="13" fill="transparent" data-id="1" />
+                <rect id="rect2" x="65" y="161" width="15" height="15" fill="transparent" data-id="2" />
+                <rect id="rect3" x="85" y="199" width="15" height="15" fill="transparent" data-id="3" />
+                <rect id="rect4" x="98" y="230" width="16" height="13" fill="transparent" data-id="4" />
+                <rect id="rect5" x="103" y="253" width="15" height="15" fill="transparent" data-id="5" />
+                
+                <!-- Anulare -->
+                <rect id="rect6" x="166" y="40" width="16" height="16" fill="transparent" data-id="6" />
+                <rect id="rect7" x="162" y="118" width="15" height="15" fill="transparent" data-id="7" />
+                <rect id="rect8" x="161" y="175" width="15" height="15" fill="transparent" data-id="8" />
+                <rect id="rect9" x="164" y="208" width="16" height="13" fill="transparent" data-id="9" />
+                <rect id="rect10" x="167" y="235" width="15" height="15" fill="transparent" data-id="10" />
+
+                <!-- Medio -->
+                <rect id="rect11" x="293" y="47" width="16" height="13" fill="transparent" data-id="11" />
+                <rect id="rect12" x="262" y="114" width="15" height="15" fill="transparent" data-id="12" />
+                <rect id="rect13" x="234" y="176" width="15" height="15" fill="transparent" data-id="13" />
+                <rect id="rect14" x="223" y="206" width="16" height="13" fill="transparent" data-id="14" />
+                <rect id="rect15" x="224" y="234" width="15" height="15" fill="transparent" data-id="15" />
+
+                <!-- Indice -->
+                
+                <rect id="rect16" x="394" y="111" width="16" height="13" fill="transparent" data-id="16" />
+                <rect id="rect17" x="356" y="153" width="15" height="15" fill="transparent" data-id="17" />
+                <rect id="rect18" x="315" y="204" width="15" height="15" fill="transparent" data-id="18" />
+                <rect id="rect19" x="296" y="226" width="16" height="13" fill="transparent" data-id="19" />
+                <rect id="rect20" x="284" y="245" width="15" height="15" fill="transparent" data-id="20" />
+                
+                <!-- Pollice -->
+                <rect id="rect21" x="434" y="358" width="16" height="13" fill="transparent" data-id="21" />
+                <rect id="rect22" x="410" y="377" width="15" height="15" fill="transparent" data-id="22" />
+                <rect id="rect15" x="343" y="385" width="16" height="13" fill="transparent" data-id="23" />
+                <rect id="rect24" x="335" y="406" width="15" height="15" fill="transparent" data-id="24" />
+                <rect id="rect25" x="272" y="397" width="16" height="13" fill="transparent" data-id="25" />
+                <rect id="rect26" x="276" y="426" width="15" height="15" fill="transparent" data-id="26" />
+                
+                <rect id="rect27" x="163" y="350" width="16" height="13" fill="transparent" data-id="27" />
+                <rect id="rect28" x="164" y="429" width="16" height="13" fill="transparent" data-id="28" />
+                <rect id="rect29" x="164" y="478" width="16" height="13" fill="transparent" data-id="29" />
+            
+            </svg>
+
+        </div>
+
+       
+        <!-- Legend -->
+        <div class="col-md-6">
+            <div>
+                Seleziona i tendini lesionati e poi seleziona le pulegge integre
+               
+            </div>
+            <div>
+                I valori con <b>A{numero}</b> rappresentano le pulegge
+            </div>
+            
+            
+            <div id="legend" style="margin-top: 100px;margin-bottom:40px;">
+                <h3>Lesioni</h3>
+            </div>
+            
+           
+            <div id="legendPulegge" style="margin-top: 20px;">
+                <h3>Pulegge</h3>
+            </div>
+        </div>
+    
+    </div>
+    
+
+    <div class="row">
+        <form  method="POST">
+            {{ form.csrf_token }}
+        
+           
+            {{ form.data_intervento.label(style="display:block;") }}
+            {{ form.data_intervento(id='generic-datepicker') }}
+        
+            {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
+            {{ form.treatment_options(id="tipologia_trattamento") }}
+            
+            {{ form.tipologia.label(style="display:block;margin-top:15px;") }}
+            {{ form.tipologia }}
+
+            {{ form.map_selected(id="map_selected") }}
+
+            <div id="fds_zona_2" style="display:none;">
+                {{ form.fds_2.label(style="display:block;margin-top:15px;") }}
+                {{ form.fds_2 }}
+            </div>
+
+            <div id="fpl_zona_1" style="display:none;">
+                {{ form.fpl_1_leddy_packer.label(style="display:block;margin-top:15px;") }}
+                {{ form.fpl_1_leddy_packer }}
+            </div>
+
+            <div id="zona_5" style="display:none;">
+                <div class="mb-3">
+                    <label class="form-label">{{ form.tendini_5.label }}</label>
+                    {% for subfield in form.tendini_5 %}
+                    <div class="form-check">
+                        {{ subfield(class="form-check-input") }}
+                        <label class="form-check-label" for="{{ subfield.id }}">
+                            {{ subfield.label.text }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="zona_1" style="display:none;">
+                {{ form.tipo_sutura_1.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_sutura_1 }}
+
+                {{ form.tipo_filo_1.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_filo_1 }}
+
+                {{ form.materiale_filo_1.label(style="display:block;margin-top:15px;") }}
+                {{ form.materiale_filo_1 }}
+            </div>
+            
+            <div id="altre_zone" style="display:none;">
+                {{ form.tipo_sutura.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_sutura(id="tipo_sutura_altre_zone") }}
+
+                <div id="passaggio_2">
+
+                    {{ form.passaggio_2.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_2 }}
+                
+                </div>
+
+                <div id="passaggio_4" style="display:none;">
+
+                    {{ form.passaggio_4.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_4 }}
+                
+                </div>
+
+                <div id="passaggio_6" style="display:none;">
+
+                    {{ form.passaggio_6.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_6 }}
+                
+                </div>
+
+                <div id="altro" style="display:none;">
+
+                    {{ form.altro.label(style="display:block;margin-top:15px;") }}
+                    {{ form.altro }}
+                
+                </div>
+
+                {{ form.tipo_filo_zona_generica.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_filo_zona_generica }}
+
+                {{ form.materiale_filo_zona_generica.label(style="display:block;margin-top:15px;") }}
+                {{ form.materiale_filo_zona_generica }}
+            
+               
+            </div>
+
+
+
+            {{ form.orario_primo_controllo.label }}
+            {{ form.orario_primo_controllo(id='timepicker') }}
+        
+        
+            {{ form.data_primo_controllo.label(style="display:block;") }}
+            {{ form.data_primo_controllo(id='datepicker') }}
+            
+        
+            {{ form.row_id(value=row_id)}}
+            {{ form.patient_id(value=patient_id)}}
+            {{ form.patient_name(value=patient_name)}}
+            {{ form.pathology_id(value=pathology_id)}}
+            
+            
+        
+            {{ form.submit_chirurgico_form(style="display:block; margin-top:15px;") }}
+            
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+        </form> 
+        </div>
+</div>
+<script>
+
+    week_to_add = "{{ week_to_add['1'] }}";
+    console.log("Week_to_add",week_to_add);
+    DataIntervento = new Date();
+
+    //Rappresentano gli id delle zone selezionate
+    id_zone_1=["1","6","16","21"];
+    id_zone_2=["4","9","14","19","23"];
+    id_zone_5=["29"];
+    //Tutti gli indici dei rettangoli non nella zona 1
+    id_zone_not_one=["2","3","4","5","7","8","10","11","12","13","14","15","17","18","19","20","22","23","24","25","26","27","28","29"];
+
+
+    const currentSelection = {};
+    const colorPalette = document.getElementById("colorPalette");
+    const colorPalettePulegge = document.getElementById("colorPalettePulegge");
+
+    //Crazione legenda dinamicamente
+    const legend = document.getElementById("legend");
+    const legendPulegge = document.getElementById("legendPulegge");
+
+    // Get all child divs from the colorPalette
+    const colorItems = colorPalette.querySelectorAll("div");
+    const colorItemsPulegge = colorPalettePulegge.querySelectorAll("div");
+
+    // Create a unique map of colors and their data IDs
+    const colorMap = new Map();
+    const colorMapPulegge = new Map();
+
+    colorItems.forEach((item) => {
+        const color = item.getAttribute("data-color");
+        const dataId = item.getAttribute("data-grams");
+
+        if (color && dataId) {
+            // Add the color and data ID to the map
+            if (!colorMap.has(color)) {
+                colorMap.set(color, []);
+            }
+            colorMap.get(color).push(dataId);
+        }
+    });
+
+    colorItemsPulegge.forEach((item) => {
+        const color = item.getAttribute("data-color");
+        const dataId = item.getAttribute("data-grams");
+
+        if (color && dataId) {
+            // Add the color and data ID to the map
+            if (!colorMapPulegge.has(color)) {
+                colorMapPulegge.set(color, []);
+            }
+            colorMapPulegge.get(color).push(dataId);
+        }
+    });
+
+    // Generate the legend content
+    colorMap.forEach((dataIds, color) => {
+        // Create a legend item
+        const legendItem = document.createElement("div");
+        legendItem.style.display = "flex";
+        legendItem.style.alignItems = "center";
+        legendItem.style.marginBottom = "10px";
+
+        // Create the color box
+        const colorBox = document.createElement("div");
+        colorBox.style.width = "20px";
+        colorBox.style.height = "20px";
+        colorBox.style.background = color;
+        colorBox.style.border = "1px solid #000";
+        colorBox.style.marginRight = "10px";
+
+        // Create the text showing data IDs
+        const text = document.createElement("span");
+        text.textContent = `: ${dataIds.join(", ")}`;
+
+        // Append the color box and text to the legend item
+        legendItem.appendChild(colorBox);
+        legendItem.appendChild(text);
+
+        // Append the legend item to the legend container
+        legend.appendChild(legendItem);
+    });
+
+     // Generate the legend content
+     colorMapPulegge.forEach((dataIds, color) => {
+        // Create a legend item
+        const legendItem = document.createElement("div");
+        legendItem.style.display = "flex";
+        legendItem.style.alignItems = "center";
+        legendItem.style.marginBottom = "10px";
+
+        // Create the color box
+        const colorBox = document.createElement("div");
+        colorBox.style.width = "20px";
+        colorBox.style.height = "20px";
+        colorBox.style.background = color;
+        colorBox.style.border = "1px solid #000";
+        colorBox.style.marginRight = "10px";
+
+        // Create the text showing data IDs
+        const text = document.createElement("span");
+        text.textContent = `: ${dataIds.join(", ")}`;
+
+        // Append the color box and text to the legend item
+        legendItem.appendChild(colorBox);
+        legendItem.appendChild(text);
+
+        // Append the legend item to the legend container
+        legendPulegge.appendChild(legendItem);
+    });
+
+    const mapping_flessori = {
+        "1": "Zona_1_Mignolo",
+        "4": "Zona_2_Mignolo",
+        "6": "Zona_1_Anulare",    
+        "9": "Zona_2_Anulare",
+        "11": "Zona_1_Medio",
+        "14": "Zona_2_Medio",
+        "16": "Zona_1_Indice",
+        "19": "Zona_2_Indice",
+        "21": "Zona_1_Pollice",
+        "23": "Zona_2_Pollice",
+        "25": "Zona_3_Pollice",
+        "27": "Zona_3",
+        "28": "Zona_4",
+        "29": "Zona_5"
+    };
+
+    const mapping_pulegge = {
+        
+        "2": "a_4_Mignolo",
+        "3": "a_2_Mignolo",
+        "5": "a_1_Mignolo",
+        "7": "a_4_Anulare",
+        "8": "a_2_Anulare",
+        "10": "a_1_Anulare",
+        "12": "a_4_Medio",
+        "13": "a_2_Medio",
+        "15": "a_1_Medio",
+        "17": "a_4_Indice",
+        "18": "a_2_Indice",
+        "20": "a_1_Indice",
+        "22": "a_3_Pollice",
+        "24": "a_2_Pollice", 
+        "26": "a_3_Pollice",
+           
+    };
+
+    document.getElementById("interactiveImage").addEventListener("click", function(event) {
+        if (event.target.tagName === "rect") {
+            const rect = event.target;
+            const rectId = rect.getAttribute("data-id");
+            
+            var mapping={};
+            //check if rect is in mapping_flessori or mapping_pulegge
+            if (rectId in mapping_flessori) {
+               
+                mapping = mapping_flessori;
+                var mappingValue = mapping[rectId];
+                 // Position the palette near the clicked rectangle
+                const rectBounds = rect.getBoundingClientRect();
+                colorPalette.style.left = `${rectBounds.x + window.scrollX}px`;
+                colorPalette.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
+                colorPalette.style.display = "block";
+            
+                console.log("Mapping_Pulegge");
+
+
+                colorPalette.onclick = function (paletteEvent) {
+                    const color = paletteEvent.target.getAttribute("data-color");
+                    const code = paletteEvent.target.getAttribute("data-id");
+
+                    
+
+                    //Se l'utente seleziona non valore non salvo nessun dato nella mappa
+                    if (color === "rgba(200, 200, 200, 1)") {
+                            
+
+                        rect.setAttribute("fill", color);
+                        colorPalette.style.display = "none";
+                        // remove from currentSelection
+                        
+                        for (const [key, value] of Object.entries(currentSelection)) {
+                            if(id_zone_1.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("fpl_zona_1").style.display = "none";
+                                document.getElementById("zona_1").style.display = "none";
+                            }
+                            if(id_zone_2.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("fds_zona_2").style.display = "none";
+                            }
+                            
+                            if(id_zone_5.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_5").style.display = "none";
+                            }
+
+                            if(id_zone_not_one.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("altre_zone").style.display = "none";
+                            }
+
+                        }
+
+                        delete currentSelection[mappingValue];
+
+                        document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+                        console.log("REMOVE Current selection", currentSelection);
+
+                    }else{
+                        currentItem= {
+                            "id": rectId,
+                            "code": code,
+                        }
+
+                        rect.setAttribute("fill", color);
+                        colorPalette.style.display = "none";
+                        // Add the mapping
+                        currentSelection[mappingValue] = currentItem;
+                        console.log("ADD Current selection", currentSelection);
+                        document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+
+                        //AGGIUNGO I CAMPI DEL FORM DA COMPILARE
+                        for (const [key, value] of Object.entries(currentSelection)) {
+                            if(id_zone_1.includes(value.id)){
+                              document.getElementById("fpl_zona_1").style.display = "block";
+                              document.getElementById("zona_1").style.display = "block";
+                            }
+                            
+                            if(id_zone_2.includes(value.id)){
+                                console.log("Aggiungi");
+                                document.getElementById("fds_zona_2").style.display = "block";
+                            }
+
+                            if(id_zone_5.includes(value.id)){
+                                console.log("ZONE 5");
+                                document.getElementById("zona_5").style.display = "block";
+                            }
+                            
+                            console.log("ZONE ONE",value.id);
+                            console.log("ZONE NOT ONE",id_zone_not_one);
+                            if(id_zone_not_one.includes(value.id)){
+                                console.log("NOT ZONE 1");
+                                document.getElementById("altre_zone").style.display = "block";
+                            }
+
+                        }
+                    }
+
+                    
+                };
+
+
+
+            } else if (rectId in mapping_pulegge) {
+                
+                mapping = mapping_pulegge;
+
+                var mappingValue = mapping[rectId];
+                 // Position the palette near the clicked rectangle
+                const rectBounds = rect.getBoundingClientRect();
+                colorPalettePulegge.style.left = `${rectBounds.x + window.scrollX}px`;
+                colorPalettePulegge.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
+                colorPalettePulegge.style.display = "block";
+            
+                console.log("Mapping_Pulegge");
+
+
+                colorPalettePulegge.onclick = function (paletteEvent) {
+                    const color = paletteEvent.target.getAttribute("data-color");
+                    const code = paletteEvent.target.getAttribute("data-id");
+                    
+                    console.log("Color", color);
+                    //Se l'utente seleziona non valore non salvo nessun dato nella mappa
+                    if (color === "rgba(200, 200, 200, 1)") {
+                        
+
+                        rect.setAttribute("fill", color);
+                        colorPalettePulegge.style.display = "none";
+                        // remove from currentSelection
+                    
+                        delete currentSelection[mappingValue];
+                        document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+                        console.log("REMOVE Current selection", currentSelection);
+
+                    }else{
+                        currentItem= {
+                            "id": rectId,
+                            "code": code,
+                        }
+
+                    rect.setAttribute("fill", color);
+                    colorPalettePulegge.style.display = "none";
+                    // Add the mapping
+                    currentSelection[mappingValue] = currentItem;
+                    console.log("ADD Current selection", currentSelection);
+                    document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+                    }
+                    
+                };
+
+            } else {
+               
+                mapping = {};
+            }
+            
+        }
+    });
+
+
+    function  toggleTipoSutura(){
+
+        var tipo_sutura = document.getElementById("tipo_sutura_altre_zone").value;
+        console.log("Tipo Sutura", tipo_sutura);
+        if(tipo_sutura === "2_passaggi"){
+            document.getElementById("passaggio_2").style.display = "block";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "4_passaggi"){
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "block";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "6_passaggi"){
+            
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "block";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "altro"){
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "block";
+        }else{
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }
+
+    }
+
+    $("#tipo_sutura_altre_zone").change(function() {
+        toggleTipoSutura();
+    });
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
+{% endblock %}

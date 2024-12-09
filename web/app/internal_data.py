@@ -9,7 +9,8 @@ ResezioneFilieraChirurgicoForm,\
 ScafoideFratturaChirurgicoForm,\
 ScafoidePseudoArtrosiChirurgicoForm,\
 DupuytrenChirurgicoForm,\
-LesioneLigamentosaChirurgicoForm
+LesioneLigamentosaChirurgicoForm,\
+LesioneTendineaFlessoriChirurgicoForm
 
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     FrattureFalangeProssimaleEnum,\
@@ -18,6 +19,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     RizoartrosiEnum,\
     FratturaRadioDistaleEnum,\
     ScafoidePseudortrosiEnum,\
+    LesioneTendineaFlessoriEnum,\
     DupuytrenEnum,\
     LesioneLigamentosaEnum,\
     CONTROLS,\
@@ -142,7 +144,8 @@ class PathologyTimline:
         PATHOLOGY_LABEL.FRATTURA_RADIO_DISTALE.value: {"active":False},  
         PATHOLOGY_LABEL.FRATTURE_METACARPALI.value : {"active":False},  
         PATHOLOGY_LABEL.FRATTURE_FALANGE_PROSSIMALE.value : {"active":False},  
-        PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value : {"active":False},  
+        PATHOLOGY_LABEL.LESIONE_TENDINEA_FLESSORI.value : {"active":False},
+        PATHOLOGY_LABEL.LESIONE_TENDINEA_ESTENSORI.value : {"active":False},  
         PATHOLOGY_LABEL.RESEZIONE_FILIERA.value: {"active":False},  
         PATHOLOGY_LABEL.DUPUYTREN.value: {"active":False},  
         PATHOLOGY_LABEL.LESIONE_NERVOSA.value:{"active":False},  
@@ -974,50 +977,96 @@ class ResezioneFilieraTimeline(PathologyTimline):
 
         return tmp_ControlMap
 
-
-class LesioneTendineaTimeline(PathologyTimline):
+class LesioneTendineaEstensoriTimeline(PathologyTimline):
     
-    #Questi sono i dati per ogni controllo
-    timeline= [0,4,6,8,12,26,52,154,520,1040]
+    #Variabile definita per ogni controllo. Indica se il percorso
+    #post operatorio è unico o no
+    decorso_unico=True
+    #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
+    timeline= [0,3,6,12,26,52,154,520,1040]
 
-    first_control=[
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.EATON_LITTLER.value,
-        CONTROLS.PIPJ.value
-    ]
+    # Numero che corrisponde al numero di controlli implementati
+    # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
+    last_control_number_before_next=1
 
-    second_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value
-        ]
+    # se non ho differenze nel post operatorio la timeline è la stessa
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
+        print(cls.timeline)
+        return cls.timeline
+    
+    #quante settimane aspettare se il paziente non risponde alla mail
+    waiting_weeks= 1
 
-    third_control = [
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.DASH.value,
-        CONTROLS.PRWHE.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-        CONTROLS.PIPJ.value,
-    ]
+    # Settimane per il primo controllo. Serve per quando devo gestire il calendario
+    # per trattamenti che hanno un decorso post operatorio diverso. 
+    # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
+    # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
+    weeks_to_first_control={
+        "1":3
+    }
+    
+    #Ultimo Controllo
+    LAST_CONTROL=9
+
+
+    @classmethod
+    def get_pre(cls):
+        
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+
+        #deepCopy ctrl_map
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+        #Setto i valori per il primo controllo
+
+        return tmp_ControlMap,pre_controls_map
+
+class LesioneTendineaFlessoriTimeline(PathologyTimline):
+    
+    #Variabile definita per ogni controllo. Indica se il percorso
+    #post operatorio è unico o no
+    decorso_unico=True
+    #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
+    timeline= [0,3,6,12,26,52,154,520,1040]
+
+    # Numero che corrisponde al numero di controlli implementati
+    # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
+    last_control_number_before_next=1
+
+    # se non ho differenze nel post operatorio la timeline è la stessa
+    @classmethod
+    def getTimeline(cls,tipo_intervento=None):
+        print(cls.timeline)
+        return cls.timeline
+    
+    #quante settimane aspettare se il paziente non risponde alla mail
+    waiting_weeks= 1
+
+    # Settimane per il primo controllo. Serve per quando devo gestire il calendario
+    # per trattamenti che hanno un decorso post operatorio diverso. 
+    # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
+    # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
+    weeks_to_first_control={
+        "1":3
+    }
+    
+    #Ultimo Controllo
+    LAST_CONTROL=9
+
+
+    @classmethod
+    def get_pre(cls):
+        
+        pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+
+
+        return tmp_ControlMap,pre_controls_map
 
 class FrattureFalangeProssimaleTimeline(PathologyTimline):
     
@@ -1493,11 +1542,11 @@ class PATHOLOGY(Enum):
                                     FratturaFalangeProssimaleChirurgicoForm,
                                     FrattureFalangeProssimaleEnum,
                                     None)
-    FERITA_LESIONE_TENDINEA = (5,
-                                PATHOLOGY_LABEL.FERITA_LESIONE_TENDINEA.value,
-                                LesioneTendineaTimeline,
-                                None,
-                                None,
+    LESIONE_TENDINEA_FLESSORI = (5,
+                                PATHOLOGY_LABEL.LESIONE_TENDINEA_FLESSORI.value,
+                                LesioneTendineaFlessoriTimeline,
+                                LesioneTendineaFlessoriChirurgicoForm,
+                                LesioneTendineaFlessoriEnum,
                                 None)
     RESEZIONE_FILIERA= (6,
                          PATHOLOGY_LABEL.RESEZIONE_FILIERA.value,
@@ -1535,6 +1584,12 @@ class PATHOLOGY(Enum):
                            LesioneLigamentosaChirurgicoForm,
                            LesioneLigamentosaEnum,
                            PreLesioneLigamentosaForm)
+    LESIONE_TENDINEA_ESTENSORI = (12,
+                                PATHOLOGY_LABEL.LESIONE_TENDINEA_ESTENSORI.value,
+                                LesioneTendineaEstensoriTimeline,
+                                None,
+                                None,
+                                None)
         
 
 
@@ -1554,8 +1609,8 @@ class PATHOLOGY_TYPE(Enum):
     FRATTURE_METACARPALI_NON_CHIRURGICO = (8,PATHOLOGY.FRATTURE_METACARPALI,"Non Chirurgico")
     FRATTURE_FALANGE_PROSSIMALE_CHIRURGICO=(9,PATHOLOGY.FRATTURE_FALANGE_PROSSIMALE,"Chirurgico")
     FRATTURE_FALANGE_PROSSIMALE_NON_CHIRURGICO=(10,PATHOLOGY.FRATTURE_FALANGE_PROSSIMALE,"Non Chirurgico")
-    FERITA_LESIONE_TENDINEA_TENDINE_FLESSORE = (11,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Flessore")
-    FERITA_LESIONE_TENDINEA_TENDINE_ESTENSORE = (12,PATHOLOGY.FERITA_LESIONE_TENDINEA, "Tendine Estensore")
+    FERITA_TENDINEA_TENDINE_FLESSORE = (11,PATHOLOGY.LESIONE_TENDINEA_FLESSORI, "Tendine Flessore")
+    FERITA_TENDINEA_TENDINE_ESTENSORE = (12,PATHOLOGY.LESIONE_TENDINEA_ESTENSORI, "Tendine Estensore")
 
 
 

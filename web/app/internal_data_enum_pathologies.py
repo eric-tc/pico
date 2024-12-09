@@ -40,6 +40,15 @@ class FrattureFalangeProssimaleEnum(Enum):
     CHIRURGICO = ("1","chirurgico")
     NON_CHIRURGICO = ("2","non chirugico")
 
+class LesioneTendineaFlessoriEnum(Enum):
+    """
+    [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
+    [1]= Visualizzato nel form
+    """       
+    FLESSORI = ("1","Flessori")
+
+    
+
 class ResezioneFilieraEnum(Enum):
     """
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
@@ -128,7 +137,8 @@ class PATHOLOGY_LABEL(Enum):
     FRATTURA_RADIO_DISTALE= "frattura_radio_distale"
     FRATTURE_METACARPALI = "fratture_metacarpali"
     FRATTURE_FALANGE_PROSSIMALE = "fratture_falange_prossimale"
-    FERITA_LESIONE_TENDINEA = "ferita_lesione_tendinea"
+    LESIONE_TENDINEA_FLESSORI = "lesione_tendinea_flessori"
+    LESIONE_TENDINEA_ESTENSORI = "lesione_tendinea_estensori"
     RESEZIONE_FILIERA= "resezione_filiera"
     DUPUYTREN= "dupuytren"
     LESIONE_NERVOSA="lesione_nervosa"
