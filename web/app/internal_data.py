@@ -111,9 +111,12 @@ class PathologyTimline:
         CONTROLS.EDEMA.value: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.SENSIBILITA.value: {"active":False,
+        CONTROLS.SENSIBILITA_VOLARE.value: {"active":False,
                            "indices":[0]
                            },
+        CONTROLS.SENSIBILITA_DORSALE.value: {"active":False,
+                             "indices":[0]
+                            },
         CONTROLS.CICATRICE.value: {"active":False,
                            "indices":[0]
                            },
@@ -315,11 +318,18 @@ class PathologyTimline:
             edema_data= form.edema.data
         print(edema_data)
 
-        print("Sensibilita")
-        sensibilita_data= None
-        if controls_map["sensibilita"]["active"]:
-            sensibilita_data= form.sensibilita.data
-        print(sensibilita_data)
+        print("Sensibilita_volare")
+        sensibilita_volare_data= None
+        if controls_map["sensibilita_volare_data"]["active"]:
+            sensibilita_volare_data= form.sensibilita_volare_data.data
+        print(sensibilita_volare_data)
+
+
+        print("Sensibilita_dorsale")
+        sensibilita_dorsale_data= None
+        if controls_map["sensibilita_dorsale_data"]["active"]:
+            sensibilita_dorsale_data= form.sensibilita_dorsale_data.data
+        print(sensibilita_dorsale_data)
 
         cicatrice = {}
 
@@ -351,7 +361,7 @@ class PathologyTimline:
 
         }
 
-        return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,sensibilita_data,cicatrice,tutore_data,altro_data
+        return mpcj_data,pipj_data,dipj_data,ipj_data,trapezio_metacarpale,polso,vas_data,forza,dash_data,prwhe_data,eaton_littler_data,edema_data,sensibilita_volare_data,sensibilita_dorsale_data,cicatrice,tutore_data,altro_data
 
    
 
@@ -1466,7 +1476,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
     
         return tmp_ControlMap

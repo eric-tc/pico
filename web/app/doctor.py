@@ -220,7 +220,8 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         prwhe_data,\
         eaton_littler_data,\
         edema_data,\
-        sensibilita_data,\
+        sensibilita_volare_data,\
+        sensibilita_dorsale_data,\
         cicatrice,\
         tutore_data,\
         altro_data = pathology.value[2].process_parameters(controls_map=controls_map,
@@ -252,7 +253,8 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         prwhe=prwhe_data,
         eaton_littler=eaton_littler_data,
         edema=edema_data,
-        sensibilita=sensibilita_data,
+        sensibilita_volare=sensibilita_volare_data,
+        sensibilita_dorsale_volare=sensibilita_dorsale_data,
         cicatrice=cicatrice,
         tutore=tutore_data,
         altro=altro_data,
@@ -903,9 +905,12 @@ def test_controls():
                     CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
                                                "indices":[0]
                                                 },
-                    CONTROLS.SENSIBILITA.value: {"active":True,
+                    CONTROLS.SENSIBILITA_VOLARE.value: {"active":True,
                                                "indices":[0]
-                                                }       
+                                                },
+                    CONTROLS.SENSIBILITA_DORSALE.value: {"active":True,
+                    "indices":[0]
+                    }            
                    }
     
     form= TreatmentForm(controls_map=controls_map)
@@ -1068,11 +1073,18 @@ def test_controls():
 
 
 
-            print("Sensibilita")
-            sensibilita_data= None
-            if controls_map["sensibilita"]["active"]:
-                sensibilita_data= form.sensibilita.data
-            print(sensibilita_data)
+            print("Sensibilita volare")
+            sensibilita_volare_data= None
+            if controls_map["sensibilita_volare"]["active"]:
+                sensibilita_volare_data= form.sensibilita_volare.data
+            print(sensibilita_volare_data)
+
+
+            print("Sensibilita dorsale")
+            sensibilita_dorsale_data= None
+            if controls_map["sensibilita_dorsale"]["active"]:
+                sensibilita_dorsale_data= form.sensibilita_dorsale.data
+            print(sensibilita_dorsale_data)
 
 
             cicatrice = {}

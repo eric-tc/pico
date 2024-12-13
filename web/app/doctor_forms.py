@@ -243,7 +243,9 @@ class TreatmentForm(FlaskForm):
     eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
     
     #9
-    sensibilita = HiddenField('sensibilita', render_kw={'class': 'form-control'}, validators=None)
+    sensibilita_volare = HiddenField('sensibilita_volare', render_kw={'class': 'form-control'}, validators=None)
+    
+    sensibilita_dorsale = HiddenField('sensibilita_dorsale', render_kw={'class': 'form-control'}, validators=None)
     
     #10
     edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)

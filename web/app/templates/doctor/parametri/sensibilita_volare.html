@@ -1,9 +1,9 @@
 <div>
     
     <fieldset>
-        <legend>Sensibilita</legend>
-    {{ form.sensibilita }}
-    {% for error in form.sensibilita.errors %}
+        <legend>Sensibilita Volare</legend>
+    {{ form.sensibilita_volare }}
+    {% for error in form.sensibilita_volare.errors %}
         <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
     
@@ -24,7 +24,7 @@
             </div>
 
             <svg id="interactiveImage" width="500" height="500" viewBox="0 0 500 500">
-                <image href="{{ url_for('static', filename='sensibility.png') }}" width="500" height="500" />
+                <image href="{{ url_for('static', filename='sensibilita_volare.png') }}" width="500" height="500" />
                 <!-- Multiple rectangles with unique IDs -->
                 
                 <!-- mignolo -->
@@ -198,7 +198,7 @@
                         // Remove the mapping
                         delete currentSelection[mappingValue];
                     }
-                    document.getElementById("sensibilita").value = JSON.stringify(currentSelection);
+                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
                     console.log("Current selection", currentSelection);
                     
                 }else{
@@ -213,13 +213,13 @@
                     // Add the mapping
                     currentSelection[mappingValue] = currentItem;
                     console.log("Current selection", currentSelection);
-                    document.getElementById("sensibilita").value = JSON.stringify(currentSelection);
+                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
                 }
 
 
             };
             
-            document.getElementById("sensibilita").value = JSON.stringify(currentSelection);
+            document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
 
             // Check if the rectangle is already colored
             /*

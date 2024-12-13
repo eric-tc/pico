@@ -77,9 +77,15 @@
 
 {% endif %}
 
-{% if controls_map.sensibilita.active %}
+{% if controls_map.sensibilita_volare.active %}
 
-{% include 'doctor/parametri/sensibilita.html' %}
+{% include 'doctor/parametri/sensibilita_volare.html' %}
+
+{% endif %}
+
+{% if controls_map.sensibilita_dorsale.active %}
+
+{% include 'doctor/parametri/sensibilita_dorsale.html' %}
 
 {% endif %}
 
