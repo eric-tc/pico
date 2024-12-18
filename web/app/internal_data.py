@@ -170,8 +170,8 @@ class PathologyTimline:
         """
 
         mpcj_data = {}
-        if controls_map["mpcj"]["active"]:
-            for index in controls_map["mpcj"]["indices"]:
+        if controls_map[CONTROLS.MPCJ.value]["active"]:
+            for index in controls_map[CONTROLS.MPCJ.value]["indices"]:
                 # Dynamically retrieve the data for each subform
                 mpcj_data[int(index)] = {
                     'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
@@ -185,8 +185,8 @@ class PathologyTimline:
 
         
         dipj_data = {}
-        if controls_map["dipj"]["active"]:
-            for index in controls_map["dipj"]["indices"]:
+        if controls_map[CONTROLS.DIPJ.value]["active"]:
+            for index in controls_map[CONTROLS.DIPJ.value]["indices"]:
                 # Dynamically retrieve the data for each subform
                 dipj_data[int(index)] = {
                     'arom_estensione': form.dipj[int(index)].arom_estensione.data,
@@ -199,8 +199,8 @@ class PathologyTimline:
 
         
         pipj_data = {}
-        if controls_map["pipj"]["active"]:
-            for index in controls_map["pipj"]["indices"]:
+        if controls_map[CONTROLS.PIPJ.value]["active"]:
+            for index in controls_map[CONTROLS.PIPJ.value]["indices"]:
                 # Dynamically retrieve the data for each subform
                 pipj_data[int(index)] = {
                     'arom_estensione': form.pipj[int(index)].arom_estensione.data,
@@ -213,8 +213,8 @@ class PathologyTimline:
         print(pipj_data)
         
         ipj_data = {}
-        if controls_map["ipj"]["active"]:
-            for index in controls_map["ipj"]["indices"]:
+        if controls_map[CONTROLS.IPJ.value]["active"]:
+            for index in controls_map[CONTROLS.IPJ.value]["indices"]:
                 # Dynamically retrieve the data for each subform
                 ipj_data[int(index)] = {
                     'arom_estensione': form.ipj[int(index)].arom_estensione.data,
@@ -228,8 +228,8 @@ class PathologyTimline:
 
         trapezio_metacarpale = {}
 
-        if controls_map["trapezio_metacarpale"]["active"]:
-            for index in controls_map["trapezio_metacarpale"]["indices"]:
+        if controls_map[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]:
+            for index in controls_map[CONTROLS.TRAPEZIO_METACARPALE.value]["indices"]:
                 trapezio_metacarpale[int(index)] = {
                     'anteposizione': form.trapezio_metacarpale[int(index)].anteposizione.data,
                     'abduzione': form.trapezio_metacarpale[int(index)].abduzione.data,
@@ -241,8 +241,8 @@ class PathologyTimline:
 
 
         polso={}
-        if controls_map["polso"]["active"]:
-            for index in controls_map["polso"]["indices"]:
+        if controls_map[CONTROLS.POLSO.value]["active"]:
+            for index in controls_map[CONTROLS.POLSO.value]["indices"]:
                 polso[int(index)] = {
                     'arom_estensione': form.polso[int(index)].arom_estensione.data,
                     'arom_flessione': form.polso[int(index)].arom_flessione.data,
@@ -259,15 +259,15 @@ class PathologyTimline:
 
         print("VAS")
         vas_data= None
-        if controls_map["vas"]["active"]:
+        if controls_map[CONTROLS.VAS.value]["active"]:
             vas_data= form.vas.data
         print(vas_data)
 
         print("FORZA")
         forza={}
 
-        if controls_map["forza"]["active"]:
-            for index in controls_map["forza"]["indices"]:
+        if controls_map[CONTROLS.FORZA.value]["active"]:
+            for index in controls_map[CONTROLS.FORZA.value]["indices"]:
                 forza[int(index)] = {
                     'key_pinch': form.forza[int(index)].key_pinch.data,
                     'tip_to_pinch': form.forza[int(index)].tip_to_pinch.data,
@@ -287,7 +287,7 @@ class PathologyTimline:
 
         print("Dash")
         dash_data= None
-        if controls_map["dash"]["active"]:
+        if controls_map[CONTROLS.DASH.value]["active"]:
             dash_data = []
             for entry in form.dash.entries:  # Iterate over FieldList
                 dash_entry = {field.name: field.data for field in entry}
@@ -298,7 +298,7 @@ class PathologyTimline:
         
         print("Prwhe")
         prwhe_data =[]
-        if controls_map["prwhe"]["active"]:
+        if controls_map[CONTROLS.PRWHE.value]["active"]:
             for entry in form.prwhe.entries:  # Iterate over FieldList
                 prwhe_entry = {field.name: field.data for field in entry}
                 prwhe_data.append(prwhe_entry)
@@ -307,34 +307,34 @@ class PathologyTimline:
         
         print("eaton littler")
         eaton_littler_data= None
-        if controls_map["eaton_littler"]["active"]:
+        if controls_map[CONTROLS.EATON_LITTLER.value]["active"]:
             eaton_littler_data= form.eaton_littler.data
         print(eaton_littler_data)
 
 
         print("edema")
         edema_data= None
-        if controls_map["edema"]["active"]:
+        if controls_map[CONTROLS.EDEMA.value]["active"]:
             edema_data= form.edema.data
         print(edema_data)
 
         print("Sensibilita_volare")
         sensibilita_volare_data= None
-        if controls_map["sensibilita_volare_data"]["active"]:
-            sensibilita_volare_data= form.sensibilita_volare_data.data
+        if controls_map[CONTROLS.SENSIBILITA_VOLARE.value]["active"]:
+            sensibilita_volare_data= form.sensibilita_volare.data
         print(sensibilita_volare_data)
 
 
         print("Sensibilita_dorsale")
         sensibilita_dorsale_data= None
-        if controls_map["sensibilita_dorsale_data"]["active"]:
-            sensibilita_dorsale_data= form.sensibilita_dorsale_data.data
+        if controls_map[CONTROLS.SENSIBILITA_DORSALE.value]["active"]:
+            sensibilita_dorsale_data= form.sensibilita_dorsale.data
         print(sensibilita_dorsale_data)
 
         cicatrice = {}
 
-        if controls_map["cicatrice"]["active"]:
-            for index in controls_map["cicatrice"]["indices"]:
+        if controls_map[CONTROLS.CICATRICE.value]["active"]:
+            for index in controls_map[CONTROLS.CICATRICE.value]["indices"]:
                 cicatrice[int(index)] = {
                     'aderente': form.cicatrice[int(index)].aderente.data,
                     'distasi_ferita': form.cicatrice[int(index)].distasi_ferita.data,
@@ -347,13 +347,13 @@ class PathologyTimline:
 
         print("tutore")
         tutore_data= None
-        if controls_map["tutore"]["active"]:
+        if controls_map[CONTROLS.TUTORE.value]["active"]:
             tutore_data= form.tutore.data
         print(tutore_data)
 
         print("altro")
         altro_data= {}
-        if controls_map["altro"]["active"]:
+        if controls_map[CONTROLS.ALTRO.value]["active"]:
             for index in controls_map["altro"]["indices"]:
                 altro_data[int(index)] = {
                     'complicanze': form.altro[int(index)].complicanze.data,

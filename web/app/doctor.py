@@ -254,7 +254,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         eaton_littler=eaton_littler_data,
         edema=edema_data,
         sensibilita_volare=sensibilita_volare_data,
-        sensibilita_dorsale_volare=sensibilita_dorsale_data,
+        sensibilita_dorsale=sensibilita_dorsale_data,
         cicatrice=cicatrice,
         tutore=tutore_data,
         altro=altro_data,

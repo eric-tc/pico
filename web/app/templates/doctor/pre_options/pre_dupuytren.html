@@ -1,8 +1,7 @@
 
 
 
-    {{ pre_controls_form.numero_interventi.label }}
-    {{ pre_controls_form.numero_interventi}}
+
 
 
     {{ pre_controls_form.hidden_hand_selection}}
@@ -118,69 +117,44 @@
     </svg>
     <input type="number" style="display: none;" id="input-box">
 </div>
+
+{{ pre_controls_form.numero_interventi.label }}
+{{ pre_controls_form.numero_interventi}}
+
 <script>
 
     const currentSelection = {};
     // Define a default color to toggle on
-    const colors = {
-        "1": "rgba(255, 0, 0, 0.5)",  // Red
-        "2": "rgba(0, 255, 0, 0.5)",  // Green
-        "3": "rgba(0, 0, 255, 0.5)",   // Blue
-        "4": "rgba(255, 0, 0, 0.5)",  // Red
-        "5": "rgba(0, 255, 0, 0.5)",  // Green
-        "6": "rgba(0, 0, 255, 0.5)",   // Blue
-        "7": "rgba(255, 0, 0, 0.5)",  // Red
-        "8": "rgba(0, 255, 0, 0.5)",  // Green
-        "9": "rgba(0, 0, 255, 0.5)",   // Blue
-        "10": "rgba(255, 0, 0, 0.5)",  // Red
-        "11": "rgba(0, 255, 0, 0.5)",  // Green
-        "12": "rgba(0, 0, 255, 0.5)",   // Blue
-        "13": "rgba(255, 0, 0, 0.5)",  // Red
-        "14": "rgba(0, 255, 0, 0.5)",  // Green
-        "15": "rgba(0, 0, 255, 0.5)",   // Blue
-        "16": "rgba(255, 0, 0, 0.5)",  // Red
-        "17": "rgba(0, 255, 0, 0.5)",  // Green
-        "18": "rgba(0, 0, 255, 0.5)",   // Blue
-        "19": "rgba(255, 0, 0, 0.5)",  // Red
-        "20": "rgba(0, 255, 0, 0.5)",   //Green
-        "21": "rgba(0, 0, 255, 0.5)",   // Blue   
-        "22": "rgba(255, 0, 0, 0.5)",
-        "23": "rgba(0, 255, 0, 0.5)",
-        "24": "rgba(0, 0, 255, 0.5)",
-        "25": "rgba(0, 255, 0, 0.5)",
-        "26": "rgba(255, 0, 0, 0.5)",
-        "27": "rgba(0, 255, 0, 0.5)", 
-        "28": "rgba(255, 0,0, 0.5)"   // Blue
-    };
+   
 
     const mapping = {
         "1": "R_DIPJ_Mignolo",
-        "2": "R_PIPJ_Mignolo",
-        "3": "R_MCPJ_Mignolo",
-        "4": "U_DIPJ_Mignolo",
-        "5": "U_PIPJ_Mignolo",
+        "3": "R_PIPJ_Mignolo",
+        "5": "R_MCPJ_Mignolo",
+        "2": "U_DIPJ_Mignolo",
+        "4": "U_PIPJ_Mignolo",
         "6": "U_MCPJ_Mignolo",
         "7": "R_DIPJ_Anulare",
-        "8": "R_PIPJ_Anulare",
-        "9": "R_MCPJ_Anulare",
-        "10": "U_DIPJ_Anulare",
-        "11": "U_PIPJ_Anulare",
+        "9": "R_PIPJ_Anulare",
+        "11": "R_MCPJ_Anulare",
+        "8": "U_DIPJ_Anulare",
+        "10": "U_PIPJ_Anulare",
         "12": "U_MCPJ_Anulare",
         "13": "R_DIPJ_Medio",
-        "14": "R_PIPJ_Medio",
-        "15": "R_MCPJ_Medio",
-        "16": "U_DIPJ_Medio",
-        "17": "U_PIPJ_Medio",
+        "15": "R_PIPJ_Medio",
+        "17": "R_MCPJ_Medio",
+        "14": "U_DIPJ_Medio",
+        "16": "U_PIPJ_Medio",
         "18": "U_MCPJ_Medio",
         "19": "R_DIPJ_Indice",
-        "20": "R_PIPJ_Indice",
-        "21": "R_MCPJ_Indice",
-        "22": "U_DIPJ_Indice",
-        "23": "U_PIPJ_Indice",
+        "21": "R_PIPJ_Indice",
+        "23": "R_MCPJ_Indice",
+        "20": "U_DIPJ_Indice",
+        "22": "U_PIPJ_Indice",
         "24": "U_MCPJ_Indice",
         "25": "R_IPJ_Pollice",
-        "26": "R_MCPJ_Pollice",
-        "27": "U_IPJ_Pollice",
+        "27": "R_MCPJ_Pollice",
+        "26": "U_IPJ_Pollice",
         "28": "U_IPJ_Pollice"
     };
 
@@ -197,13 +171,7 @@
             const rectBounds = this.getBoundingClientRect();
             const containerBounds = document.getElementById('interactiveImage').getBoundingClientRect();
 
-            /*
-            inputBox.style.left = `${rectBounds.left - containerBounds.left}px`;
-            inputBox.style.top = `${rectBounds.top - containerBounds.top}px`;
-            inputBox.style.width = `${rectBounds.width}px`;
-            inputBox.style.height = `${rectBounds.height}px`;
-            
-            */
+           
             
             inputBox.style.left = `10px`;
             inputBox.style.top = `10px`;
@@ -224,39 +192,14 @@
 
             inputBox.onchange = () => {
                 console.log("inputBox value", "changed");
-                currentSelection[mappingValue] = inputBox.value;
-                textElement.textContent = inputBox.value;
+                currentSelection[mappingValue] = inputBox.value*-1;
+                textElement.textContent = inputBox.value*-1;
             };
 
-            
-
-            // Get the mapping
-            /*
-            const mappingValue = mapping[rectId];
-            
-           if (mappingValue in currentSelection) {
-                // Remove the mapping
-                delete currentSelection[mappingValue];
-            } else {
-                // Add the mapping
-                currentSelection[mappingValue] = rectId;
-            }
-            
             document.getElementById("hidden_hand_selection").value = JSON.stringify(currentSelection);
+            
             console.log("Current selection", currentSelection);
 
-            // Check if the rectangle is already colored
-            if (rect.getAttribute("fill") === "transparent") {
-                // Add color
-                rect.setAttribute("fill", colors[rectId]);
-              
-            } else {
-                // Remove color (make it transparent again)
-                rect.setAttribute("fill", "transparent");
-               
-            }
-
-            */
         }
     });
 
