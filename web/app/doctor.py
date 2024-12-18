@@ -905,7 +905,7 @@ def test_controls():
                     CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
                                                "indices":[0]
                                                 },
-                    CONTROLS.SENSIBILITA_VOLARE.value: {"active":True,
+                    CONTROLS.SENSIBILITA_VOLARE.value: {"active":False,
                                                "indices":[0]
                                                 },
                     CONTROLS.SENSIBILITA_DORSALE.value: {"active":True,

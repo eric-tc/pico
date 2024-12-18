@@ -58,7 +58,7 @@ class EMAIL_STATUS(Enum):
 class EVENT_DAYS(Enum):
 
     DAYS_BEFORE = 5
-    DAYS_AFTER = 80
+    DAYS_AFTER = 5
 
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
@@ -868,7 +868,8 @@ class DupuytrenTimeline(PathologyTimline):
         tipo_intervento=str(tipo_intervento)
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         pip_j_indices=[]
-        pip_j_indices.append(int(metacarpo_rotto))
+        #TODO al momento prendo tutti i metacarpi non seleziono solo quelli compilati
+        #pip_j_indices.append(int(metacarpo_rotto))
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
