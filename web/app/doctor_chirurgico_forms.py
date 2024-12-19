@@ -12,7 +12,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
         DupuytrenEnum,\
-        LesioneLigamentosaEnum
+        LesioneLigamentosaEnum,\
+        OPTION_NULL
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -77,6 +78,7 @@ class FratturaRadioDistaleChirurgicoForm(ChirurgicoForm):
     classificazione_radiografica_a = SelectField(
         'Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'A'),
             ('2', 'B'),
             ('3', 'C'), 
@@ -88,6 +90,7 @@ class FratturaRadioDistaleChirurgicoForm(ChirurgicoForm):
     classificazione_radiografica_numero = SelectField(
         'Classificazione Radiografica Numero',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', '1'),
             ('2', '2'),
             ('3', '3'), 
@@ -105,6 +108,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     rottura_metacarpo = SelectField(
         'Seleziona Metacarpo rotto',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'I'),
             ('2', 'II'),
             ('3', 'III'),
@@ -128,6 +132,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     tipologia = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Gesso Chiuso'),
             ('2', 'Valva Gessata'),
             ('3', 'Tutore in Termoplastica'), 
@@ -139,6 +144,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     polso_incluso = SelectField(
         'Polso Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -149,6 +155,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     mcpj_incluso = SelectField(
         'MCPj Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -159,6 +166,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     mcpj_estese_incluso = SelectField(
         'MCPj Estese Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Flesse'),
             ('2', 'Estese'), 
         ],
@@ -169,6 +177,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     pipj_incluso = SelectField(
         'PIPj Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -179,6 +188,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     pipj_estese_incluso = SelectField(
         'PIPj Estese Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Flesse'),
             ('2', 'Estese'), 
         ],
@@ -191,6 +201,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     fili_kirschner = SelectField(
         'Fili di Kirschner',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'endomidoallre'),
             ('2', 'anterogradi'),
             ('3', 'endomidollare retrogradi'),
@@ -203,6 +214,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     viti = SelectField(
         'Viti',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'endomidoallre'),
             ('2', 'lag'),
         ],
@@ -213,6 +225,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     classificazione_radiografica = SelectField(
         'classificazione radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Prossimale'),
             ('2', 'Diafisarisa'),
             ('3', 'Sottocapitata'),
@@ -225,6 +238,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     diafisaria = SelectField(
         'classificazione radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Trasversa'),
             ('2', 'Obliqua'), 
         ],
@@ -247,6 +261,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     rottura_falange = SelectField(
         'Seleziona Falange rotta',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'I'),
             ('2', 'II'),
             ('3', 'III'),
@@ -263,6 +278,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     tipologia = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Gesso Chiuso'),
             ('2', 'Valva Gessata'),
             ('3', 'Tutore in Termoplastica'), 
@@ -274,6 +290,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     polso_incluso = SelectField(
         'Polso Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -284,6 +301,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     mcpj_incluso = SelectField(
         'MCPj Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -294,6 +312,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     mcpj_estese_incluso = SelectField(
         'MCPj Estese Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Flesse'),
             ('2', 'Estese'), 
         ],
@@ -304,6 +323,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     pipj_incluso = SelectField(
         'PIPj Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
             ('2', 'Si'), 
         ],
@@ -314,6 +334,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     pipj_estese_incluso = SelectField(
         'PIPj Estese Incluso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Flesse'),
             ('2', 'Estese'), 
         ],
@@ -326,6 +347,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     fili_kirschner = SelectField(
         'Fili di Kirschner',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'endomidoallre'),
             ('2', 'anterogradi'),
             ('3', 'endomidollare retrogradi'),
@@ -338,6 +360,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     viti = SelectField(
         'Viti',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'endomidoallre'),
             ('2', 'lag'),
         ],
@@ -348,6 +371,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     classificazione_radiografica = SelectField(
         'classificazione radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Prossimale Articolare'),
             ('2', 'Diafisara'),
             ('3', 'Distale Articolare'), 
@@ -359,6 +383,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     prossimale = SelectField(
         'Opzioni Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Frammento Singolo'),
             ('2', 'Multiframmentaria'), 
         ],
@@ -369,6 +394,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     diafisaria = SelectField(
         'Opzioni Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Trasversa'),
             ('2', 'Obliqua'), 
             ('3', 'Multiframmentaria'), 
@@ -380,6 +406,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     distale = SelectField(
         'Opzioni Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Weiss 1'),
             ('2', 'Weiss 2'), 
             ('3', 'Weiss 3'),
@@ -407,6 +434,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tipologia = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('fds', 'FDS'),
             ('fdp', 'FDP'),
             ('fds_fdp', 'FDS e FDP'),
@@ -424,6 +452,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     fds_2 = SelectField(
         'Fds Opzioni',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('completo', 'completo'),
             ('bandella_radiale', 'bandella radiale'),
             ('bandella_ulnare', 'Bandella ulnare'),
@@ -438,6 +467,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     fpl_1_leddy_packer = SelectField(
         'Classificazione Leddy Packer',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('leddy_1', '1'),
             ('leddy_2', '2'),
             ('leddy_3', '3'),
@@ -468,12 +498,13 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tendini_5=SelectMultipleField(
         'Tendini lesionati zona 5',
         choices=[
-          ('fcr', 'FDS'),
-        ('pl', 'FDP'),
-        ('fcu', 'FDS e FDP'),
-        ('fpl', 'FPL'),
-        ('fds_II_III_IV_V', 'FDS_II_III_IV_V'),
-        ('fdp_II_III_IV_V', 'FDP_II_III_IV_V'), 
+            ('', OPTION_NULL.NULL.value),
+            ('fcr', 'FDS'),
+            ('pl', 'FDP'),
+            ('fcu', 'FDS e FDP'),
+            ('fpl', 'FPL'),
+            ('fds_II_III_IV_V', 'FDS_II_III_IV_V'),
+            ('fdp_II_III_IV_V', 'FDP_II_III_IV_V'), 
         ],
         widget=widgets.ListWidget(prefix_label=False),  # List layout for checkboxes
         option_widget=widgets.CheckboxInput(),  # Render as checkboxes
@@ -484,6 +515,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tipo_sutura_1 = SelectField(
         'Tipo Sutura',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('singolo_pull_out', 'Singolo pull out'),
             ('doppio_pull_out', 'Doppio pull out'),
             ('sutura_termino_terminale', 'Sutura termino terminale'),
@@ -496,6 +528,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tipo_filo_1 = SelectField(
         'Grandezza Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('0', '0'),
             ('1_0', '1.0'),
             ('2_0', '2.0'),
@@ -511,6 +544,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     materiale_filo_1 = SelectField(
         'Materiale Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('nylon', 'Nylon'),
             ('prolene', 'Prolene'),
             ('vicryl', 'Vicryl'),
@@ -526,6 +560,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tipo_sutura = SelectField(
         'Materiale Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('2_passaggi', '2 passaggi'),
             ('4_passaggi', '4 passaggi'),
             ('6_passaggi', '6 passaggi'),
@@ -538,6 +573,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     passaggio_2 = SelectField(
         'Tipologia Passaggio 2',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('kessler_modificata', 'Kessler Modificata'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -547,6 +583,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     passaggio_4 = SelectField(
         'Tipologia Passaggio 4',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
             ('adelaide', 'Adelaide'),
         ],
@@ -557,6 +594,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     passaggio_6 = SelectField(
         'Tipologia Passaggio 6',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
             ('m_tang', 'M-Tang'),
         ],
@@ -567,6 +605,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     altro = SelectField(
         'Altro',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('punti_staccati', 'Punti Staccati'),
             ('punti_u', 'Punti a U'),
         ],
@@ -577,6 +616,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     tipo_filo_zona_generica = SelectField(
         'Grandezza Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('0', '0'),
             ('1_0', '1.0'),
             ('2_0', '2.0'),
@@ -592,6 +632,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     materiale_filo_zona_generica = SelectField(
         'Materiale Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('nylon', 'Nylon'),
             ('prolene', 'Prolene'),
             ('vicryl', 'Vicryl'),
@@ -639,6 +680,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_4_5_6_tipologia = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('edc', 'EDC'),
            
         ],
@@ -649,6 +691,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_4_5_6_secondo_tipologia=SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('edc', 'EDC'),
             ('eip', 'EIP'),
            
@@ -660,6 +703,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_4_5_6_quinto_tipologia=SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('edc', 'EDC'),
             ('edm', 'EDM'),
            
@@ -672,6 +716,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_1_2_pollice = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('epl', 'EPL'),
            
         ],
@@ -684,6 +729,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_3_4_pollice = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('epl', 'EPL'),
             ('epb', 'EPB'),
            
@@ -697,6 +743,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     zona_7_8_9 = SelectField(
         'Selezionare i tendini in zona 7 8 9',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('apl', 'APL'),
             ('epb', 'EPB'),
             ('epl', 'EPL'),
@@ -716,6 +763,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     raggio_zona_1 = SelectField(
         'Selezionare Raggio',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('I', 'I'),
             ('II', 'II'),
             ('III', 'III'),
@@ -729,6 +777,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     doyle = SelectField(
         'Classificazione Doyle',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', '1'),
             ('2', '2'),
             ('3', '3'),
@@ -743,6 +792,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     swan_neck = SelectField(
         'Presente Swan neck',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('si', 'Si'),
             ('no', 'No'),
            
@@ -754,6 +804,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     trattamento_zona_1 = SelectField(
         'Trattamento',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('splint', 'Splint'),
             ('sintesi', 'Riduzione e Sintesi'),
            
@@ -765,6 +816,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     split = SelectField(
         'Split',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('6_settimane', '6 settimane'),
             ('8_settimane', '8 settimane'),
            
@@ -776,6 +828,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     sintesi = SelectField(
         'Riduzione e Sintesi',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('fili_k_ishiguro', 'fili k ishiguro'),
             ('viti', 'viti'),
             ('ancoretta', 'ancoretta'),
@@ -790,6 +843,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     complicanze = SelectField(
         'Complicanze',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('mobilizzazione_mezzi_sintesi', 'Mobilizzazione mezzi sintesi'),
             ('infezione', 'Infezione'),
             ('perdita_riduzione', 'perdita riduzione'),
@@ -807,6 +861,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     tipo_sutura = SelectField(
         'Materiale Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('2_passaggi', '2 passaggi'),
             ('4_passaggi', '4 passaggi'),
             ('6_passaggi', '6 passaggi'),
@@ -819,6 +874,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     passaggio_2 = SelectField(
         'Tipologia Passaggio 2',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('kessler_modificata', 'Kessler Modificata'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -828,6 +884,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     passaggio_4 = SelectField(
         'Tipologia Passaggio 4',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
             ('adelaide', 'Adelaide'),
         ],
@@ -838,6 +895,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     passaggio_6 = SelectField(
         'Tipologia Passaggio 6',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
             ('m_tang', 'M-Tang'),
         ],
@@ -848,6 +906,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     altro = SelectField(
         'Altro',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('punti_staccati', 'Punti Staccati'),
             ('punti_u', 'Punti a U'),
         ],
@@ -858,6 +917,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     tipo_filo_zona_generica = SelectField(
         'Grandezza Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('0', '0'),
             ('1_0', '1.0'),
             ('2_0', '2.0'),
@@ -873,6 +933,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
     materiale_filo_zona_generica = SelectField(
         'Materiale Filo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('nylon', 'Nylon'),
             ('prolene', 'Prolene'),
             ('vicryl', 'Vicryl'),
@@ -901,6 +962,7 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
     accesso = SelectField(
         'Accesso',
         choices=[
+            ('', OPTION_NULL.NULL.value),   
             ('1', 'volare'),
             ('2', 'dorsale'),
         ],
@@ -912,6 +974,7 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
     tipologia = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'longitudinale'),
             ('2', 'trasversale'),
         ],
@@ -936,6 +999,7 @@ class DupuytrenChirurgicoForm(ChirurgicoForm):
     complicanze = SelectField(
         'Complicanze',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Lesione Tendinea'),
             ('2', 'Lesione Nervosa'),
             ('3', 'Altro'),
@@ -965,6 +1029,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     area = SelectField(
         'Accesso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('terzo_prossimale', 'volare'),
             ('terzo_medio', 'terzo_medio'),
             ('terzo_distale', 'terzo_distale'),
@@ -978,6 +1043,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     conservativo = SelectField(
         'Conservativo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('gesso_chiuso_pollice_incluso', 'gesso chiuso pollice incluso'),
             ('gesso_chiuso_pollice_escluso', 'gesso chiuso pollice escluso'),
             ('tutore_termoplastica_pollice_incluso', 'tutore termoplastica pollice incluso'),
@@ -991,6 +1057,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     chirurgico = SelectField(
         'Conservativo',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('vite_percutanea_anterograda', 'vite percutanea anterograda'),
             ('vite_percutanea_retrograda', 'vite percutanea retrograda'),
             ('vite_open_anterograda', 'vite open anterograda'),
@@ -1018,6 +1085,7 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     open = SelectField(
         'Accesso',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('accesso_volare', 'accesso_volare'),
             ('accesso_dorsale', 'accesso dorsale'),
             ('accesso_volare_accesso_dorsale', 'entrambi'),
@@ -1030,6 +1098,7 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     innesto = SelectField(
         'Innesto',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('innesto_cresta_iliaca', 'innesto cresta iliaca'),
             ('innesto_da_radio', 'innesto da radio'),
             ('innesto_sintetico', 'innesto sintetico'),
@@ -1043,6 +1112,7 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     tipo_sintesi = SelectField(
         'Sintesi',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('fili_kirschner', 'fili kirschner'),
             ('vite_retrograda', 'vite retrograda'),
             ('vite_anterograda', 'vite anterograda'),
@@ -1076,6 +1146,7 @@ class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
     conservativo = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Valva Gessata'),
             ('2', 'Tutore Su misura'),
             ('3', 'Sindattalia'), 
@@ -1089,6 +1160,7 @@ class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
     chirurgico = SelectField(
         'Tipologia',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Reinserzione con ancoretta'),
             ('2', 'Pull out'),
             ('3', 'Sutura'),

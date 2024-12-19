@@ -151,3 +151,6 @@ class PATHOLOGY_LABEL(Enum):
     SCAFOIDE_FRATTURA= "scafoide_frattura"
     SCAFOIDE_PSEUDOARTROSI= "scafoide_pseudoartrosi"
     LESIONE_LIGAMENTOSA= "lesione_ligamentosa"
+
+class OPTION_NULL(Enum):
+    NULL = "Seleziona un'opzione"

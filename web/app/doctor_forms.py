@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import DataRequired, Length,NumberRange
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField
-from .internal_data_enum_pathologies import CONTROLS
+from .internal_data_enum_pathologies import CONTROLS,OPTION_NULL
 
 
 
@@ -446,6 +446,7 @@ class PreResezioneFileraForm(FlaskForm):
     surgery = SelectField(
         'Seleziona Intervento',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'SNAC'),
             ('2', 'SLAC'),
             ('3', 'SCAC'),
@@ -460,6 +461,7 @@ class PreResezioneFileraForm(FlaskForm):
     classificazione_watson = SelectField(
         'classificazione radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', '1'),
             ('2', '2'),
             ('3', '3'),
@@ -473,6 +475,7 @@ class PreResezioneFileraForm(FlaskForm):
     classificazione_lichman = SelectField(
         'Opzioni Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', '0'),
             ('2', '1'),
             ('3', '2'),
@@ -488,6 +491,7 @@ class PreResezioneFileraForm(FlaskForm):
     lussazione_lunare = SelectField(
         'Opzioni Classificazione Radiografica',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('1', 'Volare'),
             ('2', 'Dorsale'),
             ('3', 'Altro'),
@@ -522,6 +526,7 @@ class PostScafoideForm(FlaskForm):
     guarigione = SelectField(
         'Seleziona Intervento',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('Si', 'Si'),
             ('No', 'No'),
             
@@ -535,6 +540,7 @@ class PostScafoideForm(FlaskForm):
     esame = SelectField(
         'Seleziona Intervento',
         choices=[
+            ('', OPTION_NULL.NULL.value),
             ('radiografia', 'radiografia'),
             ('tomografia_computerizzata', 'tomografia_computerizzata'),
             ('risonanza_magnetica', 'risonanza_magnetica'),
