@@ -8,4 +8,508 @@
 
 </div>
 
+
+<div>
+    
+    <div class="row">
+        <!-- SVG on the left -->
+        <div class="col-md-6">
+
+            <div id="colorPalette" style="display: none; position: absolute; z-index: 1000;">
+                <div style="width: 20px; height: 20px; background: rgba(139, 0, 0, 1);" data-color="rgba(139, 0, 0, 1)" data-id="Lesioni" data-grams="Lesioni"></div>
+                <div style="width: 20px; height: 20px; background: rgba(200, 200, 200, 1);" data-color="rgba(200, 200, 200, 1)" data-id="No Valore" data-grams="No Valore"></div>
+            </div>
+
+           
+
+            <svg id="interactiveImage" width="512" height="512" viewBox="0 0 512 512">
+                <image href="{{ url_for('static', filename='tendini_estensori.jpg') }}" width="512" height="512" />
+                <!-- Multiple rectangles with unique IDs -->
+                
+                <!-- mignolo -->
+                <rect id="rect1" x="13" y="98" width="19" height="13" fill="transparent" data-id="1" />
+                <rect id="rect2" x="28" y="126" width="19" height="13" fill="transparent" data-id="2" />
+                <rect id="rect3" x="50" y="162" width="19" height="13" fill="transparent" data-id="3" />
+                <rect id="rect4" x="73" y="198" width="19" height="13" fill="transparent" data-id="4" />
+                
+                <!-- Anulare -->
+                <rect id="rect5" x="162" y="14" width="19" height="13" fill="transparent" data-id="5" />
+                <rect id="rect6" x="158" y="57" width="19" height="13" fill="transparent" data-id="6" />
+                <rect id="rect7" x="154" y="108" width="19" height="13" fill="transparent" data-id="7" />
+                <rect id="rect8" x="154" y="168" width="19" height="13" fill="transparent" data-id="8" />
+                
+                <!-- Medio -->
+                <rect id="rect9" x="164" y="208" width="19" height="13" fill="transparent" data-id="9" />
+                <rect id="rect10" x="167" y="235" width="19" height="13" fill="transparent" data-id="10" />
+                <rect id="rect11" x="293" y="47" width="19" height="13" fill="transparent" data-id="11" />
+                <rect id="rect12" x="262" y="114" width="19" height="13" fill="transparent" data-id="12" />
+
+                <!-- Indice -->
+                <rect id="rect13" x="314" y="26" width="19" height="13" fill="transparent" data-id="13" />
+                <rect id="rect14" x="287" y="68" width="19" height="13" fill="transparent" data-id="14" />
+                <rect id="rect15" x="264" y="117" width="19" height="13" fill="transparent" data-id="15" />
+                <rect id="rect16" x="235" y="174" width="19" height="13" fill="transparent" data-id="16" />
+                
+                <!-- Pollice -->
+                <rect id="rect17" x="468" y="351" width="19" height="13" fill="transparent" data-id="17" />
+                <rect id="rect18" x="377" y="376" width="19" height="13" fill="transparent" data-id="18" />
+                <rect id="rect19" x="307" y="380" width="19" height="13" fill="transparent" data-id="19" />
+                <rect id="rect20" x="251" y="396" width="19" height="13" fill="transparent" data-id="20" />
+                
+                <!-- zona 5 6 7 8 -->
+                <rect id="rect21" x="109" y="213" width="19" height="13" fill="transparent" data-id="21" />
+                <rect id="rect22" x="156" y="323" width="19" height="13" fill="transparent" data-id="22" />
+                <rect id="rect23" x="153" y="432" width="19" height="13" fill="transparent" data-id="23" />
+                <rect id="rect24" x="127" y="479" width="19" height="13" fill="transparent" data-id="24" />
+            
+            </svg>
+
+        </div>
+
+       
+    </div>
+    
+
+    <div class="row">
+        <form  method="POST">
+            {{ form.csrf_token }}
+        
+           
+            {{ form.data_intervento.label(style="display:block;") }}
+            {{ form.data_intervento(id='generic-datepicker') }}
+        
+            {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
+            {{ form.treatment_options(id="tipologia_trattamento") }}
+            
+            {{ form.map_selected(id="map_selected") }}
+
+            <div id="zona_2_3" style="display:none;">
+                {{ form.struttura_lesionata.label(style="display:block;margin-top:15px;") }}
+                {{ form.struttura_lesionata }}
+            </div>
+
+            <div id="zona_4_5_6" style="display:none;">
+                {{ form.zona_4_5_6_tipologia.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_4_5_6_tipologia }}
+            </div>
+
+            <div id="zona_4_5_6_secondo" style="display:none;">
+                {{ form.zona_4_5_6_secondo_tipologia.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_4_5_6_secondo_tipologia }}
+            </div>
+
+            <div id="zona_4_5_6_quinto" style="display:none;">
+                {{ form.zona_4_5_6_quinto_tipologia.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_4_5_6_quinto_tipologia }}
+            </div>
+
+
+            <div id="zona_1_2_pollice" style="display:none;">
+                {{ form.zona_1_2_pollice.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_1_2_pollice }}
+            </div>
+
+            <div id="zona_3_4_pollice" style="display:none;">
+                {{ form.zona_3_4_pollice.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_3_4_pollice }}
+            </div>
+
+
+            <div id="zona_7_8_9" style="display:none;">
+                {{ form.zona_7_8_9.label(style="display:block;margin-top:15px;") }}
+                {{ form.zona_7_8_9 }}
+            </div>
+
+            <div id="zona_1" style="display:none;">
+                {{ form.raggio_zona_1.label(style="display:block;margin-top:15px;") }}
+                {{ form.raggio_zona_1 }}
+
+                {{ form.doyle.label(style="display:block;margin-top:15px;") }}
+                {{ form.doyle }}
+
+                {{ form.swan_neck.label(style="display:block;margin-top:15px;") }}
+                {{ form.swan_neck }}
+
+                {{ form.trattamento_zona_1.label(style="display:block;margin-top:15px;") }}
+                {{ form.trattamento_zona_1(id="tipo_trattamento_zona_1") }}
+
+
+                <div id="splint" style="display:block;">
+                    {{ form.split.label(style="display:block;margin-top:15px;") }}
+                    {{ form.split }}
+                </div>
+
+                <div id="sintesi" style="display:none;">
+                    {{ form.sintesi.label(style="display:block;margin-top:15px;") }}
+                    {{ form.sintesi }}
+                </div>
+                
+                {{ form.complicanze.label(style="display:block;margin-top:15px;") }}
+                {{ form.complicanze }}
+            </div>
+            
+
+            <div id="altre_zone" style="display:none;">
+                {{ form.tipo_sutura.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_sutura(id="tipo_sutura_altre_zone") }}
+
+                <div id="passaggio_2">
+
+                    {{ form.passaggio_2.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_2 }}
+                
+                </div>
+
+                <div id="passaggio_4" style="display:none;">
+
+                    {{ form.passaggio_4.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_4 }}
+                
+                </div>
+
+                <div id="passaggio_6" style="display:none;">
+
+                    {{ form.passaggio_6.label(style="display:block;margin-top:15px;") }}
+                    {{ form.passaggio_6 }}
+                
+                </div>
+
+                <div id="altro" style="display:none;">
+
+                    {{ form.altro.label(style="display:block;margin-top:15px;") }}
+                    {{ form.altro }}
+                
+                </div>
+
+                {{ form.tipo_filo_zona_generica.label(style="display:block;margin-top:15px;") }}
+                {{ form.tipo_filo_zona_generica }}
+
+                {{ form.materiale_filo_zona_generica.label(style="display:block;margin-top:15px;") }}
+                {{ form.materiale_filo_zona_generica }}
+            
+               
+            </div>
+
+
+
+            {{ form.orario_primo_controllo.label }}
+            {{ form.orario_primo_controllo(id='timepicker') }}
+        
+        
+            {{ form.data_primo_controllo.label(style="display:block;") }}
+            {{ form.data_primo_controllo(id='datepicker') }}
+            
+        
+            {{ form.row_id(value=row_id)}}
+            {{ form.patient_id(value=patient_id)}}
+            {{ form.patient_name(value=patient_name)}}
+            {{ form.pathology_id(value=pathology_id)}}
+            
+            
+        
+            {{ form.submit_chirurgico_form(style="display:block; margin-top:15px;") }}
+            
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+        </form> 
+        </div>
+</div>
+<script>
+
+    week_to_add = "{{ week_to_add['1'] }}";
+    console.log("Week_to_add",week_to_add);
+    DataIntervento = new Date();
+
+    //Rappresentano gli id delle zone selezionate
+    id_zone_1=["1","5","9","13","16"];
+    id_zone_2_3=["2","3","6","7","10","11","14","15"];
+    id_zone_4_5_6=["4","8","12","16","21","22"];
+    id_zone_1_2_pollice=["13","14"];
+    id_zone_3_4_pollice=["19","20"];
+    id_zone_7_8_9=["23","24"];
+    //Tutti gli indici dei rettangoli
+    id_zone_all=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"];
+
+
+    const currentSelection = {};
+    const colorPalette = document.getElementById("colorPalette");
+    
+
+    //Crazione legenda dinamicamente
+    const legend = document.getElementById("legend");
+   
+
+    // Get all child divs from the colorPalette
+    const colorItems = colorPalette.querySelectorAll("div");
+  
+
+    // Create a unique map of colors and their data IDs
+    const colorMap = new Map();
+   
+
+    // Generate the legend content
+    colorMap.forEach((dataIds, color) => {
+        // Create a legend item
+        const legendItem = document.createElement("div");
+        legendItem.style.display = "flex";
+        legendItem.style.alignItems = "center";
+        legendItem.style.marginBottom = "10px";
+
+        // Create the color box
+        const colorBox = document.createElement("div");
+        colorBox.style.width = "20px";
+        colorBox.style.height = "20px";
+        colorBox.style.background = color;
+        colorBox.style.border = "1px solid #000";
+        colorBox.style.marginRight = "10px";
+
+        // Create the text showing data IDs
+        const text = document.createElement("span");
+        text.textContent = `: ${dataIds.join(", ")}`;
+
+        // Append the color box and text to the legend item
+        legendItem.appendChild(colorBox);
+        legendItem.appendChild(text);
+
+        // Append the legend item to the legend container
+        legend.appendChild(legendItem);
+    });
+
+     // Generate the legend content
+    
+    const mapping_estensori = {
+        "1": "Zona_1_Mignolo",
+        "2": "Zona_2_Mignolo",
+        "3": "Zona_3_Mignolo",
+        "4": "Zona_4_Mignolo",
+        "5": "Zona_1_Anulare",
+        "6": "Zona_2_Anulare",
+        "7": "Zona_3_Anulare",
+        "8": "Zona_4_Anulare",    
+        "9": "Zona_1_Medio",
+        "10": "Zona_2_Medio",
+        "11": "Zona_3_Medio",
+        "12": "Zona_4_Medio",
+        "13": "Zona_1_Indice",
+        "14": "Zona_2_Indice",
+        "15": "Zona_3_Indice",
+        "16": "Zona_4_Indice",
+        "17": "Zona_1_Pollice",
+        "18": "Zona_2_Pollice",
+        "19": "Zona_3_Pollice",
+        "20": "Zona_4_Pollice",
+        "21": "Zona_5",
+        "22": "Zona_6",
+        "23": "Zona_7",
+        "24": "Zona_8"
+    };
+
+    document.getElementById("interactiveImage").addEventListener("click", function(event) {
+        if (event.target.tagName === "rect") {
+            const rect = event.target;
+            const rectId = rect.getAttribute("data-id");
+            
+            var mapping={};
+           
+            if (rectId in mapping_estensori) {
+               
+                mapping = mapping_estensori;
+                var mappingValue = mapping[rectId];
+                 // Position the palette near the clicked rectangle
+                const rectBounds = rect.getBoundingClientRect();
+                colorPalette.style.left = `${rectBounds.x + window.scrollX}px`;
+                colorPalette.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
+                colorPalette.style.display = "block";
+            
+                console.log("Mapping_Pulegge");
+
+
+                colorPalette.onclick = function (paletteEvent) {
+                    const color = paletteEvent.target.getAttribute("data-color");
+                    const code = paletteEvent.target.getAttribute("data-id");
+
+                    
+
+                    //Se l'utente seleziona non valore non salvo nessun dato nella mappa
+                    if (color === "rgba(200, 200, 200, 1)") {
+                            
+
+                        rect.setAttribute("fill", color);
+                        colorPalette.style.display = "none";
+                        // remove from currentSelection
+                        
+                        for (const [key, value] of Object.entries(currentSelection)) {
+                            if(id_zone_1.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_1").style.display = "none";
+                            }
+                            if(id_zone_2_3.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_2_3").style.display = "none";
+                            }
+                            
+                            if(id_zone_4_5_6.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_4_5_6").style.display = "none";
+                            }
+
+                            if(id_zone_1_2_pollice.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_1_2_pollice").style.display = "none";
+                            }
+
+                            if(id_zone_3_4_pollice.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_3_4_pollice").style.display = "none";
+                            }
+
+                            if(id_zone_7_8_9.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_7_8_9").style.display = "none";
+                            }
+
+                            if(id_zone_all.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("altre_zone").style.display = "none";
+                            }
+
+                        }
+
+                        delete currentSelection[mappingValue];
+
+                        document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+                        console.log("REMOVE Current selection", currentSelection);
+
+                    }else{
+                        currentItem= {
+                            "id": rectId,
+                            "code": code,
+                        }
+
+                        rect.setAttribute("fill", color);
+                        colorPalette.style.display = "none";
+                        // Add the mapping
+                        currentSelection[mappingValue] = currentItem;
+                        console.log("ADD Current selection", currentSelection);
+                        document.getElementById("map_selected").value = JSON.stringify(currentSelection);
+
+                        //AGGIUNGO I CAMPI DEL FORM DA COMPILARE
+                        for (const [key, value] of Object.entries(currentSelection)) {
+                            if(id_zone_1.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_1").style.display = "block";
+                            }
+                            if(id_zone_2_3.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_2_3").style.display = "block";
+                            }
+                            
+                            if(id_zone_4_5_6.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_4_5_6").style.display = "block";
+                            }
+
+                            if(id_zone_1_2_pollice.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_1_2_pollice").style.display = "block";
+                            }
+
+                            if(id_zone_3_4_pollice.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_3_4_pollice").style.display = "block";
+                            }
+
+                            if(id_zone_7_8_9.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("zona_7_8_9").style.display = "block";
+                            }
+
+                            if(id_zone_all.includes(value.id)){
+                                console.log("Rimuovi");
+                                document.getElementById("altre_zone").style.display = "block";
+                            }
+
+                        }
+                    }
+
+                    
+                };
+
+            } else { 
+                mapping = {};
+
+                console.log("Error Mapping",mapping);
+            }
+            
+        }
+    });
+
+
+    function  toggleTipoSutura(){
+
+        var tipo_sutura = document.getElementById("tipo_sutura_altre_zone").value;
+        console.log("Tipo Sutura", tipo_sutura);
+        if(tipo_sutura === "2_passaggi"){
+            document.getElementById("passaggio_2").style.display = "block";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "4_passaggi"){
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "block";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "6_passaggi"){
+            
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "block";
+            document.getElementById("altro").style.display = "none";
+        }else if(tipo_sutura === "altro"){
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "block";
+        }else{
+            document.getElementById("passaggio_2").style.display = "none";
+            document.getElementById("passaggio_4").style.display = "none";
+            document.getElementById("passaggio_6").style.display = "none";
+            document.getElementById("altro").style.display = "none";
+        }
+
+    }
+
+
+    function toggleTipoTrattamentoZona1(){
+
+        var tipo_trattamento_zona_1 = document.getElementById("tipo_trattamento_zona_1").value;
+
+        if(tipo_trattamento_zona_1 === "splint"){
+            document.getElementById("splint").style.display = "block";
+            document.getElementById("sintesi").style.display = "none";
+        }else if(tipo_trattamento_zona_1 === "sintesi"){
+            document.getElementById("splint").style.display = "none";
+            document.getElementById("sintesi").style.display = "block"; 
+        }else{
+            document.getElementById("splint").style.display = "none";
+            document.getElementById("sintesi").style.display = "none";
+        }
+    }   
+
+    $("#tipo_sutura_altre_zone").change(function() {
+        toggleTipoSutura();
+    });
+
+    
+
+    $("#tipo_trattamento_zona_1").change(function() {
+        toggleTipoTrattamentoZona1();
+    });
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
 {% endblock %}

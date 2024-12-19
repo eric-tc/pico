@@ -8,6 +8,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         FratturaRadioDistaleEnum,\
         FrattureFalangeProssimaleEnum,\
         LesioneTendineaFlessoriEnum,\
+        LesioneTendineaEstensoriEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
         DupuytrenEnum,\
@@ -521,6 +522,287 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     )
 
     #Altre Zone
+
+    tipo_sutura = SelectField(
+        'Materiale Filo',
+        choices=[
+            ('2_passaggi', '2 passaggi'),
+            ('4_passaggi', '4 passaggi'),
+            ('6_passaggi', '6 passaggi'),
+            ('altro', 'Altro'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_2 = SelectField(
+        'Tipologia Passaggio 2',
+        choices=[
+            ('kessler_modificata', 'Kessler Modificata'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_4 = SelectField(
+        'Tipologia Passaggio 4',
+        choices=[
+            ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
+            ('adelaide', 'Adelaide'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    passaggio_6 = SelectField(
+        'Tipologia Passaggio 6',
+        choices=[
+            ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
+            ('m_tang', 'M-Tang'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    altro = SelectField(
+        'Altro',
+        choices=[
+            ('punti_staccati', 'Punti Staccati'),
+            ('punti_u', 'Punti a U'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    tipo_filo_zona_generica = SelectField(
+        'Grandezza Filo',
+        choices=[
+            ('0', '0'),
+            ('1_0', '1.0'),
+            ('2_0', '2.0'),
+            ('3_0', '3.0'),
+            ('4_0', '4.0'),
+            ('5_0', '5.0'),
+            ('6_0', '6.0'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    materiale_filo_zona_generica = SelectField(
+        'Materiale Filo',
+        choices=[
+            ('nylon', 'Nylon'),
+            ('prolene', 'Prolene'),
+            ('vicryl', 'Vicryl'),
+            ('ti_cron', 'Ti-Cron'),
+            ('fiber_wire', 'Fiber wire'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
+##------------------------------------------------------------------------------------------------------------------##
+##                          LESIONE TENDINEA FLESSORI                                                               ## 
+##------------------------------------------------------------------------------------------------------------------##
+class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
+    
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[ (enum.value[0], enum.value[1]) for enum in LesioneTendineaEstensoriEnum],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
+    #indica tutti i valori salvati dal disegno
+    map_selected=HiddenField('map_selected', render_kw={'class': 'form-control'}, validators=None)
+
+
+    #zona 2 3 dita lunghe
+
+    struttura_lesionata=SelectMultipleField(
+        'Selezionare la struttura lesionata',
+        choices=[
+         ('bandella_laterale_radiale', 'Bandella laterale radiale'),
+            ('bandella_centrale', 'Bandella centrale'),
+            ('bandella_ulnare', 'Bandella ulnare'),
+        ],
+        widget=widgets.ListWidget(prefix_label=False),  # List layout for checkboxes
+        option_widget=widgets.CheckboxInput(),  # Render as checkboxes
+    )
+
+
+    #zona 4,5,6
+
+    zona_4_5_6_tipologia = SelectField(
+        'Tipologia',
+        choices=[
+            ('edc', 'EDC'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    zona_4_5_6_secondo_tipologia=SelectField(
+        'Tipologia',
+        choices=[
+            ('edc', 'EDC'),
+            ('eip', 'EIP'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    zona_4_5_6_quinto_tipologia=SelectField(
+        'Tipologia',
+        choices=[
+            ('edc', 'EDC'),
+            ('edm', 'EDM'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #zona 1 e 2 pollice
+    zona_1_2_pollice = SelectField(
+        'Tipologia',
+        choices=[
+            ('epl', 'EPL'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #zona 3 e 4 pollice
+
+    zona_3_4_pollice = SelectField(
+        'Tipologia',
+        choices=[
+            ('epl', 'EPL'),
+            ('epb', 'EPB'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    #zona 7 8 9
+
+    zona_7_8_9 = SelectField(
+        'Selezionare i tendini in zona 7 8 9',
+        choices=[
+            ('apl', 'APL'),
+            ('epb', 'EPB'),
+            ('epl', 'EPL'),
+            ('eip', 'EIP'),
+            ('edc', 'EDC'),
+            ('edm', 'EDM'),
+            ('ecu', 'ECU'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
+    # zona 1 parametri generale
+
+    raggio_zona_1 = SelectField(
+        'Selezionare Raggio',
+        choices=[
+            ('I', 'I'),
+            ('II', 'II'),
+            ('III', 'III'),
+            ('IV', 'IV'),
+            ('V', 'V'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    doyle = SelectField(
+        'Classificazione Doyle',
+        choices=[
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4a', '4a'),
+            ('4b', '4b'),
+            ('4c', '4c'),
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    swan_neck = SelectField(
+        'Presente Swan neck',
+        choices=[
+            ('si', 'Si'),
+            ('no', 'No'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    trattamento_zona_1 = SelectField(
+        'Trattamento',
+        choices=[
+            ('splint', 'Splint'),
+            ('sintesi', 'Riduzione e Sintesi'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    split = SelectField(
+        'Split',
+        choices=[
+            ('6_settimane', '6 settimane'),
+            ('8_settimane', '8 settimane'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    sintesi = SelectField(
+        'Riduzione e Sintesi',
+        choices=[
+            ('fili_k_ishiguro', 'fili k ishiguro'),
+            ('viti', 'viti'),
+            ('ancoretta', 'ancoretta'),
+            ('tenorrafia', 'tenorrafia'),
+            ('altro', 'altro'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    complicanze = SelectField(
+        'Complicanze',
+        choices=[
+            ('mobilizzazione_mezzi_sintesi', 'Mobilizzazione mezzi sintesi'),
+            ('infezione', 'Infezione'),
+            ('perdita_riduzione', 'perdita riduzione'),
+           
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    
+
+
+    # Generale tutte le zone
 
     tipo_sutura = SelectField(
         'Materiale Filo',

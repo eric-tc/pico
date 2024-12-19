@@ -10,7 +10,8 @@ ScafoideFratturaChirurgicoForm,\
 ScafoidePseudoArtrosiChirurgicoForm,\
 DupuytrenChirurgicoForm,\
 LesioneLigamentosaChirurgicoForm,\
-LesioneTendineaFlessoriChirurgicoForm
+LesioneTendineaFlessoriChirurgicoForm,\
+LesioneTendineaEstensoriChirurgicoForm
 
 from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     FrattureFalangeProssimaleEnum,\
@@ -20,6 +21,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     FratturaRadioDistaleEnum,\
     ScafoidePseudortrosiEnum,\
     LesioneTendineaFlessoriEnum,\
+    LesioneTendineaEstensoriEnum,\
     DupuytrenEnum,\
     LesioneLigamentosaEnum,\
     CONTROLS,\
@@ -994,11 +996,11 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
     #post operatorio è unico o no
     decorso_unico=True
     #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
-    timeline= [0,3,6,12,26,52,154,520,1040]
+    timeline= [0,2,4,6,8,12,26,52,520,1040]
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
-    last_control_number_before_next=1
+    last_control_number_before_next=4
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -1026,26 +1028,123 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
 
-        #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
 
-        #Setto i valori per il primo controllo
 
         return tmp_ControlMap,pre_controls_map
+    
 
+    @classmethod
+    def get_one(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_two(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_three(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_four(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+
+    @classmethod
+    def get_next(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+
+        return tmp_ControlMap
+    
 class LesioneTendineaFlessoriTimeline(PathologyTimline):
     
     #Variabile definita per ogni controllo. Indica se il percorso
     #post operatorio è unico o no
     decorso_unico=True
     #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
-    timeline= [0,3,6,12,26,52,154,520,1040]
+    timeline= [0,2,4,6,8,12,26,52,520,1040]
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
-    last_control_number_before_next=1
+    last_control_number_before_next=4
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -1078,6 +1177,110 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
 
         return tmp_ControlMap,pre_controls_map
+    
+
+    @classmethod
+    def get_one(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_two(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_three(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+    @classmethod
+    def get_four(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+        return tmp_ControlMap
+    
+
+    @classmethod
+    def get_next(cls,tipo_intervento,dito_rotto=1):
+        tipo_intervento=str(tipo_intervento)
+
+        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
+           
+        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+
+        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+
+
+        return tmp_ControlMap
+    
+    
+
+    
 
 class FrattureFalangeProssimaleTimeline(PathologyTimline):
     
@@ -1598,8 +1801,8 @@ class PATHOLOGY(Enum):
     LESIONE_TENDINEA_ESTENSORI = (12,
                                 PATHOLOGY_LABEL.LESIONE_TENDINEA_ESTENSORI.value,
                                 LesioneTendineaEstensoriTimeline,
-                                None,
-                                None,
+                                LesioneTendineaEstensoriChirurgicoForm,
+                                LesioneTendineaEstensoriEnum,
                                 None)
         
 
