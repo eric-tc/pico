@@ -11,7 +11,7 @@
         <!-- SVG on the left -->
         <div class="col-md-6">
 
-            <div id="colorPalette" style="display: none; position: absolute; z-index: 1000;">
+            <div id="colorPaletteVolare" style="display: none; position: absolute; z-index: 1000;">
                 <div style="width: 20px; height: 20px; background: rgba(0, 255, 0, 1);" data-color="rgba(0, 255, 0, 1)" data-id="2.83" data-grams="0.07g" ></div>
                 <div style="width: 20px; height: 20px; background: rgba(0, 0, 255, 1);" data-color="rgba(0, 0, 255, 1)" data-id="3.61" data-grams="0.4g"></div>
                 <div style="width: 20px; height: 20px; background: rgba(128, 0, 128, 1);" data-color="rgba(128, 0, 128, 1)" data-id="3.84" data-grams="0.6g"></div>
@@ -23,7 +23,7 @@
                 <div style="width: 20px; height: 20px; background: rgba(125, 255, 255, 0.5);" data-color="rgba(125, 255, 255, 0.5)" data-id="none" data-grams="No valore"></div>
             </div>
 
-            <svg id="interactiveImage" width="500" height="500" viewBox="0 0 500 500">
+            <svg id="interactiveImageVolare" width="500" height="500" viewBox="0 0 500 500">
                 <image href="{{ url_for('static', filename='sensibilita_volare.png') }}" width="500" height="500" />
                 <!-- Multiple rectangles with unique IDs -->
                 
@@ -73,7 +73,7 @@
        
         <!-- Legend -->
         <div class="col-md-6">
-            <div id="legend" style="margin-top: 100px;margin-bottom:40px;"></div>
+            <div id="legendVolare" style="margin-top: 100px;margin-bottom:40px;"></div>
         </div>
     
     </div>
@@ -81,33 +81,33 @@
 </div>
 <script>
 
-    const currentSelection = {};
-    const colorPalette = document.getElementById("colorPalette");
+    const currentSelectionVolare = {};
+    const colorPaletteVolare = document.getElementById("colorPaletteVolare");
 
     //Crazione legenda dinamicamente
-    const legend = document.getElementById("legend");
+    const legendVolare = document.getElementById("legendVolare");
 
     // Get all child divs from the colorPalette
-    const colorItems = colorPalette.querySelectorAll("div");
+    const colorItemsVolare = colorPaletteVolare.querySelectorAll("div");
 
     // Create a unique map of colors and their data IDs
-    const colorMap = new Map();
+    const colorMapVolare = new Map();
 
-    colorItems.forEach((item) => {
+    colorItemsVolare.forEach((item) => {
         const color = item.getAttribute("data-color");
         const dataId = item.getAttribute("data-grams");
 
         if (color && dataId) {
             // Add the color and data ID to the map
-            if (!colorMap.has(color)) {
-                colorMap.set(color, []);
+            if (!colorMapVolare.has(color)) {
+                colorMapVolare.set(color, []);
             }
-            colorMap.get(color).push(dataId);
+            colorMapVolare.get(color).push(dataId);
         }
     });
 
     // Generate the legend content
-    colorMap.forEach((dataIds, color) => {
+    colorMapVolare.forEach((dataIds, color) => {
         // Create a legend item
         const legendItem = document.createElement("div");
         legendItem.style.display = "flex";
@@ -131,10 +131,10 @@
         legendItem.appendChild(text);
 
         // Append the legend item to the legend container
-        legend.appendChild(legendItem);
+        legendVolare.appendChild(legendItem);
     });
 
-    const mapping = {
+    const mappingVolare = {
         "1": "R_DIPJ_Mignolo",
         "2": "R_PIPJ_Mignolo",
         "3": "R_MCPJ_Mignolo",
@@ -165,25 +165,25 @@
         "28": "U_IPJ_Pollice"
     };
 
-    document.getElementById("interactiveImage").addEventListener("click", function(event) {
+    document.getElementById("interactiveImageVolare").addEventListener("click", function(event) {
         if (event.target.tagName === "rect") {
             const rect = event.target;
             const rectId = rect.getAttribute("data-id");
 
             // Get the mapping
-            const mappingValue = mapping[rectId];
+            const mappingValue = mappingVolare[rectId];
 
              // Position the palette near the clicked rectangle
             const rectBounds = rect.getBoundingClientRect();
-            colorPalette.style.left = `${rectBounds.x + window.scrollX}px`;
-            colorPalette.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
-            colorPalette.style.display = "block";
+            colorPaletteVolare.style.left = `${rectBounds.x + window.scrollX}px`;
+            colorPaletteVolare.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
+            colorPaletteVolare.style.display = "block";
             
             console.log("REct event");
 
 
         // Add a click event to the palette
-            colorPalette.onclick = function (paletteEvent) {
+        colorPaletteVolare.onclick = function (paletteEvent) {
                 const color = paletteEvent.target.getAttribute("data-color");
                 const code = paletteEvent.target.getAttribute("data-id");
                 
@@ -192,14 +192,14 @@
                     console.log("Color REmove", color);
 
                     rect.setAttribute("fill", color);
-                    colorPalette.style.display = "none";
+                    colorPaletteVolare.style.display = "none";
                     // Change the rectangle color and hide the palette
-                    if (mappingValue in currentSelection) {
+                    if (mappingValue in currentSelectionVolare) {
                         // Remove the mapping
-                        delete currentSelection[mappingValue];
+                        delete currentSelectionVolare[mappingValue];
                     }
-                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
-                    console.log("Current selection", currentSelection);
+                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelectionVolare);
+                    console.log("Current selection", currentSelectionVolare);
                     
                 }else{
 
@@ -209,17 +209,17 @@
                     }
                     console.log("Color add", color);
                     rect.setAttribute("fill", color);
-                    colorPalette.style.display = "none";
+                    colorPaletteVolare.style.display = "none";
                     // Add the mapping
-                    currentSelection[mappingValue] = currentItem;
-                    console.log("Current selection", currentSelection);
-                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
+                    currentSelectionVolare[mappingValue] = currentItem;
+                    console.log("Current selection", currentSelectionVolare);
+                    document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelectionVolare);
                 }
 
 
             };
             
-            document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelection);
+            document.getElementById("sensibilita_volare").value = JSON.stringify(currentSelectionVolare);
 
             // Check if the rectangle is already colored
             /*

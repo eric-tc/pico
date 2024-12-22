@@ -12,6 +12,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         ResezioneFilieraEnum,\
         ScafoidePseudortrosiEnum,\
         DupuytrenEnum,\
+        LesioneNervosaEnum,\
         LesioneLigamentosaEnum,\
         OPTION_NULL
 
@@ -1009,6 +1010,65 @@ class DupuytrenChirurgicoForm(ChirurgicoForm):
         ,render_kw={'class': 'form-control'}
     )
 
+
+##------------------------------------------------------------------------------------------------------------------##
+##                          LesioneNervosa                                                                      ## 
+##------------------------------------------------------------------------------------------------------------------##
+class LesioneNervosaChirurgicoForm(ChirurgicoForm):
+
+    treatment_options = SelectField(
+        'Seleziona Intervento',
+        choices=[
+           (enum.value[0], enum.value[1]) for enum in LesioneNervosaEnum
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+
+    tipo_lesione = SelectField(
+        'Tipo Lesione',
+        choices=[
+            ('', OPTION_NULL.NULL.value),
+            ('completa', 'completa'),
+            ('parziale', 'parziale'),
+            ('sintetico', 'Sintetico'),
+
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    innesto = SelectField(
+        'Innesto',
+        choices=[
+            ('', OPTION_NULL.NULL.value),
+            ('innesto_nervoso', 'Innesto Nervoso'),
+            ('muscolo_vena', 'Muscolo in vena'),
+            ('sintetico', 'Sintetico'),
+
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
+    innesto_nervoso = SelectField(
+        'Innesto Nervoso',
+        choices=[
+            ('', OPTION_NULL.NULL.value),
+            ('surale', 'Innesto Nervoso'),
+            ('nervo_interosseo_posteriore', 'Nervo Interosso Posteriore'),
+            ('nervo_interosseo_anteriore', 'Nervo Interosso Anteriore'),
+            ('altro', 'Altro'),
+
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+    
+    sensibilita_volare = HiddenField('sensibilita_volare', render_kw={'class': 'form-control'}, validators=None)
+    
+    sensibilita_dorsale = HiddenField('sensibilita_dorsale', render_kw={'class': 'form-control'}, validators=None)
 
 ##------------------------------------------------------------------------------------------------------------------##
 ##                          SCAFOIDE 

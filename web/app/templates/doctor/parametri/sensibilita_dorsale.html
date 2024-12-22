@@ -11,7 +11,7 @@
         <!-- SVG on the left -->
         <div class="col-md-6">
 
-            <div id="colorPalette" style="display: none; position: absolute; z-index: 1000;">
+            <div id="colorPaletteDorsale" style="display: none; position: absolute; z-index: 1000;">
                 <div style="width: 20px; height: 20px; background: rgba(0, 255, 0, 1);" data-color="rgba(0, 255, 0, 1)" data-id="2.83" data-grams="0.07g" ></div>
                 <div style="width: 20px; height: 20px; background: rgba(0, 0, 255, 1);" data-color="rgba(0, 0, 255, 1)" data-id="3.61" data-grams="0.4g"></div>
                 <div style="width: 20px; height: 20px; background: rgba(128, 0, 128, 1);" data-color="rgba(128, 0, 128, 1)" data-id="3.84" data-grams="0.6g"></div>
@@ -23,7 +23,7 @@
                 <div style="width: 20px; height: 20px; background: rgba(125, 255, 255, 0.5);" data-color="rgba(125, 255, 255, 0.5)" data-id="none" data-grams="No valore"></div>
             </div>
 
-            <svg id="interactiveImage" width="512" height="512" viewBox="0 0 512 512">
+            <svg id="interactiveImageDorsale" width="512" height="512" viewBox="0 0 512 512">
                 <image href="{{ url_for('static', filename='sensibilta_dorsale.jpg') }}" width="512" height="512" />
                 <!-- Multiple rectangles with unique IDs -->
                 
@@ -40,7 +40,7 @@
        
         <!-- Legend -->
         <div class="col-md-6">
-            <div id="legend" style="margin-top: 100px;margin-bottom:40px;"></div>
+            <div id="legendDorsale" style="margin-top: 100px;margin-bottom:40px;"></div>
         </div>
     
     </div>
@@ -48,33 +48,33 @@
 </div>
 <script>
 
-    const currentSelection = {};
-    const colorPalette = document.getElementById("colorPalette");
+    const currentSelectionDorsale = {};
+    const colorPaletteDorsale = document.getElementById("colorPaletteDorsale");
 
     //Crazione legenda dinamicamente
-    const legend = document.getElementById("legend");
+    const legendDorsale = document.getElementById("legendDorsale");
 
     // Get all child divs from the colorPalette
-    const colorItems = colorPalette.querySelectorAll("div");
+    const colorItemsDorsale = colorPaletteDorsale.querySelectorAll("div");
 
     // Create a unique map of colors and their data IDs
-    const colorMap = new Map();
+    const colorMapDorsale = new Map();
 
-    colorItems.forEach((item) => {
+    colorItemsDorsale.forEach((item) => {
         const color = item.getAttribute("data-color");
         const dataId = item.getAttribute("data-grams");
 
         if (color && dataId) {
             // Add the color and data ID to the map
-            if (!colorMap.has(color)) {
-                colorMap.set(color, []);
+            if (!colorMapDorsale.has(color)) {
+                colorMapDorsale.set(color, []);
             }
-            colorMap.get(color).push(dataId);
+            colorMapDorsale.get(color).push(dataId);
         }
     });
 
     // Generate the legend content
-    colorMap.forEach((dataIds, color) => {
+    colorMapDorsale.forEach((dataIds, color) => {
         // Create a legend item
         const legendItem = document.createElement("div");
         legendItem.style.display = "flex";
@@ -98,7 +98,7 @@
         legendItem.appendChild(text);
 
         // Append the legend item to the legend container
-        legend.appendChild(legendItem);
+        legendDorsale.appendChild(legendItem);
     });
 
     const mapping = {
@@ -109,7 +109,7 @@
         
     };
 
-    document.getElementById("interactiveImage").addEventListener("click", function(event) {
+    document.getElementById("interactiveImageDorsale").addEventListener("click", function(event) {
         if (event.target.tagName === "rect") {
             const rect = event.target;
             const rectId = rect.getAttribute("data-id");
@@ -119,15 +119,15 @@
 
              // Position the palette near the clicked rectangle
             const rectBounds = rect.getBoundingClientRect();
-            colorPalette.style.left = `${rectBounds.x + window.scrollX}px`;
-            colorPalette.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
-            colorPalette.style.display = "block";
+            colorPaletteDorsale.style.left = `${rectBounds.x + window.scrollX}px`;
+            colorPaletteDorsale.style.top = `${rectBounds.y + window.scrollY + rectBounds.height}px`;
+            colorPaletteDorsale.style.display = "block";
             
             console.log("REct event");
 
 
         // Add a click event to the palette
-            colorPalette.onclick = function (paletteEvent) {
+            colorPaletteDorsale.onclick = function (paletteEvent) {
                 const color = paletteEvent.target.getAttribute("data-color");
                 const code = paletteEvent.target.getAttribute("data-id");
                 
@@ -136,14 +136,14 @@
                     console.log("Color REmove", color);
 
                     rect.setAttribute("fill", color);
-                    colorPalette.style.display = "none";
+                    colorPaletteDorsale.style.display = "none";
                     // Change the rectangle color and hide the palette
-                    if (mappingValue in currentSelection) {
+                    if (mappingValue in currentSelectionDorsale) {
                         // Remove the mapping
-                        delete currentSelection[mappingValue];
+                        delete currentSelectionDorsale[mappingValue];
                     }
-                    document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelection);
-                    console.log("Current selection", currentSelection);
+                    document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelectionDorsale);
+                    console.log("Current selection", currentSelectionDorsale);
                     
                 }else{
 
@@ -153,17 +153,17 @@
                     }
                     console.log("Color add", color);
                     rect.setAttribute("fill", color);
-                    colorPalette.style.display = "none";
+                    colorPaletteDorsale.style.display = "none";
                     // Add the mapping
-                    currentSelection[mappingValue] = currentItem;
-                    console.log("Current selection", currentSelection);
-                    document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelection);
+                    currentSelectionDorsale[mappingValue] = currentItem;
+                    console.log("Current selection", currentSelectionDorsale);
+                    document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelectionDorsale);
                 }
 
 
             };
             
-            document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelection);
+            document.getElementById("sensibilita_dorsale").value = JSON.stringify(currentSelectionDorsale);
 
         }
     });

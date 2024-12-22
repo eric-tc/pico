@@ -91,6 +91,15 @@ class DupuytrenEnum(Enum):
     CORDOTOMIA = ("3","Cordotomia")
     ALTRO = ("4","Altro")
 
+class LesioneNervosaEnum(Enum):
+    """
+    [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
+    [1]= Visualizzato nel form
+    """        
+    NEURORRAFIA = ("1","neurorraffia termino-terminale")
+    INNESTO = ("2","innesto")
+    ALTRO = ("3","Altro")
+
 class LesioneLigamentosaEnum(Enum):
     """
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type

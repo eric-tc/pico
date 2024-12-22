@@ -9,6 +9,7 @@ ResezioneFilieraChirurgicoForm,\
 ScafoideFratturaChirurgicoForm,\
 ScafoidePseudoArtrosiChirurgicoForm,\
 DupuytrenChirurgicoForm,\
+LesioneNervosaChirurgicoForm,\
 LesioneLigamentosaChirurgicoForm,\
 LesioneTendineaFlessoriChirurgicoForm,\
 LesioneTendineaEstensoriChirurgicoForm
@@ -23,6 +24,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     LesioneTendineaFlessoriEnum,\
     LesioneTendineaEstensoriEnum,\
     DupuytrenEnum,\
+    LesioneNervosaEnum,\
     LesioneLigamentosaEnum,\
     CONTROLS,\
     CONTROLSNUMBER,\
@@ -739,12 +741,12 @@ class LesioneNervosaTimeline(PathologyTimline):
     @classmethod
     def getTimeline(cls,tipo_intervento=None):
             
-        timeline= [0,2,6,12,26,52,520,1040]
+        timeline= [0,4,12,26,52,520,1040]
         return timeline
 
     #ATTENZIONE RICORDARSI di le weeks_to_first_control che corrispondono al primo numero della timeline !=0
     weeks_to_first_control={
-        "1":2,
+        "1":4,
         
     }
 
@@ -752,7 +754,7 @@ class LesioneNervosaTimeline(PathologyTimline):
     def get_pre(cls):
         
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
-        pre_controls_map[PATHOLOGY_LABEL.DUPUYTREN.value]["active"]=True
+        
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -763,20 +765,12 @@ class LesioneNervosaTimeline(PathologyTimline):
     
     @classmethod
     def get_one(cls,tipo_intervento,dito_rotto=1):
-        tipo_intervento=str(tipo_intervento)
-
+        
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-           
+   
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
-
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -785,21 +779,14 @@ class LesioneNervosaTimeline(PathologyTimline):
     @classmethod
     def get_next(cls,tipo_intervento,metacarpo_rotto=1):
 
-        tipo_intervento=str(tipo_intervento)
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        pip_j_indices=[]
-        pip_j_indices.append(int(metacarpo_rotto))
+   
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
-
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4] #non Ho il pollice       
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -1777,8 +1764,8 @@ class PATHOLOGY(Enum):
     LESIONE_NERVOSA=(8,
                       PATHOLOGY_LABEL.LESIONE_NERVOSA.value,
                       LesioneNervosaTimeline,
-                      None,
-                      None,
+                      LesioneNervosaChirurgicoForm,
+                      LesioneNervosaEnum,
                       None)
     SCAFOIDE_FRATTURA= (9,
                          PATHOLOGY_LABEL.SCAFOIDE_FRATTURA.value,
