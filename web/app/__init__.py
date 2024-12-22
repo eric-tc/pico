@@ -32,6 +32,12 @@ def create_app():
     csrf = CSRFProtect(app)
     CORS(app)
     
+    @app.template_filter('format_date')
+    def format_date(value, format='%Y-%m-%d'):
+        return value.strftime(format)
+
+    app.jinja_env.filters['format_date'] = format_date
+
     db.init_app(app)
 
     #Init Cache

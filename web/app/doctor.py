@@ -5,7 +5,7 @@ from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,
 from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
-from .doctor_forms import RizoartrosiForm,MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
+from .doctor_forms import MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
@@ -69,53 +69,53 @@ def profile():
                            next_treatments=next_treatments)
                           
 
-"""
-Route chimata dalla tabella nella sezione profile del prossimo intervento
-permette di cambiare la data dell'intervento se neccessario
-"""
-@doctor.route('/change_date')
-@login_required
-def change_date():
-    """
-    pathology_id_row: Corrisponde alla riga della tabella patologia in cui devo cambiare la data
-    pathology_type: id della patologia. Se per ogni patologia ho una tabella diversa devo sapere a in quale tabella andare
+# """
+# Route chimata dalla tabella nella sezione profile del prossimo intervento
+# permette di cambiare la data dell'intervento se neccessario
+# """
+# @doctor.route('/change_date')
+# @login_required
+# def change_date():
+#     """
+#     pathology_id_row: Corrisponde alla riga della tabella patologia in cui devo cambiare la data
+#     pathology_type: id della patologia. Se per ogni patologia ho una tabella diversa devo sapere a in quale tabella andare
 
-    """
+#     """
 
-    date= request.args.get("selected_date")
-    time = request.args.get("selected_time")
-    pathology_id_row= request.args.get("pathology_id_row")
-    pathology_type= int(request.args.get("pathology_type"))
+#     date= request.args.get("selected_date")
+#     time = request.args.get("selected_time")
+#     pathology_id_row= request.args.get("pathology_id_row")
+#     pathology_type= int(request.args.get("pathology_type"))
 
     
-    print(date)
-    print(time)
-    print(pathology_id_row)
-    print(pathology_type)
+#     print(date)
+#     print(time)
+#     print(pathology_id_row)
+#     print(pathology_type)
     
     
-    value_to_update= PathologyData.query.filter_by(id=pathology_id_row).first()
+#     value_to_update= PathologyData.query.filter_by(id=pathology_id_row).first()
     
-    value_to_update.next_control_date= datetime.strptime(str(date),"%d-%m-%Y")
-    value_to_update.next_control_time= str(time)
+#     value_to_update.next_control_date= datetime.strptime(str(date),"%d-%m-%Y")
+#     value_to_update.next_control_time= str(time)
 
-    try:
-        # Commit the changes to the database
-        db.session.commit()
-        flash('DATA  AGGIORNATA CORRETTAMENTE')
-        # If no exception is raised, the update was successful
-        return redirect(url_for('doctor.profile'))
+#     try:
+#         # Commit the changes to the database
+#         db.session.commit()
+#         flash('DATA  AGGIORNATA CORRETTAMENTE')
+#         # If no exception is raised, the update was successful
+#         return redirect(url_for('doctor.profile'))
     
 
-    except Exception as e:
-        # Handle the exception (e.g., log the error, display an error message)
-        print(f"Error updating record: {e}")
-        flash('DATA NON AGGIORNATA CORRETTAMENTE')
-        return redirect(url_for('doctor.profile'))
+#     except Exception as e:
+#         # Handle the exception (e.g., log the error, display an error message)
+#         print(f"Error updating record: {e}")
+#         flash('DATA NON AGGIORNATA CORRETTAMENTE')
+#         return redirect(url_for('doctor.profile'))
 
 
-    flash('DATA NON AGGIORNATA CORRETTAMENTE')
-    return redirect(url_for('doctor.profile'))
+#     flash('DATA NON AGGIORNATA CORRETTAMENTE')
+#     return redirect(url_for('doctor.profile'))
 
 
 
@@ -517,14 +517,10 @@ def patient_treatment_list(patient_id,patient_name):
 
     #prendo tutti i pazienti associati al dottore e mi faccio ritornare le malattie
     
+    print(f"PATIENT ID {patient_id}")
     session[DoctorData.ID_PATIENT.value]= patient_id
 
-
-    patients_ids = db.session.query(DoctorPatient.id_patient).filter(DoctorPatient.id_doctor == current_user.id).all()
     
-    patients_id_list= [patient_id[0] for patient_id in patients_ids ]
-
-    print(patients_id_list)
 
     #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
     # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
@@ -534,12 +530,13 @@ def patient_treatment_list(patient_id,patient_name):
                                      Pathology.id,
                                      Pathology.name,
                                      PathologyType.id,
-                                     PathologyType.name)
+                                     PathologyType.name,
+                                     PathologyData.created_at)
     .join(Pathology, Pathology.id == PathologyData.id_pathology)
     .join(PathologyType, PathologyType.id == PathologyData.id_pathology_type)
     .join(User,User.id==patient_id)
-    .filter(PathologyData.id_patient.in_(patients_id_list), 
-            PathologyData.next_control_number==1).all()
+    .filter(PathologyData.id_patient == patient_id, 
+            PathologyData.next_control_number==0).all()
     )
     
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
@@ -843,6 +840,9 @@ def event_details(row_id,event_in_range):
                            data_controllo=data_controllo,
                            event_in_range=event_in_range,
                            data_inizio_mobilizzazione=data_inizio_mobilizzazione)
+
+
+# ROUTE DI TESTING
 
 from wtforms.validators import DataRequired, Length,NumberRange
 
