@@ -61,8 +61,8 @@ class EMAIL_STATUS(Enum):
 # e dopo è possibile compilare un evento schedulato
 class EVENT_DAYS(Enum):
 
-    DAYS_BEFORE = 5
-    DAYS_AFTER = 5
+    DAYS_BEFORE = 360
+    DAYS_AFTER = 360
 
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
@@ -1650,6 +1650,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -1667,7 +1668,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
     
         return tmp_ControlMap

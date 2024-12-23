@@ -98,16 +98,16 @@ class ForzaForm(FlaskForm):
     
 
 class CicatriceForm(FlaskForm):
-    aderente = SelectField('Aderente', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
-    distasi_ferita = SelectField('Distasi Ferita', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
-    tinel = SelectField('Tinel', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    aderente = SelectField('Aderente', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    distasi_ferita = SelectField('Distasi Ferita', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    tinel = SelectField('Tinel', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
 class AltroForm(FlaskForm):
     complicanze = SelectField('Complicanze', choices=[('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="CRPS", render_kw={'class': 'form-control'}, validators=None)
     note= StringField('Note', render_kw={'class': 'form-control'}, validators=None)
 
 class GuarigioneOsseaForm(FlaskForm):
-    guarigione = SelectField('Guarigione Ossea', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    guarigione = SelectField('Guarigione Ossea', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
     data_guarigione = StringField('Data Guarigione', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
     options = SelectField('Opzioni', choices=[("radiografia", 'radiografia'), ("tomogragia_computerizzata", 'tomogragia computerizzata'),("risonanza_magnetica", 'risonanza magnetica')], default="radiografia", render_kw={'class': 'form-control'}, validators=None) 
 
@@ -240,7 +240,7 @@ class TreatmentForm(FlaskForm):
     prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
     
     #8
-    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value, render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
+    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value + "Valori [0,4]", render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
     
     #9
     sensibilita_volare = HiddenField('sensibilita_volare', render_kw={'class': 'form-control'}, validators=None)
@@ -248,13 +248,13 @@ class TreatmentForm(FlaskForm):
     sensibilita_dorsale = HiddenField('sensibilita_dorsale', render_kw={'class': 'form-control'}, validators=None)
     
     #10
-    edema = SelectField('Edema', choices=[(1, 'Yes'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    edema = SelectField('Edema', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
     
     #11
     cicatrice =  FieldList(FormField(CicatriceForm),min_entries=1, max_entries=1)
     
     #12
-    tutore = SelectField('Tutore', choices=[(1, 'Yes'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
+    tutore = SelectField('Tutore', choices=[(1, 'SI'), (0, 'No'),(2,"Altro")], default=0, render_kw={'class': 'form-control'}, validators=None)
     #13
     altro = FieldList(FormField(AltroForm),min_entries=1, max_entries=1)
 

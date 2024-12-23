@@ -26,9 +26,7 @@
         {{ form.altro.label }}
         {{ form.altro }}
          
-        {% if form.errors %}
-        {{ form.errors }}
-        {% endif %}
+      
         
         {{ form.orario_primo_controllo.label }}
         {{ form.orario_primo_controllo(id='timepicker') }}
@@ -46,7 +44,10 @@
         
 
         {{ form.submit_chirurgico_form(style="display:block; margin-top:15px;") }}
-    
+        
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
     </form>    
       
 
