@@ -27,6 +27,8 @@
         {{ form.treatment_options(id="tipologia_trattamento") }}
         
         <div id="non_chirurgico">
+
+           
             {{ form.tipologia.label(style="display:block;margin-top:15px;") }}
             {{ form.tipologia }}
 
@@ -152,10 +154,10 @@
             
             $("#classificazione_radiografica_diafisaria").hide();
 
-            if(selectedValue == "2"){
+            if(selectedValue == "diafisaria"){
                 $("#classificazione_radiografica_diafisaria").show();
             }
-            if(selectedValue == "1"){
+            else{
                 $("#classificazione_radiografica_diafisaria").hide();
             }    
         }

@@ -134,9 +134,9 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Gesso Chiuso'),
-            ('2', 'Valva Gessata'),
-            ('3', 'Tutore in Termoplastica'), 
+            ('gesso_chiuso', 'Gesso Chiuso'),
+            ('valva_gessata', 'Valva Gessata'),
+            ('tutore_termoplastica', 'Tutore in Termoplastica'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -168,8 +168,8 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'MCPj Estese Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Flesse'),
-            ('2', 'Estese'), 
+            ('flesse', 'Flesse'),
+            ('estese', 'Estese'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -190,8 +190,8 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'PIPj Estese Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Flesse'),
-            ('2', 'Estese'), 
+            ('flesse', 'Flesse'),
+            ('estese', 'Estese'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -203,10 +203,10 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Fili di Kirschner',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'endomidoallre'),
-            ('2', 'anterogradi'),
-            ('3', 'endomidollare retrogradi'),
-            ('4', 'trasversi'), 
+            ('endomidollare', 'endomidoallre'),
+            ('anterogradi', 'anterogradi'),
+            ('endomidollare_retrogradi', 'endomidollare retrogradi'),
+            ('trasversi', 'trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -216,8 +216,8 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Viti',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'endomidoallre'),
-            ('2', 'lag'),
+            ('endomidollare', 'endomidoallre'),
+            ('lag', 'lag'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -227,10 +227,10 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'classificazione radiografica',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Prossimale'),
-            ('2', 'Diafisarisa'),
-            ('3', 'Sottocapitata'),
-             ('4', 'Distale Articolare'), 
+            ('prossimale', 'Prossimale'),
+            ('diafisaria', 'Diafisarisa'),
+            ('sottocapitata', 'Sottocapitata'),
+             ('distale_articolare', 'Distale Articolare'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -240,8 +240,8 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'classificazione radiografica',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Trasversa'),
-            ('2', 'Obliqua'), 
+            ('trasversa', 'Trasversa'),
+            ('obliqua', 'Obliqua'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
