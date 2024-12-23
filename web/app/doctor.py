@@ -815,9 +815,9 @@ def event_details(row_id,event_in_range):
                 if(key != CONTROLS.DATA_FRATTURA.value and key != CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
                     setattr(pathology_db, key, form.data[key])
                 if(key == CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
-                    
-                    data_inizio_mobilizzazione= getDateInYMD(form.data[key])
-                    setattr(pathology_parent, key, data_inizio_mobilizzazione)
+                    if(form.data[key]):
+                        data_inizio_mobilizzazione= getDateInYMD(form.data[key])
+                        setattr(pathology_parent, key, data_inizio_mobilizzazione)
             
             # una volta inserito i valori il controllo si chiude e non può essere modificato
             pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
