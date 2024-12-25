@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<div>
+<div class="row">
   <div class="col-md-12 mb-12 col-lg-12">
 
     {% include 'general/pathology_form_post.html' %}
@@ -12,6 +12,111 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12 mb-12 col-lg-12">
+    <div>
+      <button class="btn btn-success fixed-button" type="button" id="generate-full-pdf">Genera PDF</button>
+    </div>
+    <div>
+      <button type="button" id="submit-btn">Generate PDF</button>
+      <div id="response-message" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+
+  $(document).ready(function () {
+    $("#generate-full-pdf").click(function () {
+        // Get the HTML content of the current page
+        var formClone = $("#form").clone();
+
+            // Update the form clone to include user-input values
+            formClone.find("input, textarea, select").each(function () {
+                if ($(this).is(":checkbox") || $(this).is(":radio")) {
+                    // For checkboxes and radio buttons
+                    if ($(this).is(":checked")) {
+                        $(this).attr("checked", true);
+                    } else {
+                        $(this).removeAttr("checked");
+                    }
+                } else {
+                    // For text, email, textarea, and other inputs
+                    $(this).attr("value", $(this).val());
+                }
+            });
+
+            // Get the updated form HTML
+            var formHtml = formClone.prop("outerHTML");
+
+        // Send the HTML to the server
+        $.ajax({
+            url: "/generate_page_pdf/{{row_id}}",
+            method: "POST",
+            headers: {
+              "X-CSRFToken": $("input[name=csrf_token]").val(), // Add CSRF token in headers
+            },
+            contentType: "application/json",
+            data: JSON.stringify({ html: formHtml }),
+            success: function (response) {
+                // Redirect to the PDF download link
+                window.location.href =  "/static/pdf_files/"+ response.filename;
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    });
+});
+
+  $(document).ready(function () {
+      $("#submit-btn").click(function () {
+          // Collect form data as a JSON object
+          var formData = {};
+          $("#form")
+              .serializeArray()
+              .forEach(function (field) {
+                  formData[field.name] = field.value;
+              });
+          
+              console.log("FORM DATA",formData);
+          // Send AJAX POST request
+          $.ajax({
+              url: "/generate_pdf",
+              method: "POST",
+              headers: {
+                "X-CSRFToken": $("input[name=csrf_token]").val(), // Add CSRF token in headers
+              },
+              contentType: "application/json",
+              data: JSON.stringify(formData),
+              success: function (response) {
+                  // Display success message and link to the generated PDF
+                  //$("#response-message").html(
+                  //    `<p>${response.message}</p><p><a href="${response.pdf_path}" target="_blank">Download PDF</a></p>`
+                  //);
+
+                  const downloadUrl = '/download/' + response.pdf_filename;
+
+                  // Create a temporary link to trigger the download
+                  const link = document.createElement('a');
+                  link.href = downloadUrl;  // Set the download URL to the response filename
+                  link.download = response.pdf_filename;  // Set the filename for the download
+                  
+                  // Trigger the download by simulating a click
+                  link.click();
+
+              },
+              error: function (xhr, status, error) {
+                  $("#response-message").html("<p>An error occurred.</p>");
+                  console.error("Error:", error);
+                  console.error("Response:", xhr.responseText);
+              },
+          });
+      });
+  });
+</script>
 
 <script>
     // Pass Jinja variable to JavaScript

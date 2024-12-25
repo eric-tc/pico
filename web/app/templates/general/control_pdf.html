@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            margin: 20px;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
+        .field span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form Submission Data</h1>
+    <div class="content">
+        {% for key, value in form_data.items() %}
+            {% if key not in ['csrf_token', 'submit'] %}
+                <div class="field">
+                    <span>{{ key|capitalize }}:</span> {{ value }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

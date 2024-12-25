@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session
+from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session,make_response
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
@@ -14,6 +14,7 @@ import json
 from .internal_data import get_pathology_type_dict,EVENT_DAYS
 from .query_sql import select_next_treatments
 import sys
+from weasyprint import HTML
 
 doctor = Blueprint('doctor', __name__)
 
@@ -843,6 +844,60 @@ def event_details(row_id,event_in_range):
                            data_inizio_mobilizzazione=data_inizio_mobilizzazione)
 
 
+
+import os
+
+PDF_DIRECTORY = 'app/static/pdf_files/'
+if not os.path.exists(PDF_DIRECTORY):
+    os.makedirs(PDF_DIRECTORY)
+
+@doctor.route("/generate_pdf", methods=["POST"])
+def generate_pdf():
+    form_data = request.json  # Receive form data as JSON
+
+    # Render the HTML template with form data
+    rendered_html = render_template("general/control_pdf.html", form_data=form_data)
+
+    # Generate the PDF
+    pdf = HTML(string=rendered_html).write_pdf()
+
+    # response = make_response(pdf)
+    # response.headers["Content-Type"] = "application/pdf"
+    # response.headers["Content-Disposition"] = "inline; filename=form_data.pdf"
+
+    # Save the PDF on the server (optional)
+    pdf_path = os.path.join(PDF_DIRECTORY, "generated_form_data.pdf")
+    with open(pdf_path, "wb") as pdf_file:
+        pdf_file.write(pdf)
+
+    return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
+
+
+@doctor.route('/generate_page_pdf/<row_id>', methods=['POST'])
+def generate_page_pdf(row_id):
+    # Get the HTML content from the AJAX request
+    data = request.get_json()
+    html_content = data.get("html")
+
+    print("Generate PDF")
+    # Generate the PDF
+    filename = f"report_{row_id}.pdf"
+    pdf_path = os.path.join(PDF_DIRECTORY, filename)
+    HTML(string=html_content).write_pdf(pdf_path)
+
+    print("Finish PDF")
+    
+    # Return the filename for download
+    return jsonify({"filename": filename})
+
+
+from flask import Flask, send_from_directory, jsonify
+
+@doctor.route('/download/',methods=["GET","POST"])   
+def download_pdf():
+    # Serve the generated PDF file for download
+    return send_from_directory("static", "form.pdf", as_attachment=True)
+    #return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
 # ROUTE DI TESTING
 
 from wtforms.validators import DataRequired, Length,NumberRange
