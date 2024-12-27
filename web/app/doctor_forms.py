@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField,IntegerField
+from wtforms import StringField, SubmitField,IntegerField,TextAreaField
 from wtforms.validators import DataRequired, Length,NumberRange
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField
 from .internal_data_enum_pathologies import CONTROLS,OPTION_NULL
@@ -561,4 +561,9 @@ class MedicalTreatmentForm(FlaskForm):
 
 
 
+class CustomControlForm(FlaskForm):
     
+    note = TextAreaField('Inserisci le tue note',render_kw={'class': 'form-control'}
+    )
+
+    submit_custom_control = SubmitField("Inserisci", render_kw={'class': 'btn btn-success',"style":"max-width: 200px;"})

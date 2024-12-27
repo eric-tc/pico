@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 mb-8 col-lg-8">
+
+        <form  id="form" method="POST">
+            {{ form.csrf_token }}
+
+        {{ form.note.label(style="display:block;margin-top:15px;") }}
+        {{ form.note }}
+
+
+        {{ form.submit_custom_control(style="display:block; margin-top:15px;") }}
+
+      
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+

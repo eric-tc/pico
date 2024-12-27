@@ -5,7 +5,7 @@ from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,
 from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
-from .doctor_forms import MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm
+from .doctor_forms import MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm,CustomControlForm
 import datetime
 from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
@@ -537,6 +537,20 @@ def medical_treatment():
                            form=form,
                            week_to_add=pathology_enum.value[2].weeks_to_first_control)
 
+
+"""
+Route per insiere un controllo personalizzato in base alla patologia.
+Questa route è chiamata dalla storia del paziente selezionando il bottone "Aggiungi Controllo"
+
+"""
+
+@doctor.route('/insert_custom_control/',methods=["GET","POST"])
+@login_required
+def insert_custom_control():
+
+    form= CustomControlForm()
+
+    return render_template('doctor/trattamenti/custom_control.html',form=form)
 
 
 # ------------------------------ROUTE PER MOSTRARE LA STORIA DEL PAZIENTE-------------------------------
