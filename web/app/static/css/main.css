@@ -284,3 +284,22 @@ input {
   right: 50px;     /* Distance from the right of the viewport */
   padding: 10px 20px;
 }
+
+
+table {
+  width: 100%; /* Ensure all tables span the entire width */
+  table-layout: fixed; /* Equal spacing for all columns */
+  border-collapse: collapse; /* Remove extra spacing between cells */
+}
+
+table th, table td {
+  text-align: center; /* Center-align content in all table cells */
+  padding: 10px; /* Add padding for better spacing */
+  word-wrap: break-word; /* Handle long text by wrapping */
+  border: 1px solid #ddd; /* Optional: Add borders for clarity */
+}
+
+table th {
+  background-color: #f8f9fa; /* Optional: Add a background for table headers */
+  font-weight: bold; /* Highlight header cells */
+}
