@@ -15,6 +15,7 @@ from .internal_data import get_pathology_type_dict,EVENT_DAYS
 from .query_sql import select_next_treatments
 import sys
 from weasyprint import HTML
+from .settings_form import SettingsFormDoctor
 
 doctor = Blueprint('doctor', __name__)
 
@@ -69,6 +70,40 @@ def profile():
                            interventi_da_fissare=interventi_da_fissare, 
                            next_treatments=next_treatments)
                           
+
+"""
+Route usata per settare i parametri del dottore. Come Email, cambio password, ecc
+
+"""
+@doctor.route('/settings_doctor',methods=["GET","POST"])
+@login_required
+def settings_doctor():
+
+    form = SettingsFormDoctor()
+    user_data = User.query.get(current_user.id)
+    
+    if form.validate_on_submit():
+        print(form.email.data)
+        user_data.name = form.name.data
+        #check if form.password.data is not empty
+        if form.password.data:
+            user_data.password = generate_password_hash(form.password.data)
+        user_data.phone = form.phone.data
+        db.session.commit()
+        flash('Cambio Dati effettuato con successo')
+        return redirect(url_for('doctor.profile'))
+    
+
+    form.email.data= user_data.email
+    form.name.data= user_data.name
+    form.phone.data= user_data.phone
+    #retrieve data from db and assign to form
+
+    
+    
+
+    return render_template('doctor/settings_doctor.html', form=form,name=current_user.name)
+
 
 # """
 # Route chimata dalla tabella nella sezione profile del prossimo intervento

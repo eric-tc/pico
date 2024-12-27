@@ -10,6 +10,9 @@ from enum import Enum
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_cors import CORS
 from flask_caching import Cache
+
+from flask_migrate import Migrate
+
 #ROLE 1 = DOCTOR
 #ROLE 2 = PATIENT
 
@@ -25,6 +28,7 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.urandom(24)
     app.config["CACHE_TYPE"] = "SimpleCache"
     app.config["CACHE_DEFAULT_TIMEOUT"] = 60
@@ -39,7 +43,9 @@ def create_app():
     app.jinja_env.filters['format_date'] = format_date
 
     db.init_app(app)
-
+    #Migrazioni
+    migrate = Migrate(app, db)
+    
     #Init Cache
     cache = Cache(app)
     

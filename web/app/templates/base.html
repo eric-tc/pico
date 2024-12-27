@@ -109,13 +109,27 @@
             </li>
             {% endif %}
 
-
+          </ul>
             
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             {% if current_user.is_authenticated %}
+          
             <li class="nav-item">
-            <a href="{{ url_for('auth.logout') }}" class="nav-link">
-              Logout
-            </a>
+              {% if current_user.role==1 %}
+                <a href="{{ url_for('doctor.settings_doctor') }}" class="nav-link">
+                  Settings
+                </a>
+              {% endif %}
+              {% if current_user.role==2 %}
+              
+
+              {% endif %}
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ url_for('auth.logout') }}" class="nav-link">
+                  Logout
+                </a>
             </li>
             {% endif %}
           </ul>

@@ -16,8 +16,11 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(300))
     name = db.Column(db.String(120))
     role = db.Column(db.Integer)
+    phone = db.Column(db.String(20))
+    sx_dx_hand = db.Column(db.String(10))
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
     doctor_ids = db.Column(ARRAY(db.Integer))
+
 
 
 class Pathology(db.Model):

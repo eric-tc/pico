@@ -10,6 +10,13 @@ from .query_sql import select_next_treatments
 patient = Blueprint('patient', __name__)
 
 
+@patient.route('/settings_patient')
+@login_required
+def settings_patient():
+
+    return render_template('patient/settings_patient.html', name=current_user.name)
+
+
 @patient.route('/profile_patient')
 @login_required
 def profile_patient():
