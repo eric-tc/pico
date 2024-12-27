@@ -7,6 +7,7 @@ from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
 from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS,PATHOLOGY_STATUS
+from sqlalchemy.dialects.postgresql import JSONB
 
 class User(UserMixin, db.Model):
 
@@ -149,35 +150,35 @@ class PathologyData(db.Model):
     #I valori di queste variabili devono corrispondere ai valori di RIZOARTROSI_CONTROLS dentro internal Data.
     #In questo modo posso accedere a queste variabili utilizzando setattr(myinstance,RIZOARTROSI_CONTROLS....value)  
     
-    mpcj=db.Column(db.JSON)
-    pipj= db.Column(db.JSON)
-    dipj=db.Column(db.JSON)
-    ipj=db.Column(db.JSON)
-    polso=db.Column(db.JSON)
+    mpcj=db.Column(JSONB)
+    pipj= db.Column(JSONB)
+    dipj=db.Column(JSONB)
+    ipj=db.Column(JSONB)
+    polso=db.Column(JSONB)
     vas=db.Column(db.Float)
-    trapezio_metacarpale=db.Column(db.JSON)
-    forza=db.Column(db.JSON)
-    dash=db.Column(db.JSON)
-    prwhe=db.Column(db.JSON)
+    trapezio_metacarpale=db.Column(JSONB)
+    forza=db.Column(JSONB)
+    dash=db.Column(JSONB)
+    prwhe=db.Column(JSONB)
     eaton_littler=db.Column(db.Integer)
     edema=db.Column(db.String(10))
-    sensibilita_volare= db.Column(db.JSON)
-    sensibilita_dorsale= db.Column(db.JSON)
-    cicatrice= db.Column(db.JSON)
+    sensibilita_volare= db.Column(JSONB)
+    sensibilita_dorsale= db.Column(JSONB)
+    cicatrice= db.Column(JSONB)
     tutore = db.Column(db.String(10))
-    altro = db.Column(db.JSON)
-    guarigione_ossea= db.Column(db.JSON)
+    altro = db.Column(JSONB)
+    guarigione_ossea= db.Column(JSONB)
     concesso_inizio_mobilizzazione = db.Column(db.Integer)
     articolazione_stabile = db.Column(db.Integer)
     data_inizio_mobilizzazione = db.Column(db.DateTime,nullable=True)
-    
-
+    #Questo campo è utilizzato per salvare note solitamente su controlli creati dal fisioterapista
+    note= db.Column(JSONB)
     #Campo utilizzati per salvare i diversi parametri 
     #in base alla tipologia di intervento selezionato
-    pre_options = db.Column(db.JSON)
-    chirugico_options = db.Column(db.JSON)
+    pre_options = db.Column(JSONB)
+    chirugico_options = db.Column(JSONB)
     #Ad esempio nello scafoide dopo 6 mesi devo aggiungere dei parametri aggiuntivi
-    post_options= db.Column(db.JSON)
+    post_options= db.Column(JSONB)
     
 
 
