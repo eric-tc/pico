@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="col-md-6 mb-6 col-lg-6">
+    
+    <form  method="POST">
+        {{ form.csrf_token }}
+
+        {{ form.email.label(style="display:block;margin-top:15px;") }}
+        {{ form.email }}
+
+        {{ form.name.label(style="display:block;margin-top:15px;") }}
+        {{ form.name }}
+
+        {{ form.password.label(style="display:block;margin-top:15px;") }}
+        {{ form.password }}
+
+        {{ form.phone.label(style="display:block;margin-top:15px;") }}
+        {{ form.phone }}
+
+        {{ form.sx_dx_hand.label(style="display:block;margin-top:15px;") }}
+        {{ form.sx_dx_hand }}
+
+        {{ form.submit_patient_settings(style="display:block; margin-top:15px;") }}
+        
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+    </form>
+
+</div>
+
+{% endblock %}

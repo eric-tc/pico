@@ -10,16 +10,16 @@ from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList
 class SettingsFormDoctor(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control','readonly': True})
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=35)],render_kw={'class': 'form-control'})
-    password = PasswordField('Password', validators=[DataRequired()],render_kw={'class': 'form-control'})
+    password = PasswordField('Password',render_kw={'class': 'form-control'})
     phone = StringField('Phone', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
-    submit_doctor_settings = SubmitField('Submit',render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
+    submit_doctor_settings = SubmitField('Aggiorna',render_kw={'class': 'btn btn-success',"style":"max-width: 200px;"})
 
 class SettingsFormPatient(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=35)],render_kw={'class': 'form-control'})
     phone = StringField('Phone', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
-    password = PasswordField('Password', validators=[DataRequired()],render_kw={'class': 'form-control'})
+    password = PasswordField('Password',render_kw={'class': 'form-control'})
     sx_dx_hand= SelectField('Mano Dominante', choices=[('sx', 'Sinistro'), ('dx', 'Destro')],render_kw={'class': 'form-control'})
-    submit = SubmitField('Submit')
+    submit_patient_settings = SubmitField('Aggiorna',render_kw={'class': 'btn btn-success',"style":"max-width: 200px;"})
 
 

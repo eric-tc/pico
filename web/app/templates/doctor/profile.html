@@ -45,18 +45,18 @@
     <table id="patientTable" class="table">
       <thead>
           <tr class="text-center">
-              <th>ID</th>
               <th>Name</th>
               <th>Nuovo Controllo</th>
               <th>Storia Paziente</th>
+              <th>Settings</th>
               <th>Azioni</th>
+
               
           </tr>
       </thead>
       <tbody>
           {% for link, name in patients_list %}
               <tr class="patientRow text-center" data-patient-id="{{ link.id}}">
-                  <td >{{ link.id }}</td>
                   <td>{{ name }}</td>
                   <td>
                     <form method="get" action="{{ url_for('doctor.insert_pre_medical_treatment', patient_id=link.id_patient, patient_name=name) }}">
@@ -68,6 +68,13 @@
                     <form method="get" action="{{ url_for('doctor.patient_treatment_list', patient_id=link.id_patient, patient_name=name) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-primary" type="submit">Vedi</button>
+                      </form>
+                  </td>
+
+                  <td>
+                    <form method="get" action="{{ url_for('patient.settings_patient_doctor', patient_id=link.id_patient) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-success" type="submit">Cambia</button>
                       </form>
                   </td>
                   <td><button class="btn btn-danger sendLinkPatient" >Rimuovi</button></td>
