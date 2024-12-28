@@ -1799,6 +1799,7 @@ class PATHOLOGY_STATUS(Enum):
     PRIMA= (1,"Prima del Trattamento")
     DURANTE= (2,"Trattamento")
     DOPO = (3,"Post Trattamento")
+    PERSONALE= (4,"Personale")
     
 class PATHOLOGY_TYPE(Enum):
     RIZOARTROSI_TRAPEZIECTOMIA = (1,PATHOLOGY.RIZOARTROSI,"Trapeziectomia e artoplastica in sospensione con APL")

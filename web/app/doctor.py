@@ -542,13 +542,28 @@ def medical_treatment():
 Route per insiere un controllo personalizzato in base alla patologia.
 Questa route è chiamata dalla storia del paziente selezionando il bottone "Aggiungi Controllo"
 
+Row_id: id della riga della tabella patology_data con next_control_number uguale a 0
+   
 """
 
-@doctor.route('/insert_custom_control/',methods=["GET","POST"])
+@doctor.route('/insert_custom_control/<row_id>',methods=["GET","POST"])
 @login_required
-def insert_custom_control():
-
+def insert_custom_control(row_id):
     form= CustomControlForm()
+
+    print(f"Row id {row_id}")
+
+    if form.validate_on_submit():
+
+       row_original_control = PathologyData.query.get(row_id)
+
+       new_row = PathologyData(id_doctor= row_original_control.id_doctor,
+                               id_patient= row_original_control.id_patient,
+                               id_pathology= row_original_control.id_pathology,
+                               id_pathology_type= row_original_control.id_pathology_type,
+                               id_pathology_status= row_original_control.id_pathology_status)
+           
+
 
     return render_template('doctor/trattamenti/custom_control.html',form=form)
 
@@ -575,13 +590,15 @@ def patient_treatment_list(patient_id,patient_name):
     #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
     # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
 
-    pathology_list=(db.session.query(PathologyData.id_patient,
+    pathology_list=(db.session.query(
+                                    PathologyData.id_patient,
                                      User.name,
                                      Pathology.id,
                                      Pathology.name,
                                      PathologyType.id,
                                      PathologyType.name,
-                                     PathologyData.created_at)
+                                     PathologyData.created_at,
+                                     PathologyData.id)
     .join(Pathology, Pathology.id == PathologyData.id_pathology)
     .join(PathologyType, PathologyType.id == PathologyData.id_pathology_type)
     .join(User,User.id==patient_id)
