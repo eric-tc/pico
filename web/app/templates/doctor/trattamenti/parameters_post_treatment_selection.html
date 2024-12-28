@@ -24,119 +24,90 @@
 <script>
 
 
+  function retrieve_form_data(){
+    var formClone = $("#form-post-treatment").clone();
+
+    let selectElement = document.getElementById("cicatrice-0-aderente");
+
+    // Get the current value of the select element
+    let selectedValue = selectElement.value;  
+
+    console.log("SELECTED VALUE ", selectedValue);
+
+    // Update the form clone to include user-input values
+    formClone.find("input, textarea, select").each(function () {
+      if ($(this).is(":checkbox") || $(this).is(":radio")) {
+          // For checkboxes and radio buttons
+          if ($(this).is(":checked")) {
+              $(this).attr("checked", true);
+          } else {
+              $(this).removeAttr("checked");
+          }
+      } else if ($(this).is("select")) {
+          // For select elements
+          console.log($(this).attr("id"), $(this).val());
+
+          let selectElement = document.getElementById($(this).attr("id"));
+          let selectedValue = selectElement.value;
+          //Cicla su tutte le opzioni del select  
+          $(this).find("option").each(function () {
+
+            //Questo setta il valore selected a true solo opzione che ha il valore uguale a quello selezionato
+            if ($(this).val() == selectedValue) {
+                  $(this).attr("selected", true);
+              } else {
+                  $(this).removeAttr("selected");
+              }
+          });
+      } else {
+          // For text, email, textarea, and other inputs
+          console.log("VALUE", $(this).val());
+          $(this).attr("value", $(this).val());
+      }
+    });
+
+    return formClone;
+  }
+  function generate_full_pdf(){
+    
+    
+    var formClone = retrieve_form_data();
+        // Get the updated form HTML
+    var formHtml = formClone.prop("outerHTML");
+        
+    // Send the HTML to the server
+    $.ajax({
+        url: "/generate_page_pdf/{{row_id}}",
+        method: "POST",
+        headers: {
+          "X-CSRFToken": $("input[name=csrf_token]").val(), // Add CSRF token in headers
+        },
+        contentType: "application/json",
+        data: JSON.stringify({ html: formHtml }),
+        success: function (response) {
+            // Redirect to the PDF download link
+            window.location.href =  "/static/pdf_files/"+ response.filename;
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+
+  }
+
   $(document).ready(function () {
     $("#generate-full-pdf").click(function () {
         // Get the HTML content of the current page
-        var formClone = $("#form").clone();
-
-        let selectElement = document.getElementById("cicatrice-0-aderente");
-
-        // Get the current value of the select element
-        let selectedValue = selectElement.value;  
-
-        console.log("SELECTED VALUE ", selectedValue);
-
-        // Update the form clone to include user-input values
-        formClone.find("input, textarea, select").each(function () {
-          if ($(this).is(":checkbox") || $(this).is(":radio")) {
-              // For checkboxes and radio buttons
-              if ($(this).is(":checked")) {
-                  $(this).attr("checked", true);
-              } else {
-                  $(this).removeAttr("checked");
-              }
-          } else if ($(this).is("select")) {
-              // For select elements
-              console.log($(this).attr("id"), $(this).val());
-
-              let selectElement = document.getElementById($(this).attr("id"));
-              let selectedValue = selectElement.value;
-              //Cicla su tutte le opzioni del select  
-              $(this).find("option").each(function () {
-
-                //Questo setta il valore selected a true solo opzione che ha il valore uguale a quello selezionato
-                if ($(this).val() == selectedValue) {
-                      $(this).attr("selected", true);
-                  } else {
-                      $(this).removeAttr("selected");
-                  }
-              });
-          } else {
-              // For text, email, textarea, and other inputs
-              console.log("VALUE", $(this).val());
-              $(this).attr("value", $(this).val());
-          }
-        });
-
-          alert("PDF generato con successo");
-            // Get the updated form HTML
-            var formHtml = formClone.prop("outerHTML");
-            
-        // Send the HTML to the server
-        $.ajax({
-            url: "/generate_page_pdf/{{row_id}}",
-            method: "POST",
-            headers: {
-              "X-CSRFToken": $("input[name=csrf_token]").val(), // Add CSRF token in headers
-            },
-            contentType: "application/json",
-            data: JSON.stringify({ html: formHtml }),
-            success: function (response) {
-                // Redirect to the PDF download link
-                window.location.href =  "/static/pdf_files/"+ response.filename;
-            },
-            error: function (xhr, status, error) {
-                console.error("Error:", error);
-            }
-        });
+        generate_full_pdf();
     });
 });
 
-  $(document).ready(function () {
-      $("#submit-btn").click(function () {
-          // Collect form data as a JSON object
-          var formData = {};
-          $("#form")
-              .serializeArray()
-              .forEach(function (field) {
-                  formData[field.name] = field.value;
-              });
-          
-              console.log("FORM DATA",formData);
-          // Send AJAX POST request
-          $.ajax({
-              url: "/generate_pdf",
-              method: "POST",
-              headers: {
-                "X-CSRFToken": $("input[name=csrf_token]").val(), // Add CSRF token in headers
-              },
-              contentType: "application/json",
-              data: JSON.stringify(formData),
-              success: function (response) {
-                  // Display success message and link to the generated PDF
-                  //$("#response-message").html(
-                  //    `<p>${response.message}</p><p><a href="${response.pdf_path}" target="_blank">Download PDF</a></p>`
-                  //);
+document.getElementById("form-post-treatment").addEventListener("submit", function (e) {
+    
+    generate_full_pdf();
+});
 
-                  const downloadUrl = '/download/' + response.pdf_filename;
-
-                  // Create a temporary link to trigger the download
-                  const link = document.createElement('a');
-                  link.href = downloadUrl;  // Set the download URL to the response filename
-                  link.download = response.pdf_filename;  // Set the filename for the download
-                  
-                  // Trigger the download by simulating a click
-                  link.click();
-
-              },
-              error: function (xhr, status, error) {
-                  $("#response-message").html("<p>An error occurred.</p>");
-                  console.error("Error:", error);
-                  console.error("Response:", xhr.responseText);
-              },
-          });
-      });
-  });
+ 
 </script>
 
 <script>
