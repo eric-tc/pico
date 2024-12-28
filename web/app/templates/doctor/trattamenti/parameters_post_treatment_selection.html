@@ -17,10 +17,6 @@
     <div>
       <button class="btn btn-success fixed-button" type="button" id="generate-full-pdf">Genera PDF</button>
     </div>
-    <div>
-      <button type="button" id="submit-btn">Generate PDF</button>
-      <div id="response-message" style="margin-top: 20px;"></div>
-    </div>
   </div>
 </div>
 
@@ -33,24 +29,49 @@
         // Get the HTML content of the current page
         var formClone = $("#form").clone();
 
-            // Update the form clone to include user-input values
-            formClone.find("input, textarea, select").each(function () {
-                if ($(this).is(":checkbox") || $(this).is(":radio")) {
-                    // For checkboxes and radio buttons
-                    if ($(this).is(":checked")) {
-                        $(this).attr("checked", true);
-                    } else {
-                        $(this).removeAttr("checked");
-                    }
-                } else {
-                    // For text, email, textarea, and other inputs
-                    $(this).attr("value", $(this).val());
-                }
-            });
+        let selectElement = document.getElementById("cicatrice-0-aderente");
 
+        // Get the current value of the select element
+        let selectedValue = selectElement.value;  
+
+        console.log("SELECTED VALUE ", selectedValue);
+
+        // Update the form clone to include user-input values
+        formClone.find("input, textarea, select").each(function () {
+          if ($(this).is(":checkbox") || $(this).is(":radio")) {
+              // For checkboxes and radio buttons
+              if ($(this).is(":checked")) {
+                  $(this).attr("checked", true);
+              } else {
+                  $(this).removeAttr("checked");
+              }
+          } else if ($(this).is("select")) {
+              // For select elements
+              console.log($(this).attr("id"), $(this).val());
+
+              let selectElement = document.getElementById($(this).attr("id"));
+              let selectedValue = selectElement.value;
+              //Cicla su tutte le opzioni del select  
+              $(this).find("option").each(function () {
+
+                //Questo setta il valore selected a true solo opzione che ha il valore uguale a quello selezionato
+                if ($(this).val() == selectedValue) {
+                      $(this).attr("selected", true);
+                  } else {
+                      $(this).removeAttr("selected");
+                  }
+              });
+          } else {
+              // For text, email, textarea, and other inputs
+              console.log("VALUE", $(this).val());
+              $(this).attr("value", $(this).val());
+          }
+        });
+
+          alert("PDF generato con successo");
             // Get the updated form HTML
             var formHtml = formClone.prop("outerHTML");
-
+            
         // Send the HTML to the server
         $.ajax({
             url: "/generate_page_pdf/{{row_id}}",

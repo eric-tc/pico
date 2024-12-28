@@ -957,6 +957,7 @@ def generate_page_pdf(row_id):
     data = request.get_json()
     html_content = data.get("html")
 
+    print(html_content)
     print("Generate PDF")
     # Generate the PDF
     filename = f"report_{row_id}.pdf"
