@@ -19,6 +19,11 @@ from .settings_form import SettingsFormDoctor
 
 doctor = Blueprint('doctor', __name__)
 
+import os
+
+PDF_DIRECTORY = 'app/static/pdf_files/'
+if not os.path.exists(PDF_DIRECTORY):
+    os.makedirs(PDF_DIRECTORY)
 
 def remove_session_data():
     
@@ -888,6 +893,23 @@ def event_details(row_id,event_in_range):
         if form.submit_form.data:
             print("SUBMIT FORM")
             print(form.data)
+
+            #Creo il PDF Dai dati parsati del form submit
+
+            html_content_original = form.hidden_html.data
+
+            if html_content_original:
+                try:
+                    html_content = request.get_json(silent=True) or eval(html_content_original)
+
+                    filename = f"report_{row_id}.pdf"
+                    pdf_path = os.path.join(PDF_DIRECTORY, filename)
+                    HTML(string=html_content.get("html")).write_pdf(pdf_path)
+                except Exception as e:
+                    print(f"Error parsing form data: {e}")
+                    parsed_data = {}
+
+            #Inserisco i dati a database della patologia inserita
             for key in controls_map.keys():
                 
                 #escludi per data_frattura perchè esiste come controllo, ma nel POST non è mai presente
@@ -923,11 +945,7 @@ def event_details(row_id,event_in_range):
 
 
 
-import os
 
-PDF_DIRECTORY = 'app/static/pdf_files/'
-if not os.path.exists(PDF_DIRECTORY):
-    os.makedirs(PDF_DIRECTORY)
 
 @doctor.route("/generate_pdf", methods=["POST"])
 def generate_pdf():

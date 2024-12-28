@@ -270,6 +270,10 @@ class TreatmentForm(FlaskForm):
     #17
     data_inizio_mobilizzazione = StringField('Data Inizio Mobilizzazione Attiva', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
 
+    #18
+    #utilizzato per passare tutto il form html per essere salvato come PDF
+    hidden_html = HiddenField('hidden_html', render_kw={'class': 'form-control'}, validators=None)
+    
     submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
 
     def __init__(self, selected_indices=None,controls_map=None, *args, **kwargs):

@@ -103,8 +103,12 @@
 });
 
 document.getElementById("form-post-treatment").addEventListener("submit", function (e) {
-    
-    generate_full_pdf();
+  
+  var formClone = retrieve_form_data();
+  var formHtml = formClone.prop("outerHTML");
+        
+  // Assign serialized data to the hidden input field
+  document.getElementById("hidden_html").value = JSON.stringify({ html: formHtml });
 });
 
  
