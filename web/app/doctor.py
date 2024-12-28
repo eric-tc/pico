@@ -555,13 +555,25 @@ def insert_custom_control(row_id):
 
     if form.validate_on_submit():
 
-       row_original_control = PathologyData.query.get(row_id)
+        row_original_control = PathologyData.query.get(row_id)
 
-       new_row = PathologyData(id_doctor= row_original_control.id_doctor,
+        new_row = PathologyData(id_doctor= row_original_control.id_doctor,
                                id_patient= row_original_control.id_patient,
                                id_pathology= row_original_control.id_pathology,
                                id_pathology_type= row_original_control.id_pathology_type,
-                               id_pathology_status= row_original_control.id_pathology_status)
+                               id_pathology_status= PATHOLOGY_STATUS.PERSONALE.value[0],
+                               id_created_from= row_id,
+                               next_control_number=-1,
+                               note=json.dumps(form.note.data),
+                               next_control_date= datetime.utcnow(),
+                               next_control_time= "12:00",
+                               id_control_status=CONTROL_STATUS.CLOSED.value[0],)
+       
+        db.session.add(new_row)
+        db.session.commit()
+
+        flash('Controllo inserito con successo')
+        return redirect(url_for('doctor.profile'))
            
 
 
