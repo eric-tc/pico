@@ -17,7 +17,7 @@
                 console.log("Event infoEvent",info.event.extendedProps.closed);
                 
                 if(info.event.extendedProps.closed=="2"){
-                    alert("Evento chiuso");
+                    window.location.href = '/next_controls/'+info.event.id+ "/2";
                     return;
                 }
                 else{
@@ -46,7 +46,7 @@
                     else{
 
                         if (eventDate < currentDate) {
-                            alert("Evento già trascorso");
+                            window.location.href = '/next_controls/'+info.event.id+ "/2";
                         } else if (eventDate > currentDate) {
                             
                             window.location.href = '/next_controls/'+info.event.id+ "/0";

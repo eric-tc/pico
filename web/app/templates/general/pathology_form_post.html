@@ -48,46 +48,42 @@
 
 </form>
 
-<script src="{{ url_for('static', filename='js/datepicker_custom_no_date_restriction.js') }}"></script>
+<div class="row">
+    <div class="col-md-12 mb-12 col-lg-12">
+      <div>
+        <button class="btn btn-success fixed-button" type="button" id="generate-full-pdf">Genera PDF</button>
+      </div>
+    </div>
+  </div>
+
+
+{% if event_in_range=="2" %}
+<div class="row">
+    
+    <h4>Evento chiuso. Puoi Scaricare il PDF</h4>
+
+    <div class="col-md-12 mb-12 col-lg-12">
+        <div>
+          <button class="btn btn-success" type="button" id="download_pdf">Scarica PDF</button>
+        </div>
+      </div>
+</div>
 
 <script>
-    // Function to calculate the mean of the three grip values
-    function calculateMeanGrip() {
-        // Get the values of the three input fields
-        const misurazione1 = parseFloat(document.getElementById('misurazione_1_grip').value) || 0;
-        const misurazione2 = parseFloat(document.getElementById('misurazione_2_grip').value) || 0;
-        const misurazione3 = parseFloat(document.getElementById('misurazione_3_grip').value) || 0;
+    $(document).ready(function(){
+        console.log("Hide button");
+        $("#generate-full-pdf").css("display", "none");
+    });
 
-        // Calculate the mean
-        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
-
-        // Set the value of the readonly grip field
-        document.getElementById('grip').value = mean.toFixed(2); // Rounded to 2 decimal places
-    }
-
-    function calculateMeanFinger() {
-        // Get the values of the three input fields
-        const misurazione1 = parseFloat(document.getElementById('misurazione_1_finger').value) || 0;
-        const misurazione2 = parseFloat(document.getElementById('misurazione_2_finger').value) || 0;
-        const misurazione3 = parseFloat(document.getElementById('misurazione_3_finger').value) || 0;
-
-        // Calculate the mean
-        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
-
-        // Set the value of the readonly grip field
-        document.getElementById('finger').value = mean.toFixed(2); // Rounded to 2 decimal places
-    }
-
-
-    //Finger 
-
-    document.getElementById('misurazione_1_finger').addEventListener('input', calculateMeanFinger);
-    document.getElementById('misurazione_2_finger').addEventListener('input', calculateMeanFinger);
-    document.getElementById('misurazione_3_finger').addEventListener('input', calculateMeanFinger);
-
-    // Add event listeners to the three input fields to recalculate the mean on input change
-    document.getElementById('misurazione_1_grip').addEventListener('input', calculateMeanGrip);
-    document.getElementById('misurazione_2_grip').addEventListener('input', calculateMeanGrip);
-    document.getElementById('misurazione_3_grip').addEventListener('input', calculateMeanGrip);
+    $("#download_pdf").click(function () {
+        
+        window.location.href =  "/static/pdf_files/"+ "report_{{row_id}}.pdf";
+            
+    });
 
 </script>
+{% endif %}
+
+
+<script src="{{ url_for('static', filename='js/datepicker_custom_no_date_restriction.js') }}"></script>
+

@@ -106,3 +106,45 @@
         {% endfor %}
     </div>
 </fieldset>
+
+<script>
+    // Function to calculate the mean of the three grip values
+    function calculateMeanGrip() {
+        // Get the values of the three input fields
+        const misurazione1 = parseFloat(document.getElementById('misurazione_1_grip').value) || 0;
+        const misurazione2 = parseFloat(document.getElementById('misurazione_2_grip').value) || 0;
+        const misurazione3 = parseFloat(document.getElementById('misurazione_3_grip').value) || 0;
+
+        // Calculate the mean
+        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
+
+        // Set the value of the readonly grip field
+        document.getElementById('grip').value = mean.toFixed(2); // Rounded to 2 decimal places
+    }
+
+    function calculateMeanFinger() {
+        // Get the values of the three input fields
+        const misurazione1 = parseFloat(document.getElementById('misurazione_1_finger').value) || 0;
+        const misurazione2 = parseFloat(document.getElementById('misurazione_2_finger').value) || 0;
+        const misurazione3 = parseFloat(document.getElementById('misurazione_3_finger').value) || 0;
+
+        // Calculate the mean
+        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
+
+        // Set the value of the readonly grip field
+        document.getElementById('finger').value = mean.toFixed(2); // Rounded to 2 decimal places
+    }
+
+
+    //Finger 
+
+    document.getElementById('misurazione_1_finger').addEventListener('input', calculateMeanFinger);
+    document.getElementById('misurazione_2_finger').addEventListener('input', calculateMeanFinger);
+    document.getElementById('misurazione_3_finger').addEventListener('input', calculateMeanFinger);
+
+    // Add event listeners to the three input fields to recalculate the mean on input change
+    document.getElementById('misurazione_1_grip').addEventListener('input', calculateMeanGrip);
+    document.getElementById('misurazione_2_grip').addEventListener('input', calculateMeanGrip);
+    document.getElementById('misurazione_3_grip').addEventListener('input', calculateMeanGrip);
+
+</script>
