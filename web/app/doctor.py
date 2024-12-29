@@ -397,7 +397,7 @@ def medical_treatment():
 
     if form.validate_on_submit():
 
-        
+   
         surgery_date = getDateInYMD(request.form.get("data_intervento"))
         
         pathology_id_type =None

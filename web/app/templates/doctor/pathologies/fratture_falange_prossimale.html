@@ -51,32 +51,39 @@
         </div>
 
         <div id="chirurgico">
-            {{ form.fili_kirschner.label(style="display:block;margin-top:15px;") }}
-            {{ form.fili_kirschner }}
 
-            {{ form.viti.label(style="display:block;margin-top:15px;") }}
-            {{ form.viti }}
+            {{ form.tipologia_chirurgica.label(style="display:block;margin-top:15px;") }}
+            {{ form.tipologia_chirurgica(id="tipologia_chirurgica") }}
 
-            {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
-            {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
-            
-            <div id="classificazione_radiografica_prossimale">   
-                {{ form.prossimale.label(style="display:block;margin-top:15px;") }}
-                {{ form.prossimale }}
+            <div id="fili_kirshner" style="display:none;">
+                {{ form.fili_kirschner.label(style="display:block;margin-top:15px;") }}
+                {{ form.fili_kirschner }}
             </div>
             
+            <div id="viti" style="display:none;">
+                {{ form.viti.label(style="display:block;margin-top:15px;") }}
+                {{ form.viti }}
+            </div> 
 
-            <div id="classificazione_radiografica_diafisaria">   
-                {{ form.diafisaria.label(style="display:block;margin-top:15px;") }}
-                {{ form.diafisaria }}
-            </div>
-            
-            <div id="classificazione_radiografica_distale">   
-                {{ form.distale.label(style="display:block;margin-top:15px;") }}
-                {{ form.distale }}
-            </div>
-            
+        </div>
 
+        {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
+        {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
+        
+        <div id="classificazione_radiografica_prossimale">   
+            {{ form.prossimale.label(style="display:block;margin-top:15px;") }}
+            {{ form.prossimale }}
+        </div>
+        
+
+        <div id="classificazione_radiografica_diafisaria">   
+            {{ form.diafisaria.label(style="display:block;margin-top:15px;") }}
+            {{ form.diafisaria }}
+        </div>
+        
+        <div id="classificazione_radiografica_distale">   
+            {{ form.distale.label(style="display:block;margin-top:15px;") }}
+            {{ form.distale }}
         </div>
        
         
@@ -118,7 +125,31 @@
     //Script per gestire dinamicamente i campi del form
     $(document).ready(function() {
 
-        function toggleChirurgico(){
+
+
+        function toggleTipologiaChirurgico(){
+
+            var selectedValue = $("#tipologia_chirurgica").val();
+            console.log(selectedValue);
+
+            if(selectedValue == "fili_kirshner"){
+                $("#fili_kirshner").show();
+                $("#viti").hide();
+               
+            }
+            else if(selectedValue == "viti"){
+                $("#fili_kirshner").hide();
+                $("#viti").show();
+                
+            }else{
+                $("#fili_kirshner").hide();
+                $("#viti").hide();
+            }
+
+        }
+
+
+        function toggleTipologiaTrattamento(){
 
             var selectedValue = $("#tipologia_trattamento").val();
             // 1= Chirurgico, 2=Non Chirurgico
@@ -139,10 +170,10 @@
             
             $("#mcpj_si").hide();
 
-            if(selectedValue == "2"){
+            if(selectedValue == "Si"){
                 $("#mcpj_si").show();
             }
-            if(selectedValue == "1"){
+            if(selectedValue == "No"){
                 $("#mcpj_si").hide();
             }
         }
@@ -152,10 +183,10 @@
             
             $("#pipj_si").hide();
 
-            if(selectedValue == "2"){
+            if(selectedValue == "Si"){
                 $("#pipj_si").show();
             }
-            if(selectedValue == "1"){
+            if(selectedValue == "No"){
                 $("#pipj_si").hide();
             }    
         }
@@ -165,20 +196,20 @@
             
         
 
-            if(selectedValue == "1"){
+            if(selectedValue == "prossimale_articolare"){
 
                 $("#classificazione_radiografica_prossimale").show();
                 $("#classificazione_radiografica_diafisaria").hide();
                 $("#classificazione_radiografica_distale").hide();
                 
             }
-            else if(selectedValue == "2"){
+            else if(selectedValue == "diafisaria"){
                 $("#classificazione_radiografica_prossimale").hide();
                 $("#classificazione_radiografica_diafisaria").show();
                 $("#classificazione_radiografica_distale").hide();
 
             }
-            else if(selectedValue == "3"){
+            else if(selectedValue == "distale_articolare"){
 
                 $("#classificazione_radiografica_prossimale").hide();
                 $("#classificazione_radiografica_diafisaria").hide();
@@ -194,14 +225,19 @@
         }
 
         //Sono eseguiti al caricamento della pagina
-        toggleChirurgico();
+        toggleTipologiaTrattamento();
         toggle_mcpj();
         toggle_ipcj();
         classificazione_radiografica();
 
 
+        
+        $("#tipologia_chirurgica").change(function() {
+            toggleTipologiaChirurgico();
+        });
+
         $("#tipologia_trattamento").change(function() {
-            toggleChirurgico();
+            toggleTipologiaTrattamento();
         });
 
         //Non Chirurgico

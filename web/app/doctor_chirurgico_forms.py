@@ -80,9 +80,9 @@ class FratturaRadioDistaleChirurgicoForm(ChirurgicoForm):
         'Classificazione Radiografica',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'A'),
-            ('2', 'B'),
-            ('3', 'C'), 
+            ('A', 'A'),
+            ('B', 'B'),
+            ('C', 'C'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -280,9 +280,9 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Gesso Chiuso'),
-            ('2', 'Valva Gessata'),
-            ('3', 'Tutore in Termoplastica'), 
+            ('gesso_chiuso', 'Gesso Chiuso'),
+            ('valva_gessata', 'Valva Gessata'),
+            ('tutore_termoplastica', 'Tutore in Termoplastica'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -292,8 +292,8 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Polso Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'No'),
-            ('2', 'Si'), 
+            ('No', 'No'),
+            ('Si', 'Si'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -303,8 +303,8 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'MCPj Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'No'),
-            ('2', 'Si'), 
+            ('No', 'No'),
+            ('Si', 'Si'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -314,8 +314,8 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'MCPj Estese Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Flesse'),
-            ('2', 'Estese'), 
+            ('Flesse', 'Flesse'),
+            ('Estese', 'Estese'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -325,8 +325,8 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'PIPj Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'No'),
-            ('2', 'Si'), 
+            ('No', 'No'),
+            ('Si', 'Si'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -336,8 +336,8 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'PIPj Estese Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Flesse'),
-            ('2', 'Estese'), 
+            ('Flesse', 'Flesse'),
+            ('Estese', 'Estese'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -345,14 +345,26 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
 
     #Valori chirurgici
 
+    tipologia_chirurgica = SelectField(
+        'Tipologia',
+        choices=[
+            ('', OPTION_NULL.NULL.value),
+            ('fili_kirshner', 'Fili di Kirshner'),
+            ('viti', 'Viti'),
+            ('placca_viti', 'Placca e Viti'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
     fili_kirschner = SelectField(
         'Fili di Kirschner',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'endomidoallre'),
-            ('2', 'anterogradi'),
-            ('3', 'endomidollare retrogradi'),
-            ('4', 'trasversi'), 
+            ('endomidollare', 'endomidoallre'),
+            ('anterogradi', 'anterogradi'),
+            ('endomidollare_retorgradi', 'endomidollare retrogradi'),
+            ('trasversi', 'trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -362,50 +374,50 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Viti',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'endomidoallre'),
-            ('2', 'lag'),
+            ('endomidollare', 'endomidoallre'),
+            ('lag', 'lag'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     classificazione_radiografica = SelectField(
-        'classificazione radiografica',
+        'Classificazione radiografica',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Prossimale Articolare'),
-            ('2', 'Diafisara'),
-            ('3', 'Distale Articolare'), 
+            ('prossimale_articolare', 'Prossimale Articolare'),
+            ('diafisaria', 'Diafisara'),
+            ('distale_articolare', 'Distale Articolare'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     prossimale = SelectField(
-        'Opzioni Classificazione Radiografica',
+        'Opzioni Classificazione Radiografica Prossimale',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Frammento Singolo'),
-            ('2', 'Multiframmentaria'), 
+            ('frammento_singole', 'Frammento Singolo'),
+            ('multiframmentaria', 'Multiframmentaria'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     diafisaria = SelectField(
-        'Opzioni Classificazione Radiografica',
+        'Opzioni Classificazione Radiografica Diafisaria',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Trasversa'),
-            ('2', 'Obliqua'), 
-            ('3', 'Multiframmentaria'), 
+            ('trasversa', 'Trasversa'),
+            ('obliqua', 'Obliqua'), 
+            ('multiframmentaria', 'Multiframmentaria'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     distale = SelectField(
-        'Opzioni Classificazione Radiografica',
+        'Opzioni Classificazione Radiografica Distale',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', 'Weiss 1'),
