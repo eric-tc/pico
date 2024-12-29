@@ -564,7 +564,9 @@ class MedicalTreatmentForm(FlaskForm):
 
 
 
-
+"""
+Form utilizzato per gestire i campi del controllo
+"""
 class CustomControlForm(FlaskForm):
     
     note = TextAreaField('Inserisci le tue note',render_kw={'class': 'form-control'}

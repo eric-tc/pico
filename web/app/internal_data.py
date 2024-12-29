@@ -846,6 +846,7 @@ class DupuytrenTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -860,6 +861,7 @@ class DupuytrenTimeline(PathologyTimline):
         #TODO al momento prendo tutti i metacarpi non seleziono solo quelli compilati
         #pip_j_indices.append(int(metacarpo_rotto))
         tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
 
@@ -868,8 +870,11 @@ class DupuytrenTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4] #non Ho il pollice       
+        
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
 
@@ -884,7 +889,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next
-    last_control_number_before_next=2
+    last_control_number_before_next=1
 
     # se non ho differenze nel post operatorio la timeline è la stessa
     @classmethod
@@ -941,23 +946,6 @@ class ResezioneFilieraTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
-
-    @classmethod
-    def get_two(cls,pathology_type=None,param=None):
-
-          #deepCopy ctrl_map
-        tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
-
-        return tmp_ControlMap
-
 
     @classmethod
     def get_next(cls,pathology_type=None,param=None):

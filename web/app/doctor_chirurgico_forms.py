@@ -1013,9 +1013,9 @@ class DupuytrenChirurgicoForm(ChirurgicoForm):
         'Complicanze',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Lesione Tendinea'),
-            ('2', 'Lesione Nervosa'),
-            ('3', 'Altro'),
+            ('lesione_tendinea', 'Lesione Tendinea'),
+            ('lesione_nervosa', 'Lesione Nervosa'),
+            ('altro', 'Altro'),
 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
