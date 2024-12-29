@@ -880,7 +880,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
     #post operatorio è unico o no
     decorso_unico=True
     #Il primo valore è sempre 0 perchè rispecchia il momento dell'intervento
-    timeline= [0,2,6,48,52,520,1040]
+    timeline= [0,2,6,12,48,52,520,1040]
 
     # Numero che corrisponde al numero di controlli implementati
     # dopo di che sono tutti uguali e sono chiamati con il methodo get_next

@@ -1,20 +1,52 @@
 
 
-    
+<div>
     {{ pre_controls_form.surgery.label }}
-    {{ pre_controls_form.surgery}}
+    {{ pre_controls_form.surgery(id="surgery")}}
 
+    <div id="classificazione_watson" style="display: none;">
+        {{ pre_controls_form.classificazione_watson.label }}
+        {{ pre_controls_form.classificazione_watson}}
+    </div>
 
-    {{ pre_controls_form.classificazione_watson.label }}
-    {{ pre_controls_form.classificazione_watson}}
+    <div id="classificazione_lichman" style="display: none;" >
+        {{ pre_controls_form.classificazione_lichman.label }}
+        {{ pre_controls_form.classificazione_lichman}}
+    </div>
 
-
-    {{ pre_controls_form.classificazione_lichman.label }}
-    {{ pre_controls_form.classificazione_lichman}}
-
-    {{ pre_controls_form.lussazione_lunare.label }}
-    {{ pre_controls_form.lussazione_lunare}}
-
+    <div id="lussazione_semilunare" style="display: none;" >
+        {{ pre_controls_form.lussazione_lunare.label }}
+        {{ pre_controls_form.lussazione_lunare}}
+    </div>
 
 
 </div>
+
+
+<script>
+
+    $(document).ready(function(){
+        $("#surgery").change(function(){
+            surgery = $("#surgery").val();
+            if(surgery == "snac" || surgery == "slac" || surgery == "scaphoidectomia" || surgery == "artrodesi"){
+                $("#classificazione_watson").show();
+                $("#classificazione_lichman").hide();
+                $("#lussazione_semilunare").hide();
+            }else if(surgery == "kienbock"){
+                $("#classificazione_watson").hide();
+                $("#classificazione_lichman").show();
+                $("#lussazione_semilunare").hide();
+            }else if(surgery == "lussazione_semilunare"){
+                $("#classificazione_watson").hide();
+                $("#classificazione_lichman").hide();
+                $("#lussazione_semilunare").show();
+            }else{
+                $("#classificazione_watson").hide();
+                $("#classificazione_lichman").hide();
+                $("#lussazione_semilunare").hide();
+            }
+        });
+    });
+
+
+</script>

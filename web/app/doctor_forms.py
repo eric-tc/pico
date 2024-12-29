@@ -164,7 +164,7 @@ class PrwheForm(FlaskForm):
     aderente = SelectField('Quanto è importante l’aspetto estetico del suo polso o mano?', choices=[("molto", 'Molto'), ("per_nulla", 'Per Nulla'),("abbastanza", 'Abbastanza')], default="molto", render_kw={'class': 'form-control-grid'}, validators=None)
     aspetto_estetico = IntegerField('Aspetto Estetico [Minimo 0- Massimo 10]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '10'},)
 
-    valore_prwhe =FloatField('Valore PRWHE', render_kw={'class': 'form-control-grid','type': 'number', 'min':'0.0', 'max': '100.0'})
+    valore_prwhe =FloatField('Valore PRWHE', render_kw={'class': 'form-control-grid','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
 
 
 class DashForm(FlaskForm):
@@ -451,11 +451,11 @@ class PreResezioneFileraForm(FlaskForm):
         'Seleziona Intervento',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'SNAC'),
-            ('2', 'SLAC'),
-            ('3', 'SCAC'),
-            ('4', 'Kienbock'),
-            ('5', 'Lussazione Inveterata Semilunare'),
+            ('snac', 'SNAC'),
+            ('slac', 'SLAC'),
+            ('scac', 'SCAC'),
+            ('kienbock', 'Kienbock'),
+            ('lussazione_semilunare', 'Lussazione Inveterata Semilunare'),
 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -463,7 +463,7 @@ class PreResezioneFileraForm(FlaskForm):
     )
 
     classificazione_watson = SelectField(
-        'classificazione radiografica',
+        'Classificazione Watson',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', '1'),
@@ -477,28 +477,28 @@ class PreResezioneFileraForm(FlaskForm):
 
     
     classificazione_lichman = SelectField(
-        'Opzioni Classificazione Radiografica',
+        'Classificazione Lichman',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', '0'),
-            ('2', '1'),
-            ('3', '2'),
-            ('4', '3A'), 
-            ('5', '3B'),
-            ('6', '3C'), 
-            ('7', '4'), 
+            ('0', '0'),
+            ('1', '1'),
+            ('2', '2'),
+            ('3A', '3A'), 
+            ('3B', '3B'),
+            ('3C', '3C'), 
+            ('4', '4'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     lussazione_lunare = SelectField(
-        'Opzioni Classificazione Radiografica',
+        'Opzioni Lussazione Semilunare',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Volare'),
-            ('2', 'Dorsale'),
-            ('3', 'Altro'),
+            ('volare', 'Volare'),
+            ('dorsale', 'Dorsale'),
+            ('altro', 'Altro'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}

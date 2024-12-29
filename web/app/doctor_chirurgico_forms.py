@@ -976,8 +976,8 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         'Accesso',
         choices=[
             ('', OPTION_NULL.NULL.value),   
-            ('1', 'volare'),
-            ('2', 'dorsale'),
+            ('volare', 'volare'),
+            ('dorsale', 'dorsale'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -988,8 +988,8 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'longitudinale'),
-            ('2', 'trasversale'),
+            ('longitudinale', 'longitudinale'),
+            ('trasversale', 'trasversale'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
