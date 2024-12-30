@@ -199,13 +199,25 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
 
     #Valori chirurgici
 
+    tipologia_chirurgica = SelectField(
+        'Tipologia',
+        choices=[
+            ('', OPTION_NULL.NULL.value),
+            ('fili_kirshner', 'Fili di Kirshner'),
+            ('viti', 'Viti'),
+            ('placca_viti', 'Placca e Viti'), 
+        ],
+        coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
+        ,render_kw={'class': 'form-control'}
+    )
+
     fili_kirschner = SelectField(
         'Fili di Kirschner',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('endomidollare', 'endomidoallre'),
             ('anterogradi', 'anterogradi'),
-            ('endomidollare_retrogradi', 'endomidollare retrogradi'),
+            ('endomidollare_retorgradi', 'endomidollare retrogradi'),
             ('trasversi', 'trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.

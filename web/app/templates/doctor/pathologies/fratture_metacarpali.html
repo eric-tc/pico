@@ -53,11 +53,19 @@
         </div>
 
         <div id="chirurgico">
-            {{ form.fili_kirschner.label(style="display:block;margin-top:15px;") }}
-            {{ form.fili_kirschner }}
 
-            {{ form.viti.label(style="display:block;margin-top:15px;") }}
-            {{ form.viti }}
+            {{ form.tipologia_chirurgica.label(style="display:block;margin-top:15px;") }}
+            {{ form.tipologia_chirurgica(id="tipologia_chirurgica") }}
+
+            <div id="fili_kirshner" style="display:none;">
+                {{ form.fili_kirschner.label(style="display:block;margin-top:15px;") }}
+                {{ form.fili_kirschner }}
+            </div>
+            
+            <div id="viti" style="display:none;">
+                {{ form.viti.label(style="display:block;margin-top:15px;") }}
+                {{ form.viti }}
+            </div> 
 
             {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
             {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
@@ -106,6 +114,28 @@
 
     //Script per gestire dinamicamente i campi del form
     $(document).ready(function() {
+
+        function toggleTipologiaChirurgico(){
+
+            var selectedValue = $("#tipologia_chirurgica").val();
+            console.log(selectedValue);
+
+            if(selectedValue == "fili_kirshner"){
+                $("#fili_kirshner").show();
+                $("#viti").hide();
+               
+            }
+            else if(selectedValue == "viti"){
+                $("#fili_kirshner").hide();
+                $("#viti").show();
+                
+            }else{
+                $("#fili_kirshner").hide();
+                $("#viti").hide();
+            }
+
+        }
+
 
         function toggleChirurgico(){
 
@@ -163,10 +193,15 @@
         }
 
         //Sono eseguiti al caricamento della pagina
+        toggleTipologiaChirurgico();
         toggleChirurgico();
         toggle_mcpj();
         toggle_ipcj();
         classificazione_radiografica_diafisaria();
+
+        $("#tipologia_chirurgica").change(function() {
+            toggleTipologiaChirurgico();
+        });
 
 
         $("#tipologia_trattamento").change(function() {
