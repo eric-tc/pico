@@ -1158,8 +1158,8 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
         'Accesso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('accesso_volare', 'accesso_volare'),
-            ('accesso_dorsale', 'accesso dorsale'),
+            ('accesso_volare', 'Accesso Volare'),
+            ('accesso_dorsale', 'Accesso Dorsale'),
             ('accesso_volare_accesso_dorsale', 'entrambi'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1171,10 +1171,10 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
         'Innesto',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('innesto_cresta_iliaca', 'innesto cresta iliaca'),
-            ('innesto_da_radio', 'innesto da radio'),
-            ('innesto_sintetico', 'innesto sintetico'),
-            ('lembo_da_condilo_femorale mediale', 'lembo da condilo femorale mediale'),
+            ('innesto_cresta_iliaca', 'Innesto Cresta Iliaca'),
+            ('innesto_da_radio', 'Innesto Da Radio'),
+            ('innesto_sintetico', 'Innesto Sintetico'),
+            ('lembo_da_condilo_femorale mediale', 'Lembo da condilo femorale mediale'),
             ('altro', 'altro'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1185,12 +1185,12 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
         'Sintesi',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('fili_kirschner', 'fili kirschner'),
-            ('vite_retrograda', 'vite retrograda'),
-            ('vite_anterograda', 'vite anterograda'),
-            ('placca', 'placca'),
-            ('nessuna_sintesi', 'nessuna sintesi'),
-            ('altro', 'altro'),
+            ('fili_kirschner', 'Fili kirschner'),
+            ('vite_retrograda', 'Vite retrograda'),
+            ('vite_anterograda', 'Vite anterograda'),
+            ('placca', 'Placca'),
+            ('nessuna_sintesi', 'Nessuna sintesi'),
+            ('altro', 'Altro'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
