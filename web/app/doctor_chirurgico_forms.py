@@ -1102,9 +1102,9 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
         'Accesso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('terzo_prossimale', 'volare'),
-            ('terzo_medio', 'terzo_medio'),
-            ('terzo_distale', 'terzo_distale'),
+            ('terzo_prossimale', 'Terzo prossimale'),
+            ('terzo_medio', 'Terzo medio'),
+            ('terzo_distale', 'Terzo distale'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -1113,7 +1113,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     #Se CONSERVATIVO
 
     conservativo = SelectField(
-        'Conservativo',
+        'Opzioni Conservativo',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('gesso_chiuso_pollice_incluso', 'gesso chiuso pollice incluso'),
@@ -1127,7 +1127,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     )
     #CHIRURGICO
     chirurgico = SelectField(
-        'Conservativo',
+        'Opzioni Chirurgico',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('vite_percutanea_anterograda', 'vite percutanea anterograda'),

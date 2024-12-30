@@ -26,13 +26,13 @@
         {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
         {{ form.treatment_options(id="tipologia_trattamento") }}
         
-        <div id="conservativo">
+        <div id="conservativo" style="display: none;">
             {{ form.conservativo.label(style="display:block;margin-top:15px;") }}
             {{ form.conservativo }}
 
         </div>
 
-        <div id="chirurgico">
+        <div id="chirurgico"  >
             {{ form.chirurgico.label(style="display:block;margin-top:15px;") }}
             {{ form.chirurgico }}
         </div>
@@ -80,13 +80,13 @@
         function toggleChirurgico(){
 
             var selectedValue = $("#tipologia_trattamento").val();
-            // 
-            if(selectedValue == "chirurgico"){
+            console.log("valore Selezionato",selectedValue);
+            if(selectedValue == "1"){
                 $("#chirurgico").show();
                 $("#conservativo").hide();
                 week_to_add= "{{ week_to_add['1'] }}";
             }
-            if(selectedValue == "conservativo"){
+            if(selectedValue == "2"){
                 $("#conservativo").show();
                 $("#chirurgico").hide();
                 week_to_add= "{{ week_to_add['2'] }}";

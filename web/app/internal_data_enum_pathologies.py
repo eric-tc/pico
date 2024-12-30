@@ -68,8 +68,8 @@ class ScafoideFratturaEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    CHIRURGICO = ("1","chirurgico")
-    CONSERVATIVO = ("2","conservativo")
+    CHIRURGICO = ("1","Chirurgico")
+    CONSERVATIVO = ("2","Conservativo")
 
 # In base a questi valori avrò un decorso post operatorio diverso
 class ScafoidePseudortrosiEnum(Enum):
