@@ -445,6 +445,10 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        
+        #TODO: Aggiungere solo se è stato selezionato il pollice
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 
         return tmp_ControlMap
@@ -462,11 +466,14 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
-
+        
         tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+
+        #TODO: Aggiungere solo se è stato selezionato il pollice
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
         return tmp_ControlMap
 
 

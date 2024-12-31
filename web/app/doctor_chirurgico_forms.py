@@ -1231,9 +1231,9 @@ class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Valva Gessata'),
-            ('2', 'Tutore Su misura'),
-            ('3', 'Sindattalia'), 
+            ('valva_gessata', 'Valva Gessata'),
+            ('tutore_misura', 'Tutore Su misura'),
+            ('sindattalia', 'Sindattalia'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -1245,10 +1245,10 @@ class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Reinserzione con ancoretta'),
-            ('2', 'Pull out'),
-            ('3', 'Sutura'),
-            ('4', 'Altro'), 
+            ('reinserzione_ancoretta', 'Reinserzione con ancoretta'),
+            ('pull_out', 'Pull out'),
+            ('sutura', 'Sutura'),
+            ('altro', 'Altro'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
