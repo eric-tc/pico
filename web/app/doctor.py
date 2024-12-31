@@ -40,8 +40,7 @@ def profile():
     patients_list=(
     db.session.query(DoctorPatient, User.name)
     .join(User, DoctorPatient.id_patient == User.id)
-    .filter(DoctorPatient.id_doctor == current_user.id)
-    .all()
+    .filter(DoctorPatient.id_doctor == current_user.id).order_by(User.id.asc()).all()
     )
     
 
@@ -52,7 +51,7 @@ def profile():
     interventi_da_fissare= db.session.query(PathologyData,User.name,Pathology.name)\
     .join(User, PathologyData.id_patient == User.id)\
     .join(Pathology,PathologyData.id_pathology==Pathology.id)\
-    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).all()
+    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(User.id.asc()).all()
     print("INTERVENTI DA FISSARE")
     print(interventi_da_fissare)
 
@@ -897,8 +896,6 @@ def event_details(row_id,event_in_range):
             #Creo il PDF Dai dati parsati del form submit
 
             html_content_original = form.hidden_html.data
-            print(html_content_original)
-            input("HTML CONTENT")
             if html_content_original:
                 try:
                     html_content = request.get_json(silent=True) or eval(html_content_original)

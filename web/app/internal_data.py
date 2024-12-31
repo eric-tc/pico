@@ -983,7 +983,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
     # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
     # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
     weeks_to_first_control={
-        "1":3
+        "1":2
     }
     
     #Ultimo Controllo

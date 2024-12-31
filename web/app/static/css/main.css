@@ -280,7 +280,7 @@ input {
 
 .fixed-button {
   position: fixed; /* Ensures the button stays in a fixed position */
-  top: 50px;       /* Distance from the top of the viewport */
+  top: 6%;       /* Distance from the top of the viewport */
   right: 10px;     /* Distance from the right of the viewport */
   padding: 10px 20px;
 }

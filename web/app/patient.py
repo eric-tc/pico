@@ -31,6 +31,7 @@ def settings_patient_doctor(patient_id):
             print("Password Aggiornata")
             user_data.password = generate_password_hash(form.password.data)
         user_data.phone = form.phone.data
+        user_data.sx_dx_hand = form.sx_dx_hand.data
         db.session.commit()
         flash('Cambio Dati effettuato con successo')
 
@@ -40,6 +41,7 @@ def settings_patient_doctor(patient_id):
     form.email.data= user_data.email
     form.name.data= user_data.name
     form.phone.data= user_data.phone
+    form.sx_dx_hand.data= user_data.sx_dx_hand
     #retrieve data from db and assign to form
     
     return render_template('patient/settings_patient.html',form=form ,name=current_user.name)
