@@ -735,9 +735,9 @@ def get_events():
         today = datetime.today()
 
         # 3 Mesi
-        months_to_retrieve=3
-        date_after_x_months = today + timedelta(days=months_to_retrieve*30)
-
+        
+        date_after_x_months = today + timedelta(days=EVENT_DAYS.MONTHS_TO_RETRIEVE.value*30)
+        
         treatments= db.session.query(PathologyData,User.name,Pathology.name)\
         .join(User,PathologyData.id_patient==User.id)\
         .join(Pathology,PathologyData.id_pathology==Pathology.id)\
@@ -897,7 +897,8 @@ def event_details(row_id,event_in_range):
             #Creo il PDF Dai dati parsati del form submit
 
             html_content_original = form.hidden_html.data
-
+            print(html_content_original)
+            input("HTML CONTENT")
             if html_content_original:
                 try:
                     html_content = request.get_json(silent=True) or eval(html_content_original)

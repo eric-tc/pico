@@ -21,13 +21,7 @@
   function retrieve_form_data(){
     var formClone = $("#form-post-treatment").clone();
 
-    let selectElement = document.getElementById("cicatrice-0-aderente");
-
-    // Get the current value of the select element
-    let selectedValue = selectElement.value;  
-
-    console.log("SELECTED VALUE ", selectedValue);
-
+    
     // Update the form clone to include user-input values
     formClone.find("input, textarea, select").each(function () {
       if ($(this).is(":checkbox") || $(this).is(":radio")) {

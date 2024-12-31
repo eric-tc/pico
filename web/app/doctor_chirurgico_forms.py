@@ -538,7 +538,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     #zona 1
 
     tipo_sutura_1 = SelectField(
-        'Tipo Sutura',
+        'Tipo Sutura Zona 1',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('singolo_pull_out', 'Singolo pull out'),
@@ -551,7 +551,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     )
 
     tipo_filo_1 = SelectField(
-        'Grandezza Filo',
+        'Grandezza Filo Zona 1',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('0', '0'),
@@ -567,7 +567,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     )
 
     materiale_filo_1 = SelectField(
-        'Materiale Filo',
+        'Materiale Filo Zona 1',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('nylon', 'Nylon'),
@@ -583,7 +583,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     #Altre Zone
 
     tipo_sutura = SelectField(
-        'Materiale Filo',
+        'Selezionare Numero di Passaggi',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('2_passaggi', '2 passaggi'),
@@ -639,7 +639,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     )
 
     tipo_filo_zona_generica = SelectField(
-        'Grandezza Filo',
+        'Grandezza Filo Altre Zone',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('0', '0'),
@@ -655,7 +655,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     )
 
     materiale_filo_zona_generica = SelectField(
-        'Materiale Filo',
+        'Materiale Filo Altre Zone',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('nylon', 'Nylon'),

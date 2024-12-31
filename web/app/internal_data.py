@@ -63,6 +63,8 @@ class EVENT_DAYS(Enum):
 
     DAYS_BEFORE = 360
     DAYS_AFTER = 360
+    #numero di mesi in cui sono recuperati gli eventi al calendario
+    MONTHS_TO_RETRIEVE = 12
 
 
 #--------------------------------- DEFINIZIONE DELLE TIMELINE ---------------------------------
@@ -445,7 +447,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        
+
         #TODO: Aggiungere solo se è stato selezionato il pollice
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
         tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
@@ -1125,7 +1127,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
     # ATTENZIONE QUESTO VALORE DEVE ESSERE LO STESSO DI timeline[1]
     # Usato solo nella schermata medical_treatment per gestire il calendario del primo controllo
     weeks_to_first_control={
-        "1":3
+        "1":2
     }
     
     #Ultimo Controllo
