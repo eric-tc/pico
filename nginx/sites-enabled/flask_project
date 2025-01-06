@@ -1,8 +1,8 @@
 upstream app {
-    server web:8000;
+    server web:4050;
 }
 server {
-    listen 80;
+    listen 4050;
     server_name example.org;
     charset utf-8;
 
