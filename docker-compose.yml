@@ -7,15 +7,15 @@ secrets:
     file: ./secrets/postgres_password.txt
 
 services:
-  nginx:
-    restart: always
-    build: ./nginx
-    ports:
-      - "4050:4050"
-    volumes:
-      - ./web/static:/static
-    links:
-      - web:web
+  # nginx:
+  #   restart: always
+  #   build: ./nginx
+  #   ports:
+  #     - "4050:4050"
+  #   volumes:
+  #     - ./web/static:/static
+  #   links:
+  #     - web:web
 
   web:
     restart: always
@@ -36,6 +36,8 @@ services:
     #   - "4050:4050"
     expose:
       - "4050"
+    ports:
+      - "4050:4050"
     depends_on:
       - postgres
     # command: ["bash"]
