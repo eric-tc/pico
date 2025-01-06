@@ -43,7 +43,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = os.urandom(24)
+    app.config['SECRET_KEY'] = "#ekqk3DEgqwer)=90mlw@"
     app.config["CACHE_TYPE"] = "SimpleCache"
     app.config["CACHE_DEFAULT_TIMEOUT"] = 60
     
