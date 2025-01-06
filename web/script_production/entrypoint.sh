@@ -2,7 +2,7 @@
 
 # Wait for the PostgreSQL service to be available
 echo "Waiting for postgres..."
-while ! nc -z postgres 5432; do
+while ! nc -z postgres_prod 5432; do
   sleep 1
 done
 echo "Postgres is up!"

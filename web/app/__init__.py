@@ -93,6 +93,11 @@ def create_app():
     from .patient import patient as patient_blueprint
     app.register_blueprint(patient_blueprint)
     
+    #TODO da rivedere con HTTPS problemi con validazione csrf da gunicorn con worker multipli
+    app.config['PREFERRED_URL_SCHEME'] = 'http'
+    app.config['WTF_CSRF_ENABLED'] = True
+    app.config['WTF_CSRF_SSL_STRICT'] = False
+
     return app
 
 my_app= create_app()

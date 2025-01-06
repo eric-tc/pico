@@ -10,9 +10,5 @@ COPY app /app/
 
 COPY script_production/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-#
 
-#CMD ["gunicorn", "-w", "2", "-b", ":4050", "app:my_app"]
-
-
-CMD ["/bin/sh", "-c", "/entrypoint.sh && gunicorn -w 2 -b :4050 app:my_app"]
+CMD ["/bin/sh", "-c", "/entrypoint.sh && gunicorn -w 1 -b :4050 app:my_app"]

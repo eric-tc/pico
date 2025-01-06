@@ -8,3 +8,6 @@ redis==5.0.1
 postgres==4.0
 flask-wtf==1.2.1
 flask_cors==4.0.0
+flask_caching==2.3.0
+flask-migrate==4.0.7
+weasyprint==63.1
