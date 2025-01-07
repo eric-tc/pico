@@ -8,6 +8,23 @@ from . import db
 from .internal_data import ROLE
 auth = Blueprint('auth', __name__)
 
+from .models import User,\
+DoctorPatient,\
+DoctorCurrentPathology,\
+Notification,\
+PathologyData,\
+PathologyType,\
+PathologyStatus,\
+Pathology,\
+EmailStatus,\
+ControlStatus,\
+NotificationStatus
+
+import click
+from flask.cli import with_appcontext
+
+
+
 @auth.route('/login')
 def login():
     return render_template('auth/login.html')

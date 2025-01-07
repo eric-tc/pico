@@ -101,3 +101,15 @@ def create_app():
     return app
 
 my_app= create_app()
+# Questo comando serve per creare il db con i dati di default 
+# viene chiamto con il comando flask insert-db
+@my_app.cli.command("insert-db")
+def insert_db():
+    with my_app.app_context():    
+        print("INSEIRMENTO DATI DI DEFAULT")
+        NotificationStatus.insert_rows()
+        PathologyType.insert_rows()
+        PathologyStatus.insert_rows()
+        Pathology.insert_rows()
+        EmailStatus.insert_rows()
+        ControlStatus.insert_rows()
