@@ -7,7 +7,11 @@ server {
     charset utf-8;
 
     location /static {
-        alias /static/;
+        alias /app/static/;
+    }
+
+    location /static/pdf_files/ {
+        alias /app/static/pdf_files/;
     }
 
     location / {

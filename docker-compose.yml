@@ -13,7 +13,8 @@ services:
     ports:
       - "4050:4050"
     volumes:
-      - ./web/static:/static
+      - ./web/app/static:/app/static
+      - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
     links:
       - web:web
 
@@ -40,6 +41,8 @@ services:
     #   - "4050:4050"
     depends_on:
       - postgres_prod
+    volumes:
+      - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
     # command: ["bash"]
     # stdin_open: true
     # tty: true
