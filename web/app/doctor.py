@@ -109,56 +109,6 @@ def settings_doctor():
     return render_template('doctor/settings_doctor.html', form=form,name=current_user.name)
 
 
-# """
-# Route chimata dalla tabella nella sezione profile del prossimo intervento
-# permette di cambiare la data dell'intervento se neccessario
-# """
-# @doctor.route('/change_date')
-# @login_required
-# def change_date():
-#     """
-#     pathology_id_row: Corrisponde alla riga della tabella patologia in cui devo cambiare la data
-#     pathology_type: id della patologia. Se per ogni patologia ho una tabella diversa devo sapere a in quale tabella andare
-
-#     """
-
-#     date= request.args.get("selected_date")
-#     time = request.args.get("selected_time")
-#     pathology_id_row= request.args.get("pathology_id_row")
-#     pathology_type= int(request.args.get("pathology_type"))
-
-    
-#     print(date)
-#     print(time)
-#     print(pathology_id_row)
-#     print(pathology_type)
-    
-    
-#     value_to_update= PathologyData.query.filter_by(id=pathology_id_row).first()
-    
-#     value_to_update.next_control_date= datetime.strptime(str(date),"%d-%m-%Y")
-#     value_to_update.next_control_time= str(time)
-
-#     try:
-#         # Commit the changes to the database
-#         db.session.commit()
-#         flash('DATA  AGGIORNATA CORRETTAMENTE')
-#         # If no exception is raised, the update was successful
-#         return redirect(url_for('doctor.profile'))
-    
-
-#     except Exception as e:
-#         # Handle the exception (e.g., log the error, display an error message)
-#         print(f"Error updating record: {e}")
-#         flash('DATA NON AGGIORNATA CORRETTAMENTE')
-#         return redirect(url_for('doctor.profile'))
-
-
-#     flash('DATA NON AGGIORNATA CORRETTAMENTE')
-#     return redirect(url_for('doctor.profile'))
-
-
-
 """
 Ajax request to send notification to patient
 

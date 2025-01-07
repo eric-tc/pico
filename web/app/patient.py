@@ -8,6 +8,7 @@ from datetime import datetime
 from .query_sql import select_next_treatments
 from .settings_form import SettingsFormPatient
 from werkzeug.security import generate_password_hash, check_password_hash
+from .mutils import getDateInYMD,getDateStringFromDate
 
 patient = Blueprint('patient', __name__)
 
@@ -30,6 +31,7 @@ def settings_patient_doctor(patient_id):
         if form.password.data:
             print("Password Aggiornata")
             user_data.password = generate_password_hash(form.password.data)
+        user_data.birth_date = getDateInYMD(form.birth_date.data)
         user_data.phone = form.phone.data
         user_data.sx_dx_hand = form.sx_dx_hand.data
         db.session.commit()
@@ -42,6 +44,7 @@ def settings_patient_doctor(patient_id):
     form.name.data= user_data.name
     form.phone.data= user_data.phone
     form.sx_dx_hand.data= user_data.sx_dx_hand
+    form.birth_date.data= "" if user_data.birth_date is None else getDateStringFromDate(user_data.birth_date)
     #retrieve data from db and assign to form
     
     return render_template('patient/settings_patient.html',form=form ,name=current_user.name)

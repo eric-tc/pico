@@ -17,6 +17,7 @@ class SettingsFormDoctor(FlaskForm):
 class SettingsFormPatient(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=35)],render_kw={'class': 'form-control'})
+    birth_date = StringField('Data Di Nascita', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
     phone = StringField('Phone', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
     password = PasswordField('Password',render_kw={'class': 'form-control'})
     sx_dx_hand= SelectField('Mano Dominante', choices=[('sx', 'Sinistro'), ('dx', 'Destro')],render_kw={'class': 'form-control'})

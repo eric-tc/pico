@@ -29,7 +29,15 @@ def get_pathology_enum(pathology_id):
     for pathology in PATHOLOGY:
         if pathology.value[0] == int(pathology_id):
             return pathology
-        
+
+"""
+Restituisce la data in formato stringa
+
+"""
+def getDateStringFromDate(date:datetime):
+    #convert date in %Y-%m-%d into string %d-%m-%Y
+
+    return date.strftime('%d-%m-%Y')  
 
 """
 Utilizzata per settare la data del prossimo controllo

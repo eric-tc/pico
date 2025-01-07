@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     role = db.Column(db.Integer)
     phone = db.Column(db.String(20))
     sx_dx_hand = db.Column(db.String(10))
+    birth_date = db.Column(db.DateTime)
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
     doctor_ids = db.Column(ARRAY(db.Integer))
 

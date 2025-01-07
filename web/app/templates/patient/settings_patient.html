@@ -13,6 +13,9 @@
         {{ form.name.label(style="display:block;margin-top:15px;") }}
         {{ form.name }}
 
+        {{ form.birth_date.label(style="display:block;margin-top:15px;") }}
+        {{ form.birth_date(id='generic-datepicker-no-res',style="max-width:80%") }}
+
         {{ form.password.label(style="display:block;margin-top:15px;") }}
         {{ form.password }}
 
@@ -30,5 +33,7 @@
     </form>
 
 </div>
+
+<script src="{{ url_for('static', filename='js/datepicker_custom_no_date_restriction.js') }}"></script>
 
 {% endblock %}
