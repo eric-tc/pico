@@ -35,7 +35,7 @@ services:
       - postgres
   postgres:
     restart: always
-    image: postgres:latest
+    image: postgres:17.2-alpine3.21
     container_name: handrehab_postgres_dev
     volumes:
       -  db-data-dev:/var/lib/postgresql
