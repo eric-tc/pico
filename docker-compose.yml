@@ -9,6 +9,7 @@ secrets:
 services:
   nginx:
     restart: always
+    image: pico/nginx_prod_otel:v1.0
     build: ./nginx
     ports:
       - "4050:4050"
