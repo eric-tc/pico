@@ -923,13 +923,36 @@ def generate_page_pdf(row_id):
     data = request.get_json()
     html_content = data.get("html")
 
-    print(html_content)
+    patient_name = "Nome Paziente"
+    #get currrent date
+    current_date = datetime.now().strftime("%d/%m/%Y")
+
+    #Get Patient Name
+    Data= db.session.query(PathologyData.id,PathologyData.id_pathology,PathologyData.id_patient,User.name,Pathology.name)\
+        .join(User,PathologyData.id_patient==User.id)\
+        .join(Pathology,PathologyData.id_pathology==Pathology.id)\
+        .filter(PathologyData.id == row_id).first()
+                
+    Id,IdPathology,IdPatient,PatientName,PathologyName= Data
+
+    additional_html = f"""
+    <div style="color: black; font-weight: bold;">
+        <h1>Resoconto Terapia</h1>
+        <p>Data Referto: {current_date} </p>
+        <p>Nome: {PatientName} </p>
+        <p>Patologia: {PathologyName} </p>
+        
+    </div>
+    """
+    full_html = additional_html +  html_content
+
+    #print(html_content)
     print("Generate PDF")
     # Generate the PDF
     filename = f"report_{row_id}.pdf"
     pdf_path = os.path.join(PDF_DIRECTORY, filename)
-    HTML(string=html_content).write_pdf(pdf_path)
-
+    HTML(string=full_html).write_pdf(pdf_path)
+    
     print("Finish PDF")
     
     # Return the filename for download
