@@ -865,14 +865,52 @@ def event_details(row_id,event_in_range):
             #Inserisco i dati a database della patologia inserita
             for key in controls_map.keys():
                 
-                #escludi per data_frattura perchè esiste come controllo, ma nel POST non è mai presente
+                #Remove csrf token 
+                
+                #Data frattura nei controlli non è conteggiata
                 if(key != CONTROLS.DATA_FRATTURA.value and key != CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
-                    setattr(pathology_db, key, form.data[key])
+                    mpcj_data,\
+                    pipj_data,\
+                    dipj_data,\
+                    ipj_data,\
+                    trapezio_metacarpale,\
+                    polso,\
+                    vas_data,\
+                    forza,\
+                    dash_data,\
+                    prwhe_data,\
+                    eaton_littler_data,\
+                    edema_data,\
+                    sensibilita_volare_data,\
+                    sensibilita_dorsale_data,\
+                    cicatrice,\
+                    tutore_data,\
+                    altro_data = pathology.value[2].process_parameters(controls_map=controls_map,
+                                                        form=form)
+                    
+                    pathology_db.mpcj=mpcj_data
+                    pathology_db.pipj=pipj_data
+                    pathology_db.dipj=dipj_data
+                    pathology_db.ipj=ipj_data
+                    pathology_db.polso=polso
+                    pathology_db.vas=vas_data
+                    pathology_db.trapezio_metacarpale=trapezio_metacarpale
+                    pathology_db.forza=forza
+                    pathology_db.dash=dash_data
+                    pathology_db.prwhe=prwhe_data
+                    pathology_db.eaton_littler=eaton_littler_data
+                    pathology_db.edema=edema_data
+                    pathology_db.sensibilita_volare=sensibilita_volare_data
+                    pathology_db.sensibilita_dorsale=sensibilita_dorsale_data
+                    pathology_db.cicatrice=cicatrice
+                    pathology_db.tutore=tutore_data
+                    pathology_db.altro=altro_data
+
                 if(key == CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
                     if(form.data[key]):
                         data_inizio_mobilizzazione= getDateInYMD(form.data[key])
                         setattr(pathology_parent, key, data_inizio_mobilizzazione)
-            
+                    
             # una volta inserito i valori il controllo si chiude e non può essere modificato
             pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
             #Aggiornamento della row
