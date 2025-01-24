@@ -103,6 +103,12 @@ def create_app():
     return app
 
 my_app= create_app()
+
+
+@my_app.context_processor
+def utility_processor():
+    return dict(zip=zip)
+
 # Questo comando serve per creare il db con i dati di default 
 # viene chiamto con il comando flask insert-db
 @my_app.cli.command("insert-db")

@@ -167,34 +167,53 @@ class OPTION_NULL(Enum):
 
 # DASH ENUM
 
-class DASH_ENUM(Enum):
-    SVITARE_COPERICHIO = "Svitare coperchio"
-    SCRIVERE = "Scrivere"
-    GIRARE_CHIAVE = "Girare una chiave"
-    PREPARARE_PASTO = "Preparare un pasto"
-    APRIRE_PORTA_PESANTE = "Aprire spingendo una porta pesante"
+class DASH_ENUM_FIRST(Enum):
+    SVITARE_COPERICHIO = (1,"Svitare coperchio")
+    SCRIVERE = (2,"Scrivere")
+    GIRARE_CHIAVE = (3,"Girare una chiave")
+    PREPARARE_PASTO = (4,"Preparare un pasto")
+    APRIRE_PORTA_PESANTE = (5,"Aprire spingendo una porta pesante")
     
     #5
-    POSARE_OGGETTO= "Posare un oggetto su uno scaffale al di sopra della propria testa"
-    FARE_LAVORI_DOMESTICI= "Fare lavori domestici pesanti (es. lavare i pavimenti o i vetri)"
-    LAVORI_GIARDINAGGIO="Fare lavori di giardinaggio"
-    RIFARE_LETTO= "Rifare il letto"
-    PORTARE_BORSA= "Portare la borsa della spesa o una ventiquattrore"
+    POSARE_OGGETTO= (6,"Posare un oggetto su uno scaffale al di sopra della propria testa")
+    FARE_LAVORI_DOMESTICI= (7,"Fare lavori domestici pesanti (es. lavare i pavimenti o i vetri)")
+    LAVORI_GIARDINAGGIO=(8,"Fare lavori di giardinaggio")
+    RIFARE_LETTO= (9,"Rifare il letto")
+    PORTARE_BORSA= (10,"Portare la borsa della spesa o una ventiquattrore")
 
     #10
-    PORTARE_OGGETTO= "Portare un oggetto pesante (oltre 5 Kg)"
-    CAMBIO_LAMPADINA = "Cambiare una lampadina posta al di sopra della propria testa"
-    LAVARSI_CAPELLI = "Lavarsi o asciugarsi i capelli"
-    LAVARSI_SCHIENA = "Lavarsi la schiena"
-    INFILARSI_MAGILIONE= "Infilarsi un maglione"
+    PORTARE_OGGETTO= (11,"Portare un oggetto pesante (oltre 5 Kg)")
+    CAMBIO_LAMPADINA = (12,"Cambiare una lampadina posta al di sopra della propria testa")
+    LAVARSI_CAPELLI = (13,"Lavarsi o asciugarsi i capelli")
+    LAVARSI_SCHIENA = (14,"Lavarsi la schiena")
+    INFILARSI_MAGILIONE= (15,"Infilarsi un maglione")
 
     #15
-    USARE_COLTELLO= "Usare un coltello per tagliare del cibo"
-    ATTIVITA_RICREATIVE ="Attività ricreative che richiedono poco sforzo (es. giocare a carte,lavorare a maglia "
-    ATTIVITA_COLPI_BRACCIO= "Attività ricreative nelle quali si fa forza o si prendono colpi sul braccio, sulla spalla o sulla mano (es. usare il martello, giocare a tennis o a golf, ecc.)"
-    ATTIVITA_MOV_LIBERO="Attività ricreative che richiedono un movimento libero del braccio (es. giocare a frisbee, a badminton, ecc.)"
-    NECESSITA_SPOSTAMENTO= "Far fronte alle necessità di spostamento (andare da un posto ad un altro)"
+    USARE_COLTELLO= (16,"Usare un coltello per tagliare del cibo")
+    ATTIVITA_RICREATIVE =(17,"Attività ricreative che richiedono poco sforzo (es. giocare a carte,lavorare a maglia ")
+    ATTIVITA_COLPI_BRACCIO= (18,"Attività ricreative nelle quali si fa forza o si prendono colpi sul braccio, sulla spalla o sulla mano (es. usare il martello, giocare a tennis o a golf, ecc.)")
+    ATTIVITA_MOV_LIBERO=(19,"Attività ricreative che richiedono un movimento libero del braccio (es. giocare a frisbee, a badminton, ecc.)")
+    NECESSITA_SPOSTAMENTO= (20,"Far fronte alle necessità di spostamento (andare da un posto ad un altro)")
 
     #20
 
-    ATTIVITA_SESSUALE= "Attività sessuale"
+    ATTIVITA_SESSUALE= (21,"Attività sessuale")
+
+class DASH_ENUM_SECOND(Enum):
+    PROBLEMA_BRACCIO= (22,"Durante la settimana passata, in che misura il suo problema al braccio, alla spalla o alla mano ha interferito con le normali attività sociali con la famiglia, gli amici, i vicini di casa i gruppi di cui fa parte?")
+
+class DASH_ENUM_THIRD(Enum):
+    PROBLEMA_LAVORO= (23,"Durante la settimana passata è stato limitato nel suo lavoro o in altre attività quotidiane abituali a causa del suo problema al braccio, alla spalla o alla mano?")
+
+class DASH_ENUM_FOURTH(Enum):
+    DOLORE_BRACCIO= (24,"Dolore al braccio, alla spalla o alla mano")
+    DOLORE_BRACCIO_ATT=(25,"Dolore al braccio, alla spalla o alla mano nel compiere una qualsiasi attività specifica")
+    FORMICOLIO=(26,"Formicolio (sensazione di punture di spillo) al braccio, alla spalla o alla mano")
+    DEBOLEZZA_BRACCIO = (27,"Debolezza al braccio, alla spalla o alla mano")
+    RIGIDITA_BRACCIO = (28,"Rigidità del braccio, della spalla o della mano")
+
+class DASH_ENUM_FIFTH(Enum):
+    PROBLEMA_DORMIRE= (29,"Durante l'ultima settimana quanta difficoltà ha incontrato nel dormire a causa del dolore al braccio, alla spalla o alla mano? ")
+
+class DASH_ENUM_SIXTH(Enum):
+    MENO_CAPACA= (30,"Mi sento meno capace, meno fiducioso o meno utile a causa del mio problema al braccio, alla spalla o alla mano ")

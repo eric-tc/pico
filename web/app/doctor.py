@@ -16,11 +16,11 @@ from .query_sql import select_next_treatments
 import sys
 from weasyprint import HTML
 from .settings_form import SettingsFormDoctor
-from .internal_data_enum_pathologies import DASH_ENUM
+from .internal_data_enum_pathologies import DASH_ENUM_FIFTH,DASH_ENUM_FOURTH,DASH_ENUM_SECOND,DASH_ENUM_THIRD,DASH_ENUM_FIRST,DASH_ENUM_SIXTH
 
 #TEST
 
-from .doctor_forms import TableDash
+from .doctor_forms import DashFormTest
 
 doctor = Blueprint('doctor', __name__)
 
@@ -1004,8 +1004,16 @@ def test_controls():
                    "forza":{"active":False,
                            "indices":[0]
                            },
-                    "dash":{"active":False,
-                           "indices":[0]
+                    "dash": {"active":True,
+                           "indices":[0],
+                           "labels":{
+                                "labels_1":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIRST],
+                                "labels_2":[(label.value[1],label.value[0]) for label in DASH_ENUM_SECOND],
+                                "labels_3":[(label.value[1],label.value[0]) for label in DASH_ENUM_THIRD],
+                                "labels_4":[(label.value[1],label.value[0]) for label in DASH_ENUM_FOURTH],
+                                "labels_5":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIFTH],
+                                "labels_6":[(label.value[1],label.value[0]) for label in DASH_ENUM_SIXTH], 
+                                }
                            },       
                     "prwhe":{"active":False,
                            "indices":[0]
@@ -1169,10 +1177,22 @@ def test_controls():
             print("Dash")
             dash_data= None
             if controls_map["dash"]["active"]:
-                dash_data = []
-                for entry in form.dash.entries:  # Iterate over FieldList
-                    dash_entry = {field.name: field.data for field in entry}
-                    dash_data.append(dash_entry)
+                dash_data = {}
+                
+                for row, label in zip (form.dash.first_dash.rows,controls_map["dash"]["labels"]["labels_1"]):
+                    dash_data[label[1]]=row.data["options"]
+                for row, label in zip (form.dash.second_dash.rows,controls_map["dash"]["labels"]["labels_2"]):
+                    dash_data[label[1]]=row.data["options"]
+                for row, label in zip (form.dash.third_dash.rows,controls_map["dash"]["labels"]["labels_3"]):
+                    dash_data[label[1]]=row.data["options"]
+                for row, label in zip (form.dash.fourth_dash.rows,controls_map["dash"]["labels"]["labels_4"]):
+                    dash_data[label[1]]=row.data["options"]
+                for row, label in zip (form.dash.fifth_dash.rows,controls_map["dash"]["labels"]["labels_5"]):
+                    dash_data[label[1]]=row.data["options"]
+                for row, label in zip (form.dash.sixth_dash.rows,controls_map["dash"]["labels"]["labels_6"]):
+                    dash_data[label[1]]=row.data["options"]
+                    
+                    
             print(dash_data)
 
 
@@ -1300,15 +1320,46 @@ def svg_test():
 @doctor.route('/dash_test/',methods=["GET","POST"])
 def dash_test():
 
-    form = TableDash()
-    labels=[label.value for label in DASH_ENUM]
+    form = DashFormTest()
+
+    labels_1=[(label.value[1],label.value[0]) for label in DASH_ENUM_FIRST]
+    labels_2=[(label.value[1],label.value[0]) for label in DASH_ENUM_SECOND]
+    labels_3=[(label.value[1],label.value[0]) for label in DASH_ENUM_THIRD]
+    labels_4=[(label.value[1],label.value[0]) for label in DASH_ENUM_FOURTH]
+    labels_5=[(label.value[1],label.value[0]) for label in DASH_ENUM_FIFTH]
+    labels_6=[(label.value[1],label.value[0]) for label in DASH_ENUM_SIXTH]
 
     results={}
     if form.validate_on_submit():
         
-        for row, label in zip (form.rows,labels):
-            results[label]=row.data["options"]
+        for row, label in zip (form.dash.first_dash.rows,labels_1):
+            print(label[1])
+            print(row.data["options"])
+            results[label[1]]=row.data["options"]
+        
+        for row, label in zip (form.dash.second_dash.rows,labels_2):
+            results[label[1]]=row.data["options"]
+        
+        for row, label in zip (form.dash.third_dash.rows,labels_3):
+            results[label[1]]=row.data["options"]
+
+        for row, label in zip (form.dash.fourth_dash.rows,labels_4):
+            results[label[1]]=row.data["options"]
+
+        for row, label in zip (form.dash.fifth_dash.rows,labels_5):
+            results[label[1]]=row.data["options"]
+
+        for row, label in zip (form.dash.sixth_dash.rows,labels_6):
+            results[label[1]]=row.data["options"]
 
         print(results)
 
-    return render_template('doctor/test_dash.html',form=form,labels=labels,zip=zip)
+    return render_template('doctor/test_dash.html',
+                           form=form,
+                           labels_1=labels_1,
+                           labels_2=labels_2,
+                           labels_3=labels_3,
+                           labels_4=labels_4,
+                           labels_5=labels_5,
+                           labels_6=labels_6,
+                           zip=zip)

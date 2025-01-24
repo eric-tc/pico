@@ -1,232 +1,192 @@
-{% for index in range(form.dash | length) %}
-    {% if index in controls_map.dash.indices %}
-        <fieldset>
-            
-            <legend>Dash</legend>
-                <div class="form-grid-2">
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].svitare_coperchio.label }}</label>
-                        {{ form.dash[index].svitare_coperchio }}
-                        {% for error in form.dash[index].svitare_coperchio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+<!-- -------------------------1------------------ -->
+<fieldset>
+    <legend>Dash</legend>
 
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].scrivere.label }}</label>
-                        {{ form.dash[index].scrivere }}
-                        {% for error in form.dash[index].scrivere.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].girare_chiave.label }}</label>
-                        {{ form.dash[index].girare_chiave }}
-                        {% for error in form.dash[index].girare_chiave.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].preparare_pasto.label }}</label>
-                        {{ form.dash[index].preparare_pasto }}
-                        {% for error in form.dash[index].preparare_pasto.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].aprire_porta_pesante.label }}</label>
-                        {{ form.dash[index].aprire_porta_pesante }}
-                        {% for error in form.dash[index].aprire_porta_pesante.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>   
-                    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].posare_oggetto.label }}</label>
-                        {{ form.dash[index].posare_oggetto }}
-                        {% for error in form.dash[index].posare_oggetto.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].fare_lavori_domestici.label }}</label>
-                        {{ form.dash[index].fare_lavori_domestici }}
-                        {% for error in form.dash[index].fare_lavori_domestici.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].fare_lavori_giardinaggio.label }}</label>
-                        {{ form.dash[index].fare_lavori_giardinaggio }}
-                        {% for error in form.dash[index].fare_lavori_giardinaggio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].rifare_letto.label }}</label>
-                        {{ form.dash[index].rifare_letto }}
-                        {% for error in form.dash[index].rifare_letto.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].portare_borsa.label }}</label>
-                        {{ form.dash[index].portare_borsa }}
-                        {% for error in form.dash[index].portare_borsa.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].portare_oggetto.label }}</label>
-                        {{ form.dash[index].portare_oggetto }}
-                        {% for error in form.dash[index].portare_oggetto.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].cambio_lampadina.label }}</label>
-                        {{ form.dash[index].cambio_lampadina }}
-                        {% for error in form.dash[index].cambio_lampadina.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].lavarsi_capelli.label }}</label>
-                        {{ form.dash[index].lavarsi_capelli }}
-                        {% for error in form.dash[index].lavarsi_capelli.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].lavarsi_schiena.label }}</label>
-                        {{ form.dash[index].lavarsi_schiena }}
-                        {% for error in form.dash[index].lavarsi_schiena.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].Infilare_maglione.label }}</label>
-                        {{ form.dash[index].Infilare_maglione }}
-                        {% for error in form.dash[index].Infilare_maglione.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].usare_coltello.label }}</label>
-                        {{ form.dash[index].usare_coltello }}
-                        {% for error in form.dash[index].usare_coltello.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].attivita_ricreative.label }}</label>
-                        {{ form.dash[index].attivita_ricreative }}
-                        {% for error in form.dash[index].attivita_ricreative.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].attivita_colpi_braccio.label }}</label>
-                        {{ form.dash[index].attivita_colpi_braccio }}
-                        {% for error in form.dash[index].attivita_colpi_braccio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].attivita_mov_libero.label }}</label>
-                        {{ form.dash[index].attivita_mov_libero }}
-                        {% for error in form.dash[index].attivita_mov_libero.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].necessita_spostamento.label }}</label>
-                        {{ form.dash[index].necessita_spostamento }}
-                        {% for error in form.dash[index].necessita_spostamento.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].att_sesso.label }}</label>
-                        {{ form.dash[index].att_sesso }}
-                        {% for error in form.dash[index].att_sesso.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].dolore_braccio.label }}</label>
-                        {{ form.dash[index].dolore_braccio }}
-                        {% for error in form.dash[index].dolore_braccio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].sett_passata.label }}</label>
-                        {{ form.dash[index].sett_passata }}
-                        {% for error in form.dash[index].sett_passata.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].durante_settimana.label }}</label>
-                        {{ form.dash[index].durante_settimana }}
-                        {% for error in form.dash[index].durante_settimana.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                   
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].dolore_braccio_attivita.label }}</label>
-                        {{ form.dash[index].dolore_braccio_attivita }}
-                        {% for error in form.dash[index].dolore_braccio_attivita.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].formicolio.label }}</label>
-                        {{ form.dash[index].formicolio }}
-                        {% for error in form.dash[index].formicolio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].debolezza_braccio.label }}</label>
-                        {{ form.dash[index].debolezza_braccio }}
-                        {% for error in form.dash[index].debolezza_braccio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].rigidita_braccio.label }}</label>
-                        {{ form.dash[index].rigidita_braccio }}
-                        {% for error in form.dash[index].rigidita_braccio.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].difficolta_dormire.label }}</label>
-                        {{ form.dash[index].difficolta_dormire }}
-                        {% for error in form.dash[index].difficolta_dormire.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.dash[index].meno_utile.label }}</label>
-                        {{ form.dash[index].meno_utile }}
-                        {% for error in form.dash[index].meno_utile.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-            
-                </div>
-            
-        </fieldset>
-       
-    {% endif %}
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nessuna Difficoltà 1</th>
+            <th>Lieve Difficoltà 2</th>
+            <th>Discreta Difficoltà 3</th>
+            <th>Notevole Difficoltà 4</th>
+            <th>Non ci sono riuscito 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.first_dash.rows, controls_map.dash.labels.labels_1) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
 {% endfor %}
+    </tbody>
+</table>
+
+<!-- -------------------------2------------------ -->
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Per Nulla  1</th>
+            <th>Molto Poco 2</th>
+            <th>Un pò 3</th>
+            <th>Molto 4</th>
+            <th>Moltissimo 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.second_dash.rows, controls_map.dash.labels.labels_2) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<!-- -------------------------3------------------ -->
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nom mi ha limitato per nulla  1</th>
+            <th>Mi ha limitato leggermente 2</th>
+            <th>Mi ha limitato discretamente 3</th>
+            <th>Mi ha limitato molto</th>
+            <th>Non ci sono riuscito 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.third_dash.rows, controls_map.dash.labels.labels_3) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<!-- -------------------------4------------------ -->
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nessuno 1</th>
+            <th>Lieve 2</th>
+            <th>Discreto 3</th>
+            <th>Forte 4</th>
+            <th>Estremo 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.fourth_dash.rows, controls_map.dash.labels.labels_4) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+
+<!-- -------------------------5------------------ -->
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nessuna difficoltà  1</th>
+            <th>Lieve difficoltà 2</th>
+            <th>Discreta difficoltà 3</th>
+            <th>Notevole difficoltà 4</th>
+            <th>Non sono riuscito a dormire 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.fifth_dash.rows, controls_map.dash.labels.labels_5) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+
+<!-- -------------------------6------------------ -->
+<table class="dash">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Non sono assolutamente d'accordo 1</th>
+            <th>Non sono d'accordo 2</th>
+            <th>Non saprei 3</th>
+            <th>Sono d'accordo 4</th>
+            <th>Sono assolutamente d'accordo 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.dash.sixth_dash.rows, controls_map.dash.labels.labels_6) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+</fieldset>

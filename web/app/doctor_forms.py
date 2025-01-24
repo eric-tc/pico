@@ -167,49 +167,49 @@ class PrwheForm(FlaskForm):
     valore_prwhe =FloatField('Valore PRWHE', render_kw={'class': 'form-control-grid','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
 
 
-class DashForm(FlaskForm):
+# class DashForm(FlaskForm):
     
-    #0
-    svitare_coperchio = IntegerField('Svitare il coperchio di un barattolo ben chiuso o nuovo. [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    scrivere = IntegerField('Scrivere [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    girare_chiave = IntegerField('Girare una chiave  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    preparare_pasto = IntegerField('Preparare un pasto ', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    aprire_porta_pesante = IntegerField('Aprire spingendo una porta pesante ', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #0
+#     svitare_coperchio = IntegerField('Svitare il coperchio di un barattolo ben chiuso o nuovo. [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     scrivere = IntegerField('Scrivere [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     girare_chiave = IntegerField('Girare una chiave  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     preparare_pasto = IntegerField('Preparare un pasto ', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     aprire_porta_pesante = IntegerField('Aprire spingendo una porta pesante ', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     
-    #5    
-    posare_oggetto = IntegerField('Posare un oggetto su uno scaffale al di sopra della propria testa  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    fare_lavori_domestici = IntegerField('Fare lavori domestici pesanti (es. lavare i pavimenti o i vetri)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    fare_lavori_giardinaggio = IntegerField('Fare lavori di giardinaggio (es. lavare i pavimenti o i vetri)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    rifare_letto = IntegerField('Rifare il letto [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    portare_borsa = IntegerField('Portare la borsa della spesa o una ventiquattrore [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #5    
+#     posare_oggetto = IntegerField('Posare un oggetto su uno scaffale al di sopra della propria testa  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     fare_lavori_domestici = IntegerField('Fare lavori domestici pesanti (es. lavare i pavimenti o i vetri)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     fare_lavori_giardinaggio = IntegerField('Fare lavori di giardinaggio (es. lavare i pavimenti o i vetri)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     rifare_letto = IntegerField('Rifare il letto [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     portare_borsa = IntegerField('Portare la borsa della spesa o una ventiquattrore [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     
-    #10
-    portare_oggetto = IntegerField('Portare un oggetto pesante (oltre 5 Kg) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    cambio_lampadina = IntegerField('Cambiare una lampadina posta al di sopra della propria testa [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    lavarsi_capelli = IntegerField('Lavarsi o asciugarsi i capelli (vestirsi, lavarsi, etc) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    lavarsi_schiena = IntegerField('Lavarsi la schiena [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    Infilare_maglione = IntegerField('Infilarsi un maglione [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #10
+#     portare_oggetto = IntegerField('Portare un oggetto pesante (oltre 5 Kg) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     cambio_lampadina = IntegerField('Cambiare una lampadina posta al di sopra della propria testa [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     lavarsi_capelli = IntegerField('Lavarsi o asciugarsi i capelli (vestirsi, lavarsi, etc) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     lavarsi_schiena = IntegerField('Lavarsi la schiena [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     Infilare_maglione = IntegerField('Infilarsi un maglione [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     
-    #15
-    usare_coltello = IntegerField('Usare un coltello per tagliare del cibo [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    attivita_ricreative = IntegerField('Attività ricreative che richiedono poco sforzo (es. giocare a carte,lavorare a maglia) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    attivita_colpi_braccio = IntegerField('Attività ricreative nelle quali si fa forza o si prendono colpi sul braccio, sulla spalla o sulla mano (es. usare il martello, giocare atennis o a golf, ecc [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    attivita_mov_libero = IntegerField('Attività ricreative che richiedono un movimento libero del braccio(es. giocare a frisbee, a badminton, ecc.)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    necessita_spostamento = IntegerField('Far fronte alle necessità di spostamento (andare da un posto ad un altro) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #15
+#     usare_coltello = IntegerField('Usare un coltello per tagliare del cibo [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     attivita_ricreative = IntegerField('Attività ricreative che richiedono poco sforzo (es. giocare a carte,lavorare a maglia) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     attivita_colpi_braccio = IntegerField('Attività ricreative nelle quali si fa forza o si prendono colpi sul braccio, sulla spalla o sulla mano (es. usare il martello, giocare atennis o a golf, ecc [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     attivita_mov_libero = IntegerField('Attività ricreative che richiedono un movimento libero del braccio(es. giocare a frisbee, a badminton, ecc.)  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     necessita_spostamento = IntegerField('Far fronte alle necessità di spostamento (andare da un posto ad un altro) [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     
-    #20
-    att_sesso = IntegerField('Attività sessuale [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    sett_passata = IntegerField('Durante la settimana passata, in che misura il suo problema al braccio, alla spalla o alla mano ha interferito con le normali attività sociali con la famiglia, gli amici, i vicini di casa i gruppi di cui fa parte?  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    durante_settimana = IntegerField('Durante la settimana passata è stato limitato nel suo lavoro o in altre attività quotidiane abituali a causa del suo problema al braccio, alla spalla o alla mano? [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    dolore_braccio = IntegerField('Dolore al braccio, alla spalla o alla mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    dolore_braccio_attivita = IntegerField('Dolore al braccio, alla spalla o alla mano nel compiere una qualsiasi attività specifica  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #20
+#     att_sesso = IntegerField('Attività sessuale [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     sett_passata = IntegerField('Durante la settimana passata, in che misura il suo problema al braccio, alla spalla o alla mano ha interferito con le normali attività sociali con la famiglia, gli amici, i vicini di casa i gruppi di cui fa parte?  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     durante_settimana = IntegerField('Durante la settimana passata è stato limitato nel suo lavoro o in altre attività quotidiane abituali a causa del suo problema al braccio, alla spalla o alla mano? [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     dolore_braccio = IntegerField('Dolore al braccio, alla spalla o alla mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     dolore_braccio_attivita = IntegerField('Dolore al braccio, alla spalla o alla mano nel compiere una qualsiasi attività specifica  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     
-    #25
-    formicolio = IntegerField('Formicolio (sensazione di punture di spillo) al braccio, alla spalla o alla mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    debolezza_braccio = IntegerField('Debolezza al braccio, alla spalla o alla mano  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    rigidita_braccio = IntegerField('Rigidità del braccio, della spalla o della mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    difficolta_dormire = IntegerField('Durante ultima settimana quanta difficoltà ha incontrato nel dormire a causa del dolore al braccio, alla spalla o alla mano? [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    meno_utile = IntegerField('Mi sento meno capace, meno fiducioso o meno utile a causa del mio problema al braccio, alla spalla o alla mano  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     #25
+#     formicolio = IntegerField('Formicolio (sensazione di punture di spillo) al braccio, alla spalla o alla mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     debolezza_braccio = IntegerField('Debolezza al braccio, alla spalla o alla mano  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     rigidita_braccio = IntegerField('Rigidità del braccio, della spalla o della mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     difficolta_dormire = IntegerField('Durante ultima settimana quanta difficoltà ha incontrato nel dormire a causa del dolore al braccio, alla spalla o alla mano? [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
+#     meno_utile = IntegerField('Mi sento meno capace, meno fiducioso o meno utile a causa del mio problema al braccio, alla spalla o alla mano  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
 
 
 #ESEMPIO DASH
@@ -227,15 +227,48 @@ class RowForm(FlaskForm):
         default='1'
     )
 
-class TableDash(FlaskForm):
+class FirstDash(FlaskForm):
     rows = FieldList(FormField(RowForm), min_entries=21)  # 3 rows as an example
-    submit = SubmitField('Submit')
+    
 
-class Dash(FlaskForm):
+class SecondDash(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    
 
-    upper_dash= FieldList(FormField(TableDash), min_entries=1, max_entries=1)
-    lower_dash= FieldList(FormField(TableDash), min_entries=1, max_entries=1)
+class ThirdDash(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    
 
+class FourthDash(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=5)  # 3 rows as an example
+
+class FifthDash(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+
+class Sixth(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    
+
+
+class DashForm(FlaskForm):
+
+    # first_dash= FieldList(FormField(FirstDash), min_entries=1, max_entries=1)
+    # second_dash= FieldList(FormField(SecondDash), min_entries=1, max_entries=1)
+    # third_dash= FieldList(FormField(ThirdDash), min_entries=1, max_entries=1)
+    # fourth_dash= FieldList(FormField(FourthDash), min_entries=1, max_entries=1)
+
+    first_dash= FormField(FirstDash)
+    second_dash= FormField(SecondDash)
+    third_dash= FormField(ThirdDash)
+    fourth_dash= FormField(FourthDash)
+    fifth_dash= FormField(FifthDash)
+    sixth_dash= FormField(Sixth)
+
+    
+class DashFormTest(FlaskForm):
+    
+    dash = FormField(DashForm)
+    submit = SubmitField("Submit", render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
 
 
 class TreatmentForm(FlaskForm):
@@ -260,8 +293,8 @@ class TreatmentForm(FlaskForm):
     forza= FieldList(FormField(ForzaForm), min_entries=1, max_entries=1)
     
     #6
-    dash = FieldList(FormField(DashForm), min_entries=1, max_entries=1)
-    
+    #dash = FieldList(FormField(DashForm), min_entries=1, max_entries=1)
+    dash = FormField(DashForm)
     #7
     prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
     

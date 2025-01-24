@@ -28,7 +28,13 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     LesioneLigamentosaEnum,\
     CONTROLS,\
     CONTROLSNUMBER,\
-    PATHOLOGY_LABEL
+    PATHOLOGY_LABEL,\
+    DASH_ENUM_FIRST,\
+    DASH_ENUM_SECOND,\
+    DASH_ENUM_THIRD,\
+    DASH_ENUM_FOURTH,\
+    DASH_ENUM_FIFTH,\
+    DASH_ENUM_SIXTH
 
 from .doctor_forms import PreResezioneFileraForm,PreDupuytrenForm,PreLesioneLigamentosaForm
 
@@ -106,7 +112,15 @@ class PathologyTimline:
                            "indices":[0]
                            },
         CONTROLS.DASH.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "labels":{
+                                "labels_1":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIRST],
+                                "labels_2":[(label.value[1],label.value[0]) for label in DASH_ENUM_SECOND],
+                                "labels_3":[(label.value[1],label.value[0]) for label in DASH_ENUM_THIRD],
+                                "labels_4":[(label.value[1],label.value[0]) for label in DASH_ENUM_FOURTH],
+                                "labels_5":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIFTH],
+                                "labels_6":[(label.value[1],label.value[0]) for label in DASH_ENUM_SIXTH], 
+                                }
                            },
         CONTROLS.PRWHE.value: {"active":False,
                            "indices":[0]
@@ -293,11 +307,21 @@ class PathologyTimline:
 
         print("Dash")
         dash_data= None
-        if controls_map[CONTROLS.DASH.value]["active"]:
-            dash_data = []
-            for entry in form.dash.entries:  # Iterate over FieldList
-                dash_entry = {field.name: field.data for field in entry}
-                dash_data.append(dash_entry)
+        if controls_map["dash"]["active"]:
+            dash_data = {}
+            
+            for row, label in zip (form.dash.first_dash.rows,controls_map["dash"]["labels"]["labels_1"]):
+                dash_data[label[1]]=row.data["options"]
+            for row, label in zip (form.dash.second_dash.rows,controls_map["dash"]["labels"]["labels_2"]):
+                dash_data[label[1]]=row.data["options"]
+            for row, label in zip (form.dash.third_dash.rows,controls_map["dash"]["labels"]["labels_3"]):
+                dash_data[label[1]]=row.data["options"]
+            for row, label in zip (form.dash.fourth_dash.rows,controls_map["dash"]["labels"]["labels_4"]):
+                dash_data[label[1]]=row.data["options"]
+            for row, label in zip (form.dash.fifth_dash.rows,controls_map["dash"]["labels"]["labels_5"]):
+                dash_data[label[1]]=row.data["options"]
+            for row, label in zip (form.dash.sixth_dash.rows,controls_map["dash"]["labels"]["labels_6"]):
+                dash_data[label[1]]=row.data["options"]
         print(dash_data)
 
 
