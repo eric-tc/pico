@@ -163,3 +163,38 @@ class PATHOLOGY_LABEL(Enum):
 
 class OPTION_NULL(Enum):
     NULL = "Seleziona un'opzione"
+
+
+# DASH ENUM
+
+class DASH_ENUM(Enum):
+    SVITARE_COPERICHIO = "Svitare coperchio"
+    SCRIVERE = "Scrivere"
+    GIRARE_CHIAVE = "Girare una chiave"
+    PREPARARE_PASTO = "Preparare un pasto"
+    APRIRE_PORTA_PESANTE = "Aprire spingendo una porta pesante"
+    
+    #5
+    POSARE_OGGETTO= "Posare un oggetto su uno scaffale al di sopra della propria testa"
+    FARE_LAVORI_DOMESTICI= "Fare lavori domestici pesanti (es. lavare i pavimenti o i vetri)"
+    LAVORI_GIARDINAGGIO="Fare lavori di giardinaggio"
+    RIFARE_LETTO= "Rifare il letto"
+    PORTARE_BORSA= "Portare la borsa della spesa o una ventiquattrore"
+
+    #10
+    PORTARE_OGGETTO= "Portare un oggetto pesante (oltre 5 Kg)"
+    CAMBIO_LAMPADINA = "Cambiare una lampadina posta al di sopra della propria testa"
+    LAVARSI_CAPELLI = "Lavarsi o asciugarsi i capelli"
+    LAVARSI_SCHIENA = "Lavarsi la schiena"
+    INFILARSI_MAGILIONE= "Infilarsi un maglione"
+
+    #15
+    USARE_COLTELLO= "Usare un coltello per tagliare del cibo"
+    ATTIVITA_RICREATIVE ="Attività ricreative che richiedono poco sforzo (es. giocare a carte,lavorare a maglia "
+    ATTIVITA_COLPI_BRACCIO= "Attività ricreative nelle quali si fa forza o si prendono colpi sul braccio, sulla spalla o sulla mano (es. usare il martello, giocare a tennis o a golf, ecc.)"
+    ATTIVITA_MOV_LIBERO="Attività ricreative che richiedono un movimento libero del braccio (es. giocare a frisbee, a badminton, ecc.)"
+    NECESSITA_SPOSTAMENTO= "Far fronte alle necessità di spostamento (andare da un posto ad un altro)"
+
+    #20
+
+    ATTIVITA_SESSUALE= "Attività sessuale"

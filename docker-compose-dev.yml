@@ -23,7 +23,7 @@ services:
     environment:
       DEBUG: False
       POSTGRES_DB: db_dev
-      DATABASE_PORT: 5432
+      DATABASE_PORT: 5433
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     expose:
@@ -47,9 +47,10 @@ services:
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     ports:
-      - "5432:5432"
+      - "5433:5433"
     expose:
-      - "5432"
+      - "5433"
+    command: -p 5433
   redis:
     image: "redis:latest"
   celery_worker:
@@ -68,7 +69,7 @@ services:
     environment:
       DEBUG: False
       POSTGRES_DB: db_dev
-      DATABASE_PORT: 5432
+      DATABASE_PORT: 5433
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     command: ["bash"]

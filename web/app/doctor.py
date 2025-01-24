@@ -16,6 +16,11 @@ from .query_sql import select_next_treatments
 import sys
 from weasyprint import HTML
 from .settings_form import SettingsFormDoctor
+from .internal_data_enum_pathologies import DASH_ENUM
+
+#TEST
+
+from .doctor_forms import TableDash
 
 doctor = Blueprint('doctor', __name__)
 
@@ -1290,3 +1295,20 @@ def test_controls():
 def svg_test():
 
     return render_template('doctor/svg_test.html')
+
+
+@doctor.route('/dash_test/',methods=["GET","POST"])
+def dash_test():
+
+    form = TableDash()
+    labels=[label.value for label in DASH_ENUM]
+
+    results={}
+    if form.validate_on_submit():
+        
+        for row, label in zip (form.rows,labels):
+            results[label]=row.data["options"]
+
+        print(results)
+
+    return render_template('doctor/test_dash.html',form=form,labels=labels,zip=zip)

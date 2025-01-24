@@ -43,6 +43,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(BaseConfig)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    #Questa pws non può essere randomica altrimenti gunicorn con il multithread ne crea una diversa
+    # per ogni thread creando problemi di validazione csrf
     app.config['SECRET_KEY'] = "#ekqk3DEgqwer)=90mlw@"
     app.config["CACHE_TYPE"] = "SimpleCache"
     app.config["CACHE_DEFAULT_TIMEOUT"] = 60

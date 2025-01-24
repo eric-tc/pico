@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField,TextAreaField
 from wtforms.validators import DataRequired, Length,NumberRange
-from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField
+from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField,RadioField
 from .internal_data_enum_pathologies import CONTROLS,OPTION_NULL
 
 
@@ -210,7 +210,33 @@ class DashForm(FlaskForm):
     rigidita_braccio = IntegerField('Rigidità del braccio, della spalla o della mano [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     difficolta_dormire = IntegerField('Durante ultima settimana quanta difficoltà ha incontrato nel dormire a causa del dolore al braccio, alla spalla o alla mano? [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
     meno_utile = IntegerField('Mi sento meno capace, meno fiducioso o meno utile a causa del mio problema al braccio, alla spalla o alla mano  [Minimo 0- Massimo 5]', render_kw={'class': 'form-control-grid','type': 'number', 'min':'1', 'max': '5'})
-    
+
+
+#ESEMPIO DASH
+
+class RowForm(FlaskForm):
+    options = RadioField(
+        'Options',
+        choices=[
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'),
+            ('5', '5')
+        ],
+        default='1'
+    )
+
+class TableDash(FlaskForm):
+    rows = FieldList(FormField(RowForm), min_entries=21)  # 3 rows as an example
+    submit = SubmitField('Submit')
+
+class Dash(FlaskForm):
+
+    upper_dash= FieldList(FormField(TableDash), min_entries=1, max_entries=1)
+    lower_dash= FieldList(FormField(TableDash), min_entries=1, max_entries=1)
+
+
 
 class TreatmentForm(FlaskForm):
 
