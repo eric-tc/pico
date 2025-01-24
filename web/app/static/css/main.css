@@ -318,7 +318,7 @@ table.dash th, table.dash td {
 
 /* Make the first column of tables with class 'dash' wider */
 table.dash th:first-child, table.dash td:first-child {
-  width: 30%; /* Adjust percentage as needed */
+  width: 50%; /* Adjust percentage as needed */
 }
 
 /* Style for table headers */

@@ -340,9 +340,16 @@ class PathologyTimline:
         print("Prwhe")
         prwhe_data =[]
         if controls_map[CONTROLS.PRWHE.value]["active"]:
-            for entry in form.prwhe.entries:  # Iterate over FieldList
-                prwhe_entry = {field.name: field.data for field in entry}
-                prwhe_data.append(prwhe_entry)
+            prwhe_data = {}
+            
+            for row, label in zip (form.prwhe.first_prwhe.rows,controls_map["prwhe"]["labels"]["labels_1"]):
+                prwhe_data[label[1]]=row.data["options"]
+            for row, label in zip (form.prwhe.second_prwhe.rows,controls_map["prwhe"]["labels"]["labels_2"]):
+                prwhe_data[label[1]]=row.data["options"]
+            for row, label in zip (form.prwhe.third_prwhe.rows,controls_map["prwhe"]["labels"]["labels_3"]):
+                prwhe_data[label[1]]=row.data["options"]
+            for row, label in zip (form.prwhe.fourth_prwhe.rows,controls_map["prwhe"]["labels"]["labels_4"]):
+                prwhe_data[label[1]]=row.data["options"]
         print(prwhe_data)
 
         
