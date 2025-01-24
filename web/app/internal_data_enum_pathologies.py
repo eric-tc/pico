@@ -217,3 +217,27 @@ class DASH_ENUM_FIFTH(Enum):
 
 class DASH_ENUM_SIXTH(Enum):
     MENO_CAPACA= (30,"Mi sento meno capace, meno fiducioso o meno utile a causa del mio problema al braccio, alla spalla o alla mano ")
+
+
+class PWRHE_ENUM_FIRST(Enum):
+    DOLORE_RIPOSO= (1,"A riposo")
+    DOLORE_MOV_RIPETUTI= (2,"Eseguendo movimenti ripetuti del polso /mano")
+    DOLORE_SOLLVEVARE= (3," Sollevando un oggetto pesante")
+    QUANTO_MALE= (4,"Quando fa più male")
+
+class PWRHE_ENUM_SECOND(Enum):
+    AVVERTO_DOLORE= (5,"Quando avverte dolore")
+
+class PWRHE_ENUM_THIRD(Enum):
+    GIRARE_MANIGLIA= (6,"Girare la maniglia di una porta usando la mano malata")
+    TAGLIARE_CARNE= (7,"Tagliare la carne tenendo il coltello con la mano malata")
+    ALLACCIARE_BOTTONE= (8,"Allacciare i bottoni della camicia")
+    SOLLEVARE_SEDIA= (9,"Sollevarsi da una sedia, spingendosi sulla mano malata")
+    PORTARE_OGGETTO= (10,"Portare un oggetto del peso di circa 5 kg con la mano malata")
+    USARE_CARTA_IGIENICA= (11,"Usare la carta igienica con la mano malata")
+
+class PWRHE_ENUM_FOURTH(Enum):
+    CURA_PERSONALE= (12,"Attività di cura della propria persona (vestirsi, lavarsi, etc)")
+    LAVORO_DOMESTICO= (13,"Lavori domestici (pulire, sbrigare le faccende)")
+    LAVORO= (14,"Lavoro (occupazione o lavoro giornaliero)")
+    ATTIVITA_RICREATIVE= (15,"Attività ricreative e del tempo libero")

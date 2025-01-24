@@ -34,7 +34,11 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     DASH_ENUM_THIRD,\
     DASH_ENUM_FOURTH,\
     DASH_ENUM_FIFTH,\
-    DASH_ENUM_SIXTH
+    DASH_ENUM_SIXTH,\
+    PWRHE_ENUM_FIRST,\
+    PWRHE_ENUM_SECOND,\
+    PWRHE_ENUM_THIRD,\
+    PWRHE_ENUM_FOURTH
 
 from .doctor_forms import PreResezioneFileraForm,PreDupuytrenForm,PreLesioneLigamentosaForm
 
@@ -123,7 +127,14 @@ class PathologyTimline:
                                 }
                            },
         CONTROLS.PRWHE.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "labels":{
+                                "labels_1":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_FIRST],
+                                "labels_2":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_SECOND],
+                                "labels_3":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_THIRD],
+                                "labels_4":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_FOURTH],
+                                
+                                }
                            },
         CONTROLS.EATON_LITTLER.value: {"active":False,
                            "indices":[0]

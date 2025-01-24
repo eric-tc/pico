@@ -214,7 +214,7 @@ class PrwheForm(FlaskForm):
 
 #ESEMPIO DASH
 
-class RowForm(FlaskForm):
+class RowFormDash(FlaskForm):
     options = RadioField(
         'Options',
         choices=[
@@ -228,25 +228,25 @@ class RowForm(FlaskForm):
     )
 
 class FirstDash(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=21)  # 3 rows as an example
+    rows = FieldList(FormField(RowFormDash), min_entries=21)  # 3 rows as an example
     
 
 class SecondDash(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    rows = FieldList(FormField(RowFormDash), min_entries=1)  # 3 rows as an example
     
 
 class ThirdDash(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    rows = FieldList(FormField(RowFormDash), min_entries=1)  # 3 rows as an example
     
 
 class FourthDash(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=5)  # 3 rows as an example
+    rows = FieldList(FormField(RowFormDash), min_entries=5)  # 3 rows as an example
 
 class FifthDash(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
-
+    rows = FieldList(FormField(RowFormDash), min_entries=1)  # 3 rows as an example
+RowFormDash
 class Sixth(FlaskForm):
-    rows = FieldList(FormField(RowForm), min_entries=1)  # 3 rows as an example
+    rows = FieldList(FormField(RowFormDash), min_entries=1)  # 3 rows as an example
     
 
 
@@ -264,7 +264,47 @@ class DashForm(FlaskForm):
     fifth_dash= FormField(FifthDash)
     sixth_dash= FormField(Sixth)
 
+#PRWHE
+
+class RowFormPrwhe(FlaskForm):
+    options = RadioField(
+        'Options',
+        choices=[
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'),
+            ('5', '5'),
+            ('6', '6'),
+            ('7', '7'),
+            ('8', '8'),
+            ('9', '9'),
+            ('10', '10'),
+        ],
+        default='1'
+    )
+
+class FirstPrwhe(FlaskForm):
+    rows = FieldList(FormField(RowFormPrwhe), min_entries=4)  # 3 rows as an example
     
+
+class SecondPrwhe(FlaskForm):
+    rows = FieldList(FormField(RowFormPrwhe), min_entries=1)  # 3 rows as an example
+
+
+class ThirdPrwhe(FlaskForm):
+    rows = FieldList(FormField(RowFormPrwhe), min_entries=6)  # 3 rows as an example
+
+class FourthPrwhe(FlaskForm):
+    rows = FieldList(FormField(RowFormPrwhe), min_entries=4)  # 3 rows as an example
+
+class PrwheForm(FlaskForm):
+    first_prwhe= FormField(FirstPrwhe)
+    second_prwhe= FormField(SecondPrwhe)
+    third_prwhe= FormField(ThirdPrwhe)
+    fourth_prwhe= FormField(FourthPrwhe)
+
+
 class DashFormTest(FlaskForm):
     
     dash = FormField(DashForm)
@@ -296,8 +336,8 @@ class TreatmentForm(FlaskForm):
     #dash = FieldList(FormField(DashForm), min_entries=1, max_entries=1)
     dash = FormField(DashForm)
     #7
-    prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
-    
+    #prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
+    prwhe=FormField(PrwheForm)
     #8
     eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value + "Valori [0,4]", render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
     

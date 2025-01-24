@@ -1,201 +1,159 @@
-{% for index in range(form.prwhe | length) %}
-    {% if index in controls_map.prwhe.indices %}
-        <fieldset>
-            <h2>Prwhe</h2>
-                <legend>Dolore</legend>
-                <div class="form-grid-2">
-                    <div class="grid-item-2">
-                        <label>{{ form.prwhe[index].dolore_riposo.label }}</label>
-                        {{ form.prwhe[index].dolore_riposo }}
-                        {% for error in form.prwhe[index].dolore_riposo.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <div class="grid-item-2">
-                        <label>{{ form.prwhe[index].dolore_movimenti_ripetuti.label }}</label>
-                        {{ form.prwhe[index].dolore_movimenti_ripetuti }}
-                        {% for error in form.prwhe[index].dolore_movimenti_ripetuti.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.prwhe[index].dolore_sollevando.label }}</label>
-                        {{ form.prwhe[index].dolore_sollevando }}
-                        {% for error in form.prwhe[index].dolore_sollevando.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.prwhe[index].dolore_piu_male.label }}</label>
-                        {{ form.prwhe[index].dolore_piu_male }}
-                        {% for error in form.prwhe[index].dolore_piu_male.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-                    <div class="grid-item-2">
-                        <label>{{ form.prwhe[index].dolore_avverto_dolore.label }}</label>
-                        {{ form.prwhe[index].dolore_avverto_dolore }}
-                        {% for error in form.prwhe[index].dolore_avverto_dolore.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>    
-            
-                </div>
-            
-            </fieldset>
-            <fieldset>
-                <legend>Funzione</legend>
-            <div class="form-grid-2">
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_maniglia.label }}</label>
-                    {{ form.prwhe[index].funzionea_maniglia }}
-                    {% for error in form.prwhe[index].funzionea_maniglia.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_tagliare.label }}</label>
-                    {{ form.prwhe[index].funzionea_tagliare }}
-                    {% for error in form.prwhe[index].funzionea_tagliare.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_bottoni.label }}</label>
-                    {{ form.prwhe[index].funzionea_bottoni }}
-                    {% for error in form.prwhe[index].funzionea_bottoni.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_sedia.label }}</label>
-                    {{ form.prwhe[index].funzionea_sedia }}
-                    {% for error in form.prwhe[index].funzionea_sedia.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_portare_oggetto.label }}</label>
-                    {{ form.prwhe[index].funzionea_portare_oggetto }}
-                    {% for error in form.prwhe[index].funzionea_portare_oggetto.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzionea_carta_igienica.label }}</label>
-                    {{ form.prwhe[index].funzionea_carta_igienica }}
-                    {% for error in form.prwhe[index].funzionea_carta_igienica.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzioneb_cura_persona.label }}</label>
-                    {{ form.prwhe[index].funzioneb_cura_persona }}
-                    {% for error in form.prwhe[index].funzioneb_cura_persona.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzioneb_lavori_domestici.label }}</label>
-                    {{ form.prwhe[index].funzioneb_lavori_domestici }}
-                    {% for error in form.prwhe[index].funzioneb_lavori_domestici.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzioneb_lavoro.label }}</label>
-                    {{ form.prwhe[index].funzioneb_lavoro }}
-                    {% for error in form.prwhe[index].funzioneb_lavoro.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].funzioneb_attivita_ricreative.label }}</label>
-                    {{ form.prwhe[index].funzioneb_attivita_ricreative }}
-                    {% for error in form.prwhe[index].funzioneb_attivita_ricreative.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
+<!-- -------------------------1------------------ -->
+<fieldset>
+    <legend>PRWHE</legend>
 
-            </div>
-            </fieldset>
-            <fieldset>
-                <legend>Valore Prwhe</legend>
-            <div class="form-grid-2">
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].aderente.label }}</label>
-                    {{ form.prwhe[index].aderente }}
-                    {% for error in form.prwhe[index].aderente.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].aspetto_estetico.label }}</label>
-                    {{ form.prwhe[index].aspetto_estetico }}
-                    {% for error in form.prwhe[index].aspetto_estetico.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>    
-                <div class="grid-item-2">
-                    <label>{{ form.prwhe[index].valore_prwhe.label }}</label>
-                    {{ form.prwhe[index].valore_prwhe }}
-                    {% for error in form.prwhe[index].valore_prwhe.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </div>        
 
-            </div>
-        </fieldset>
-    {% endif %}
+<table class="prwhe">
+    <thead>
+        <tr>
+            <th>Misuri sulla scala da 0 a 10 l’intensità di dolore che quantifica la sintomatologia media del polso/mano nell’ultima settimana.
+                Metta una crocetta sul numero che descrive l’intensità del suo dolore nell’ultima settimana.
+                Zero significa nessun dolore e 10 significa massimo dolore .
+                (Per massimo dolore intendiamo il dolore più intenso mai provato o quello che impedisce di compiere l’azione richiesta.)</th>
+            <th>Nessuna Difficoltà 1</th>
+            <th> 2</th>
+            <th> 3</th>
+            <th> 4</th>
+            <th> 5</th>
+            <th> 6</th>
+            <th> 7</th>
+            <th> 8</th>
+            <th> 9</th>
+            <th>Difficoltà massima 10</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.prwhe.first_prwhe.rows, controls_map.prwhe.labels.labels_1) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
 {% endfor %}
+    </tbody>
+</table>
 
-<script>
+<!-- -------------------------2------------------ -->
+<table class="prwhe">
+    <thead>
+        <tr>
+            <th>Stimi l’intensità del dolore</th>
+            <th>Mai 1</th>
+            <th> 2</th>
+            <th> 3</th>
+            <th> 4</th>
+            <th> 5</th>
+            <th> 6</th>
+            <th> 7</th>
+            <th> 8</th>
+            <th> 9</th>
+            <th>Sempre 10</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.prwhe.second_prwhe.rows, controls_map.prwhe.labels.labels_2) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // Get all inputs with the class 'prwhe-input'
-        const dolore = document.querySelectorAll('input[id*="dolore"]');
-        const funzione_a = document.querySelectorAll('input[id*="funzionea"]');
-        const funzione_b = document.querySelectorAll('input[id*="funzioneb"]');
-    
-        const calculateSum = () => {
-            let sum_dolore = 0;
-            dolore.forEach(input => {
-                const value = parseFloat(input.value) || 0; // Use 0 if the input is empty or invalid
-                sum_dolore += value;
-            });
-            
-            let sum_funzione_a = 0;
-            funzione_a.forEach(input => {
-                const value = parseFloat(input.value) || 0; // Use 0 if the input is empty or invalid
-                sum_funzione_a += value;
-            });
+<!-- -------------------------3------------------ -->
+<table class="prwhe">
+    <thead>
+        <tr>
+            <th>Stimi sulla scala da 0 a 10 la difficoltà avvertita nell’ultima settimana eseguendo una delle seguenti azioni specifiche.
+                Metta una crocetta sul numero che descrive la difficoltà ad eseguire l’azione nell’ultima settimana.
+                Zero significa nessuna difficoltà e 10 significa massima difficoltà (cioè che l’attività specifica non era eseguibile).</th>
+            <th>Nessuna Difficoltà 1</th>
+            <th> 2</th>
+            <th> 3</th>
+            <th> 4</th>
+            <th> 5</th>
+            <th> 6</th>
+            <th> 7</th>
+            <th> 8</th>
+            <th> 9</th>
+            <th>Difficoltà massima 10</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.prwhe.third_prwhe.rows, controls_map.prwhe.labels.labels_3) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
 
-            let sum_funzione_b = 0;
-            funzione_b.forEach(input => {
-                const value = parseFloat(input.value) || 0; // Use 0 if the input is empty or invalid
-                sum_funzione_b += value;
-            });
-            
-            let valore_prwhe=sum_dolore + (sum_funzione_a + sum_funzione_b)/2;
-            document.getElementById('prwhe-0-valore_prwhe').value = valore_prwhe;
+<!-- -------------------------4------------------ -->
 
-            console.log(valore_prwhe);
-           
-        };
-    
-        // Add event listeners to each input to trigger sum calculation
-        dolore.forEach(input => {
-            input.addEventListener('input', calculateSum);
-        });
-        
-        funzione_a.forEach(input => {
-            input.addEventListener('input', calculateSum);
-        });
-        funzione_b.forEach(input => {
-            input.addEventListener('input', calculateSum);
-        });
-        // Initial sum calculation
-        calculateSum();
-    });
 
-</script>
+<table class="prwhe">
+    <thead>
+        <tr>
+            <th>Misuri sulla scala da 0 a 10 la difficoltà avvertita nell’ultima settimana eseguendo le attività della vita quotidiana.
+                Attività “usuale”significa attività della vita quotidiana svolta prima di avere una problema con il polso o con la mano.
+                Metta una crocetta sul numero che descrive la difficoltà ad eseguire l’azione nell’ultima settimana.
+                Zero significa nessun difficoltà e 10 significa massima difficoltà (cioè che l’attività specifica non era eseguibile). </th>
+            <th>Nessuna Difficoltà 1</th>
+            <th> 2</th>
+            <th> 3</th>
+            <th> 4</th>
+            <th> 5</th>
+            <th> 6</th>
+            <th> 7</th>
+            <th> 8</th>
+            <th> 9</th>
+            <th>Difficoltà massima 10</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row_form,label in zip(form.prwhe.fourth_prwhe.rows, controls_map.prwhe.labels.labels_4) %}
+    <tr>
+        <td>{{label[1]}}. {{label[0]}}</td>
+        {% for choice in row_form.options.choices %}
+            <td>
+                <input 
+                    type="radio" 
+                    name="{{ row_form.options.name }}" 
+                    value="{{ choice[0] }}" 
+                    {% if row_form.options.data == choice[0] %} checked {% endif %}>
+                <!-- Label can be displayed optionally -->
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+</fieldset>

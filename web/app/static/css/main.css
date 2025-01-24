@@ -318,10 +318,32 @@ table.dash th, table.dash td {
 
 /* Make the first column of tables with class 'dash' wider */
 table.dash th:first-child, table.dash td:first-child {
+  width: 30%; /* Adjust percentage as needed */
+}
+
+/* Style for table headers */
+table.prwhe th {
+  background-color: #f4f4f4;
+}
+
+
+table.prwhe {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.prwhe th, table.dash td {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Make the first column of tables with class 'dash' wider */
+table.prwhe th:first-child, table.dash td:first-child {
   width: 50%; /* Adjust percentage as needed */
 }
 
 /* Style for table headers */
-table.dash th {
+table.prwhe th {
   background-color: #f4f4f4;
 }
