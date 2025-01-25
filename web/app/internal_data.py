@@ -341,15 +341,26 @@ class PathologyTimline:
         prwhe_data =[]
         if controls_map[CONTROLS.PRWHE.value]["active"]:
             prwhe_data = {}
-            
+            prwhe_value = 0
+            dolore = 0
+            funzione_a=0
+            funzione_b=0
             for row, label in zip (form.prwhe.first_prwhe.rows,controls_map["prwhe"]["labels"]["labels_1"]):
                 prwhe_data[label[1]]=row.data["options"]
+                dolore+=int(row.data["options"])
             for row, label in zip (form.prwhe.second_prwhe.rows,controls_map["prwhe"]["labels"]["labels_2"]):
                 prwhe_data[label[1]]=row.data["options"]
+                dolore+=int(row.data["options"])
             for row, label in zip (form.prwhe.third_prwhe.rows,controls_map["prwhe"]["labels"]["labels_3"]):
                 prwhe_data[label[1]]=row.data["options"]
+                funzione_a+=int(row.data["options"])
             for row, label in zip (form.prwhe.fourth_prwhe.rows,controls_map["prwhe"]["labels"]["labels_4"]):
                 prwhe_data[label[1]]=row.data["options"]
+                funzione_b+=int(row.data["options"])
+            
+            prwhe_data["prwhe"]=(dolore + (funzione_a + funzione_b)/2)/100
+
+
         print(prwhe_data)
 
         
