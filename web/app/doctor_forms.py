@@ -98,9 +98,9 @@ class ForzaForm(FlaskForm):
     
 
 class CicatriceForm(FlaskForm):
-    aderente = SelectField('Aderente', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
-    distasi_ferita = SelectField('Distasi Ferita', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
-    tinel = SelectField('Tinel', choices=[(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    aderente = SelectField('Aderente', choices=[('', OPTION_NULL.NULL.value),(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    distasi_ferita = SelectField('Distasi Ferita', choices=[('', OPTION_NULL.NULL.value),(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
+    tinel = SelectField('Tinel', choices=[('', OPTION_NULL.NULL.value),(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
 class AltroForm(FlaskForm):
     complicanze = SelectField('Complicanze', choices=[('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="CRPS", render_kw={'class': 'form-control'}, validators=None)
@@ -250,8 +250,14 @@ class TreatmentForm(FlaskForm):
     #prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
     prwhe=FormField(PrwheForm)
     #8
-    eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value + "Valori [0,4]", render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
-    
+    #eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value + "Valori [0,4]", render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
+    eaton_littler= SelectField('Eaton Littler', choices=[ ('', OPTION_NULL.NULL.value)
+                                                          ("0", 'Stadio 0- Nessun artrosi'),
+                                                          ("1", "Stadio 1 - leggero aumento di ampiezza dell' articolazione trapezio-metacarpale (pre-artrite), contorni articolari normali, sublussazione <1/3."),
+                                                          ("2", "Stadio 2 - restringimento dellarticolazione trapezio-metacarpale con sclerosi ossea, sublussazione dell' articolazione pari a 1/3, osteofiti <2 mm."),
+                                                          ("3", "Stadio 3 - obliterazione dell'articolazione trapezio-metacarpale con geodi e sclerosi ossea, sublussazione dell'articolazione >1/3, osteofiti >2 mm"),
+                                                          ("4", "Stadio 4 - deterioramento dell'articolazione trapezio-metacarpale con in aggiunta artrosi scafo-trapezio-trapezoidea con evidenti cambiamenti sclerotici e cistici")], 
+                                                          default=0, render_kw={'class': 'form-control'}, validators=None)
     #9
     sensibilita_volare = HiddenField('sensibilita_volare', render_kw={'class': 'form-control'}, validators=None)
     
