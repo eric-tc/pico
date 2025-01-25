@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField,TextAreaField
 from wtforms.validators import DataRequired, Length,NumberRange
-from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField,RadioField
+from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField,RadioField,DecimalField
 from .internal_data_enum_pathologies import CONTROLS,OPTION_NULL
 
 
@@ -228,8 +228,15 @@ class TreatmentForm(FlaskForm):
     polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
 
     #3
-    vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
-
+    #vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    vas = DecimalField(
+        'Seleziona i valori:',
+        validators=[
+            NumberRange(min=0, max=10, message="Value must be between 0 and 100.")
+        ]
+        ,default=0.0,
+        render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '10.0'}
+    )
     #
     trapezio_metacarpale= FieldList(FormField(TrapezioMetacarpicaForm),min_entries=1, max_entries=1)
 

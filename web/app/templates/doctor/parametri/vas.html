@@ -1,6 +1,27 @@
 <fieldset>
     <legend>Vas</legend>
-{{ form.vas }}
+<!-- {{ form.vas }}
 {% for error in form.vas.errors %}
     <span style="color: red;">[{{ error }}]</span>
-{% endfor %}
+{% endfor %} -->
+
+<label class="slider-vas" for="slider">{{ form.vas.label }}</label>
+        <input 
+            type="range" 
+            id="slider" 
+            name="vas" 
+            min="0" 
+            max="10" 
+            step="0.1" 
+            value="{{ form.vas.data or 5.0 }}" 
+            oninput="sliderValue.innerText = this.value"
+        >
+<span id="sliderValue">{{ form.vas.data or 5.0 }}</span>
+
+
+<script>
+    // Update the slider value dynamically
+    document.getElementById('slider').addEventListener('input', function (event) {
+        document.getElementById('sliderValue').innerText = event.target.value;
+    });
+</script>
