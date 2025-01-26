@@ -1,7 +1,7 @@
 {% for index in range(form.pipj | length) %}
     {% if index in controls_map.pipj.indices %}
         <fieldset>
-            <legend>Misurazione pipj Dito {{ index }}</legend>
+            <legend>{{controls_map.pipj.names[index]}}</legend>
 
             <div class="form-grid">
 

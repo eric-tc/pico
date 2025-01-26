@@ -1,7 +1,7 @@
 {% for index in range(form.trapezio_metacarpale | length) %}
     {% if index in controls_map.trapezio_metacarpale.indices %}
         <fieldset>
-            <legend>Misurazione Trapezione Metacarpale</legend>
+            <legend>{{controls_map.trapezio_metacarpale.names[index]}}</legend>
             
             <div class="form-grid">
                 <!-- Field 1 -->

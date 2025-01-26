@@ -84,13 +84,22 @@ class ForzaForm(FlaskForm):
     # misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
     # grip = FloatField('Grip(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'}, validators=[DataRequired(),NumberRange(min=0.0, max=100.0)])
 
+    misurazione_1_pinch = FloatField('Misurazione 1 pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_2_pinch = FloatField('Misurazione 1 pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_3_pinch = FloatField('Misurazione 1 pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
+    
 
-    key_pinch = FloatField('Key Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
-    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_1_tip = FloatField('Misurazione 1 tip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_2_tip = FloatField('Misurazione 1 tip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    misurazione_3_tip = FloatField('Misurazione 1 tip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
+    tip_to_pinch= FloatField('Tip to Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
+    
     misurazione_1_finger = FloatField('Misurazione 1 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
     misurazione_2_finger = FloatField('Misurazione 2 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
     misurazione_3_finger = FloatField('Misurazione 3 Finger(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
     three_fingers_pinch = FloatField('Three Fingers Pinch(Kg)', render_kw={'class': 'form-control','readonly': True,'type': 'number', 'min':'0.0', 'max': '100.0'})
+    
     misurazione_1_grip= FloatField('Misurazione 1 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
     misurazione_2_grip = FloatField('Misurazione 2 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
     misurazione_3_grip = FloatField('Misurazione 3 Grip(Kg)', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '100.0'})
@@ -228,7 +237,6 @@ class TreatmentForm(FlaskForm):
     polso = FieldList(FormField(AromPromPolsoForm),render_kw={'class': 'form-control'}, min_entries=1, max_entries=1)
 
     #3
-    #vas = FloatField('vas', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
     vas = DecimalField(
         'Seleziona i valori:',
         validators=[
@@ -247,11 +255,10 @@ class TreatmentForm(FlaskForm):
     #dash = FieldList(FormField(DashForm), min_entries=1, max_entries=1)
     dash = FormField(DashForm)
     #7
-    #prwhe = FieldList(FormField(PrwheForm), min_entries=1, max_entries=1)
     prwhe=FormField(PrwheForm)
     #8
-    #eaton_littler = IntegerField(CONTROLS.EATON_LITTLER.value + "Valori [0,4]", render_kw={'class': 'form-control','type': 'number', 'min':'0', 'max': '4'} )
-    eaton_littler= SelectField('Eaton Littler', choices=[ ('', OPTION_NULL.NULL.value)
+   
+    eaton_littler= SelectField('Eaton Littler', choices=[ ('', OPTION_NULL.NULL.value),
                                                           ("0", 'Stadio 0- Nessun artrosi'),
                                                           ("1", "Stadio 1 - leggero aumento di ampiezza dell' articolazione trapezio-metacarpale (pre-artrite), contorni articolari normali, sublussazione <1/3."),
                                                           ("2", "Stadio 2 - restringimento dellarticolazione trapezio-metacarpale con sclerosi ossea, sublussazione dell' articolazione pari a 1/3, osteofiti <2 mm."),

@@ -1,7 +1,7 @@
 {% for index in range(form.mpcj | length) %}
     {% if index in controls_map.mpcj.indices %}
         <fieldset>
-            <legend>Misurazione Mpcj Dito {{ index }}</legend>
+            <legend>{{controls_map.mpcj.names[index]}}</legend>
             <div class="form-grid">
 
                 <div class="grid-item">

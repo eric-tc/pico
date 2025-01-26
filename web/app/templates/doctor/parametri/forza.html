@@ -6,32 +6,67 @@
         
         {% for index in range(form.forza | length) %}
             {% if index in controls_map.forza.indices %}
-            <!-- Field 1 -->
+            <!-- Misurazione Pinch 1 -->
+
+            <div class="grid-item">
+                <label>{{ form.forza[index].misurazione_1_pinch.label }}</label>
+                {{ form.forza[index].misurazione_1_pinch(id="misurazione_1_pinch") }}
+                {% for error in form.forza[index].misurazione_1_pinch.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="grid-item">
+                <label>{{ form.forza[index].misurazione_2_pinch.label }}</label>
+                {{ form.forza[index].misurazione_2_pinch(id="misurazione_2_pinch") }}
+                {% for error in form.forza[index].misurazione_2_pinch.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="grid-item">
+                <label>{{ form.forza[index].misurazione_3_pinch.label }}</label>
+                {{ form.forza[index].misurazione_3_pinch(id="misurazione_3_pinch") }}
+                {% for error in form.forza[index].misurazione_3_pinch.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
                 <div class="grid-item">
                     <label>{{ form.forza[index].key_pinch.label }}</label>
-                    {{ form.forza[index].key_pinch }}
+                    {{ form.forza[index].key_pinch(id="pinch") }}
                     {% for error in form.forza[index].key_pinch.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>    
 
-                <!-- Field 2 -->
+                <!--  Misurazione TIP 2 -->
+                
                 <div class="grid-item">
-                    <label>{{ form.forza[index].tip_to_pinch.label }}</label>
-                    {{ form.forza[index].tip_to_pinch }}
-                    {% for error in form.forza[index].tip_to_pinch.errors %}
+                    <label>{{ form.forza[index].misurazione_1_tip.label }}</label>
+                    {{ form.forza[index].misurazione_1_tip(id="misurazione_1_tip") }}
+                    {% for error in form.forza[index].misurazione_1_tip.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
-
-                 <!-- Field 3 -->
-                 <div class="grid-item">
-                   
+                <div class="grid-item">
+                    <label>{{ form.forza[index].misurazione_2_tip.label }}</label>
+                    {{ form.forza[index].misurazione_2_tip(id="misurazione_2_tip") }}
+                    {% for error in form.forza[index].misurazione_2_tip.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </div>
-
-                 <!-- Field 4 -->
-                 <div class="grid-item">
-                   
+                <div class="grid-item">
+                    <label>{{ form.forza[index].misurazione_3_tip.label }}</label>
+                    {{ form.forza[index].misurazione_3_tip(id="misurazione_3_tip") }}
+                    {% for error in form.forza[index].misurazione_3_tip.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="grid-item">
+                    <label>{{ form.forza[index].tip_to_pinch.label }}</label>
+                    {{ form.forza[index].tip_to_pinch(id="tip") }}
+                    {% for error in form.forza[index].tip_to_pinch.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </div>
                 
                  <!-- Misurazione 3 Fingers -->
@@ -108,6 +143,33 @@
 </fieldset>
 
 <script>
+
+    function calculateMeanPinch() {
+        // Get the values of the three input fields
+        const misurazione1 = parseFloat(document.getElementById('misurazione_1_pinch').value) || 0;
+        const misurazione2 = parseFloat(document.getElementById('misurazione_2_pinch').value) || 0;
+        const misurazione3 = parseFloat(document.getElementById('misurazione_3_pinch').value) || 0;
+
+        // Calculate the mean
+        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
+
+        // Set the value of the readonly grip field
+        document.getElementById('pinch').value = mean.toFixed(2); // Rounded to 2 decimal places
+    }
+
+    function calculateMeanTip() {
+        // Get the values of the three input fields
+        const misurazione1 = parseFloat(document.getElementById('misurazione_1_tip').value) || 0;
+        const misurazione2 = parseFloat(document.getElementById('misurazione_2_tip').value) || 0;
+        const misurazione3 = parseFloat(document.getElementById('misurazione_3_tip').value) || 0;
+
+        // Calculate the mean
+        const mean = (misurazione1 + misurazione2 + misurazione3) / 3;
+
+        // Set the value of the readonly grip field
+        document.getElementById('tip').value = mean.toFixed(2); // Rounded to 2 decimal places
+    }
+
     // Function to calculate the mean of the three grip values
     function calculateMeanGrip() {
         // Get the values of the three input fields
@@ -137,6 +199,15 @@
 
 
     //Finger 
+
+    document.getElementById('misurazione_1_pinch').addEventListener('input', calculateMeanPinch);
+    document.getElementById('misurazione_2_pinch').addEventListener('input', calculateMeanPinch);
+    document.getElementById('misurazione_3_pinch').addEventListener('input', calculateMeanPinch);
+
+    document.getElementById('misurazione_1_tip').addEventListener('input', calculateMeanTip);
+    document.getElementById('misurazione_2_tip').addEventListener('input', calculateMeanTip);
+    document.getElementById('misurazione_3_tip').addEventListener('input', calculateMeanTip);
+
 
     document.getElementById('misurazione_1_finger').addEventListener('input', calculateMeanFinger);
     document.getElementById('misurazione_2_finger').addEventListener('input', calculateMeanFinger);

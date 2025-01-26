@@ -89,19 +89,24 @@ class PathologyTimline:
     
     Controls_Map={
         CONTROLS.DATA_FRATTURA.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "names":"Data Frattura"
                            },
         CONTROLS.MPCJ.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "names":["Articolarità metacarpo-falange del pollice","Articolarità metacarpo-falange dell'indice","Articolarità metacarpo-falange del medio","Articolarità metacarpo-falange dell'anulare","Articolarità metacarpo-falange del mignolo"]
                            },
         CONTROLS.PIPJ.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "names":["Articolarità interfalangea prossimale del pollice","Articolarità interfalangea prossimale dell'indice","Articolarità interfalangea prossimale del medio","Articolarità  prossimale interfalangea dell'anulare","Articolarità interfalangea prossimale del mignolo"]
                            },
         CONTROLS.DIPJ.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "names":["Articolarità interfalangea distale del pollice","Articolarità interfalangea distale dell'indice","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo"]
                            },
         CONTROLS.IPJ.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                           "names":["Articolarità interfalangea del pollice","Articolarità interfalangea dell'indice","Articolarità interfalangea del medio","Articolarità interfalangea dell'anulare","Articolarità interfalangea del mignolo"]
                            },
         CONTROLS.POLSO.value: {"active":False,
                            "indices":[0]
@@ -110,7 +115,8 @@ class PathologyTimline:
                            "indices":[0]
                            },
         CONTROLS.TRAPEZIO_METACARPALE.value: {"active":False,
-                           "indices":[0]
+                           "indices":[0],
+                            "names":["Articolarità trapezione-metacarpale del pollice"]
                            },
         CONTROLS.FORZA.value: {"active":False,
                            "indices":[0]
@@ -300,15 +306,21 @@ class PathologyTimline:
         if controls_map[CONTROLS.FORZA.value]["active"]:
             for index in controls_map[CONTROLS.FORZA.value]["indices"]:
                 forza[int(index)] = {
+                    '1_pinch': form.forza[int(index)].misurazione_1_pinch.data,
+                    '2_pinch': form.forza[int(index)].misurazione_2_pinch.data,
+                    '3_pinch': form.forza[int(index)].misurazione_3_pinch.data,
                     'key_pinch': form.forza[int(index)].key_pinch.data,
+                    '1_tip': form.forza[int(index)].misurazione_1_tip.data,
+                    '2_tip': form.forza[int(index)].misurazione_2_tip.data,
+                    '3_tip': form.forza[int(index)].misurazione_3_tip.data,
                     'tip_to_pinch': form.forza[int(index)].tip_to_pinch.data,
-                    'misurazione_1_finger': form.forza[int(index)].misurazione_1_finger.data,
-                    'misurazione_2_finger': form.forza[int(index)].misurazione_2_finger.data,
-                    'misurazione_3_finger': form.forza[int(index)].misurazione_3_finger.data,
+                    '1_finger': form.forza[int(index)].misurazione_1_finger.data,
+                    '2_finger': form.forza[int(index)].misurazione_2_finger.data,
+                    '3_finger': form.forza[int(index)].misurazione_3_finger.data,
                     'three_fingers_pinch': form.forza[int(index)].three_fingers_pinch.data,
-                    'misurazione_1_grip': form.forza[int(index)].misurazione_1_grip.data,
-                    'misurazione_2_grip': form.forza[int(index)].misurazione_2_grip.data,
-                    'misurazione_3_grip': form.forza[int(index)].misurazione_3_grip.data,
+                    '1_grip': form.forza[int(index)].misurazione_1_grip.data,
+                    '2_grip': form.forza[int(index)].misurazione_2_grip.data,
+                    '3_grip': form.forza[int(index)].misurazione_3_grip.data,
                     'grip': form.forza[int(index)].grip.data,
                     
                 }
