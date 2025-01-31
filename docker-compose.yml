@@ -22,7 +22,7 @@ services:
   web:
     restart: always
     build: ./web
-    image: picomedtech/official_prod:v1.0
+    image: picomedtech/official_prod:v1.1
     links:
       - postgres_prod:postgres
     secrets:

@@ -1,0 +1,96 @@
+version: '3.7'
+
+secrets:
+  postgres_user:
+    file: ./secrets/postgres_user.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+
+services:
+  # Traefik: Reverse Proxy for SSL and Domain Routing
+  traefik:
+    image: traefik:v2.5
+    restart: always
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=MYEMAIL@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /docker/letsencrypt:/letsencrypt
+    container_name: traefik
+
+  # Nginx: Application Proxy
+  nginx:
+    restart: always
+    image: picomedtech/nginx_prod_otel:v1.0
+    build: ./nginx
+    ports:
+      - "4050:4050"  # Expose port 4050 internally
+    volumes:
+      - ./web/app/static:/app/static
+      - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`www.picomir.it`)"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.tls=true"
+      - "traefik.http.routers.nginx.tls.certresolver=myresolver"
+    networks:
+      - nginx
+    depends_on:
+      - web  # Ensure the web service is up before Nginx
+
+  # Web: Your Web Application Service
+  web:
+    restart: always
+    build: ./web
+    image: picomedtech/official_prod:v1.0
+    environment:
+      DEBUG: False
+      POSTGRES_DB: db
+      DATABASE_PORT: 5432
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    expose:
+      - "4050"  # Expose port 4050 internally within the Docker network
+    depends_on:
+      - postgres_prod
+    secrets:
+      - postgres_user
+      - postgres_password
+    volumes:
+      - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
+    command: ["sh", "-c", "gunicorn -w 2 -b :4050 app:my_app"]  # Change this to your app's command
+
+  # PostgreSQL: Database Service
+  postgres_prod:
+    restart: always
+    image: postgres:17.2-alpine3.21
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    volumes:
+      - db-data:/var/lib/postgresql
+    expose:
+      - "5432"  # Expose internally for the web service
+    ports:
+      - "5432:5432"  # Expose externally if needed
+
+volumes:
+  db-data:
