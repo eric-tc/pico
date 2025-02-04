@@ -5,8 +5,6 @@
 # RUN python -m pip install --upgrade pip && python -m pip install -r requirements.txt
 FROM pico/official
 RUN apt-get update && apt-get install -y netcat-openbsd
-COPY run_app.py .
-COPY app /app/
 
 COPY script_production/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
