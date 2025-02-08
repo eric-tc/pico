@@ -33,3 +33,22 @@ docker-compose -f docker-compose-dev.yaml down
 3) Trovare Ip Container docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-postgres-container
 4) Configurare DBEaver scegliendo come database Postgres usando indirizzo Ip username e password
 5) Configurare la connessione con nome database:db user:postgres psw:postgres usare come porta di connessione 6543 e come host 0.0.0.0
+
+
+
+## Migrazioni
+
+### Inizializzazione
+
+flask db init
+
+
+### Migrazione
+
+flask db migrate -m "Added new column to User"
+
+### Aggiornamento
+
+Una volta che ho salvato la migrazione posso aggiornare il database con flask db upgrade
+
+flask db upgrade

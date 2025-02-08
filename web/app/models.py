@@ -18,8 +18,11 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(120))
     role = db.Column(db.Integer)
     phone = db.Column(db.String(20))
-    sx_dx_hand = db.Column(db.String(10))
+    sx_dx_hand = db.Column(db.String(5))
     birth_date = db.Column(db.DateTime)
+    manual_job = db.Column(db.String(5))
+    job= db.Column(db.String(50))
+    note= db.Column(db.Text) # Non metto un limite alla lunghezza del testo
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
     doctor_ids = db.Column(ARRAY(db.Integer))
 
