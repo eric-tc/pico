@@ -6,7 +6,4 @@
 FROM pico/official
 RUN apt-get update && apt-get install -y netcat-openbsd
 
-COPY script_production/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-CMD ["/bin/sh", "-c", "/entrypoint.sh && flask insert-db && gunicorn -w 2 -b :4050 app:my_app"]
+CMD ["/bin/sh", "-c", "gunicorn -w 2 -b :4050 app:my_app"]

@@ -9,20 +9,22 @@ secrets:
 services:
   nginx:
     restart: always
-    image: picomedtech/nginx_prod_otel:v1.0
-    build: ./nginx
+    image: picomedtech/nginx_prod_otel:v1.1
+    build:
+      context: ./nginx  # Path to the directory containing your Dockerfile
+      dockerfile: Dockerfile.local  # Specify the Dockerfile to use
     ports:
       - "4050:4050"
     volumes:
       - ./web/app/static:/app/static
       - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
     links:
-      - web:web
+      - web_prod:web_prod
 
-  web:
+  web_prod:
     restart: always
     build: ./web
-    image: picomedtech/official_prod:v1.1
+    image: picomedtech/official_prod:v1.2
     links:
       - postgres_prod:postgres
     secrets:
@@ -44,6 +46,8 @@ services:
       - postgres_prod
     volumes:
       - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
+      - ./web/app:/app/ #Questo volume serve per scaricare direttamente il codice sorgente in produzione
+      - ./web/app/migrations:/migrations/ #Questo volume aggiorna il db in produzione
     # command: ["bash"]
     # stdin_open: true
     # tty: true

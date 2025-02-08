@@ -1,4 +1,16 @@
-# Come installare https
+## Gestione migrazioni
+
+1) Aggiornare il codice in produzione con ultima versione migrazioni
+2) Eseguire il comando flask db upgrade dentro al container dove è presente gunicorn
+
+### SOLO se prima volta
+
+Dopo aver eseguito **flask db upgrade** eseguire **flask insert-db** per inserire le patologie di default a database.
+
+
+**N.B** di base le migrazioni le gestisco manualmente per evitare casini con gli entrypoint
+
+## Come installare https
 
 Questi comandi vanno eseguiti dalla root. Perchè i volumi presenti in docker hanno le path in base alla root del progetto
 
