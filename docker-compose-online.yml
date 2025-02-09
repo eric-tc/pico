@@ -30,7 +30,7 @@ services:
 
   web:
     restart: always
-    image: picomedtech/official_prod:v1.0
+    image: picomedtech/official_prod:v1.2
     links:
       - postgres_prod:postgres
     secrets:
