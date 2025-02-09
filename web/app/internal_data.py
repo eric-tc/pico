@@ -94,19 +94,19 @@ class PathologyTimline:
                            },
         CONTROLS.MPCJ.value: {"active":False,
                            "indices":[0],
-                           "names":["Articolarità metacarpo-falange del pollice","Articolarità metacarpo-falange dell'indice","Articolarità metacarpo-falange del medio","Articolarità metacarpo-falange dell'anulare","Articolarità metacarpo-falange del mignolo"]
+                           "names":["Articolarità metacarpo-falange del pollice (gradi °)","Articolarità metacarpo-falange dell'indice (gradi °)","Articolarità metacarpo-falange del medio (gradi °)","Articolarità metacarpo-falange dell'anulare (gradi °)","Articolarità metacarpo-falange del mignolo(gradi °)"]
                            },
         CONTROLS.PIPJ.value: {"active":False,
                            "indices":[0],
-                           "names":["Articolarità interfalangea prossimale del pollice","Articolarità interfalangea prossimale dell'indice","Articolarità interfalangea prossimale del medio","Articolarità  prossimale interfalangea dell'anulare","Articolarità interfalangea prossimale del mignolo"]
+                           "names":["Articolarità interfalangea prossimale del pollice (gradi °)","Articolarità interfalangea prossimale dell'indice (gradi °)","Articolarità interfalangea prossimale del medio (gradi °)","Articolarità  prossimale interfalangea dell'anulare (gradi °)","Articolarità interfalangea prossimale del mignolo (gradi °)"]
                            },
         CONTROLS.DIPJ.value: {"active":False,
                            "indices":[0],
-                           "names":["Articolarità interfalangea distale del pollice","Articolarità interfalangea distale dell'indice","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo"]
+                           "names":["Articolarità interfalangea distale del pollice (gradi °)","Articolarità interfalangea distale dell'indice (gradi °)","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo (gradi °)"]
                            },
         CONTROLS.IPJ.value: {"active":False,
                            "indices":[0],
-                           "names":["Articolarità interfalangea del pollice","Articolarità interfalangea dell'indice","Articolarità interfalangea del medio","Articolarità interfalangea dell'anulare","Articolarità interfalangea del mignolo"]
+                           "names":["Articolarità interfalangea del pollice (gradi °)","Articolarità interfalangea dell'indice (gradi °)","Articolarità interfalangea del medio (gradi °)","Articolarità interfalangea dell'anulare (gradi °)","Articolarità interfalangea del mignolo (gradi °)"]
                            },
         CONTROLS.POLSO.value: {"active":False,
                            "indices":[0]
@@ -116,9 +116,9 @@ class PathologyTimline:
                            },
         CONTROLS.TRAPEZIO_METACARPALE.value: {"active":False,
                            "indices":[0],
-                            "names":["Articolarità trapezione-metacarpale del pollice"]
+                            "names":["Articolarità trapezione-metacarpale del pollice (gradi °)"]
                            },
-        CONTROLS.FORZA.value: {"active":False,
+        CONTROLS.FORZA.value: {"active":False, 
                            "indices":[0]
                            },
         CONTROLS.DASH.value: {"active":False,

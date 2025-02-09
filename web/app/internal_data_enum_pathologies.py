@@ -8,7 +8,7 @@ class RizoartrosiEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    TRAPEZIECTOMIA_ARTOPLASTICA=('1', 'Trapeziectomia più artroplastica in sospensione con abduttore lungo del pollice')
+    TRAPEZIECTOMIA_ARTOPLASTICA=('1', 'Trapeziectomia e artroplastica in sospensione con abduttore lungo del pollice')
     PROTESI=('2', 'Protesi Touch')
     TRAPEZIECTOMIA = ('3', 'trapeziectomia')
     TRAPEZIECTOMIA_FLESSORE= ('4', 'trapeziectomia più artroplastica con flessore radiale del carpo')
@@ -78,8 +78,8 @@ class ScafoidePseudortrosiEnum(Enum):
     [1]= Visualizzato nel form
     """        
     OPEN = ("1","open")
-    OPEN_ASSISTENZA = ("2","open assistenza artroscopica")
-    ARTROSCOPICO = ("3","artroscopico")
+    OPEN_ASSISTENZA = ("2","open con assistenza artroscopica")
+    ARTROSCOPICO = ("3","interamente artroscopico")
 
 class DupuytrenEnum(Enum):
     """

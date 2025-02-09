@@ -69,7 +69,7 @@ class TrapezioMetacarpicaForm(FlaskForm):
 
     anteposizione = FloatField('Anteposizione',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
     abduzione = FloatField('Abduzione', render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
-    kapandji = FloatField('Pinch',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
+    kapandji = FloatField('Kapandji Score',render_kw={'class': 'form-control','type': 'number', 'min':'0.0', 'max': '120.0'})
 
 class ForzaForm(FlaskForm):
 

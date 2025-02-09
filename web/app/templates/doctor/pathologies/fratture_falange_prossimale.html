@@ -4,7 +4,7 @@
 
 <div class="row">
 
-<h2> Frattura Falange Prossimale </h2>
+<h2> Frattura della falange prossimale </h2>
 
 </div>
 
@@ -87,12 +87,13 @@
         </div>
        
         
-        {{ form.orario_primo_controllo.label }}
+       
+        {{ form.data_primo_controllo.label(style="display:block;margin-bottom:15px;") }}
+        {{ form.data_primo_controllo(id='datepicker',) }}
+        
+
+        {{ form.orario_primo_controllo.label(style="display:block;margin-top:15px;") }}
         {{ form.orario_primo_controllo(id='timepicker') }}
-
-
-        {{ form.data_primo_controllo.label(style="display:block;") }}
-        {{ form.data_primo_controllo(id='datepicker') }}
         
 
         {{ form.row_id(value=row_id)}}

@@ -26,15 +26,14 @@
         {{ form.altro.label }}
         {{ form.altro }}
          
-      
+
+        {{ form.data_primo_controllo.label(style="display:block;margin-bottom:15px;") }}
+        {{ form.data_primo_controllo(id='datepicker',) }}
         
-        {{ form.orario_primo_controllo.label }}
+
+        {{ form.orario_primo_controllo.label(style="display:block;margin-top:15px;") }}
         {{ form.orario_primo_controllo(id='timepicker') }}
 
-
-        {{ form.data_primo_controllo.label(style="display:block;") }}
-        {{ form.data_primo_controllo(id='datepicker') }}
-        
 
         {{ form.row_id(value=row_id)}}
         {{ form.patient_id(value=patient_id)}}

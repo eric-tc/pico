@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("DataIntervento", DataIntervento);
         console.log("TmpSpecificDate", TmpSpecificDate);
         
-        var daysBefore = 3;
-        var daysAfter = 4;
+        var daysBefore = 5;
+        var daysAfter = 5;
 
         //Devo inizializzare il valore delle date con la data specifica dell'intervento altrimenti non funziona
         //Inizializzando la data con new Date() viene preso il mese di riferimento corrente e non quello futuro

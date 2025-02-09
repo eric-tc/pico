@@ -154,7 +154,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     )
 
     mcpj_incluso = SelectField(
-        'MCPj Incluso',
+        'Articolazione metacarpofalangea incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
@@ -165,7 +165,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     )
 
     mcpj_estese_incluso = SelectField(
-        'MCPj Estese Incluso',
+        'Mcpj incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('flesse', 'Flesse'),
@@ -176,7 +176,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     )
 
     pipj_incluso = SelectField(
-        'PIPj Incluso',
+        'Articolazione interfalangea prossiamale Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
@@ -187,7 +187,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     )
     
     pipj_estese_incluso = SelectField(
-        'PIPj Estese Incluso',
+        'Pipj incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('flesse', 'Flesse'),
@@ -215,10 +215,10 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Fili di Kirschner',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('endomidollare', 'endomidoallre'),
-            ('anterogradi', 'anterogradi'),
-            ('endomidollare_retorgradi', 'endomidollare retrogradi'),
-            ('trasversi', 'trasversi'), 
+            ('endomidollare', 'Endomidoallre'),
+            ('anterogradi', 'Anterogradi'),
+            ('endomidollare_retorgradi', 'Endomidollare retrogradi'),
+            ('trasversi', 'Trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -228,8 +228,8 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Viti',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('endomidollare', 'endomidoallre'),
-            ('lag', 'lag'),
+            ('endomidollare', 'Endomidoallre'),
+            ('lag', 'Lag'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -242,18 +242,19 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
             ('prossimale', 'Prossimale'),
             ('diafisaria', 'Diafisarisa'),
             ('sottocapitata', 'Sottocapitata'),
-             ('distale_articolare', 'Distale Articolare'), 
+             ('distale_articolare', 'Distale articolare'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     diafisaria = SelectField(
-        'classificazione radiografica',
+        'classificazione radiografica diafisaria',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('trasversa', 'Trasversa'),
-            ('obliqua', 'Obliqua'), 
+            ('obliqua', 'Obliqua'),
+            ('multiframmentaria', 'Multiframmentaria'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -265,14 +266,14 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
 class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     
     treatment_options = SelectField(
-        'Seleziona Intervento',
+        'Seleziona intervento',
         choices=[ (enum.value[0], enum.value[1]) for enum in FrattureFalangeProssimaleEnum],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     rottura_falange = SelectField(
-        'Seleziona Falange rotta',
+        'Seleziona falange rotta',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', 'I'),
@@ -292,16 +293,16 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('gesso_chiuso', 'Gesso Chiuso'),
-            ('valva_gessata', 'Valva Gessata'),
-            ('tutore_termoplastica', 'Tutore in Termoplastica'), 
+            ('gesso_chiuso', 'Gesso chiuso'),
+            ('valva_gessata', 'Valva gessata'),
+            ('tutore_termoplastica', 'Tutore in termoplastica'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
     )
 
     polso_incluso = SelectField(
-        'Polso Incluso',
+        'Polso incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('No', 'No'),
@@ -312,7 +313,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     )
 
     mcpj_incluso = SelectField(
-        'MCPj Incluso',
+        'Articolazione metacarpofalangea incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('No', 'No'),
@@ -323,7 +324,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     )
 
     mcpj_estese_incluso = SelectField(
-        'MCPj Estese Incluso',
+        'MCPj Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('Flesse', 'Flesse'),
@@ -334,7 +335,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     )
 
     pipj_incluso = SelectField(
-        'PIPj Incluso',
+        'Articolazione Interfalangea prossimale Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('No', 'No'),
@@ -345,7 +346,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
     )
     
     pipj_estese_incluso = SelectField(
-        'PIPj Estese Incluso',
+        'PIPj Incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('Flesse', 'Flesse'),
@@ -363,7 +364,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
             ('', OPTION_NULL.NULL.value),
             ('fili_kirshner', 'Fili di Kirshner'),
             ('viti', 'Viti'),
-            ('placca_viti', 'Placca e Viti'), 
+            ('placca_viti', 'Placca e viti'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -373,10 +374,10 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Fili di Kirschner',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('endomidollare', 'endomidoallre'),
-            ('anterogradi', 'anterogradi'),
-            ('endomidollare_retorgradi', 'endomidollare retrogradi'),
-            ('trasversi', 'trasversi'), 
+            ('endomidollare', 'Endomidoallre'),
+            ('anterogradi', 'Anterogradi'),
+            ('endomidollare_retorgradi', 'Endomidollare retrogradi'),
+            ('trasversi', 'Trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -386,7 +387,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Viti',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('endomidollare', 'endomidoallre'),
+            ('endomidollare', 'Endomidoallre'),
             ('lag', 'lag'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -397,9 +398,9 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Classificazione radiografica',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('prossimale_articolare', 'Prossimale Articolare'),
+            ('prossimale_articolare', 'Prossimale articolare'),
             ('diafisaria', 'Diafisara'),
-            ('distale_articolare', 'Distale Articolare'), 
+            ('distale_articolare', 'Distale articolare'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -409,7 +410,7 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Opzioni Classificazione Radiografica Prossimale',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('frammento_singole', 'Frammento Singolo'),
+            ('frammento_singole', 'Frammento singolo'),
             ('multiframmentaria', 'Multiframmentaria'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -432,11 +433,11 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Opzioni Classificazione Radiografica Distale',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Weiss 1'),
-            ('2', 'Weiss 2'), 
-            ('3', 'Weiss 3'),
-            ('4', 'Weiss 3'), 
-            ('5', 'Weiss 5'),  
+            ('1', 'Weiss e Hastings 1'),
+            ('2', 'Weiss e Hastings 2'), 
+            ('3', 'Weiss e Hastings 3'),
+            ('4', 'Weiss e Hastings 4'), 
+            ('5', '5 multiframmentaria/bicondilica'),  
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -997,7 +998,7 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
 
     
     tipologia = SelectField(
-        'Tipologia',
+        'Incisione',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('longitudinale', 'longitudinale'),
@@ -1111,7 +1112,7 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
     )
 
     area = SelectField(
-        'Accesso',
+        'Sede di frattura',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('terzo_prossimale', 'Terzo prossimale'),
@@ -1128,10 +1129,10 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
         'Opzioni Conservativo',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('gesso_chiuso_pollice_incluso', 'gesso chiuso pollice incluso'),
-            ('gesso_chiuso_pollice_escluso', 'gesso chiuso pollice escluso'),
-            ('tutore_termoplastica_pollice_incluso', 'tutore termoplastica pollice incluso'),
-            ('tutore_termoplastica_pollice_escluso', 'tutore termoplastica pollice escluso'),
+            ('gesso_chiuso_pollice_incluso', 'Gesso chiuso pollice incluso'),
+            ('gesso_chiuso_pollice_escluso', 'Gesso chiuso pollice escluso'),
+            ('tutore_termoplastica_pollice_incluso', 'Tutore termoplastica pollice incluso'),
+            ('tutore_termoplastica_pollice_escluso', 'Tutore termoplastica pollice escluso'),
             ('altro', 'altro'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1142,10 +1143,10 @@ class ScafoideFratturaChirurgicoForm(ChirurgicoForm):
         'Opzioni Chirurgico',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('vite_percutanea_anterograda', 'vite percutanea anterograda'),
-            ('vite_percutanea_retrograda', 'vite percutanea retrograda'),
-            ('vite_open_anterograda', 'vite open anterograda'),
-            ('vite_open_retrograda', 'vite open retrograda'),
+            ('vite_percutanea_anterograda', 'Vite percutanea anterograda'),
+            ('vite_percutanea_retrograda', 'Vite percutanea retrograda'),
+            ('vite_open_anterograda', 'Vite open anterograda'),
+            ('vite_open_retrograda', 'Vite open retrograda'),
             ('altro', 'altro'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1167,12 +1168,12 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
     # SE OPEN o OPEN ASSISTENZA ARTROSCOPICA
 
     open = SelectField(
-        'Accesso',
+        'Sede di frattura',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('accesso_volare', 'Accesso Volare'),
             ('accesso_dorsale', 'Accesso Dorsale'),
-            ('accesso_volare_accesso_dorsale', 'entrambi'),
+            ('accesso_volare_accesso_dorsale', 'Entrambi'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}

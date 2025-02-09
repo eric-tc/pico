@@ -34,6 +34,10 @@ def settings_patient_doctor(patient_id):
         user_data.birth_date = getDateInYMD(form.birth_date.data)
         user_data.phone = form.phone.data
         user_data.sx_dx_hand = form.sx_dx_hand.data
+        user_data.sex=form.sex.data
+        user_data.job = form.job.data
+        user_data.manual_job = form.manual_job.data
+        user_data.note = form.note.data
         db.session.commit()
         flash('Cambio Dati effettuato con successo')
 
@@ -45,6 +49,10 @@ def settings_patient_doctor(patient_id):
     form.phone.data= user_data.phone
     form.sx_dx_hand.data= user_data.sx_dx_hand
     form.birth_date.data= "" if user_data.birth_date is None else getDateStringFromDate(user_data.birth_date)
+    form.job.data= user_data.job
+    form.sex.data= user_data.sex
+    form.manual_job.data= user_data.manual_job
+    form.note.data= user_data.note
     #retrieve data from db and assign to form
     
     return render_template('patient/settings_patient.html',form=form ,name=current_user.name)

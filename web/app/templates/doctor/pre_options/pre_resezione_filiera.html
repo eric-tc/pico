@@ -28,10 +28,10 @@
     $(document).ready(function(){
         $("#surgery").change(function(){
             surgery = $("#surgery").val();
-            if(surgery == "snac" || surgery == "slac" || surgery == "scaphoidectomia" || surgery == "artrodesi"){
+            if(surgery == "snac" || surgery == "slac" || surgery == "scac" || surgery == "scaphoidectomia" || surgery == "artrodesi"){
                 $("#classificazione_watson").show();
                 $("#classificazione_lichman").hide();
-                $("#lussazione_semilunare").hide();
+                $("#lussazione_semilunare").hide(); 
             }else if(surgery == "kienbock"){
                 $("#classificazione_watson").hide();
                 $("#classificazione_lichman").show();

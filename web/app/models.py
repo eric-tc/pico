@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     sx_dx_hand = db.Column(db.String(5))
     birth_date = db.Column(db.DateTime)
     manual_job = db.Column(db.String(5))
+    sex = db.Column(db.String(5))
     job= db.Column(db.String(50))
     note= db.Column(db.Text) # Non metto un limite alla lunghezza del testo
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])

@@ -4,7 +4,7 @@
 
 <div class="row">
 
-<h2> Rizoartrosi </h2>
+<h2> Resezione di filiera </h2>
 
 </div>
 
@@ -28,14 +28,15 @@
 
         {{ form.tipologia.label(style="display:block;margin-top:15px;") }}
         {{ form.tipologia }}
-         
         
-        {{ form.orario_primo_controllo.label }}
+        
+        {{ form.data_primo_controllo.label(style="display:block;margin-bottom:15px;") }}
+        {{ form.data_primo_controllo(id='datepicker',) }}
+        
+
+        {{ form.orario_primo_controllo.label(style="display:block;margin-top:15px;") }}
         {{ form.orario_primo_controllo(id='timepicker') }}
 
-
-        {{ form.data_primo_controllo.label(style="display:block;") }}
-        {{ form.data_primo_controllo(id='datepicker') }}
         
 
         {{ form.row_id(value=row_id)}}

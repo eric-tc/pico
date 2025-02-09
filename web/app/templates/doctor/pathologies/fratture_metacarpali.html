@@ -4,7 +4,7 @@
 
 <div class="row">
 
-<h2> Frattura MetaCarpali </h2>
+<h2> Frattura metacarpale </h2>
 
 </div>
 
@@ -67,22 +67,26 @@
                 {{ form.viti }}
             </div> 
 
-            {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
-            {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
-            
-            <div id="classificazione_radiografica_diafisaria">   
-                {{ form.diafisaria.label(style="display:block;margin-top:15px;") }}
-                {{ form.diafisaria }}
-            </div>
+           
+           
         </div>
        
+        {{ form.classificazione_radiografica.label(style="display:block;margin-top:15px;") }}
+        {{ form.classificazione_radiografica(id='classificazione_radiografica') }}
         
-        {{ form.orario_primo_controllo.label }}
+
+        <div id="classificazione_radiografica_diafisaria">   
+            {{ form.diafisaria.label(style="display:block;margin-top:15px;") }}
+            {{ form.diafisaria }}
+        </div>
+        
+       
+        {{ form.data_primo_controllo.label(style="display:block;margin-bottom:15px;") }}
+        {{ form.data_primo_controllo(id='datepicker',) }}
+        
+
+        {{ form.orario_primo_controllo.label(style="display:block;margin-top:15px;") }}
         {{ form.orario_primo_controllo(id='timepicker') }}
-
-
-        {{ form.data_primo_controllo.label(style="display:block;") }}
-        {{ form.data_primo_controllo(id='datepicker') }}
         
 
         {{ form.row_id(value=row_id)}}
