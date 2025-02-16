@@ -31,7 +31,7 @@ def settings_patient_doctor(patient_id):
         if form.password.data:
             print("Password Aggiornata")
             user_data.password = generate_password_hash(form.password.data)
-        user_data.birth_date = getDateInYMD(form.birth_date.data)
+        user_data.birth_date = getDateInYMD(form.birth_date.data) if form.birth_date.data else None
         user_data.phone = form.phone.data
         user_data.sx_dx_hand = form.sx_dx_hand.data
         user_data.sex=form.sex.data
