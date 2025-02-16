@@ -47,7 +47,7 @@ services:
     volumes:
       - ./web/app/static/pdf_files:/app/static/pdf_files:delegated
       - ./web/app:/app/ #Questo volume serve per scaricare direttamente il codice sorgente in produzione
-      - ./web/app/migrations:/migrations/ #Questo volume aggiorna il db in produzione
+      - ./web/migrations:/migrations/ #Questo volume aggiorna il db in produzione
     # command: ["bash"]
     # stdin_open: true
     # tty: true
