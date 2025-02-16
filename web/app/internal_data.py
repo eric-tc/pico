@@ -71,8 +71,8 @@ class EMAIL_STATUS(Enum):
 # e dopo è possibile compilare un evento schedulato
 class EVENT_DAYS(Enum):
 
-    DAYS_BEFORE = 360
-    DAYS_AFTER = 360
+    DAYS_BEFORE = 20
+    DAYS_AFTER = 20
     #numero di mesi in cui sono recuperati gli eventi al calendario
     MONTHS_TO_RETRIEVE = 12
 
