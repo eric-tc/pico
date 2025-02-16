@@ -416,7 +416,9 @@ def medical_treatment():
         data_primo_controllo=form.data_primo_controllo.data
         orario_primo_controllo=form.orario_primo_controllo.data
 
-        date_accepted_first_control=True
+        date_accepted_first_control=False
+        if data_primo_controllo:
+            date_accepted_first_control=True
         for control_number,weeks_to_add in enumerate(pathology_enum.value[2].getTimeline(pathology_id_type)):
             
             #Aggiungo i controlli solo se hanno una settimana maggiore di 0
