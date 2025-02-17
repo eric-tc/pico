@@ -13,13 +13,14 @@
 
 <div class="col-md-6 mb-6 col-lg-6">
     
-    <form  method="POST">
+    <form  id="pathology_form" method="POST">
         {{ form.csrf_token }}
     
        
         {{ form.data_intervento.label(style="display:block;") }}
         {{ form.data_intervento(id='generic-datepicker') }}
-
+        <p id="error-message" style="color: red; display: none;"></p>
+        
         {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
         {{ form.treatment_options }}
 
@@ -68,6 +69,6 @@
 
 <script src="{{ url_for('static', filename='js/generic_datepicker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/datepicker_only_week.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/prevent_form_sub_surgery_date.js') }}"></script>
 
 {% endblock %}
