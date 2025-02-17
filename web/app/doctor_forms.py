@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField,IntegerField,TextAreaField
-from wtforms.validators import DataRequired, Length,NumberRange
+from wtforms.validators import DataRequired, Length,NumberRange,InputRequired
 from wtforms.fields import DateField,TimeField,SelectField,HiddenField,FieldList,FormField,FloatField,RadioField,DecimalField
 from .internal_data_enum_pathologies import CONTROLS,OPTION_NULL
 
@@ -450,7 +450,7 @@ class PreTreamentForm(TreatmentForm):
     # I valori del campo del form devono avere lo stesso valore delle chiavi di CONTROLS
     #in questo modo nella UI posso verificare quando un campo è attivo o meno utilizzando una map dove la chiave
     # è la label:True,False. Vedere pagina next_control
-    data_frattura = StringField('Data Frattura', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
+    data_frattura = StringField('Data Frattura', render_kw={'class': 'form-control-custom','readonly':True}, validators=[InputRequired(message="Campo richiesto")])
 
 
 # Per alcune patologie posso aggiungere dei parametri aggiuntivi nei dati pre operatori
@@ -458,7 +458,7 @@ class PreTreamentForm(TreatmentForm):
 class PreDupuytrenForm(FlaskForm):
 
     numero_interventi = IntegerField('Numero Interventi', render_kw={'class': 'form-control'}, validators=[DataRequired(message="Campo richiesto"),
-            NumberRange(min=1, max=20, message="Value must be between 1 and 20.")])
+            NumberRange(min=1, max=20, message="Il valore deve essere tra 1 e 20.")])
     
     hidden_hand_selection = HiddenField('hidden_hand_selection', render_kw={'class': 'form-control'}, validators=None)
 

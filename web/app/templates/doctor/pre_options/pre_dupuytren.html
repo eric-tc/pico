@@ -115,7 +115,8 @@
         
         
     </svg>
-    <input type="number" style="display: none;" id="input-box">
+    <input type="number" style="display: none;" id="input-box" min="-120" max="120">
+    <p id="error-message" style="color: red; display: none;">Il valore deve essere compreso tra -120 e 120</p>
 </div>
 
 {{ pre_controls_form.numero_interventi.label }}
@@ -171,7 +172,7 @@
             const rectBounds = this.getBoundingClientRect();
             const containerBounds = document.getElementById('interactiveImage').getBoundingClientRect();
 
-           
+            let errorMessage = document.getElementById("error-message");
             
             inputBox.style.left = `10px`;
             inputBox.style.top = `10px`;
@@ -179,7 +180,7 @@
             inputBox.style.height = `50px`;
             
 
-            inputBox.value = 100; // Pre-fill value if it exists
+            inputBox.value = 0; // Pre-fill value if it exists
             inputBox.style.display = 'block';
             inputBox.focus();
             
@@ -192,8 +193,15 @@
 
             inputBox.onchange = () => {
                 console.log("inputBox value", "changed");
-                currentSelection[mappingValue] = inputBox.value*-1;
-                textElement.textContent = inputBox.value*-1;
+
+                if(inputBox.value<-120 || inputBox.value>120){
+                    errorMessage.style.display = "block";  // Show error message
+                    inputBox.value = "";  // Clear the input value
+                }else{
+                    errorMessage.style.display = "none";
+                    currentSelection[mappingValue] = inputBox.value*1;
+                    textElement.textContent = inputBox.value*1;
+                }
             };
 
             document.getElementById("hidden_hand_selection").value = JSON.stringify(currentSelection);
