@@ -58,3 +58,16 @@ services:
       - ./nginx/www:/var/www/html
     entrypoint: "/bin/sh -c 'while true; do certbot renew; sleep 12h; done'"
 
+
+## Connessione in Remoto
+
+ssh 46.101.189.188
+La chiave si trova in C:\Users\Vision-e\digital_ocean.pub
+
+
+### Caricare una nuova release
+
+scp 0.0.3.zip 46.101.189.188:/home/release/{versione}
+
+unzip {versione}
+
