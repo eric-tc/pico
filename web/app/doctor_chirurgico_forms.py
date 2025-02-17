@@ -176,7 +176,7 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
     )
 
     pipj_incluso = SelectField(
-        'Articolazione interfalangea prossiamale Incluso',
+        'Articolazione interfalangea prossiamale incluso',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('1', 'No'),
@@ -433,11 +433,11 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Opzioni Classificazione Radiografica Distale',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'Weiss e Hastings 1'),
-            ('2', 'Weiss e Hastings 2'), 
-            ('3', 'Weiss e Hastings 3'),
-            ('4', 'Weiss e Hastings 4'), 
-            ('5', '5 multiframmentaria/bicondilica'),  
+            ('1', '1 Weiss e Hastings'),
+            ('2', '2 Weiss e Hastings'), 
+            ('3', '3 Weiss e Hastings'),
+            ('4', '4 Weiss e Hastings'), 
+            ('5', '5 Ultiframmentaria/bicondilica'),  
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -479,10 +479,10 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Fds Opzioni',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('completo', 'completo'),
-            ('bandella_radiale', 'bandella radiale'),
+            ('completo', 'Completo'),
+            ('bandella_radiale', 'Bandella radiale'),
             ('bandella_ulnare', 'Bandella ulnare'),
-            ('4', 'trasversi'), 
+            ('4', 'Trasversi'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -600,7 +600,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 2',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('kessler_modificata', 'Kessler Modificata'),
+            ('kessler_modificata', 'Kessler modificata'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -610,7 +610,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 4',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
+            ('doppia_kessler_modificata', 'Doppia Kessler modificata'),
             ('adelaide', 'Adelaide'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -621,7 +621,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 6',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
+            ('tripla_kessler_modificata', 'Tripla Kessler modificata'),
             ('m_tang', 'M-Tang'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -632,7 +632,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Altro',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('punti_staccati', 'Punti Staccati'),
+            ('punti_staccati', 'Punti staccati'),
             ('punti_u', 'Punti a U'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -832,7 +832,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('splint', 'Splint'),
-            ('sintesi', 'Riduzione e Sintesi'),
+            ('sintesi', 'Riduzione e sintesi'),
            
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -855,11 +855,11 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         'Riduzione e Sintesi',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('fili_k_ishiguro', 'fili k ishiguro'),
-            ('viti', 'viti'),
-            ('ancoretta', 'ancoretta'),
-            ('tenorrafia', 'tenorrafia'),
-            ('altro', 'altro'),
+            ('fili_k_ishiguro', 'Fili k ishiguro'),
+            ('viti', 'Viti'),
+            ('ancoretta', 'Ancoretta'),
+            ('tenorrafia', 'Tenorrafia'),
+            ('altro', 'Altro'),
            
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -872,7 +872,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
             ('', OPTION_NULL.NULL.value),
             ('mobilizzazione_mezzi_sintesi', 'Mobilizzazione mezzi sintesi'),
             ('infezione', 'Infezione'),
-            ('perdita_riduzione', 'perdita riduzione'),
+            ('perdita_riduzione', 'Perdita riduzione'),
            
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -901,7 +901,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 2',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('kessler_modificata', 'Kessler Modificata'),
+            ('kessler_modificata', 'Kessler modificata'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -911,7 +911,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 4',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('doppia_kessler_modificata', 'Doppia Kessler Modificata'),
+            ('doppia_kessler_modificata', 'Doppia Kessler modificata'),
             ('adelaide', 'Adelaide'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -922,7 +922,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         'Tipologia Passaggio 6',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('tripla_kessler_modificata', 'Tripla Kessler Modificata'),
+            ('tripla_kessler_modificata', 'Tripla Kessler modificata'),
             ('m_tang', 'M-Tang'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -933,7 +933,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         'Altro',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('punti_staccati', 'Punti Staccati'),
+            ('punti_staccati', 'Punti staccati'),
             ('punti_u', 'Punti a U'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -989,8 +989,8 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         'Accesso',
         choices=[
             ('', OPTION_NULL.NULL.value),   
-            ('volare', 'volare'),
-            ('dorsale', 'dorsale'),
+            ('volare', 'Volare'),
+            ('dorsale', 'Dorsale'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -1001,8 +1001,8 @@ class ResezioneFilieraChirurgicoForm(ChirurgicoForm):
         'Incisione',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('longitudinale', 'longitudinale'),
-            ('trasversale', 'trasversale'),
+            ('longitudinale', 'Longitudinale'),
+            ('trasversale', 'Trasversale'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -1026,8 +1026,8 @@ class DupuytrenChirurgicoForm(ChirurgicoForm):
         'Complicanze',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('lesione_tendinea', 'Lesione Tendinea'),
-            ('lesione_nervosa', 'Lesione Nervosa'),
+            ('lesione_tendinea', 'Lesione tendinea'),
+            ('lesione_nervosa', 'Lesione nervosa'),
             ('altro', 'Altro'),
 
         ],
@@ -1055,8 +1055,8 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
         'Tipo Lesione',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('completa', 'completa'),
-            ('parziale', 'parziale'),
+            ('completa', 'Completa'),
+            ('parziale', 'Parziale'),
             ('sintetico', 'Sintetico'),
 
         ],
@@ -1068,9 +1068,9 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
         'Innesto',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('innesto_nervoso', 'Innesto Nervoso'),
+            ('innesto_nervoso', 'Innesto nervoso'),
             ('muscolo_vena', 'Muscolo in vena'),
-            ('sintetico', 'Sintetico'),
+            ('sintetico', 'sintetico'),
 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1082,8 +1082,8 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('surale', 'Innesto Nervoso'),
-            ('nervo_interosseo_posteriore', 'Nervo Interosso Posteriore'),
-            ('nervo_interosseo_anteriore', 'Nervo Interosso Anteriore'),
+            ('nervo_interosseo_posteriore', 'Nervo interosso posteriore'),
+            ('nervo_interosseo_anteriore', 'Nervo interosso anteriore'),
             ('altro', 'Altro'),
 
         ],
@@ -1171,8 +1171,8 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
         'Sede di frattura',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('accesso_volare', 'Accesso Volare'),
-            ('accesso_dorsale', 'Accesso Dorsale'),
+            ('accesso_volare', 'Accesso volare'),
+            ('accesso_dorsale', 'Accesso dorsale'),
             ('accesso_volare_accesso_dorsale', 'Entrambi'),
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1184,9 +1184,9 @@ class ScafoidePseudoArtrosiChirurgicoForm(ChirurgicoForm):
         'Innesto',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('innesto_cresta_iliaca', 'Innesto Cresta Iliaca'),
-            ('innesto_da_radio', 'Innesto Da Radio'),
-            ('innesto_sintetico', 'Innesto Sintetico'),
+            ('innesto_cresta_iliaca', 'Innesto cresta Iliaca'),
+            ('innesto_da_radio', 'Innesto da radio'),
+            ('innesto_sintetico', 'Innesto sintetico'),
             ('lembo_da_condilo_femorale mediale', 'Lembo da condilo femorale mediale'),
             ('altro', 'altro'),
         ],
@@ -1232,9 +1232,9 @@ class LesioneLigamentosaChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('valva_gessata', 'Valva Gessata'),
-            ('tutore_misura', 'Tutore Su misura'),
-            ('sindattalia', 'Sindattalia'), 
+            ('valva_gessata', 'Valva gessata'),
+            ('tutore_misura', 'Tutore su misura'),
+            ('sindattalia', 'Sindattilia'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
