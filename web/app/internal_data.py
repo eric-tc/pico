@@ -816,6 +816,7 @@ class LesioneNervosaTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["names"]=["Data lesione"]
 
         return tmp_ControlMap,pre_controls_map
 

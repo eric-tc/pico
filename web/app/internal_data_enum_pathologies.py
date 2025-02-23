@@ -10,18 +10,18 @@ class RizoartrosiEnum(Enum):
     """        
     TRAPEZIECTOMIA_ARTOPLASTICA=('1', 'Trapeziectomia e artroplastica in sospensione con abduttore lungo del pollice')
     PROTESI=('2', 'Protesi Touch')
-    TRAPEZIECTOMIA = ('3', 'trapeziectomia')
-    TRAPEZIECTOMIA_FLESSORE= ('4', 'trapeziectomia più artroplastica con flessore radiale del carpo')
-    TRAPEZIECTOMIA_TIGHT =('5', 'trapeziectomia più tight rope')
-    EMITRAPEZIECOTIMA = ('6', 'emitrapeziectomia,')
+    TRAPEZIECTOMIA = ('3', 'Trapeziectomia')
+    TRAPEZIECTOMIA_FLESSORE= ('4', 'Trapeziectomia più artroplastica con flessore radiale del carpo')
+    TRAPEZIECTOMIA_TIGHT =('5', 'Trapeziectomia più tight rope')
+    EMITRAPEZIECOTIMA = ('6', 'Emitrapeziectomia,')
 
 
 class FratturaRadioDistaleEnum(Enum):
-    GESSO_CHIUSO= ('1', 'gesso chiuso')
-    PLACCA_VITI= ('2', 'placca e viti')
-    FISSATORE_ESTERNO= ('3', 'fissatore esterno con fili di Kirschner')
-    VITI = ('4', 'viti')
-    VALVA_GESSATA = ('5', 'valva gessata')
+    GESSO_CHIUSO= ('1', 'Gesso chiuso')
+    PLACCA_VITI= ('2', 'Placca e viti')
+    FISSATORE_ESTERNO= ('3', 'Fissatore esterno con fili di Kirschner')
+    VITI = ('4', 'Viti')
+    VALVA_GESSATA = ('5', 'Valva gessata')
 
 # In base a questi valori avrò un decorso post operatorio diverso
 class FrattureMetaCarpaliEnum(Enum):
@@ -29,16 +29,16 @@ class FrattureMetaCarpaliEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """       
-    CHIRURGICO = ("1","chirurgico")
-    NON_CHIRURGICO = ("2","non chirugico")
+    CHIRURGICO = ("1","Chirurgico")
+    NON_CHIRURGICO = ("2","Non chirugico")
 
 class FrattureFalangeProssimaleEnum(Enum):
     """
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """       
-    CHIRURGICO = ("1","chirurgico")
-    NON_CHIRURGICO = ("2","non chirugico")
+    CHIRURGICO = ("1","Chirurgico")
+    NON_CHIRURGICO = ("2","Non chirugico")
 
 class LesioneTendineaFlessoriEnum(Enum):
     """
@@ -59,8 +59,8 @@ class ResezioneFilieraEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """       
-    CHIRURGICO = ("1","chirurgico")
-    CONSERVATIVO = ("2","conservativo")
+    CHIRURGICO = ("1","Chirurgico")
+    CONSERVATIVO = ("2","Conservativo")
 
 # In base a questi valori avrò un decorso post operatorio diverso
 class ScafoideFratturaEnum(Enum):
@@ -77,8 +77,8 @@ class ScafoidePseudortrosiEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    OPEN = ("1","open")
-    OPEN_ASSISTENZA = ("2","open con assistenza artroscopica")
+    OPEN = ("1","Open")
+    OPEN_ASSISTENZA = ("2","Open con assistenza artroscopica")
     ARTROSCOPICO = ("3","interamente artroscopico")
 
 class DupuytrenEnum(Enum):
@@ -86,8 +86,8 @@ class DupuytrenEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    APONEVRECTOMIA_OPEN = ("1","aponevrectomia segmentale open")
-    APONEVRECTOMIA_INNESTO = ("2","aponevrectomia con innesto cutaneo")
+    APONEVRECTOMIA_OPEN = ("1","Aponevrectomia segmentale open")
+    APONEVRECTOMIA_INNESTO = ("2","Aponevrectomia con innesto cutaneo")
     CORDOTOMIA = ("3","Cordotomia")
     ALTRO = ("4","Altro")
 
@@ -96,8 +96,8 @@ class LesioneNervosaEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    NEURORRAFIA = ("1","neurorraffia termino-terminale")
-    INNESTO = ("2","innesto")
+    NEURORRAFIA = ("1","Neurorraffia termino-terminale")
+    INNESTO = ("2","Innesto")
     ALTRO = ("3","Altro")
 
 class LesioneLigamentosaEnum(Enum):
@@ -105,8 +105,8 @@ class LesioneLigamentosaEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """        
-    CHIRURGICO = ("1","chirurgico")
-    CONSERVATIVO = ("2","conservativo")
+    CHIRURGICO = ("1","Chirurgico")
+    CONSERVATIVO = ("2","Conservativo")
 
 class CONTROLS(Enum):
 

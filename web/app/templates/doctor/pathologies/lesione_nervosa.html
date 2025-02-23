@@ -21,21 +21,22 @@
         {{ form.data_intervento(id='generic-datepicker') }}
         <p id="error-message" style="color: red; display: none;"></p>
         
+        {{ form.tipo_lesione.label(style="display:block;margin-top:15px;") }}
+        {{ form.tipo_lesione }}
+
         {{ form.treatment_options.label(style="display:block;margin-top:15px;") }}
         {{ form.treatment_options }}
+        
 
-        {{ form.tipo_lesione.label(style="display:block;margin-top:15px;") }}
-        {{ form.tipo_lesione }}
-
-        {{ form.tipo_lesione.label(style="display:block;margin-top:15px;") }}
-        {{ form.tipo_lesione }}
-
-        {{ form.innesto.label(style="display:block;margin-top:15px;") }}
-        {{ form.innesto }}
-
-        {{ form.innesto_nervoso.label(style="display:block;margin-top:15px;") }}
-        {{ form.innesto_nervoso }}
-
+        <div id="innesto_div" style="display:none;">
+            {{ form.innesto.label(style="display:block;margin-top:15px;") }}
+            {{ form.innesto }}
+        </div>
+        
+        <div id="innesto_nervoso_div" style="display:none;">
+            {{ form.innesto_nervoso.label(style="display:block;margin-top:15px;") }}
+            {{ form.innesto_nervoso }}
+        </div>
 
         {% include 'doctor/parametri/sensibilita_volare.html' %}
         {{ form.sensibilita_volare }}
@@ -77,6 +78,51 @@
     const week_to_add = "{{ week_to_add['1'] }}";
     console.log(week_to_add);
     DataIntervento = new Date();
+
+
+    function toggleInnesto(){
+        
+        var selectedValue = $("#innesto").val();
+        console.log(selectedValue);
+        
+        if(selectedValue == "innesto_nervoso"){
+            $("#innesto_nervoso_div").show();
+        }
+        else{
+            $("#innesto_nervoso_div").hide();
+        }
+    }
+
+
+    function toggleTipoIntervento(){
+
+        var selectedValue = $("#treatment_options").val();
+        
+        console.log("Treatment options");
+        if(selectedValue == "2"){
+            $("#innesto_div").show();
+            $("#innesto_nervoso_div").hide();
+           
+        }
+        else{
+            $("#innesto_div").hide();
+            $("#innesto_nervoso_div").hide();
+        }
+
+    }
+
+
+    $(document).ready(function() {
+
+        $("#treatment_options").change(function() {
+            toggleTipoIntervento();
+        });
+
+        $("#innesto").change(function() {
+            toggleInnesto();
+        });
+
+    });
 
 </script>
 

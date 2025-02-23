@@ -1057,7 +1057,6 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
             ('', OPTION_NULL.NULL.value),
             ('completa', 'Completa'),
             ('parziale', 'Parziale'),
-            ('sintetico', 'Sintetico'),
 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1070,7 +1069,7 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
             ('', OPTION_NULL.NULL.value),
             ('innesto_nervoso', 'Innesto nervoso'),
             ('muscolo_vena', 'Muscolo in vena'),
-            ('sintetico', 'sintetico'),
+            ('sintetico', 'Sintetico'),
 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -1081,7 +1080,7 @@ class LesioneNervosaChirurgicoForm(ChirurgicoForm):
         'Innesto Nervoso',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('surale', 'Innesto Nervoso'),
+            ('surale', 'Surale'),
             ('nervo_interosseo_posteriore', 'Nervo interosso posteriore'),
             ('nervo_interosseo_anteriore', 'Nervo interosso anteriore'),
             ('altro', 'Altro'),
