@@ -71,3 +71,9 @@ scp 0.0.3.zip 46.101.189.188:/home/release/{versione}
 
 unzip {versione}
 
+
+# Debug
+
+Per vedere i log del docker container 
+
+docker logs -f <container_name_or_id>

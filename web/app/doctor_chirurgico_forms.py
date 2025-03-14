@@ -461,10 +461,10 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
         'Tipologia',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('fds', 'FDS'),
-            ('fdp', 'FDP'),
-            ('fds_fdp', 'FDS e FDP'),
-            ('fpl', 'fpl'), 
+            # ('fds', 'FDS'),
+            # ('fdp', 'FDP'),
+            # ('fds_fdp', 'FDS e FDP'),
+            # ('fpl', 'fpl'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -481,8 +481,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
             ('', OPTION_NULL.NULL.value),
             ('completo', 'Completo'),
             ('bandella_radiale', 'Bandella radiale'),
-            ('bandella_ulnare', 'Bandella ulnare'),
-            ('4', 'Trasversi'), 
+            ('bandella_ulnare', 'Bandella ulnare'), 
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
         ,render_kw={'class': 'form-control'}
@@ -491,7 +490,7 @@ class LesioneTendineaFlessoriChirurgicoForm(ChirurgicoForm):
     #fpl_zona 1
 
     fpl_1_leddy_packer = SelectField(
-        'Classificazione Leddy Packer',
+        'Classificazione Leddy e Packer',
         choices=[
             ('', OPTION_NULL.NULL.value),
             ('leddy_1', '1'),
@@ -694,7 +693,7 @@ class LesioneTendineaEstensoriChirurgicoForm(ChirurgicoForm):
         choices=[
          ('bandella_laterale_radiale', 'Bandella laterale radiale'),
             ('bandella_centrale', 'Bandella centrale'),
-            ('bandella_ulnare', 'Bandella ulnare'),
+            ('bandella_ulnare', 'Bandella laterale ulnare'),
         ],
         widget=widgets.ListWidget(prefix_label=False),  # List layout for checkboxes
         option_widget=widgets.CheckboxInput(),  # Render as checkboxes

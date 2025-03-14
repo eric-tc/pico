@@ -230,6 +230,7 @@
     //Tutti gli indici dei rettangoli non nella zona 1
     id_zone_not_one=["2","3","4","5","7","8","10","11","12","13","14","15","17","18","19","20","22","23","24","25","26","27","28","29"];
 
+    id_pollice=["21","23","25"];
 
     const currentSelection = {};
     const colorPalette = document.getElementById("colorPalette");
@@ -444,13 +445,47 @@
                         //AGGIUNGO I CAMPI DEL FORM DA COMPILARE
                         for (const [key, value] of Object.entries(currentSelection)) {
                             if(id_zone_1.includes(value.id)){
-                              document.getElementById("fpl_zona_1").style.display = "block";
-                              document.getElementById("zona_1").style.display = "block";
+                                document.getElementById("fpl_zona_1").style.display = "block";
+                                document.getElementById("zona_1").style.display = "block";
+                                
+
+                                let select = document.getElementById("tipologia");
+                                let option = document.createElement("option");
+                                option.value = "fdp";
+                                option.text = "FDP";
+                                select.appendChild(option);
+                                document.getElementById("tipologia").value = "fdp";
                             }
                             
                             if(id_zone_2.includes(value.id)){
                                 console.log("Aggiungi");
-                                document.getElementById("fds_zona_2").style.display = "block";
+
+                                let select = document.getElementById("tipologia");
+                                
+                                let option = document.createElement("option");
+                                option.value = "fdp";
+                                option.text = "FDP";
+                                select.appendChild(option);
+
+                                let option2 = document.createElement("option");
+                                option2.value = "fds";
+                                option2.text = "FDS";
+                                select.appendChild(option2);
+                                
+                                document.getElementById("tipologia").value = "fdp";
+                                //document.getElementById("fds_zona_2").style.display = "block";
+                            }
+
+                            if(id_pollice.includes(value.id)){
+                                
+                                let select = document.getElementById("tipologia");
+                                select.innerHTML = "";
+                                
+                                let option = document.createElement("option");
+                                option.value = "fpl";
+                                option.text = "FPL";
+                                select.appendChild(option);
+
                             }
 
                             if(id_zone_5.includes(value.id)){
@@ -529,6 +564,22 @@
     });
 
 
+
+    function  toggleTipologia(){
+
+        var tipo = document.getElementById("tipologia").value;
+        console.log("Tipo", tipo);
+        if(tipo === "fds"){
+            
+            document.getElementById("fds_zona_2").style.display = "block";
+           
+        }else{
+
+            document.getElementById("fds_zona_2").style.display = "none";
+        }
+
+    }
+
     function  toggleTipoSutura(){
 
         var tipo_sutura = document.getElementById("tipo_sutura_altre_zone").value;
@@ -566,6 +617,15 @@
     $("#tipo_sutura_altre_zone").change(function() {
         toggleTipoSutura();
     });
+
+
+    $("#tipologia").change(function() {
+        toggleTipologia();
+    });
+
+
+
+
 
 
 </script>

@@ -231,7 +231,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         id_pathology_type=pathology_id, # Non conosco ancora il tipo di intervento che sceglierà il dottore
         id_pathology_status= PATHOLOGY_STATUS.PRIMA.value[0], 
         id_patient=patient_id,  
-        next_control_date=datetime(1970, 1, 1) if data_frattura is "" else get_date(data_frattura),
+        next_control_date=datetime(1970, 1, 1) if not data_frattura else get_date(data_frattura),
         next_control_time= "12:00",
         is_date_accepted= 0,
         next_control_number=0,

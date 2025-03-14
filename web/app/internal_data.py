@@ -90,7 +90,7 @@ class PathologyTimline:
     Controls_Map={
         CONTROLS.DATA_FRATTURA.value: {"active":False,
                            "indices":[0],
-                           "names":"Data Frattura"
+                           "names":["Data Frattura"]
                            },
         CONTROLS.MPCJ.value: {"active":False,
                            "indices":[0],
@@ -116,7 +116,7 @@ class PathologyTimline:
                            },
         CONTROLS.TRAPEZIO_METACARPALE.value: {"active":False,
                            "indices":[0],
-                            "names":["Articolarità trapezione-metacarpale del pollice (gradi °)"]
+                            "names":["Articolarità trapezio-metacarpale del pollice (gradi °)"]
                            },
         CONTROLS.FORZA.value: {"active":False, 
                            "indices":[0]
