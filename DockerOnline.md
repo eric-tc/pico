@@ -77,3 +77,9 @@ unzip {versione}
 Per vedere i log del docker container 
 
 docker logs -f <container_name_or_id>
+
+
+# Problemi Certificato SSL
+
+1) Provare a fare docker compose down  e poi docker compose up. In teoria si risolve.
+
