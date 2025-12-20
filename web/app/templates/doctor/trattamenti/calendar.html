@@ -34,10 +34,16 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             events: '/treatments_events',
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
             dateClick: function(info){
                 
-                var redirectUrl = getEventRedirectUrl(info);
-                window.location.href = '/controls_for_day/'+info.dateStr;
+                
+                //window.location.href = '/controls_for_day/'+info.dateStr;
 
             
             }, //Endpoit per recuperare gli eventi da mostrare nel calendario

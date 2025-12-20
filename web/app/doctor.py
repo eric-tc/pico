@@ -738,6 +738,10 @@ def get_events():
 
         return jsonify(events)
 
+"""
+Al momento questa funzione è deprecata perchè già integrate nel calendario.
+Questa è vantaggiosa solo se devo visionare il paziente.
+"""
 @doctor.route('/controls_for_day/<date>', methods=["GET", "POST"])
 @login_required
 def controls_for_day(date):
