@@ -297,7 +297,7 @@ class TreatmentForm(FlaskForm):
     #utilizzato per passare tutto il form html per essere salvato come PDF
     hidden_html = HiddenField('hidden_html', render_kw={'class': 'form-control'}, validators=None)
     
-    submit_form = SubmitField("Submit", render_kw={'class': 'btn btn-primary',"style":"max-width: 200px;"})
+    submit_form = SubmitField("Inserisci", render_kw={'class': 'btn btn-primary mt-3',"style":"max-width: 200px;"})
 
     def __init__(self, selected_indices=None,controls_map=None, *args, **kwargs):
         super(TreatmentForm, self).__init__(*args, **kwargs)

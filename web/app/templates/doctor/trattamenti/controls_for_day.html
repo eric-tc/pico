@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Interventi programmati per la data: {{ selected_date }}</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome Paziente</th>
+            <th>Intervento da eseguire</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in interventions %}
+        <tr>
+            <td>{{ item.patient_name }}</td>
+            <td>
+                <a href="{{ url_for('doctor.event_details', row_id=item.id, event_in_range=item.code) }}">
+                    {{ item.surgery_name }}
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="2">Nessun intervento programmato per questa data.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

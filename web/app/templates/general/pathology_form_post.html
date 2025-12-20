@@ -28,6 +28,25 @@
     {% if event_in_range=="1" %}
 
     <div class="row">
+     <h2 class="title mt-3">
+            Puoi cambiare la data del controllo
+        </h2>
+
+        {{ form.orario_controllo.label }}
+        {{ form.orario_controllo(id='timepicker', style="max-width:50%") }}
+
+        
+        {{ form.data_controllo.label }}
+        
+        <div class="mt-3 mb-3">
+            {{ form.data_controllo(id='datepicker',style="max-width:50%") }}
+        </div>
+
+        {{form.submit_change_date(style="max-width:30%")}}   
+    
+    </div>
+
+    <div class="row mt-5">
 
         <h2> Configuratore guidato terapia </h2>
         

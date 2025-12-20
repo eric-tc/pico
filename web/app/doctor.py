@@ -677,6 +677,7 @@ def calendar():
 # Posso usare questi campi per popolare il calendario con diversi filtri
 
 @doctor.route('/treatments_events')
+@login_required
 def get_events():
 
 
@@ -736,6 +737,58 @@ def get_events():
         cache.set(CacheDataDoctor.CALENDAR_EVENTS.value,events)
 
         return jsonify(events)
+
+@doctor.route('/controls_for_day/<date>', methods=["GET", "POST"])
+@login_required
+def controls_for_day(date):
+    selected_date = date
+    interventions = []
+    if selected_date:
+        try:
+            # Parsing la data in formato YYYY-MM-DD
+            date_obj = datetime.strptime(selected_date, "%Y-%m-%d")
+            # Query per recuperare gli interventi con surgery_date uguale alla data fornita
+            results = db.session.query(PathologyData, User.name, Pathology.name) \
+                .join(User, PathologyData.id_patient == User.id) \
+                .join(Pathology, PathologyData.id_pathology == Pathology.id) \
+                .filter(PathologyData.next_control_date != None) \
+                .filter(func.date(PathologyData.next_control_date) == date_obj.date()) \
+                .all()
+            for row in results:
+                pathology_data, patient_name, surgery_name = row
+                code = None
+                if getattr(pathology_data, 'id_control_status', None) == 2:
+                    code = 2
+                else:
+                    current_date = datetime.now().date()
+                    event_date = getattr(pathology_data, 'next_control_date', None)
+                    days_before = EVENT_DAYS.DAYS_BEFORE.value
+                    days_after = EVENT_DAYS.DAYS_AFTER.value
+                    if event_date:
+                        days_before_date = current_date - timedelta(days=int(days_before))
+                        days_after_date = current_date + timedelta(days=int(days_after))
+                        if days_before_date <= event_date.date() <= days_after_date:
+                            code = 1
+                        elif event_date.date() < current_date:
+                            code = 2
+                        elif event_date.date() > current_date:
+                            code = 0
+                interventions.append({
+                    'id': pathology_data.id,
+                    'patient_name': patient_name,
+                    'surgery_name': surgery_name,
+                    'code': code
+                })
+        except Exception as e:
+            print(f"Errore nella ricerca: {e}")
+    return render_template(
+        'doctor/trattamenti/controls_for_day.html',
+        interventions=interventions,
+        selected_date=selected_date
+    )
+
+
+    
 
 @doctor.route('/next_controls/<row_id>/<event_in_range>',methods=["GET","POST"])
 @login_required
@@ -1403,3 +1456,4 @@ def dash_test():
                            labels_5=labels_5,
                            labels_6=labels_6,
                            zip=zip)
+
