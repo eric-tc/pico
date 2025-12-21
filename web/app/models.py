@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(300))
     name = db.Column(db.String(120))
+    surname = db.Column(db.String(120))
     role = db.Column(db.Integer)
     phone = db.Column(db.String(20))
     sx_dx_hand = db.Column(db.String(5))
@@ -23,10 +24,10 @@ class User(UserMixin, db.Model):
     manual_job = db.Column(db.String(5))
     sex = db.Column(db.String(5))
     job= db.Column(db.String(50))
-    note= db.Column(db.Text) # Non metto un limite alla lunghezza del testo
+    note= db.Column(db.Text)
     #new_instance = YourModel(doctor_ids=[1, 2, 3, 4, 5])
     doctor_ids = db.Column(ARRAY(db.Integer))
-
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class Pathology(db.Model):

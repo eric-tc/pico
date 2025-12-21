@@ -52,3 +52,8 @@ flask db migrate -m "Added new column to User"
 Una volta che ho salvato la migrazione posso aggiornare il database con flask db upgrade
 
 flask db upgrade
+
+# Dev
+
+1) In dev aprire il container con il progetto ed eseguire flask db upgrade dalla cartella /home/
+2) Eseguire dalla cartella /home flask db-insert che popola il database con le patologie

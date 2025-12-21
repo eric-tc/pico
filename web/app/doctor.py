@@ -43,9 +43,10 @@ def profile():
     remove_session_data()
 
     patients_list=(
-    db.session.query(DoctorPatient, User.name)
+    db.session.query(DoctorPatient, User.name,User.surname)
     .join(User, DoctorPatient.id_patient == User.id)
-    .filter(DoctorPatient.id_doctor == current_user.id).order_by(User.id.asc()).all()
+    .filter(DoctorPatient.id_doctor == current_user.id).order_by(User.id.asc())
+    .order_by(User.surname.asc()).all()
     )
     
 
@@ -53,10 +54,10 @@ def profile():
 
     #Ritorna tutti le patologie aggiunte dal dottore per le quali non è ancora stato fissato intervento
     #(pathology_row,patient_name,pathology_name)
-    interventi_da_fissare= db.session.query(PathologyData,User.name,Pathology.name)\
+    interventi_da_fissare= db.session.query(PathologyData,User.name,User.surname,Pathology.name)\
     .join(User, PathologyData.id_patient == User.id)\
     .join(Pathology,PathologyData.id_pathology==Pathology.id)\
-    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(User.id.asc()).all()
+    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(PathologyData.created_at.asc()).all()
     print("INTERVENTI DA FISSARE")
     print(interventi_da_fissare)
 
@@ -633,6 +634,7 @@ Il metodo post serve per gestire i dati derivati dal form
 def create_patient_post():
 
     email = request.form.get('email')
+    surname = request.form.get('surname')   
     name = request.form.get('name')
     password = request.form.get('password')
 
@@ -643,7 +645,7 @@ def create_patient_post():
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_patient = User(email=email, name=name, password=generate_password_hash(password),role=ROLE.PATIENT.value)
+    new_patient = User(email=email, name=name, surname=surname, password=generate_password_hash(password),role=ROLE.PATIENT.value)
 
     # add the new user to the database
     db.session.add(new_patient)
