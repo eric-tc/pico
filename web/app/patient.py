@@ -27,6 +27,7 @@ def settings_patient_doctor(patient_id):
     if form.validate_on_submit():
         print(form.email.data)
         user_data.name = form.name.data
+        user_data.surname = form.surname.data
         #check if form.password.data is not empty
         if form.password.data:
             print("Password Aggiornata")
@@ -46,6 +47,7 @@ def settings_patient_doctor(patient_id):
 
     form.email.data= user_data.email
     form.name.data= user_data.name
+    form.surname.data= user_data.surname
     form.phone.data= user_data.phone
     form.sx_dx_hand.data= user_data.sx_dx_hand
     form.birth_date.data= "" if user_data.birth_date is None else getDateStringFromDate(user_data.birth_date)
@@ -92,26 +94,60 @@ def settings_patient():
     return render_template('patient/settings_patient.html', name=current_user.name)
 
 
-@patient.route('/profile_patient')
+@patient.route('/profile_patient',methods=["GET","POST"])
+@patient.route('/profile_patient/<int:patient_id>', methods=["GET", "POST"])
 @login_required
-def profile_patient():
+def profile_patient(patient_id=None):
+
+    form = SettingsFormPatient()
+    user_data = User.query.get(current_user.id if patient_id is None else patient_id)
+
+    if form.validate_on_submit():
+        user_data.name = form.name.data
+        user_data.surname = form.surname.data
+        if form.password.data:
+            user_data.password = generate_password_hash(form.password.data)
+        user_data.birth_date = getDateInYMD(form.birth_date.data) if form.birth_date.data else None
+        user_data.phone = form.phone.data
+        user_data.sx_dx_hand = form.sx_dx_hand.data
+        user_data.sex = form.sex.data
+        user_data.job = form.job.data
+        user_data.manual_job = form.manual_job.data
+        user_data.note = form.note.data
+        db.session.commit()
+        flash('Cambio Dati effettuato con successo')
+        return redirect(url_for('patient.profile_patient'))
+
+    # Pre-popola i dati del form
+    form.email.data = user_data.email
+    form.name.data = user_data.name
+    form.surname.data = user_data.surname
+    form.phone.data = user_data.phone
+    form.sx_dx_hand.data = user_data.sx_dx_hand
+    form.birth_date.data = "" if user_data.birth_date is None else getDateStringFromDate(user_data.birth_date)
+    form.job.data = user_data.job
+    form.sex.data = user_data.sex
+    form.manual_job.data = user_data.manual_job
+    form.note.data = user_data.note
 
     #get all notification
-    current_notifications_list= db.session.query(Notification, User.name).join(User, Notification.id_doctor == User.id).filter(
+    current_notifications_list = db.session.query(Notification, User.name).join(User, Notification.id_doctor == User.id).filter(
         and_(
-            Notification.id_patient==current_user.id,
+            Notification.id_patient == current_user.id,
             or_(
-                Notification.status==NOTIFICATION_STATUS.SENT.value[0],
-                Notification.status==NOTIFICATION_STATUS.APPROVED.value[0]
+                Notification.status == NOTIFICATION_STATUS.SENT.value[0],
+                Notification.status == NOTIFICATION_STATUS.APPROVED.value[0]
             )
         )
     ).all()
 
     #recupero la lista degli interventi successivi associati al paziente
-    next_treatments=[]
-    select_next_treatments(current_user.id,next_treatments)
+    next_treatments = []
+    select_next_treatments(current_user.id, next_treatments)
 
-    return render_template('patient/profile_patient.html', 
+    return render_template('patient/profile_patient.html',
+                           form=form,
+                           user=user_data,
                            name=current_user.name,
                            current_notifications_list=current_notifications_list,
                            next_treatments=next_treatments)

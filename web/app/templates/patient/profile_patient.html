@@ -1,168 +1,56 @@
 {% extends "base.html" %}
 
-{% block content %}
-
-  <div class="container mt-5">
-    <div class="row">
-        <h1 class="title">
-          Ciao {{ name }}!
-        </h1>
-    </div>
-    <div class="row">
-        {% include 'alert.html' %}
-    </div>
-
-<!-- --------------------------ROW  PROSSIMI INTERVENTI ------------------------------- -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="changeDateModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="changeDateModal">Modal Title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Modal content goes here -->
-                <form class="edit-form" action="{{ url_for('doctor.change_date') }}" >
-                  {% include 'general/select_date.html' %}
-  
-                  <input type="hidden" id="pathology_id_row" name="pathology_id_row" value="">
-                  <input type="hidden" id="pathology_type" name="pathology_type" value="1">
-                  <input type="submit" class="btn btn-primary" value="Submit">
-                </form>
-            </div>
-            <div class="modal-footer">
+{% block content %}     
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Modifica informazioni utente</h5>
+                        <form method="get" action="{{ url_for('doctor.patient_treatment_list', patient_id=user.id, patient_name=form.name) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-primary" type="submit">Vedi trattamenti</button>
+                        </form>
+                    </div>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="alert alert-success" role="alert">
+                                {{ messages[0] }}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        {{ form.email.label(style="display:block;margin-top:15px;") }}
+                        {{ form.email }}
+                        {{ form.name.label(style="display:block;margin-top:15px;") }}
+                        {{ form.name }}
+                        {{ form.surname.label(style="display:block;margin-top:15px;") }}
+                        {{ form.surname }}
+                        {{ form.birth_date.label(style="display:block;margin-top:15px;") }}
+                        {{ form.birth_date(id='generic-datepicker-no-res',style="max-width:80%") }}
+                        {{ form.password.label(style="display:block;margin-top:15px;") }}
+                        {{ form.password }}
+                        {{ form.sex.label(style="display:block;margin-top:15px;") }}
+                        {{ form.sex }}
+                        {{ form.phone.label(style="display:block;margin-top:15px;") }}
+                        {{ form.phone }}
+                        {{ form.sx_dx_hand.label(style="display:block;margin-top:15px;") }}
+                        {{ form.sx_dx_hand }}
+                        {{ form.manual_job.label(style="display:block;margin-top:15px;") }}
+                        {{ form.manual_job }}
+                        {{ form.job.label(style="display:block;margin-top:15px;") }}
+                        {{ form.job }}
+                        {{ form.note.label(style="display:block;margin-top:15px;") }}
+                        {{ form.note }}
+                        {{ form.submit_patient_settings(style="display:block; margin-top:15px;") }}
+                        {% if form.errors %}
+                            {{ form.errors }}
+                        {% endif %}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-  </div>
-  
-  <h1 class="title mb-3" data-toggle="tooltip" data-placement="top" title="Qui sono visualizzati i prossimi controlli ordinati per paziente">
-    Prossimi appuntamenti
-   </h1>
-  
-  <div class="row">
-  
-    <div class="col-md-1 mb-1 col-lg-2"></div>
-    <div class="col-md-10 mb-10 col-lg-8">
-     
-      
-      <table id="nextControlsTable" class="table">
-        <thead>
-            <tr class="text-center">
-              <th>Numero Controllo </th>
-              <th>Nome Intervento </th>
-              <th>Nome Paziente</th>
-              <th>Data Intervento</th>
-              <th>Azioni</th>
-              <th>Cambia</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for pathology, username,pathology_type,week_to_add in next_treatments %}
-          <tr class="notificationRow text-center" data-item-id="{{pathology.id}}_{{ week_to_add }}_{{pathology.created_at}}">
-              <td >{{ pathology.next_control_number }}</td>
-              <td >{{ pathology_type }}</td>
-              <td >{{ username }}</td>
-              <td class="editable" data-field="next_control_date">
-                <span class="content">{{ pathology.next_control_date }}</span>
-            </td>
-              <td>
-                <form method="get" action="{{ url_for('doctor.next_control', patient_id=pathology.id_patient, patient_name=username,next_control_number=pathology.next_control_number,row_id_to_update=pathology.id,default_date=pathology.created_at) }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button class="btn btn-success" type="submit">Compila</button>
-                </form>
-              </td>
-              <td class="open-modal-cell"><button class="btn btn-primary">Cambia Data</button></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-1 mb-2 col-lg-2"></div>
-  </div>
-  
-
-<script>
-    var csrftoken = $('meta[name=csrf-token]').attr('content')
-
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken)
-            }
-        }
-    })
-    
-    $('#patientRequests').on('click', '.sendLinkPatient', function() {
-        var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
-        var idNotification = $(this).closest('.patientRequest').data('id-notification');
-        var button=  $(this);
-      // Send AJAX request to Flask endpoint
-        $.ajax({
-            type: 'POST',
-            url: '/accept_doctor_request',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({ 'id_doctor': idDoctor,"id_notification": idNotification }),
-            success: function(response) {
-                // Display the selected user details
-                
-                
-                button.removeClass('btn-success');
-                button.addClass('btn-danger');
-                button.addClass('removeLinkPatient');
-                
-                setTimeout(function() {
-                    $('#alert_success').addClass('d-none');
-                }, 3000);
-            
-            },
-            error: function(error) {
-                console.error('Error:', error);
-                $('#alert_danger').removeClass('d-none');
-
-                setTimeout(function() {
-                    $('#alert_danger').addClass('d-none');
-                }, 3000);
-            }
-        });
-    });
-
-    $('#patientRequests').on('click', '.removeLinkPatient', function() {
-
-        var idNotification = $(this).closest('.patientRequest').data('id-notification');
-        var idDoctor = $(this).closest('.patientRequest').data('id-doctor');
-        var row = $(this).closest('tr');
-        $.ajax({
-            type: 'POST',
-            url: '/remove_doctor_request',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({ 'id_doctor': idDoctor,"id_notification":idNotification }),
-            success: function(response) {
-                // Display the selected user details
-                
-                $('#alert_success').removeClass('d-none');
-
-               row.hide()
-
-                setTimeout(function() {
-                    $('#alert_success').addClass('d-none');
-                }, 3000);
-            
-            },
-            error: function(error) {
-                console.error('Error:', error);
-                $('#alert_danger').removeClass('d-none');
-
-                setTimeout(function() {
-                    $('#alert_danger').addClass('d-none');
-                }, 3000);
-            }
-        });
-
-
-    });
-
-</script>
+    <script src="{{ url_for('static', filename='js/datepicker_custom_no_date_restriction.js') }}"></script>
 {% endblock %}

@@ -17,13 +17,14 @@ class SettingsFormDoctor(FlaskForm):
 class SettingsFormPatient(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
     name = StringField('Nome', validators=[DataRequired(), Length(min=2, max=35)],render_kw={'class': 'form-control'})
+    surname = StringField('Cognome', validators=[DataRequired(), Length(min=2, max=35)],render_kw={'class': 'form-control'})
     birth_date = StringField('Data Di Nascita', render_kw={'class': 'form-control-custom','readonly':True}, validators=None)
-    phone = StringField('Telefono', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
+    phone = StringField('Telefono', validators=[ Length(min=0, max=35)],render_kw={'class': 'form-control'})
     password = PasswordField('Password',render_kw={'class': 'form-control'})
     sx_dx_hand= SelectField('Mano Dominante', choices=[('', OPTION_NULL.NULL.value),('sx', 'Sinistro'), ('dx', 'Destro')],render_kw={'class': 'form-control'})
     manual_job = SelectField('Lavoro Manuale', choices=[('', OPTION_NULL.NULL.value),('no', 'No'), ('si', 'Si')],render_kw={'class': 'form-control'})
     sex = SelectField('Sesso', choices=[('', OPTION_NULL.NULL.value),('M', 'Maschio'), ('F', 'Femmina')],render_kw={'class': 'form-control'})
-    job = StringField('Lavoro', validators=[DataRequired(), Length(min=6, max=35)],render_kw={'class': 'form-control'})
+    job = StringField('Lavoro', validators=[Length(min=0, max=35)],render_kw={'class': 'form-control'})
     note = TextAreaField('Note',render_kw={'class': 'form-control'})
     submit_patient_settings = SubmitField('Aggiorna',render_kw={'class': 'btn btn-success',"style":"max-width: 200px;"})
 

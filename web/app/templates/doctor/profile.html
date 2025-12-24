@@ -42,14 +42,14 @@
     {% endif %}
     {% endwith %}
 
-    <table id="patientTable" class="table">
+    <table id="patientTable" class="table-rounded">
       <thead>
           <tr class="text-center">
               <th>Nome</th>
               <th>Nuovo Intervento</th>
               <th>Storia Paziente</th>
-              <th>Impostazioni</th>
-              <th>Azioni</th>
+              <!-- <th>Impostazioni</th>
+              <th>Azioni</th> -->
 
               
           </tr>
@@ -57,7 +57,11 @@
       <tbody>
           {% for link, name,surname in patients_list %}
               <tr class="patientRow text-center" data-patient-id="{{ link.id}}">
-                  <td> {% if surname %}{{ surname }} {% endif %}{{ name }}</td>
+                  <td>
+                    <a href="{{ url_for('patient.profile_patient', patient_id=link.id_patient) }}">
+                      {% if surname %}{{ surname }} {% endif %}{{ name }}
+                    </a>
+                  </td>
                   <td>
                     <form method="get" action="{{ url_for('doctor.insert_pre_medical_treatment', patient_id=link.id_patient, patient_name=name) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -71,13 +75,13 @@
                       </form>
                   </td>
 
-                  <td>
+                  <!-- <td>
                     <form method="get" action="{{ url_for('patient.settings_patient_doctor', patient_id=link.id_patient) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-success" type="submit">Cambia</button>
                       </form>
                   </td>
-                  <td><button class="btn btn-danger sendLinkPatient" >Rimuovi</button></td>
+                  <td><button class="btn btn-danger sendLinkPatient" >Rimuovi</button></td> -->
               </tr>
           {% endfor %}
       </tbody>
@@ -105,7 +109,7 @@
 <div class="row">
   <div class="col-md-12 mb-12 col-lg-12">
 
-    <table id="patientTable" class="table">
+    <table id="patientTable" class="table-rounded">
       <thead>
           <tr class="text-center">
              
@@ -120,7 +124,11 @@
           {% for pathology_data, patient_name,patient_surname, pathology_name in interventi_da_fissare %}
               <tr class="patientRow text-center" data-patient-id="{{ pathology_data.id}}">
                  
-                  <td>{% if patient_surname %}{{ patient_surname }} {% endif %}{{ patient_name }}</td>
+                 <td>
+                    <a href="{{ url_for('patient.profile_patient', patient_id=pathology_data.id_patient) }}">
+                      {% if patient_surname %}{{ patient_surname }} {% endif %}{{ patient_name }}
+                    </a>
+                  </td>
                   <td>
                       {{ pathology_name }}
                   </td>
