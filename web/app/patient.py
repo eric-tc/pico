@@ -58,41 +58,6 @@ def settings_patient_doctor(patient_id):
     #retrieve data from db and assign to form
     
     return render_template('patient/settings_patient.html',form=form ,name=current_user.name)
-"""
-Route Utilizzata dal dottore per cambiare i settings del paziente
-
-"""
-
-@patient.route('/settings_patient')
-@login_required
-def settings_patient():
-
-    form = SettingsFormPatient()
-
-    user_data = User.query.get(current_user.id)
-    
-
-
-    if form.validate_on_submit():
-        print(form.email.data)
-        user_data.name = form.name.data
-        #check if form.password.data is not empty
-        if form.password.data:
-            user_data.password = generate_password_hash(form.password.data)
-        user_data.phone = form.phone.data
-        db.session.commit()
-        flash('Cambio Dati effettuato con successo')
-
-        return redirect(url_for('patient.profile_patient'))
-        
-
-    form.email.data= user_data.email
-    form.name.data= user_data.name
-    form.phone.data= user_data.phone
-    #retrieve data from db and assign to form
-
-    return render_template('patient/settings_patient.html', name=current_user.name)
-
 
 @patient.route('/profile_patient',methods=["GET","POST"])
 @patient.route('/profile_patient/<int:patient_id>', methods=["GET", "POST"])
