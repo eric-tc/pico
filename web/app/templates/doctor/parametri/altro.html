@@ -12,15 +12,19 @@
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>    
+            </div>
 
-                <!-- Field 2 -->
-                <div class="grid-item">
+            <div class="form-grid">
+                   <div class="grid-item" style="grid-column: span 2;">
                     <label>{{ form.altro[index].note.label }}</label>
                     {{ form.altro[index].note }}
                     {% for error in form.altro[index].note.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
+
+            </div>
+
                 
             </div>
         </fieldset>

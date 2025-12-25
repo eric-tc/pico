@@ -129,6 +129,8 @@ class PathologyData(db.Model):
     pathology_status = db.relationship('PathologyStatus', foreign_keys=[id_pathology_status])
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    # Tiene traccia di quando il record è stato modificato l'ultima volta
+    date_insertion= db.Column(db.DateTime, nullable=True)
 
     #Tiene traccia della riga del database da cui è stato creato il record.
     #Solitamente fa riferimento al controllo con next_control_number=0. 

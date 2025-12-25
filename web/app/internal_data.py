@@ -71,7 +71,7 @@ class EMAIL_STATUS(Enum):
 # e dopo è possibile compilare un evento schedulato
 class EVENT_DAYS(Enum):
 
-    DAYS_BEFORE = 40
+    DAYS_BEFORE = 20
     DAYS_AFTER = 20
     #numero di mesi in cui sono recuperati gli eventi al calendario
     MONTHS_TO_RETRIEVE = 12
@@ -160,7 +160,8 @@ class PathologyTimline:
         CONTROLS.TUTORE.value: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.ALTRO.value: {"active":False,
+        # Questi valori ci sono per ogni controllo                   
+        CONTROLS.ALTRO.value: {"active":True,
                            "indices":[0]
                            },
         CONTROLS.GUARIGIONE_OSSEA.value: {"active":False,
@@ -1396,6 +1397,8 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+       
+
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
@@ -1419,6 +1422,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
@@ -1510,7 +1514,9 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value]["active"]= True
 
+        
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
 

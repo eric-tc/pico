@@ -974,6 +974,8 @@ def event_details(row_id,event_in_range):
                     
             # una volta inserito i valori il controllo si chiude e non può essere modificato
             pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
+            pathology_db.date_insertion= datetime.utcnow()
+            
             #Aggiornamento della row
             db.session.commit()
 
