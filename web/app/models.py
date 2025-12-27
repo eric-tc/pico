@@ -30,19 +30,45 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
+
+class Parameters(db.Model):
+
+    """
+    Salva a database i parametri utilizzati per ogni patologia.
+    Lascio la chiave primaria per ritornare errori in caso volessi inserirre due volte lo stesso parametro
+    """
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120))
+    
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for member in CONTROLS:
+                new_instance = cls(id=member.value[0],name=member.value[1])
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
+
 class Pathology(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
 
 
     @classmethod
     def insert_rows(cls):
-        # Create and insert a new row for each value in the list
+        # Valore inserito tramite flask insert-db
+        # Il valore ID è assegnato dal codice in modo da avere uniformità tra i vari ambienti
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY:
                 print(row.value)
-                id,name,timeline,form,enum,pre_options= row.value
-                new_instance = cls(name=name)
+                id_code,name,timeline,form,enum,pre_options= row.value
+                # 
+                new_instance = cls(id=id_code,name=name)
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -69,8 +95,8 @@ class PathologyStatus(db.Model):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY_STATUS:
-                id,name= row.value
-                new_instance = cls(name=name)
+                id_code,name= row.value
+                new_instance = cls(id=id_code,name=name)
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -91,8 +117,8 @@ class PathologyType(db.Model):
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY_TYPE:
 
-                id,type,name= row.value
-                new_instance = cls(name=name,type=type.value[0])
+                id_code,type,name= row.value
+                new_instance = cls(id=id_code,name=name,type=type.value[0])
                 db.session.add(new_instance)
             
             # Commit the changes
@@ -190,6 +216,32 @@ class PathologyData(db.Model):
     
 
 
+class PathologyDataStats(db.Model):
+    """
+    Tabella che tiene traccia dei valori medi per ogni parametro per ogni controllo in base alla patologia.
+
+    Esempio:
+    Rizoartrosi, controllo 1, mpcj = valore medio
+
+    Questo dato medio servirà per mostrare al dottore come si sta comportando il paziente rispetto alla media del controllo
+    """
+    
+    id = db.Column(db.Integer, primary_key=True)
+    id_pathology = db.Column(db.Integer, db.ForeignKey('pathology.id'), nullable=False)
+    pathology = db.relationship('Pathology', foreign_keys=[id_pathology])
+    id_parameter = db.Column(db.Integer, db.ForeignKey('parameters.id'), nullable=False)
+    parameter = db.relationship('Parameters', foreign_keys=[id_parameter])
+    control_number = db.Column(db.Integer, nullable=False)
+    media = db.Column(db.Float, nullable=True)
+    mediana = db.Column(db.Float, nullable=True)
+    deviazione_standard = db.Column(db.Float, nullable=True)
+    data_aggiornamento = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        UniqueConstraint('id_pathology', 'id_parameter', 'control_number'),
+    )
+
+    
 """
 Classe per tenere traccia relazione paziente dottore
 Un dottore può avere più pazienti in cura.

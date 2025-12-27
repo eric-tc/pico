@@ -71,8 +71,8 @@ class EMAIL_STATUS(Enum):
 # e dopo è possibile compilare un evento schedulato
 class EVENT_DAYS(Enum):
 
-    DAYS_BEFORE = 20
-    DAYS_AFTER = 20
+    DAYS_BEFORE = 200
+    DAYS_AFTER = 200
     #numero di mesi in cui sono recuperati gli eventi al calendario
     MONTHS_TO_RETRIEVE = 12
 
@@ -88,40 +88,40 @@ class EVENT_DAYS(Enum):
 class PathologyTimline:
     
     Controls_Map={
-        CONTROLS.DATA_FRATTURA.value: {"active":False,
+        CONTROLS.DATA_FRATTURA.value[1]: {"active":False,
                            "indices":[0],
                            "names":["Data Frattura"]
                            },
-        CONTROLS.MPCJ.value: {"active":False,
+        CONTROLS.MPCJ.value[1]: {"active":False,
                            "indices":[0],
                            "names":["Articolarità metacarpo-falange del pollice (gradi °)","Articolarità metacarpo-falange dell'indice (gradi °)","Articolarità metacarpo-falange del medio (gradi °)","Articolarità metacarpo-falange dell'anulare (gradi °)","Articolarità metacarpo-falange del mignolo(gradi °)"]
                            },
-        CONTROLS.PIPJ.value: {"active":False,
+        CONTROLS.PIPJ.value[1]: {"active":False,
                            "indices":[0],
                            "names":["Articolarità interfalangea prossimale del pollice (gradi °)","Articolarità interfalangea prossimale dell'indice (gradi °)","Articolarità interfalangea prossimale del medio (gradi °)","Articolarità  prossimale interfalangea dell'anulare (gradi °)","Articolarità interfalangea prossimale del mignolo (gradi °)"]
                            },
-        CONTROLS.DIPJ.value: {"active":False,
+        CONTROLS.DIPJ.value[1]: {"active":False,
                            "indices":[0],
                            "names":["Articolarità interfalangea distale del pollice (gradi °)","Articolarità interfalangea distale dell'indice (gradi °)","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo (gradi °)"]
                            },
-        CONTROLS.IPJ.value: {"active":False,
+        CONTROLS.IPJ.value[1]: {"active":False,
                            "indices":[0],
                            "names":["Articolarità interfalangea del pollice (gradi °)","Articolarità interfalangea dell'indice (gradi °)","Articolarità interfalangea del medio (gradi °)","Articolarità interfalangea dell'anulare (gradi °)","Articolarità interfalangea del mignolo (gradi °)"]
                            },
-        CONTROLS.POLSO.value: {"active":False,
+        CONTROLS.POLSO.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.VAS.value: {"active":False,
+        CONTROLS.VAS.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.TRAPEZIO_METACARPALE.value: {"active":False,
+        CONTROLS.TRAPEZIO_METACARPALE.value[1]: {"active":False,
                            "indices":[0],
                             "names":["Articolarità trapezio-metacarpale del pollice (gradi °)"]
                            },
-        CONTROLS.FORZA.value: {"active":False, 
+        CONTROLS.FORZA.value[1]: {"active":False, 
                            "indices":[0]
                            },
-        CONTROLS.DASH.value: {"active":False,
+        CONTROLS.DASH.value[1]: {"active":False,
                            "indices":[0],
                            "labels":{
                                 "labels_1":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIRST],
@@ -132,7 +132,7 @@ class PathologyTimline:
                                 "labels_6":[(label.value[1],label.value[0]) for label in DASH_ENUM_SIXTH], 
                                 }
                            },
-        CONTROLS.PRWHE.value: {"active":False,
+        CONTROLS.PRWHE.value[1]: {"active":False,
                            "indices":[0],
                            "labels":{
                                 "labels_1":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_FIRST],
@@ -142,38 +142,38 @@ class PathologyTimline:
                                 
                                 }
                            },
-        CONTROLS.EATON_LITTLER.value: {"active":False,
+        CONTROLS.EATON_LITTLER.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.EDEMA.value: {"active":False,
+        CONTROLS.EDEMA.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.SENSIBILITA_VOLARE.value: {"active":False,
+        CONTROLS.SENSIBILITA_VOLARE.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.SENSIBILITA_DORSALE.value: {"active":False,
+        CONTROLS.SENSIBILITA_DORSALE.value[1]: {"active":False,
                              "indices":[0]
                             },
-        CONTROLS.CICATRICE.value: {"active":False,
+        CONTROLS.CICATRICE.value[1]: {"active":False,
                            "indices":[0]
                            },
-        CONTROLS.TUTORE.value: {"active":False,
+        CONTROLS.TUTORE.value[1]: {"active":False,
                            "indices":[0]
                            },
         # Questi valori ci sono per ogni controllo                   
-        CONTROLS.ALTRO.value: {"active":True,
+        CONTROLS.ALTRO.value[1]: {"active":True,
                            "indices":[0]
                            },
-        CONTROLS.GUARIGIONE_OSSEA.value: {"active":False,
+        CONTROLS.GUARIGIONE_OSSEA.value[1]: {"active":False,
                                             "indices":[0]
                                             },
-        CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+        CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]: {"active":False,
                                                         "indices":[0]
                                                         },
-        CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
+        CONTROLS.ARTICOLAZIONE_STABILE.value[1]: {"active":False,
                                                "indices":[0]
                                                 },
-        CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+        CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value[1]: {"active":False,
                                                "indices":[0]
                                                 },                            
     }
@@ -208,8 +208,8 @@ class PathologyTimline:
         """
 
         mpcj_data = {}
-        if controls_map[CONTROLS.MPCJ.value]["active"]:
-            for index in controls_map[CONTROLS.MPCJ.value]["indices"]:
+        if controls_map[CONTROLS.MPCJ.value[1]]["active"]:
+            for index in controls_map[CONTROLS.MPCJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 mpcj_data[int(index)] = {
                     'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
@@ -223,8 +223,8 @@ class PathologyTimline:
 
         
         dipj_data = {}
-        if controls_map[CONTROLS.DIPJ.value]["active"]:
-            for index in controls_map[CONTROLS.DIPJ.value]["indices"]:
+        if controls_map[CONTROLS.DIPJ.value[1]]["active"]:
+            for index in controls_map[CONTROLS.DIPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 dipj_data[int(index)] = {
                     'arom_estensione': form.dipj[int(index)].arom_estensione.data,
@@ -237,8 +237,8 @@ class PathologyTimline:
 
         
         pipj_data = {}
-        if controls_map[CONTROLS.PIPJ.value]["active"]:
-            for index in controls_map[CONTROLS.PIPJ.value]["indices"]:
+        if controls_map[CONTROLS.PIPJ.value[1]]["active"]:
+            for index in controls_map[CONTROLS.PIPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 pipj_data[int(index)] = {
                     'arom_estensione': form.pipj[int(index)].arom_estensione.data,
@@ -251,8 +251,8 @@ class PathologyTimline:
         print(pipj_data)
         
         ipj_data = {}
-        if controls_map[CONTROLS.IPJ.value]["active"]:
-            for index in controls_map[CONTROLS.IPJ.value]["indices"]:
+        if controls_map[CONTROLS.IPJ.value[1]]["active"]:
+            for index in controls_map[CONTROLS.IPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 ipj_data[int(index)] = {
                     'arom_estensione': form.ipj[int(index)].arom_estensione.data,
@@ -266,8 +266,8 @@ class PathologyTimline:
 
         trapezio_metacarpale = {}
 
-        if controls_map[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]:
-            for index in controls_map[CONTROLS.TRAPEZIO_METACARPALE.value]["indices"]:
+        if controls_map[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]:
+            for index in controls_map[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["indices"]:
                 trapezio_metacarpale[int(index)] = {
                     'anteposizione': form.trapezio_metacarpale[int(index)].anteposizione.data,
                     'abduzione': form.trapezio_metacarpale[int(index)].abduzione.data,
@@ -279,8 +279,8 @@ class PathologyTimline:
 
 
         polso={}
-        if controls_map[CONTROLS.POLSO.value]["active"]:
-            for index in controls_map[CONTROLS.POLSO.value]["indices"]:
+        if controls_map[CONTROLS.POLSO.value[1]]["active"]:
+            for index in controls_map[CONTROLS.POLSO.value[1]]["indices"]:
                 polso[int(index)] = {
                     'arom_estensione': form.polso[int(index)].arom_estensione.data,
                     'arom_flessione': form.polso[int(index)].arom_flessione.data,
@@ -297,15 +297,15 @@ class PathologyTimline:
 
         print("VAS")
         vas_data= None
-        if controls_map[CONTROLS.VAS.value]["active"]:
+        if controls_map[CONTROLS.VAS.value[1]]["active"]:
             vas_data= form.vas.data
         print(vas_data)
 
         print("FORZA")
         forza={}
 
-        if controls_map[CONTROLS.FORZA.value]["active"]:
-            for index in controls_map[CONTROLS.FORZA.value]["indices"]:
+        if controls_map[CONTROLS.FORZA.value[1]]["active"]:
+            for index in controls_map[CONTROLS.FORZA.value[1]]["indices"]:
                 forza[int(index)] = {
                     '1_pinch': form.forza[int(index)].misurazione_1_pinch.data,
                     '2_pinch': form.forza[int(index)].misurazione_2_pinch.data,
@@ -352,7 +352,7 @@ class PathologyTimline:
         
         print("Prwhe")
         prwhe_data =[]
-        if controls_map[CONTROLS.PRWHE.value]["active"]:
+        if controls_map[CONTROLS.PRWHE.value[1]]["active"]:
             prwhe_data = {}
             prwhe_value = 0
             dolore = 0
@@ -379,34 +379,34 @@ class PathologyTimline:
         
         print("eaton littler")
         eaton_littler_data= None
-        if controls_map[CONTROLS.EATON_LITTLER.value]["active"]:
+        if controls_map[CONTROLS.EATON_LITTLER.value[1]]["active"]:
             eaton_littler_data= form.eaton_littler.data
         print(eaton_littler_data)
 
 
         print("edema")
         edema_data= None
-        if controls_map[CONTROLS.EDEMA.value]["active"]:
+        if controls_map[CONTROLS.EDEMA.value[1]]["active"]:
             edema_data= form.edema.data
         print(edema_data)
 
         print("Sensibilita_volare")
         sensibilita_volare_data= None
-        if controls_map[CONTROLS.SENSIBILITA_VOLARE.value]["active"]:
+        if controls_map[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]:
             sensibilita_volare_data= form.sensibilita_volare.data
         print(sensibilita_volare_data)
 
 
         print("Sensibilita_dorsale")
         sensibilita_dorsale_data= None
-        if controls_map[CONTROLS.SENSIBILITA_DORSALE.value]["active"]:
+        if controls_map[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]:
             sensibilita_dorsale_data= form.sensibilita_dorsale.data
         print(sensibilita_dorsale_data)
 
         cicatrice = {}
 
-        if controls_map[CONTROLS.CICATRICE.value]["active"]:
-            for index in controls_map[CONTROLS.CICATRICE.value]["indices"]:
+        if controls_map[CONTROLS.CICATRICE.value[1]]["active"]:
+            for index in controls_map[CONTROLS.CICATRICE.value[1]]["indices"]:
                 cicatrice[int(index)] = {
                     'aderente': form.cicatrice[int(index)].aderente.data,
                     'distasi_ferita': form.cicatrice[int(index)].distasi_ferita.data,
@@ -419,13 +419,13 @@ class PathologyTimline:
 
         print("tutore")
         tutore_data= None
-        if controls_map[CONTROLS.TUTORE.value]["active"]:
+        if controls_map[CONTROLS.TUTORE.value[1]]["active"]:
             tutore_data= form.tutore.data
         print(tutore_data)
 
         print("altro")
         altro_data= {}
-        if controls_map[CONTROLS.ALTRO.value]["active"]:
+        if controls_map[CONTROLS.ALTRO.value[1]]["active"]:
             for index in controls_map["altro"]["indices"]:
                 altro_data[int(index)] = {
                     'complicanze': form.altro[int(index)].complicanze.data,
@@ -490,7 +490,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -501,23 +501,23 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
         
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
 
         #TODO: Aggiungere solo se è stato selezionato il pollice
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -527,21 +527,21 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
         
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
 
         #TODO: Aggiungere solo se è stato selezionato il pollice
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         return tmp_ControlMap
 
 
@@ -579,7 +579,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
 
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -591,14 +591,14 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -608,16 +608,16 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
     
         return tmp_ControlMap
     
@@ -626,18 +626,18 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
-        tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -647,16 +647,16 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=False # Diventa true se concesso_inizio_mobilizzazione è true
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -697,7 +697,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
 
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -711,10 +711,10 @@ class ScafoideFratturaTimeline(PathologyTimline):
         
         if(tipo_intervento==ScafoideFratturaEnum.CHIRURGICO.value[0]):
            
-            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+            tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
             return tmp_ControlMap
     
@@ -723,13 +723,13 @@ class ScafoideFratturaTimeline(PathologyTimline):
 
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         
         return tmp_ControlMap
     
@@ -739,13 +739,13 @@ class ScafoideFratturaTimeline(PathologyTimline):
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         
         return tmp_ControlMap
     
@@ -754,14 +754,14 @@ class ScafoideFratturaTimeline(PathologyTimline):
 
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -770,13 +770,13 @@ class ScafoideFratturaTimeline(PathologyTimline):
 
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -816,8 +816,8 @@ class LesioneNervosaTimeline(PathologyTimline):
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["names"]=["Data lesione"]
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["names"]=["Data lesione"]
 
         return tmp_ControlMap,pre_controls_map
 
@@ -827,10 +827,10 @@ class LesioneNervosaTimeline(PathologyTimline):
         
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
    
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -840,11 +840,11 @@ class LesioneNervosaTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
    
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -880,11 +880,11 @@ class DupuytrenTimeline(PathologyTimline):
     def get_pre(cls):
         
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
-        pre_controls_map[PATHOLOGY_LABEL.DUPUYTREN.value]["active"]=True
+        pre_controls_map[PATHOLOGY_LABEL.DUPUYTREN.value[1]]["active"]=True
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -895,18 +895,18 @@ class DupuytrenTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -919,21 +919,21 @@ class DupuytrenTimeline(PathologyTimline):
         pip_j_indices=[]
         #TODO al momento prendo tutti i metacarpi non seleziono solo quelli compilati
         #pip_j_indices.append(int(metacarpo_rotto))
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4] #non Ho il pollice       
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4] #non Ho il pollice       
         
-        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -980,11 +980,11 @@ class ResezioneFilieraTimeline(PathologyTimline):
         #indica che ci sono dei parametri da inserire oltre a quelli classici
         pre_controls_map[PATHOLOGY_LABEL.RESEZIONE_FILIERA.value]["active"]=True
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         
         #Setto i valori per il primo controllo
 
@@ -999,10 +999,10 @@ class ResezioneFilieraTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1014,13 +1014,13 @@ class ResezioneFilieraTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1063,7 +1063,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
 
         return tmp_ControlMap,pre_controls_map
@@ -1075,8 +1075,8 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1086,17 +1086,17 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1106,21 +1106,21 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
 
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1130,17 +1130,17 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1151,19 +1151,19 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -1207,7 +1207,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
 
         return tmp_ControlMap,pre_controls_map
@@ -1219,8 +1219,8 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1230,17 +1230,17 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1250,21 +1250,21 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
 
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1274,17 +1274,17 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1295,19 +1295,19 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
 
-        tmp_ControlMap[CONTROLS.DIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value]["indices"]= [1,2,3,4]
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -1355,7 +1355,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -1370,14 +1370,14 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             pip_j_indices=[]
             pip_j_indices.append(int(metacarpo_rotto))
-            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-            tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+            tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
             # In questo controllo sono attivii tutti i campi
-            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-            tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-            tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+            tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
 
             return tmp_ControlMap
     @classmethod
@@ -1387,21 +1387,21 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         pip_j_indices=[]
         pip_j_indices.append(int(metacarpo_rotto))
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
        
 
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
-            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1412,20 +1412,20 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         pip_j_indices=[]
         pip_j_indices.append(int(metacarpo_rotto))
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
-            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1472,7 +1472,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
 
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -1487,14 +1487,14 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             pip_j_indices=[]
             pip_j_indices.append(int(metacarpo_rotto))
-            tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-            tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-            tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-            tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+            tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
             # In questo controllo sono attivii tutti i campi
-            tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-            tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-            tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+            tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
 
             return tmp_ControlMap
     @classmethod
@@ -1504,21 +1504,21 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         pip_j_indices=[]
         pip_j_indices.append(int(metacarpo_rotto))
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.ALTRO.value]["active"]= True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]= True
 
         
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
-            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1529,19 +1529,19 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         pip_j_indices=[]
         pip_j_indices.append(int(metacarpo_rotto))
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[0,1,2,3,4]
-        tmp_ControlMap[CONTROLS.PIPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.FORZA.value]["indices"]= pip_j_indices
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
-            tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+            tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1574,7 +1574,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value]["active"]=True
+        tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
   
@@ -1587,12 +1587,12 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indices"]=[1,2,3,4]
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1603,14 +1603,14 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
           #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indeces"]=[1,2,3,4]
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1624,14 +1624,14 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.POLSO.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["indeces"]=[1,2,3,4]
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -1677,13 +1677,13 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EATON_LITTLER.value]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EATON_LITTLER.value[1]]["active"]=True
 
         #Setto i valori per il primo controllo
 
@@ -1698,11 +1698,11 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1712,16 +1712,16 @@ class RizoartrosiControlsTimeline(PathologyTimline):
           #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
 
-        tmp_ControlMap[CONTROLS.VAS.value]["active"]=True
-        tmp_ControlMap[CONTROLS.EDEMA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.IPJ.value]["active"]=True
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.FORZA.value]["active"]=True
-        tmp_ControlMap[CONTROLS.DASH.value]["active"]=True
-        tmp_ControlMap[CONTROLS.PRWHE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value]["active"]=True
-        tmp_ControlMap[CONTROLS.CICATRICE.value]["active"]=True
+        tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
     
         return tmp_ControlMap
    

@@ -29,6 +29,7 @@ DoctorPatient,\
 DoctorCurrentPathology,\
 Notification,\
 PathologyData,\
+Parameters,\
 PathologyType,\
 PathologyStatus,\
 Pathology,\
@@ -121,3 +122,4 @@ def insert_db():
         Pathology.insert_rows()
         EmailStatus.insert_rows()
         ControlStatus.insert_rows()
+        Parameters.insert_rows()

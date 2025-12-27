@@ -202,7 +202,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
             if "csrf_token" in precontrols_data:
                 precontrols_data.pop("csrf_token")
 
-        data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value)
+        data_frattura = request.form.get(CONTROLS.DATA_FRATTURA.value[1])
         
         mpcj_data,\
         pipj_data,\
@@ -929,7 +929,7 @@ def event_details(row_id,event_in_range):
                 #Remove csrf token 
                 
                 #Data frattura nei controlli non è conteggiata
-                if(key != CONTROLS.DATA_FRATTURA.value and key != CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
+                if(key != CONTROLS.DATA_FRATTURA.value[1] and key != CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value[1]):
                     mpcj_data,\
                     pipj_data,\
                     dipj_data,\
@@ -967,7 +967,7 @@ def event_details(row_id,event_in_range):
                     pathology_db.tutore=tutore_data
                     pathology_db.altro=altro_data
 
-                if(key == CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value):
+                if(key == CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value[1]):
                     if(form.data[key]):
                         data_inizio_mobilizzazione= getDateInYMD(form.data[key])
                         setattr(pathology_parent, key, data_inizio_mobilizzazione)
@@ -975,7 +975,7 @@ def event_details(row_id,event_in_range):
             # una volta inserito i valori il controllo si chiude e non può essere modificato
             pathology_db.id_control_status= int(CONTROL_STATUS.CLOSED.value[0])
             pathology_db.date_insertion= datetime.utcnow()
-            
+
             #Aggiornamento della row
             db.session.commit()
 
@@ -1134,19 +1134,19 @@ def test_controls():
                     "altro":{"active":False,
                            "indices":[0]
                            },
-                    CONTROLS.GUARIGIONE_OSSEA.value: {"active":False,
+                    CONTROLS.GUARIGIONE_OSSEA.value[1]: {"active":False,
                                             "indices":[0]
                                             },
-                    CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value: {"active":False,
+                    CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]: {"active":False,
                                                         "indices":[0]
                                                         },
-                    CONTROLS.ARTICOLAZIONE_STABILE.value: {"active":False,
+                    CONTROLS.ARTICOLAZIONE_STABILE.value[1]: {"active":False,
                                                "indices":[0]
                                                 },
-                    CONTROLS.SENSIBILITA_VOLARE.value: {"active":False,
+                    CONTROLS.SENSIBILITA_VOLARE.value[1]: {"active":False,
                                                "indices":[0]
                                                 },
-                    CONTROLS.SENSIBILITA_DORSALE.value: {"active":True,
+                    CONTROLS.SENSIBILITA_DORSALE.value[1]: {"active":True,
                     "indices":[0]
                     }            
                    }

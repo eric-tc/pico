@@ -112,7 +112,7 @@ class CicatriceForm(FlaskForm):
     tinel = SelectField('Tinel', choices=[('', OPTION_NULL.NULL.value),(1, 'Si'), (0, 'No')], default=0, render_kw={'class': 'form-control'}, validators=None)
 
 class AltroForm(FlaskForm):
-    complicanze = SelectField('Complicanze', choices=[('None', 'None'),('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="CRPS", render_kw={'class': 'form-control'}, validators=None)
+    complicanze = SelectField('Complicanze', choices=[('None', 'Nessuna'),('CRPS', 'CRPS'), ('infenzione', 'infenzione'),("problematiche_nervose", 'problematiche nervose'),("problematiche tendinee", 'problematiche tendinee')], default="None", render_kw={'class': 'form-control'}, validators=None)
     note= TextAreaField('Note', render_kw={'class': 'form-control', 'rows': 4}, validators=None)
 
 class GuarigioneOsseaForm(FlaskForm):

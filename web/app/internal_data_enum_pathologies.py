@@ -110,28 +110,28 @@ class LesioneLigamentosaEnum(Enum):
 
 class CONTROLS(Enum):
 
-    DATA_FRATTURA= "data_frattura"
-    MPCJ = "mpcj"
-    PIPJ = "pipj"
-    DIPJ = "dipj"
-    IPJ = "ipj"
-    POLSO = "polso"
-    VAS = "vas"
-    TRAPEZIO_METACARPALE = "trapezio_metacarpale"
-    FORZA = "forza"
-    DASH = "dash"
-    PRWHE = "prwhe"
-    EATON_LITTLER = "eaton_littler"
-    EDEMA = "edema"
-    SENSIBILITA_VOLARE = "sensibilita_volare"
-    SENSIBILITA_DORSALE = "sensibilita_dorsale"
-    CICATRICE = "cicatrice"
-    TUTORE= "tutore"
-    ALTRO = "altro"
-    GUARIGIONE_OSSEA = "guarigione_ossea"
-    CONCESSO_INIZIO_MOBILIZZAZIONE = "concesso_inizio_mobilizzazione"
-    ARTICOLAZIONE_STABILE = "articolazione_stabile"
-    DATA_INIZIO_MOBILIZZAZIONE = "data_inizio_mobilizzazione"
+    DATA_FRATTURA= (1,"data_frattura")
+    MPCJ = (2,"mpcj")
+    PIPJ = (3,"pipj")
+    DIPJ = (4,"dipj")
+    IPJ = (5,"ipj")
+    POLSO = (6,"polso")
+    VAS = (7,"vas")
+    TRAPEZIO_METACARPALE = (8,"trapezio_metacarpale")
+    FORZA = (9,"forza")
+    DASH = (10,"dash")
+    PRWHE = (11,"prwhe")
+    EATON_LITTLER = (12,"eaton_littler")
+    EDEMA = (13,"edema")
+    SENSIBILITA_VOLARE = (14,"sensibilita_volare")
+    SENSIBILITA_DORSALE = (15,"sensibilita_dorsale")
+    CICATRICE = (16,"cicatrice")
+    TUTORE= (17,"tutore")
+    ALTRO = (18,"altro")
+    GUARIGIONE_OSSEA = (19,"guarigione_ossea")
+    CONCESSO_INIZIO_MOBILIZZAZIONE = (20,"concesso_inizio_mobilizzazione")
+    ARTICOLAZIONE_STABILE = (21,"articolazione_stabile")
+    DATA_INIZIO_MOBILIZZAZIONE = (22,"data_inizio_mobilizzazione")
    
 
 class CONTROLSNUMBER(Enum):
