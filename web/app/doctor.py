@@ -547,7 +547,7 @@ def insert_custom_control(row_id):
 # Non passo nessun parametro nella path. passo tutti i valori in Post con il form
 
 """
-Route per mostrare tutti i pazienti e i rispettivi trattamenti eseguiti
+Route per mostrare tutti i pazienti associati al dottore e i rispettivi trattamenti eseguiti
 
 """
 @doctor.route('/patient_treatment_list/<patient_id>/<patient_name>',methods=["GET"])
@@ -564,23 +564,33 @@ def patient_treatment_list(patient_id,patient_name):
     #ciclo su tutte le tabelle delle malattie per farmi ritornare tutti gli interventi. Versione 1
     # Nella tabella doctor patient pathology recupero solo le tabelle che devo ciclare per recuperare la storia paziente
 
-    pathology_list=(db.session.query(
-                                    PathologyData.id_patient,
-                                     User.name,
-                                     Pathology.id,
-                                     Pathology.name,
-                                     PathologyType.id,
-                                     PathologyType.name,
-                                     PathologyData.created_at,
-                                     PathologyData.id)
+    pathology_list = (
+    db.session.query(
+        PathologyData.id_patient,
+        User.name,
+        User.surname,
+        Pathology.id,
+        Pathology.name,
+        PathologyType.id,
+        PathologyType.name,
+        PathologyData.created_at,
+        PathologyData.id
+    )
     .join(Pathology, Pathology.id == PathologyData.id_pathology)
     .join(PathologyType, PathologyType.id == PathologyData.id_pathology_type)
-    .join(User,User.id==patient_id)
+    .join(User, User.id == PathologyData.id_patient)
     .filter(PathologyData.id_patient == patient_id, 
-            PathologyData.next_control_number==0).all()
+            PathologyData.next_control_number == 0)
+    .all()
     )
+    name=""
+    surname=""
+    for item in pathology_list:
+        name=item[1]
+        surname=item[2]
+        break
     
-    return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list)
+    return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list,name=name,surname=surname)
 
 
 """

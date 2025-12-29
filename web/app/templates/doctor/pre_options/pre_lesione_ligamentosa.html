@@ -3,16 +3,39 @@
 {{ pre_controls_form.hidden_lesione_selection}}
 
 <div>
+    <h3>Seleziona le aree di lesione ligamentosa</h3>
+    <div>
+        <p>Clicca all'interno dei rettangoli interessati per selezionarli o deselezionarli. Le aree selezionate verranno evidenziate.</p>
+        <p><b>Ulnare</b> lesione verso il mignolo. <b>Radiale</b> lesione verso il pollice</p>
+        
+    </div>
     <svg id="interactiveImage" width="500" height="500" viewBox="0 0 500 500">
         <image href="{{ url_for('static', filename='lesione_ligamentosa.png') }}" width="500" height="500" />
         <!-- Multiple rectangles with unique IDs -->
         
         <!-- mignolo -->
+        <text x="40" y="80" font-size="12" fill="black">DIPJ</text>
+        <text x="40" y="92" font-size="12" fill="black">Radiale</text>
         <rect id="rect1" x="13" y="100" width="18" height="15" fill="transparent" data-id="1" />
+        
+        <text x="10" y="130" font-size="12" fill="black">PIPJ </text>
+        <text x="10" y="142" font-size="12" fill="black">Ulnare </text>
         <rect id="rect2" x="22" y="149" width="18" height="15" fill="transparent" data-id="2" />
-        <rect id="rect3" x="49" y="245" width="18" height="15" fill="transparent" data-id="3" />
+        
+        <text x="80" y="225" font-size="12" fill="black">MCPJ </text>
+        <text x="80" y="237" font-size="12" fill="black">Radiale </text>
+        <rect id="rect3" x="49" y="245" width="18" height="15" fill="transparent" data-id="3" />    
+        
+        <text x="0" y="80" font-size="12" fill="black">DIPJ </text>
+        <text x="0" y="94" font-size="12" fill="black">Ulnare </text>
         <rect id="rect4" x="40" y="100" width="18" height="15" fill="transparent" data-id="4" />
+        
+        <text x="45" y="130" font-size="12" fill="black">PIPJ </text>
+        <text x="45" y="142" font-size="12" fill="black">Radiale </text>
         <rect id="rect5" x="48" y="144" width="18" height="15" fill="transparent" data-id="5" />
+        
+        <text x="30" y="225" font-size="12" fill="black">MCPJ </text>
+        <text x="30" y="237" font-size="12" fill="black">Ulnare </text>
         <rect id="rect6" x="85" y="239" width="18" height="15" fill="transparent" data-id="6" />
 
         <!-- Anulare -->
@@ -54,32 +77,32 @@ const currentSelection = {};
 // Define a default color to toggle on
 const colors = {
     "1": "rgba(255, 0, 0, 0.5)",  // Red
-    "2": "rgba(0, 255, 0, 0.5)",  // Green
-    "3": "rgba(0, 0, 255, 0.5)",   // Blue
+    "2": "rgba(255, 0, 0, 0.5)",  // Green
+    "3": "rgba(255, 0, 0, 0.5)",   // Blue
     "4": "rgba(255, 0, 0, 0.5)",  // Red
-    "5": "rgba(0, 255, 0, 0.5)",  // Green
-    "6": "rgba(0, 0, 255, 0.5)",   // Blue
+    "5": "rgba(255, 0, 0, 0.5)",  // Green
+    "6": "rgba(255, 0, 0, 0.5)",   // Blue
     "7": "rgba(255, 0, 0, 0.5)",  // Red
-    "8": "rgba(0, 255, 0, 0.5)",  // Green
-    "9": "rgba(0, 0, 255, 0.5)",   // Blue
+    "8": "rgba(255, 0, 0, 0.5)",  // Green
+    "9": "rgba(255, 0, 0, 0.5)",   // Blue
     "10": "rgba(255, 0, 0, 0.5)",  // Red
-    "11": "rgba(0, 255, 0, 0.5)",  // Green
-    "12": "rgba(0, 0, 255, 0.5)",   // Blue
+    "11": "rgba(255, 0, 0, 0.5)",  // Green
+    "12": "rgba(255, 0, 0, 0.5)",   // Blue
     "13": "rgba(255, 0, 0, 0.5)",  // Red
-    "14": "rgba(0, 255, 0, 0.5)",  // Green
-    "15": "rgba(0, 0, 255, 0.5)",   // Blue
+    "14": "rgba(255, 0, 0, 0.5)",  // Green
+    "15": "rgba(255, 0, 0, 0.5)",   // Blue
     "16": "rgba(255, 0, 0, 0.5)",  // Red
-    "17": "rgba(0, 255, 0, 0.5)",  // Green
-    "18": "rgba(0, 0, 255, 0.5)",   // Blue
+    "17": "rgba(255, 0, 0, 0.5)",  // Green
+    "18": "rgba(255, 0, 0, 0.5)",   // Blue
     "19": "rgba(255, 0, 0, 0.5)",  // Red
-    "20": "rgba(0, 255, 0, 0.5)",   //Green
-    "21": "rgba(0, 0, 255, 0.5)",   // Blue   
+    "20": "rgba(255, 0, 0, 0.5)",   //Green
+    "21": "rgba(255, 0, 0, 0.5)",   // Blue   
     "22": "rgba(255, 0, 0, 0.5)",
-    "23": "rgba(0, 255, 0, 0.5)",
-    "24": "rgba(0, 0, 255, 0.5)",
-    "25": "rgba(0, 255, 0, 0.5)",
+    "23": "rgba(255, 0, 0, 0.5)",
+    "24": "rgba(255, 0, 0, 0.5)",
+    "25": "rgba(255, 0, 0, 0.5)",
     "26": "rgba(255, 0, 0, 0.5)",
-    "27": "rgba(0, 255, 0, 0.5)", 
+    "27": "rgba(255, 0, 0, 0.5)", 
     "28": "rgba(255, 0,0, 0.5)"   // Blue
 };
 

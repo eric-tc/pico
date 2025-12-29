@@ -6,21 +6,19 @@
 <div class="container mt-5">
 
     <div class="row">
-        <h2>Terapie Pazienti in Cura</h2>
-        <table id="patientTable" class="table">
+        <h2 >Patologie {{ name }} {{ surname }} </h2>
+        <table id="patientTable" class="table mt-3">
             <thead>
                 <tr>
-                    <th>Nome paziente</th>
                     <th>Tipo Patologia</th>
-                    <th>Data Creazione</th>
+                    <th>Data inserimento</th>
                     <th>Storia Terapia</th>
                     <th>Controllo </th>
                 </tr>
             </thead>
             <tbody>
-                {% for id_patient,patient_name,id_pathology,pathology_name,id_pathology_type,pathology_type_name,creation_date,row_id in pathology_list %}
+                {% for id_patient,patient_name,patient_surname,id_pathology,pathology_name,id_pathology_type,pathology_type_name,creation_date,row_id in pathology_list %}
                     <tr class="patientRow" >
-                        <td>{{ patient_name }}</td>
                         <td>{{ pathology_name }}</td>
                         <td>{{ creation_date|format_date }}</td>
                         <td>

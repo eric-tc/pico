@@ -161,7 +161,7 @@ class PathologyTimline:
                            "indices":[0]
                            },
         # Questi valori ci sono per ogni controllo                   
-        CONTROLS.ALTRO.value[1]: {"active":True,
+        CONTROLS.ALTRO.value[1]: {"active":False,
                            "indices":[0]
                            },
         CONTROLS.GUARIGIONE_OSSEA.value[1]: {"active":False,
@@ -518,6 +518,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -542,6 +543,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         return tmp_ControlMap
 
 
@@ -599,6 +601,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -618,7 +621,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
-    
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         return tmp_ControlMap
     
     @classmethod
@@ -638,6 +641,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
 
         tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -657,6 +661,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
     
         return tmp_ControlMap
 
@@ -715,6 +720,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
             return tmp_ControlMap
     
@@ -730,6 +736,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         return tmp_ControlMap
     
@@ -746,6 +753,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         return tmp_ControlMap
     
@@ -762,6 +770,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.GUARIGIONE_OSSEA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -777,6 +786,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -831,6 +841,7 @@ class LesioneNervosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -845,6 +856,7 @@ class LesioneNervosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -907,6 +919,7 @@ class DupuytrenTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -934,6 +947,7 @@ class DupuytrenTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -986,6 +1000,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         
+        
         #Setto i valori per il primo controllo
 
         return tmp_ControlMap,pre_controls_map
@@ -1003,6 +1018,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1021,6 +1037,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1077,6 +1094,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1097,6 +1115,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1121,6 +1140,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
 
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1141,6 +1161,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1164,6 +1185,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -1221,6 +1243,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1241,6 +1264,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1265,6 +1289,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
 
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1285,6 +1310,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1308,6 +1334,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
 
         return tmp_ControlMap
@@ -1378,6 +1405,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+            tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
             return tmp_ControlMap
     @classmethod
@@ -1397,6 +1425,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
        
 
 
@@ -1422,6 +1451,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
@@ -1495,6 +1525,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
+            tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
             return tmp_ControlMap
     @classmethod
@@ -1515,6 +1546,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]= True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
@@ -1539,6 +1571,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         if(tipo_intervento==FrattureMetaCarpaliEnum.CHIRURGICO.value[0]):
             tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
@@ -1593,6 +1626,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[1,2,3,4]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1611,6 +1645,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
@@ -1632,6 +1667,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         return tmp_ControlMap
 
@@ -1684,6 +1720,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EATON_LITTLER.value[1]]["active"]=True
+        
 
         #Setto i valori per il primo controllo
 
@@ -1703,6 +1740,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.IPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
 
@@ -1722,6 +1760,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
     
         return tmp_ControlMap
    
