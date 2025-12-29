@@ -707,7 +707,7 @@ def get_events():
         
         date_after_x_months = today + timedelta(days=EVENT_DAYS.MONTHS_TO_RETRIEVE.value*30)
         
-        treatments= db.session.query(PathologyData,User.name,Pathology.name)\
+        treatments= db.session.query(PathologyData,User.name,User.surname,Pathology.name)\
         .join(User,PathologyData.id_patient==User.id)\
         .join(Pathology,PathologyData.id_pathology==Pathology.id)\
         .filter(PathologyData.id_doctor == current_user.id,
@@ -726,10 +726,10 @@ def get_events():
         for treatment in treatments:
             event_dict={}
 
-            pathology_row,patient_name,pathology_name = treatment
+            pathology_row,patient_name,patient_surname,pathology_name = treatment
             #patient_name = "test"
             #pathology_name = "pathology_name"
-            event_dict["title"]= f"{patient_name} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
+            event_dict["title"]= f"{patient_name} {patient_surname} - {pathology_name}- {pathology_row.next_control_number}° controllo - {pathology_row.next_control_time}"
             event_dict["start"]= pathology_row.next_control_date.strftime("%Y-%m-%d") + "T" + pathology_row.next_control_time
             event_dict["id"]= pathology_row.id
             event_dict["closed"]=pathology_row.id_control_status
