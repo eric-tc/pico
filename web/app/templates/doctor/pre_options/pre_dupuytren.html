@@ -133,40 +133,40 @@
 {{ pre_controls_form.numero_interventi}}
 
 <script>
-
+    const indicesLabels = {{ indices_labels|tojson }};
     const currentSelection = {};
     // Define a default color to toggle on
    
 
     const mapping = {
-        "1": "R_DIPJ_Mignolo",
-        "3": "R_PIPJ_Mignolo",
-        "5": "R_MCPJ_Mignolo",
-        "2": "U_DIPJ_Mignolo",
-        "4": "U_PIPJ_Mignolo",
-        "6": "U_MCPJ_Mignolo",
-        "7": "R_DIPJ_Anulare",
-        "9": "R_PIPJ_Anulare",
-        "11": "R_MCPJ_Anulare",
-        "8": "U_DIPJ_Anulare",
-        "10": "U_PIPJ_Anulare",
-        "12": "U_MCPJ_Anulare",
-        "13": "R_DIPJ_Medio",
-        "15": "R_PIPJ_Medio",
-        "17": "R_MCPJ_Medio",
-        "14": "U_DIPJ_Medio",
-        "16": "U_PIPJ_Medio",
-        "18": "U_MCPJ_Medio",
-        "19": "R_DIPJ_Indice",
-        "21": "R_PIPJ_Indice",
-        "23": "R_MCPJ_Indice",
-        "20": "U_DIPJ_Indice",
-        "22": "U_PIPJ_Indice",
-        "24": "U_MCPJ_Indice",
-        "25": "R_IPJ_Pollice",
-        "27": "R_MCPJ_Pollice",
-        "26": "U_IPJ_Pollice",
-        "28": "U_IPJ_Pollice"
+    "1": "R_DIPJ_"+indicesLabels["MIGNOLO"],
+    "2": "R_PIPJ_"+indicesLabels["MIGNOLO"],
+    "3": "R_MCPJ_"+indicesLabels["MIGNOLO"],
+    "4": "U_DIPJ_"+indicesLabels["MIGNOLO"],
+    "5": "U_PIPJ_"+indicesLabels["MIGNOLO"],
+    "6": "U_MCPJ_"+indicesLabels["MIGNOLO"],
+    "7": "R_DIPJ_"+indicesLabels["ANULARE"],
+    "8": "R_PIPJ_"+indicesLabels["ANULARE"],
+    "9": "R_MCPJ_"+indicesLabels["ANULARE"],
+    "10": "U_DIPJ_"+indicesLabels["ANULARE"],
+    "11": "U_PIPJ_"+indicesLabels["ANULARE"],
+    "12": "U_MCPJ_"+indicesLabels["ANULARE"],
+    "13": "R_DIPJ_"+indicesLabels["MEDIO"],
+    "14": "R_PIPJ_"+indicesLabels["MEDIO"],
+    "15": "R_MCPJ_"+indicesLabels["MEDIO"],
+    "16": "U_DIPJ_"+indicesLabels["MEDIO"],
+    "17": "U_PIPJ_"+indicesLabels["MEDIO"],
+    "18": "U_MCPJ_"+indicesLabels["MEDIO"],
+    "19": "R_DIPJ_"+indicesLabels["INDICE"],
+    "20": "R_PIPJ_"+indicesLabels["INDICE"],
+    "21": "R_MCPJ_"+indicesLabels["INDICE"],
+    "22": "U_DIPJ_"+indicesLabels["INDICE"],
+    "23": "U_PIPJ_"+indicesLabels["INDICE"],
+    "24": "U_MCPJ_"+indicesLabels["INDICE"],
+    "25": "R_IPJ_"+indicesLabels["POLLICE"],
+    "26": "R_MCPJ_"+indicesLabels["POLLICE"],
+    "27": "U_IPJ_"+indicesLabels["POLLICE"],
+    "28": "U_IPJ_"+indicesLabels["POLLICE"]
     };
 
     const inputBox = document.getElementById('input-box');

@@ -108,6 +108,18 @@ class LesioneLigamentosaEnum(Enum):
     CHIRURGICO = ("1","Chirurgico")
     CONSERVATIVO = ("2","Conservativo")
 
+
+"""
+Per parametri come MCPJ e PIPJ uso questi enum per differenziare le dita
+
+"""
+class INDICES(Enum):
+    POLLICE= (0,"Pollice")
+    INDICE = (1,"Indice")
+    MEDIO = (2,"Medio")
+    ANULARE= (3,"Anulare")
+    MIGNOLO= (4,"Mignolo")
+
 class CONTROLS(Enum):
 
     DATA_FRATTURA= (1,"data_frattura")

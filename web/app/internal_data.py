@@ -2,6 +2,7 @@
 
 from enum import Enum
 import copy
+import json
 from .doctor_chirurgico_forms import RizoartrosiChirurgicoForm,FratturaRadioDistaleChirurgicoForm,\
 FratturaMetaCarpaliChirurgicoForm,\
 FratturaFalangeProssimaleChirurgicoForm,\
@@ -27,6 +28,7 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     LesioneNervosaEnum,\
     LesioneLigamentosaEnum,\
     CONTROLS,\
+    INDICES,\
     CONTROLSNUMBER,\
     PATHOLOGY_LABEL,\
     DASH_ENUM_FIRST,\
@@ -89,40 +91,40 @@ class PathologyTimline:
     
     Controls_Map={
         CONTROLS.DATA_FRATTURA.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "names":["Data Frattura"]
                            },
         CONTROLS.MPCJ.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "names":["Articolarità metacarpo-falange del pollice (gradi °)","Articolarità metacarpo-falange dell'indice (gradi °)","Articolarità metacarpo-falange del medio (gradi °)","Articolarità metacarpo-falange dell'anulare (gradi °)","Articolarità metacarpo-falange del mignolo(gradi °)"]
                            },
         CONTROLS.PIPJ.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "names":["Articolarità interfalangea prossimale del pollice (gradi °)","Articolarità interfalangea prossimale dell'indice (gradi °)","Articolarità interfalangea prossimale del medio (gradi °)","Articolarità  prossimale interfalangea dell'anulare (gradi °)","Articolarità interfalangea prossimale del mignolo (gradi °)"]
                            },
         CONTROLS.DIPJ.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "names":["Articolarità interfalangea distale del pollice (gradi °)","Articolarità interfalangea distale dell'indice (gradi °)","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo (gradi °)"]
                            },
         CONTROLS.IPJ.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "names":["Articolarità interfalangea del pollice (gradi °)","Articolarità interfalangea dell'indice (gradi °)","Articolarità interfalangea del medio (gradi °)","Articolarità interfalangea dell'anulare (gradi °)","Articolarità interfalangea del mignolo (gradi °)"]
                            },
         CONTROLS.POLSO.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.VAS.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.TRAPEZIO_METACARPALE.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                             "names":["Articolarità trapezio-metacarpale del pollice (gradi °)"]
                            },
         CONTROLS.FORZA.value[1]: {"active":False, 
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.DASH.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "labels":{
                                 "labels_1":[(label.value[1],label.value[0]) for label in DASH_ENUM_FIRST],
                                 "labels_2":[(label.value[1],label.value[0]) for label in DASH_ENUM_SECOND],
@@ -133,7 +135,7 @@ class PathologyTimline:
                                 }
                            },
         CONTROLS.PRWHE.value[1]: {"active":False,
-                           "indices":[0],
+                           "indices":[INDICES.POLLICE.value[0]],
                            "labels":{
                                 "labels_1":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_FIRST],
                                 "labels_2":[(label.value[1],label.value[0]) for label in PWRHE_ENUM_SECOND],
@@ -143,38 +145,38 @@ class PathologyTimline:
                                 }
                            },
         CONTROLS.EATON_LITTLER.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.EDEMA.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.SENSIBILITA_VOLARE.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.SENSIBILITA_DORSALE.value[1]: {"active":False,
-                             "indices":[0]
+                             "indices":[INDICES.POLLICE.value[0]]
                             },
         CONTROLS.CICATRICE.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.TUTORE.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         # Questi valori ci sono per ogni controllo                   
         CONTROLS.ALTRO.value[1]: {"active":False,
-                           "indices":[0]
+                           "indices":[INDICES.POLLICE.value[0]]
                            },
         CONTROLS.GUARIGIONE_OSSEA.value[1]: {"active":False,
-                                            "indices":[0]
+                                            "indices":[INDICES.POLLICE.value[0]]
                                             },
         CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]: {"active":False,
-                                                        "indices":[0]
+                                                        "indices":[INDICES.POLLICE.value[0]]
                                                         },
         CONTROLS.ARTICOLAZIONE_STABILE.value[1]: {"active":False,
-                                               "indices":[0]
+                                               "indices":[INDICES.POLLICE.value[0]]
                                                 },
         CONTROLS.DATA_INIZIO_MOBILIZZAZIONE.value[1]: {"active":False,
-                                               "indices":[0]
+                                               "indices":[INDICES.POLLICE.value[0]]
                                                 },                            
     }
     
@@ -496,7 +498,33 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
     
     @classmethod
-    def get_one(cls,tipo_intervento,dito_rotto=1):
+    def get_one(cls,tipo_intervento,param=None):
+        
+        """
+        Nei param ritornano tutte le lesioni presenti. Ad esempio per il mignolo
+
+        {"R_PIPJ_Mignolo":"2","U_PIPJ_Mignolo":"5"}
+        
+        :param cls: Description
+        :param tipo_intervento: Description
+        :param param: Description
+        """
+        
+        # Crea un array che contiene gli indici delle dita coinvolte.
+
+        dita_map = {i.value[1]: i.value[0] for i in INDICES}
+
+        dict_param= json.loads(param)
+        numeri_dita = []
+        for key in dict_param.keys():
+            for nome_dito, valore_num in dita_map.items():
+                if nome_dito in key and valore_num not in numeri_dita:
+                    numeri_dita.append(valore_num)
+                    break
+
+        print(numeri_dita)  # Esempio: [4]
+
+
         tipo_intervento=str(tipo_intervento)
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -506,13 +534,13 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CONCESSO_INIZIO_MOBILIZZAZIONE.value[1]]["active"]=True
         
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=numeri_dita
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= numeri_dita
 
         #TODO: Aggiungere solo se è stato selezionato il pollice
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
@@ -531,13 +559,25 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=[
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         #TODO: Aggiungere solo se è stato selezionato il pollice
         tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
@@ -910,13 +950,25 @@ class DupuytrenTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -935,13 +987,25 @@ class DupuytrenTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4] #non Ho il pollice       
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]      
         
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
@@ -1107,13 +1171,25 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
@@ -1128,13 +1204,25 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=  [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
@@ -1152,13 +1240,25 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -1174,13 +1274,25 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
@@ -1256,13 +1368,25 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
@@ -1277,13 +1401,25 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
@@ -1301,13 +1437,25 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -1323,13 +1471,25 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [1,2,3,4]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
@@ -1402,7 +1562,11 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
             # In questo controllo sono attivii tutti i campi
-            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
             tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -1420,7 +1584,11 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
@@ -1445,7 +1613,11 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
@@ -1522,7 +1694,11 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
             tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
             # In questo controllo sono attivii tutti i campi
-            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+            tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
             tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
             tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -1540,7 +1716,11 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
@@ -1565,7 +1745,11 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
         # In questo controllo sono attivii tutti i campi
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[0,1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= pip_j_indices
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["indices"]= pip_j_indices
@@ -1624,7 +1808,11 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
@@ -1641,7 +1829,11 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
@@ -1662,7 +1854,11 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.POLSO.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indeces"]=[1,2,3,4]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[
+                                                            INDICES.INDICE.value[0],
+                                                            INDICES.MEDIO.value[0],
+                                                            INDICES.ANULARE.value[0],
+                                                            INDICES.MIGNOLO.value[0]]
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True

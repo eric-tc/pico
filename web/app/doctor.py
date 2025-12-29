@@ -2,7 +2,7 @@ from flask import Blueprint, render_template,request,jsonify,redirect, url_for, 
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
-from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline
+from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline,LesioneLigamentosaTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
 from .doctor_forms import MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm,CustomControlForm
@@ -16,7 +16,7 @@ from .query_sql import select_next_treatments
 import sys
 from weasyprint import HTML
 from .settings_form import SettingsFormDoctor
-from .internal_data_enum_pathologies import DASH_ENUM_FIFTH,DASH_ENUM_FOURTH,DASH_ENUM_SECOND,DASH_ENUM_THIRD,DASH_ENUM_FIRST,DASH_ENUM_SIXTH
+from .internal_data_enum_pathologies import DASH_ENUM_FIFTH,DASH_ENUM_FOURTH,DASH_ENUM_SECOND,DASH_ENUM_THIRD,DASH_ENUM_FIRST,DASH_ENUM_SIXTH,INDICES
 
 #TEST
 
@@ -266,12 +266,14 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
         return redirect(url_for('doctor.profile'))
 
 
-
+    #trasformo enum in una mappa da utilizzare in Jinja2
+    indices_labels = {i.name: i.value[1] for i in INDICES}
     return render_template('doctor/trattamenti/parameters_pre_treatment_selection.html',doctor_id=current_user.id,
                             patient_name=patient_name,
                             patient_id=patient_id,
                             pathology=PATHOLOGY,
                             form_keys=PATHOLOGY_KEY_SELECTION_FORM,
+                            indices_labels=indices_labels,
                             form=form,
                             controls_map=controls_map,
                             controls_map_pre=pre_controls_map,
@@ -872,10 +874,16 @@ def event_details(row_id,event_in_range):
                     param= json.loads(pathology_data_original[0])["rottura_falange"]
 
 
+            #Lesione Ligamentosa devo tornare MCPJ o PIPJ 
+            if(pathology.value[2] is LesioneLigamentosaTimeline):
+                print("Lesione Ligamentosa")
+                pathology_data_original = db.session.query(PathologyData.pre_options).filter(PathologyData.id==pathology_db.id_created_from).first()
+                param= json.loads(pathology_data_original[0])["hidden_lesione_selection"]
+
             print(f"PARAM {param}")
             controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type,param)
             
-            print(f"CONTROLS MAP {controls_map}")
+            #print(f"CONTROLS MAP {controls_map}")
            
             #settimane 
             timeline= pathology.value[2].getTimeline(str(pathology_db.id_pathology_type))    
@@ -887,7 +895,7 @@ def event_details(row_id,event_in_range):
             
             data_intervento= pathology_db.surgery_date
             data_controllo= pathology_db.next_control_date
-            print(controls_map)
+            #print(controls_map)
             print(week_to_add)
             print(data_intervento)
             print(data_controllo)
