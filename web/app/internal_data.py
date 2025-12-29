@@ -496,17 +496,14 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         return tmp_ControlMap,pre_controls_map
 
-    
     @classmethod
-    def get_one(cls,tipo_intervento,param=None):
-        
+    def get_dita_map(cls,param):
         """
         Nei param ritornano tutte le lesioni presenti. Ad esempio per il mignolo
 
         {"R_PIPJ_Mignolo":"2","U_PIPJ_Mignolo":"5"}
         
         :param cls: Description
-        :param tipo_intervento: Description
         :param param: Description
         """
         
@@ -519,10 +516,21 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         for key in dict_param.keys():
             for nome_dito, valore_num in dita_map.items():
                 if nome_dito in key and valore_num not in numeri_dita:
-                    numeri_dita.append(valore_num)
+                    numeri_dita.append(int(valore_num))
                     break
 
         print(numeri_dita)  # Esempio: [4]
+
+        return numeri_dita
+    
+    @classmethod
+    def get_one(cls,tipo_intervento,param=None):
+        
+      
+        
+        # Crea un array che contiene gli indici delle dita coinvolte.
+
+        numeri_dita = cls.get_dita_map(param)
 
 
         tipo_intervento=str(tipo_intervento)
@@ -542,16 +550,22 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= numeri_dita
 
-        #TODO: Aggiungere solo se è stato selezionato il pollice
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        #Solo con il pollice coinvolto
+        if 0 in numeri_dita:
+            tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap
     
     @classmethod
-    def get_next(cls,tipo_intervento,dito_rotto=1):
+    def get_next(cls,tipo_intervento,param=None):
+
+        numeri_dita = []
+        if(param is not None):
+            numeri_dita = cls.get_dita_map(param)
+
         tipo_intervento=str(tipo_intervento)
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -559,29 +573,19 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=numeri_dita
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
         
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=[
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= numeri_dita
 
-        #TODO: Aggiungere solo se è stato selezionato il pollice
-        tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        #Solo con il pollice coinvolto
+        if 0 in numeri_dita:
+            tmp_ControlMap[CONTROLS.TRAPEZIO_METACARPALE.value[1]]["active"]=True
+            tmp_ControlMap[CONTROLS.SENSIBILITA_DORSALE.value[1]]["active"]=True
+        
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         return tmp_ControlMap
