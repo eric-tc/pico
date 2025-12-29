@@ -198,6 +198,34 @@ class PathologyTimline:
         PATHOLOGY_LABEL.DUPUYTREN.value: {"active":False}  
     }
 
+    @classmethod
+    def get_dita_map(cls,param):
+        """
+        Nei param ritornano tutte le lesioni presenti. Ad esempio per il mignolo
+
+        {"R_PIPJ_Mignolo":"2","U_PIPJ_Mignolo":"5"}
+        
+        :param cls: Description
+        :param param: Description
+
+        Utile in alcune patologie per recuperare le dita coinvolte. Ad esempio Dupuytren e lesione ligamentosa
+        """
+        
+        # Crea un array che contiene gli indici delle dita coinvolte.
+
+        dita_map = {i.value[1]: i.value[0] for i in INDICES}
+
+        dict_param= json.loads(param)
+        numeri_dita = []
+        if(param is not None):
+            for key in dict_param.keys():
+                    for nome_dito, valore_num in dita_map.items():
+                        if nome_dito in key and valore_num not in numeri_dita:
+                            numeri_dita.append(int(valore_num))
+                            break
+        print(numeri_dita)  # Esempio: [4]
+
+        return numeri_dita
 
     @classmethod
     def process_parameters(cls, controls_map,form):
@@ -496,32 +524,6 @@ class LesioneLigamentosaTimeline(PathologyTimline):
 
         return tmp_ControlMap,pre_controls_map
 
-    @classmethod
-    def get_dita_map(cls,param):
-        """
-        Nei param ritornano tutte le lesioni presenti. Ad esempio per il mignolo
-
-        {"R_PIPJ_Mignolo":"2","U_PIPJ_Mignolo":"5"}
-        
-        :param cls: Description
-        :param param: Description
-        """
-        
-        # Crea un array che contiene gli indici delle dita coinvolte.
-
-        dita_map = {i.value[1]: i.value[0] for i in INDICES}
-
-        dict_param= json.loads(param)
-        numeri_dita = []
-        for key in dict_param.keys():
-            for nome_dito, valore_num in dita_map.items():
-                if nome_dito in key and valore_num not in numeri_dita:
-                    numeri_dita.append(int(valore_num))
-                    break
-
-        print(numeri_dita)  # Esempio: [4]
-
-        return numeri_dita
     
     @classmethod
     def get_one(cls,tipo_intervento,param=None):
@@ -548,7 +550,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= numeri_dita
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=  [value for value in numeri_dita if value !=0]  #escludo il pollice
 
         #Solo con il pollice coinvolto
         if 0 in numeri_dita:
@@ -579,7 +581,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
         
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= numeri_dita
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=  [value for value in numeri_dita if value !=0]  #escludo il pollice
 
         #Solo con il pollice coinvolto
         if 0 in numeri_dita:
@@ -936,7 +938,7 @@ class DupuytrenTimeline(PathologyTimline):
     def get_pre(cls):
         
         pre_controls_map = copy.deepcopy(cls.Controls_Map_Pre)
-        pre_controls_map[PATHOLOGY_LABEL.DUPUYTREN.value[1]]["active"]=True
+        pre_controls_map[PATHOLOGY_LABEL.DUPUYTREN.value]["active"]=True
         
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
@@ -946,33 +948,24 @@ class DupuytrenTimeline(PathologyTimline):
 
     
     @classmethod
-    def get_one(cls,tipo_intervento,dito_rotto=1):
+    def get_one(cls,tipo_intervento,param=None):
         tipo_intervento=str(tipo_intervento)
 
+        numeri_dita = cls.get_dita_map(param)
+        
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
            
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=numeri_dita
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=  [value for value in numeri_dita if value !=0]  #escludo il pollice
+
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.CICATRICE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
@@ -981,36 +974,25 @@ class DupuytrenTimeline(PathologyTimline):
     
     
     @classmethod
-    def get_next(cls,tipo_intervento,metacarpo_rotto=1):
+    def get_next(cls,tipo_intervento,param=None):
 
         tipo_intervento=str(tipo_intervento)
+        
+        numeri_dita = cls.get_dita_map(param)
+        
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
-        pip_j_indices=[]
-        #TODO al momento prendo tutti i metacarpi non seleziono solo quelli compilati
-        #pip_j_indices.append(int(metacarpo_rotto))
+        
         tmp_ControlMap[CONTROLS.VAS.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EDEMA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.MPCJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=[INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.MPCJ.value[1]]["indices"]=numeri_dita
 
         tmp_ControlMap[CONTROLS.PIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= [INDICES.POLLICE.value[0],
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]
+        tmp_ControlMap[CONTROLS.PIPJ.value[1]]["indices"]= numeri_dita
 
         tmp_ControlMap[CONTROLS.DIPJ.value[1]]["active"]=True
-        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]= [
-                                                            INDICES.INDICE.value[0],
-                                                            INDICES.MEDIO.value[0],
-                                                            INDICES.ANULARE.value[0],
-                                                            INDICES.MIGNOLO.value[0]]      
-        
+        tmp_ControlMap[CONTROLS.DIPJ.value[1]]["indices"]=  [value for value in numeri_dita if value !=0]  #escludo il pollice
+
         tmp_ControlMap[CONTROLS.SENSIBILITA_VOLARE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True

@@ -7,6 +7,12 @@
     {{ pre_controls_form.hidden_hand_selection}}
 
 <div>
+     <div>
+        <p>Clicca all'interno dei rettangoli interessati per inserire i valori. <b>Cliccando all'interno del rettangolo</b> si aprirà una casella sotto il grafico. </p>
+        <p>Inserisci i valori per salvari. <b>Inserisci il valore 0</b> per non conteggiare il valore o lascia vuoto</p>
+        
+    </div>
+
     <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 12px;">
         <span style="display: flex; align-items: center;">
             <svg width="24" height="18" style="margin-right: 6px;"><rect width="24" height="18" fill="rgba(255,255,102,0.5)" stroke="#aaa"/></svg>
@@ -190,7 +196,7 @@
             inputBox.style.height = `50px`;
             
 
-            inputBox.value = 0; // Pre-fill value if it exists
+            //inputBox.value = 0; // Pre-fill value if it exists
             inputBox.style.display = 'block';
             inputBox.focus();
             

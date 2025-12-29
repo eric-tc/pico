@@ -2,7 +2,7 @@ from flask import Blueprint, render_template,request,jsonify,redirect, url_for, 
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
-from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline,LesioneLigamentosaTimeline
+from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline,LesioneLigamentosaTimeline,DupuytrenTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
 from .doctor_forms import MedicalTreatmentForm,PreTreamentForm,PostTreatmentForm,TreatmentForm,CustomControlForm
@@ -188,8 +188,8 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
             controls_map,pre_controls_map= pathology.value[2].get_pre()
             if(pathology.value[5] is not None):
                 pre_controls_form= pathology.value[5]()
-            print("CONTROLS MAP")
-            print(controls_map)
+            # print("CONTROLS MAP")
+            # print(controls_map)
             break
     
     
@@ -878,7 +878,15 @@ def event_details(row_id,event_in_range):
             if(pathology.value[2] is LesioneLigamentosaTimeline):
                 print("Lesione Ligamentosa")
                 pathology_data_original = db.session.query(PathologyData.pre_options).filter(PathologyData.id==pathology_db.id_created_from).first()
+                # "hidden_hand_selection" rappresenta il valore nel form della selezione pre_dupuytren.html
                 param= json.loads(pathology_data_original[0])["hidden_lesione_selection"]
+
+
+            if(pathology.value[2] is DupuytrenTimeline):
+                print("Dupuytren")
+                pathology_data_original = db.session.query(PathologyData.pre_options).filter(PathologyData.id==pathology_db.id_created_from).first()
+                print(pathology_data_original)
+                param= json.loads(pathology_data_original[0])["hidden_hand_selection"]
 
             print(f"PARAM {param}")
             controls_map= getattr( pathology.value[2],"get_"+control_key,None)(pathology_db.id_pathology_type,param)
