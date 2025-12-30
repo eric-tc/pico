@@ -241,6 +241,8 @@ class PathologyTimline:
         if controls_map[CONTROLS.MPCJ.value[1]]["active"]:
             for index in controls_map[CONTROLS.MPCJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
+                print(f"Processing MCPJ for index {index}")
+                print(form.mpcj)
                 mpcj_data[int(index)] = {
                     'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
                     'arom_flessione': form.mpcj[int(index)].arom_flessione.data,
@@ -248,9 +250,7 @@ class PathologyTimline:
                     'prom_flessione': form.mpcj[int(index)].prom_flessione.data
                 }
 
-        print("MPCJ")
         print(mpcj_data)
-
         
         dipj_data = {}
         if controls_map[CONTROLS.DIPJ.value[1]]["active"]:
@@ -874,6 +874,8 @@ class LesioneNervosaTimeline(PathologyTimline):
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["names"]=["Data lesione"]
+        
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 

@@ -11,22 +11,30 @@
             <thead>
                 <tr>
                     <th>Tipo Patologia</th>
+                    <th>Note</th>
                     <th>Data inserimento</th>
-                    <th>Storia Terapia</th>
                     <th>Controllo </th>
                 </tr>
             </thead>
             <tbody>
-                {% for id_patient,patient_name,patient_surname,id_pathology,pathology_name,id_pathology_type,pathology_type_name,creation_date,row_id in pathology_list %}
+                {% for id_patient,patient_name,patient_surname,id_pathology,pathology_name,id_pathology_type,pathology_type_name,creation_date,row_id,altro in pathology_list %}
                     <tr class="patientRow" >
-                        <td>{{ pathology_name }}</td>
-                        <td>{{ creation_date|format_date }}</td>
                         <td>
-                            <form method="get" action="{{ url_for('doctor.patient_history', id_pathology=id_pathology,id_pathology_type=id_pathology_type) }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-primary" type="submit">Vedi </button>
-                            </form>    
+                        <form method="post" action="{{ url_for('doctor.patient_history') }}" id="form-{{ loop.index }}">
+                            <input type="hidden" name="id_pathology" value="{{ id_pathology }}">
+                            <input type="hidden" name="id_pathology_type" value="{{ id_pathology_type }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <a href="#" class="btn btn-link" onclick="document.getElementById('form-{{ loop.index }}').submit(); return false;" title="Vai alla storia terapia">{{ pathology_name }}</a>
+                        </form>
                         </td>
+                        <td>
+                            {% set note = altro.get('0', {}).get('note', '') %}
+                            {% if note %}
+                                {{ note }}
+                            {% endif %}
+                        </td>     
+
+                        <td>{{ creation_date|format_date }}</td>
                         <td>
                             <form method="get" action="{{ url_for('doctor.insert_custom_control',row_id=row_id) }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

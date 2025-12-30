@@ -57,7 +57,7 @@ def profile():
     interventi_da_fissare= db.session.query(PathologyData,User.name,User.surname,Pathology.name)\
     .join(User, PathologyData.id_patient == User.id)\
     .join(Pathology,PathologyData.id_pathology==Pathology.id)\
-    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(PathologyData.created_at.asc()).all()
+    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(PathologyData.created_at.desc()).all()
     print("INTERVENTI DA FISSARE")
     print(interventi_da_fissare)
 
@@ -576,13 +576,15 @@ def patient_treatment_list(patient_id,patient_name):
         PathologyType.id,
         PathologyType.name,
         PathologyData.created_at,
-        PathologyData.id
+        PathologyData.id,
+        PathologyData.altro
     )
     .join(Pathology, Pathology.id == PathologyData.id_pathology)
     .join(PathologyType, PathologyType.id == PathologyData.id_pathology_type)
     .join(User, User.id == PathologyData.id_patient)
     .filter(PathologyData.id_patient == patient_id, 
             PathologyData.next_control_number == 0)
+            .order_by(PathologyData.created_at.desc())
     .all()
     )
     name=""
@@ -592,19 +594,23 @@ def patient_treatment_list(patient_id,patient_name):
         surname=item[2]
         break
     
+    print("PATHOLOGY LIST")
+    print(pathology_list)
+
     return render_template('doctor/patient_treatment_list.html',pathology_list=pathology_list,name=name,surname=surname)
 
 
 """
 Route to show patient history
 """
-@doctor.route('/patient_history/<id_pathology>/<id_pathology_type>/',methods=["GET"])
+@doctor.route('/patient_history/',methods=["POST"])
 @login_required
-def patient_history(id_pathology,id_pathology_type):
+def patient_history():
     
     print(session.get(DoctorData.ID_PATIENT.value))
     
-   
+    id_pathology = request.form.get('id_pathology')
+    id_pathology_type = request.form.get('id_pathology_type')
 
     print("HISTORY PATIENT")
     print(id_pathology)
@@ -933,8 +939,6 @@ def event_details(row_id,event_in_range):
         
         if form.submit_form.data:
             print("SUBMIT FORM")
-            print(form.data)
-
             #Creo il PDF Dai dati parsati del form submit
 
             html_content_original = form.hidden_html.data
@@ -1098,7 +1102,62 @@ def download_pdf():
     # Serve the generated PDF file for download
     return send_from_directory("static", "form.pdf", as_attachment=True)
     #return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
-# ROUTE DI TESTING
+
+
+#-------------------------- ROUTE STATISTICHE ----------------------------
+
+@doctor.route('/update_statistics/',methods=["GET","POST"])
+def update_statistics():
+    """
+    Funzione per aggiornare le statistiche medie dei controlli.
+    Probabilmente dovrò chiamarla ogni tanto per aggiornare i valori.
+    
+    Da capire se ricalcolare tutte le statistiche o solo quelle dove ci sono più valori aggiornati
+
+    """
+
+    # Recupero gli id di tutte le patologie
+    pathology_ids = [pathology.value[0] for pathology in PATHOLOGY]
+    # Recupero tutti gli id del numero dei controlli
+    controls_number = [control.value[0] for control in CONTROLSNUMBER]
+    # recupero tutti i valori dei vari contorlli dei vari parametri
+    params_name = [control.value[1] for control in CONTROLS]
+    
+    print(f"PATHOLOGY IDS {pathology_ids}")
+    print(f"CONTROLS NUMBER {controls_number}")
+    print(f"PARAMS NAME {params_name}")
+
+    for pathology_id in pathology_ids:
+        for control_number in controls_number:
+            statistics = db.session.query(PathologyData.mpcj,
+                                PathologyData.pipj,
+                                PathologyData.dipj,
+                                PathologyData.ipj,
+                                PathologyData.polso,
+                                PathologyData.vas,
+                                PathologyData.trapezio_metacarpale,
+                                PathologyData.forza,
+                                PathologyData.dash,
+                                PathologyData.prwhe,
+                                PathologyData.eaton_littler,
+                                PathologyData.edema,
+                                PathologyData.sensibilita_volare,
+                                PathologyData.sensibilita_dorsale,
+                                PathologyData.cicatrice,
+                                PathologyData.tutore,
+                                PathologyData.altro)\
+            .filter(PathologyData.id_pathology == pathology_id,PathologyData.next_control_number == control_number).all()
+
+            if len(statistics) != 0:
+                print(f"STATS {statistics[0]}")
+
+    
+    return "Ok"
+        
+
+
+
+#-------------------------- ROUTE DI TESTING CONTROLLI DINAMICI ----------------------------
 
 from wtforms.validators import DataRequired, Length,NumberRange
 
@@ -1490,4 +1549,5 @@ def dash_test():
                            labels_5=labels_5,
                            labels_6=labels_6,
                            zip=zip)
+
 
