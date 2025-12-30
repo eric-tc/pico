@@ -1,7 +1,7 @@
 # questo file DEVE racchiudere solo gli Enum delle patologie che hanno un decorso post operatorio 
 # diverso in base alle opzioni selezionate durante la fase di compilazione del form intervento
 from enum import Enum
-
+from .calcola_statistiche import *
 
 class RizoartrosiEnum(Enum):
     """
@@ -122,17 +122,17 @@ class INDICES(Enum):
 
 class CONTROLS(Enum):
 
-    DATA_FRATTURA= (1,"data_frattura")
-    MPCJ = (2,"mpcj")
-    PIPJ = (3,"pipj")
-    DIPJ = (4,"dipj")
-    IPJ = (5,"ipj")
-    POLSO = (6,"polso")
-    VAS = (7,"vas")
-    TRAPEZIO_METACARPALE = (8,"trapezio_metacarpale")
-    FORZA = (9,"forza")
-    DASH = (10,"dash")
-    PRWHE = (11,"prwhe")
+    DATA_FRATTURA= (1,"data_frattura",None)
+    MPCJ = (2,"mpcj",mpcj_statistics)
+    PIPJ = (3,"pipj",pipj_statistics)
+    DIPJ = (4,"dipj",dipj_statistics)
+    IPJ = (5,"ipj",ipj_statistics)
+    POLSO = (6,"polso",polso_statistics)
+    VAS = (7,"vas",vas_statistics)
+    TRAPEZIO_METACARPALE = (8,"trapezio_metacarpale",trapezio_metacarpale_statistics)
+    FORZA = (9,"forza",forza_statistics)
+    DASH = (10,"dash",dash_statistics)
+    PRWHE = (11,"prwhe",prwhe_statistics)
     EATON_LITTLER = (12,"eaton_littler")
     EDEMA = (13,"edema")
     SENSIBILITA_VOLARE = (14,"sensibilita_volare")

@@ -1127,29 +1127,35 @@ def update_statistics():
     print(f"CONTROLS NUMBER {controls_number}")
     print(f"PARAMS NAME {params_name}")
 
-    for pathology_id in pathology_ids:
+    for pathology in PATHOLOGY:
         for control_number in controls_number:
             statistics = db.session.query(PathologyData.mpcj,
-                                PathologyData.pipj,
-                                PathologyData.dipj,
-                                PathologyData.ipj,
-                                PathologyData.polso,
-                                PathologyData.vas,
-                                PathologyData.trapezio_metacarpale,
-                                PathologyData.forza,
-                                PathologyData.dash,
-                                PathologyData.prwhe,
-                                PathologyData.eaton_littler,
-                                PathologyData.edema,
-                                PathologyData.sensibilita_volare,
-                                PathologyData.sensibilita_dorsale,
-                                PathologyData.cicatrice,
-                                PathologyData.tutore,
-                                PathologyData.altro)\
-            .filter(PathologyData.id_pathology == pathology_id,PathologyData.next_control_number == control_number).all()
+                                          PathologyData.pipj)\
+            .filter(PathologyData.id_pathology == pathology.value[0],PathologyData.next_control_number == control_number).all()
 
-            if len(statistics) != 0:
-                print(f"STATS {statistics[0]}")
+            
+            mpcj_data_list = []
+            pipj_data_list = []
+            
+            
+            for mpcj_data, pipj_data in statistics:
+                
+                if mpcj_data:
+                    mpcj_data_list.append(mpcj_data)
+                    mpcj_data_list.append(mpcj_data)
+
+                if pipj_data:
+                    pipj_data_list.append(pipj_data)
+                    pipj_data_list.append(pipj_data)
+                
+
+            print("STATISTICS DATA")
+            print(mpcj_data_list)
+            print(pipj_data_list)
+              
+           
+            print(f"Pathology Type {pathology.value[1]} - Control Number {control_number}")
+            print(f"STATS {statistics} Len {len(statistics)}")
 
     
     return "Ok"
