@@ -45,7 +45,7 @@ def profile():
     patients_list=(
     db.session.query(DoctorPatient, User.name,User.surname)
     .join(User, DoctorPatient.id_patient == User.id)
-    .filter(DoctorPatient.id_doctor == current_user.id).order_by(User.id.asc())
+    .filter(DoctorPatient.id_doctor == current_user.id)
     .order_by(User.surname.asc()).all()
     )
     
@@ -1106,6 +1106,35 @@ def download_pdf():
 
 #-------------------------- ROUTE STATISTICHE ----------------------------
 
+def insert_finger_params_into_db(id_pathology,next_control_number,controls_param_id,data_db):
+    """
+    : Inserisce i parametri medi, mediani e deviazione standard nella tabella PathologyDataStats
+    : param id_pathology: id della patologia
+    : param next_control_number: numero del controllo
+    : param controls_param_id: id del parametro di controllo deriva dall'enum CONTROLS
+    : param data_db: dizionario con i valori medi, mediani e
+    Solitamente questi valori sono per mpcj pipj dipj ipj
+    """
+    needCommit=False
+    for dito, parametri in data_db.items():
+        for finger_param, values in parametri.items():
+            print("ADD TO DB")
+            stat_row = PathologyDataStats(
+                id_pathology=id_pathology,
+                control_number=next_control_number,
+                id_parameter=controls_param_id,
+                dito=int(dito),
+                finger_parameter=finger_param,  # oppure l'id dell'enum se usi enum per finger_parameter
+                media=values['mean'],
+                mediana=values['median'],
+                deviazione_standard=values['std'],
+                data_aggiornamento=datetime.utcnow()
+            )
+            needCommit=True
+            db.session.add(stat_row)
+    if needCommit:
+        db.session.commit()
+
 @doctor.route('/update_statistics/',methods=["GET","POST"])
 def update_statistics():
     """
@@ -1116,22 +1145,11 @@ def update_statistics():
 
     """
 
-    # Recupero gli id di tutte le patologie
-    pathology_ids = [pathology.value[0] for pathology in PATHOLOGY]
-    # Recupero tutti gli id del numero dei controlli
-    controls_number = [control.value[0] for control in CONTROLSNUMBER]
-    # recupero tutti i valori dei vari contorlli dei vari parametri
-    params_name = [control.value[1] for control in CONTROLS]
-    
-    # print(f"PATHOLOGY IDS {pathology_ids}")
-    # print(f"CONTROLS NUMBER {controls_number}")
-    # print(f"PARAMS NAME {params_name}")
-
     for pathology in PATHOLOGY:
-        for control_number in controls_number:
+        for control_number in CONTROLSNUMBER:
             statistics = db.session.query(PathologyData.mpcj,
                                           PathologyData.pipj)\
-            .filter(PathologyData.id_pathology == pathology.value[0],PathologyData.next_control_number == control_number).all()
+            .filter(PathologyData.id_pathology == pathology.value[0],PathologyData.next_control_number == control_number.value[0]).all()
 
             
             mpcj_data_list = []
@@ -1148,40 +1166,14 @@ def update_statistics():
                     pipj_data_list.append(pipj_data)
                     pipj_data_list.append(pipj_data)
                 
-            print(f"Pathology Type {pathology.value[1]} - Control Number {control_number}")
+            print(f"Pathology Type {pathology.value[1]} - Control Number {control_number.value[0]}")
+        
             
-            print("MPCJ DATA LIST")
-            print(mpcj_data_list)
-            #Verifico se nella tabella PathologyDataStats ci sono già delle righe
-
-            data_present= db.session.query(PathologyDataStats).first()
             mpcj_data_db=CONTROLS.MPCJ.value[2](mpcj_data_list)
             pipj_data_db=CONTROLS.PIPJ.value[2](pipj_data_list)
             
-                
-            for dito, parametri in mpcj_data_db.items():
-                for finger_param, values in parametri.items():
-                    stat_row = PathologyDataStats(
-                        id_pathology=pathology.value[0],
-                        control_number=control_number,
-                        id_parameter=CONTROLS.MPCJ.value[0],
-                        dito=int(dito),
-                        finger_parameter=finger_param,  # oppure l'id dell'enum se usi enum per finger_parameter
-                        media=values['mean'],
-                        mediana=values['median'],
-                        deviazione_standard=values['std'],
-                        data_aggiornamento=datetime.utcnow()
-                    )
-                    db.session.add(stat_row)
-            db.session.commit()
+            insert_finger_params_into_db(pathology.value[0],control_number.value[0],CONTROLS.MPCJ.value[0],mpcj_data_db)    
             
-            
-            print(pipj_data_list)
-              
-           
-           
-            
-
     
     return "Ok"
         

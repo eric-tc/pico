@@ -38,15 +38,15 @@ def mpcj_statistics(data_list):
         result[finger] = {}
         for param, values in param_dict.items():
             arr = np.array(values)
-            print("VALUES")
-            print(arr)
+            if len(arr) == 0:
+                continue
+            print(f"arr {arr}")
             result[finger][param] = {
                 'mean': float(np.mean(arr)),
                 'median': float(np.median(arr)),
                 'std': float(np.std(arr))
             }
 
-    print(result)
     return result
 
 def pipj_statistics(data_list):
@@ -62,7 +62,8 @@ def pipj_statistics(data_list):
             if finger not in finger_stats:
                 finger_stats[finger] = {k: [] for k in params}
             for k, v in params.items():
-                finger_stats[finger][k].append(v)
+                if v is not None:
+                    finger_stats[finger][k].append(v)
 
     # Calcola statistiche
     result = {}
@@ -70,51 +71,72 @@ def pipj_statistics(data_list):
         result[finger] = {}
         for param, values in param_dict.items():
             arr = np.array(values)
+            if len(arr) == 0:
+                continue
+            print(f"arr {arr}")
             result[finger][param] = {
                 'mean': float(np.mean(arr)),
                 'median': float(np.median(arr)),
                 'std': float(np.std(arr))
             }
 
-    print(result)
     return result
 
-def dipj_statistics(data_list, indices):
-    """
-    Calcola le statistiche per i valori DIPJ
-    :param data_list: Lista di dizionari contenenti i dati DIPJ
-    :param indices: Indici delle dita da considerare
-    :return: Dizionario con le statistiche calcolate
-    """
-    statistics = {}
-    for index in indices:
-        values = [data[index]['prom_flessione'] for data in data_list if index in data]
-        if values:
-            statistics[index] = {
-                'min': min(values),
-                'max': max(values),
-                'average': sum(values) / len(values)
+def dipj_statistics(data_list):
+    
+    finger_stats = {}
+    for entry in data_list:
+        for finger, params in entry.items():
+            if finger not in finger_stats:
+                finger_stats[finger] = {k: [] for k in params}
+            for k, v in params.items():
+                if v is not None:
+                    finger_stats[finger][k].append(v)
+
+    # Calcola statistiche
+    result = {}
+    for finger, param_dict in finger_stats.items():
+        result[finger] = {}
+        for param, values in param_dict.items():
+            arr = np.array(values)
+            if len(arr) == 0:
+                continue
+            print(f"arr {arr}")
+            result[finger][param] = {
+                'mean': float(np.mean(arr)),
+                'median': float(np.median(arr)),
+                'std': float(np.std(arr))
             }
-    return statistics
+
+    return result
 
 
-def ipj_statistics(data_list, indices):
-    """
-    Calcola le statistiche per i valori IPJ
-    :param data_list: Lista di dizionari contenenti i dati IPJ
-    :param indices: Indici delle dita da considerare
-    :return: Dizionario con le statistiche calcolate
-    """
-    statistics = {}
-    for index in indices:
-        values = [data[index]['prom_flessione'] for data in data_list if index in data]
-        if values:
-            statistics[index] = {
-                'min': min(values),
-                'max': max(values),
-                'average': sum(values) / len(values)
+def ipj_statistics(data_list):
+    finger_stats = {}
+    for entry in data_list:
+        for finger, params in entry.items():
+            if finger not in finger_stats:
+                finger_stats[finger] = {k: [] for k in params}
+            for k, v in params.items():
+                if v is not None:
+                    finger_stats[finger][k].append(v)
+
+    # Calcola statistiche
+    result = {}
+    for finger, param_dict in finger_stats.items():
+        result[finger] = {}
+        for param, values in param_dict.items():
+            arr = np.array(values)
+            if len(arr) == 0:
+                continue
+            print(f"arr {arr}")
+            result[finger][param] = {
+                'mean': float(np.mean(arr)),
+                'median': float(np.median(arr)),
+                'std': float(np.std(arr))
             }
-    return statistics
+
+    return result
 
 def polso_statistics(data_list):
     """
