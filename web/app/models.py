@@ -7,6 +7,7 @@ from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
 from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS,PATHOLOGY_STATUS
+from .internal_data_enum_pathologies import FINGER_PARAMETERS
 from sqlalchemy.dialects.postgresql import JSONB
 
 class User(UserMixin, db.Model):
@@ -95,6 +96,25 @@ class PathologyStatus(db.Model):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
             for row in PATHOLOGY_STATUS:
+                id_code,name= row.value
+                new_instance = cls(id=id_code,name=name)
+                db.session.add(new_instance)
+            
+            # Commit the changes
+            db.session.commit()
+        else:
+            print(f"The table {cls.__tablename__} is not empty. Rows were not inserted.")
+
+class FingerParameters(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(120))
+
+
+    @classmethod
+    def insert_rows(cls):
+        # Create and insert a new row for each value in the list
+        if db.session.query(cls).count() == 0:
+            for row in FINGER_PARAMETERS:
                 id_code,name= row.value
                 new_instance = cls(id=id_code,name=name)
                 db.session.add(new_instance)
@@ -232,6 +252,11 @@ class PathologyDataStats(db.Model):
     id_parameter = db.Column(db.Integer, db.ForeignKey('parameters.id'), nullable=False)
     parameter = db.relationship('Parameters', foreign_keys=[id_parameter])
     control_number = db.Column(db.Integer, nullable=False)
+    #Rappresenta il dito a cui si riferisce il parametro. Ad esempio per mpcj
+    dito=db.Column(db.Integer,nullable=True)
+    # Rappresenta il parametro specifico del dito. Ad esempio per mpcj può essere arom_flessione, prom_flessione, arom_estensione, prom_estensione
+    # Ho aggiunto un enum specifico per questo FINGER_PARAMETERS
+    finger_parameter=db.Column(db.Integer,nullable=True)
     media = db.Column(db.Float, nullable=True)
     mediana = db.Column(db.Float, nullable=True)
     deviazione_standard = db.Column(db.Float, nullable=True)

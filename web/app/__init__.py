@@ -35,7 +35,9 @@ PathologyStatus,\
 Pathology,\
 EmailStatus,\
 ControlStatus,\
-NotificationStatus
+NotificationStatus,\
+FingerParameters
+
 
 def create_app():
     global csrf
@@ -123,3 +125,4 @@ def insert_db():
         EmailStatus.insert_rows()
         ControlStatus.insert_rows()
         Parameters.insert_rows()
+        FingerParameters.insert_rows()

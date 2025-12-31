@@ -108,6 +108,20 @@ class LesioneLigamentosaEnum(Enum):
     CHIRURGICO = ("1","Chirurgico")
     CONSERVATIVO = ("2","Conservativo")
 
+""" Per parametri come MCPJ e PIPJ, DIPJ uso questi enum per differenziare arom e prom e flessione ed estensione.
+    Questo mi servirà per salvare i dati a db in modo corretto e poi recuperarli per il calcolo delle statistiche
+"""
+class FINGER_PARAMETERS(Enum):
+    #Usati per McPJ, PIPJ, DIPJ, IPJ
+    AROM_FLESSIONE= (1,"arom_flessione")
+    PROM_FLESSIONE = (2,"prom_flessione")
+    AROM_ESTENSIONE= (3,"arom_estensione")
+    PROM_ESTENSIONE= (4,"prom_estensione")
+    # Questi sono usati per il polso
+    AROM_SUPINAZIONE= (5,"arom_supinazione")
+    PROM_SUPINAZIONE= (6,"prom_supinazione")
+    AROM_PRONAZIONE= (7,"arom_pronazione")
+    PROM_PRONAZIONE= (8,"prom_pronazione")
 
 """
 Per parametri come MCPJ e PIPJ uso questi enum per differenziare le dita

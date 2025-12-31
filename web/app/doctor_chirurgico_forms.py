@@ -14,7 +14,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
         DupuytrenEnum,\
         LesioneNervosaEnum,\
         LesioneLigamentosaEnum,\
-        OPTION_NULL
+        OPTION_NULL,\
+        INDICES
 
 #Questo file gestisce solo i form per l'intervento chirurgico. ATTENZIONE è incluso nel file internal:data.py
 # Questi form sono legati all'enum Pathology
@@ -110,11 +111,11 @@ class FratturaMetaCarpaliChirurgicoForm(ChirurgicoForm):
         'Seleziona Metacarpo rotto',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'I'),
-            ('2', 'II'),
-            ('3', 'III'),
-            ('4', 'IV'),
-            ('5', 'V'),
+            (INDICES.POLLICE.value[0], 'I'),
+            (INDICES.INDICE.value[0], 'II'),
+            (INDICES.MEDIO.value[0], 'III'),
+            (INDICES.ANULARE.value[0], 'IV'),
+            (INDICES.MIGNOLO.value[0], 'V'),
             
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.
@@ -276,11 +277,11 @@ class FratturaFalangeProssimaleChirurgicoForm(ChirurgicoForm):
         'Seleziona falange rotta',
         choices=[
             ('', OPTION_NULL.NULL.value),
-            ('1', 'I'),
-            ('2', 'II'),
-            ('3', 'III'),
-            ('4', 'IV'),
-            ('5', 'V'),
+            (INDICES.POLLICE.value[0], 'I'),
+            (INDICES.INDICE.value[0], 'II'),
+            (INDICES.MEDIO.value[0], 'III'),
+            (INDICES.ANULARE.value[0], 'IV'),
+            (INDICES.MIGNOLO.value[0], 'V'),
             
         ],
         coerce=str  # Data type conversion, e.g., if you expect an integer you can use coerce=int.

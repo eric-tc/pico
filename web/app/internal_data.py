@@ -40,7 +40,8 @@ from .internal_data_enum_pathologies import FrattureMetaCarpaliEnum,\
     PWRHE_ENUM_FIRST,\
     PWRHE_ENUM_SECOND,\
     PWRHE_ENUM_THIRD,\
-    PWRHE_ENUM_FOURTH
+    PWRHE_ENUM_FOURTH,\
+    FINGER_PARAMETERS
 
 from .doctor_forms import PreResezioneFileraForm,PreDupuytrenForm,PreLesioneLigamentosaForm
 
@@ -96,19 +97,19 @@ class PathologyTimline:
                            },
         CONTROLS.MPCJ.value[1]: {"active":False,
                            "indices":[INDICES.POLLICE.value[0]],
-                           "names":["Articolarità metacarpo-falange del pollice (gradi °)","Articolarità metacarpo-falange dell'indice (gradi °)","Articolarità metacarpo-falange del medio (gradi °)","Articolarità metacarpo-falange dell'anulare (gradi °)","Articolarità metacarpo-falange del mignolo(gradi °)"]
+                           "names":["(MCPj)Articolarità metacarpo-falange del pollice (gradi °)","(MCPj)Articolarità metacarpo-falange dell'indice (gradi °)","(MCPj)Articolarità metacarpo-falange del medio (gradi °)","(MCPj)Articolarità metacarpo-falange dell'anulare (gradi °)","(MCPj)Articolarità metacarpo-falange del mignolo(gradi °)"]
                            },
         CONTROLS.PIPJ.value[1]: {"active":False,
                            "indices":[INDICES.POLLICE.value[0]],
-                           "names":["Articolarità interfalangea prossimale del pollice (gradi °)","Articolarità interfalangea prossimale dell'indice (gradi °)","Articolarità interfalangea prossimale del medio (gradi °)","Articolarità  prossimale interfalangea dell'anulare (gradi °)","Articolarità interfalangea prossimale del mignolo (gradi °)"]
+                           "names":["(PIPj)Articolarità interfalangea prossimale del pollice (gradi °)","(PIPj)Articolarità interfalangea prossimale dell'indice (gradi °)","(PIPj)Articolarità interfalangea prossimale del medio (gradi °)","(PIPj)Articolarità  prossimale interfalangea dell'anulare (gradi °)","(PIPj)Articolarità interfalangea prossimale del mignolo (gradi °)"]
                            },
         CONTROLS.DIPJ.value[1]: {"active":False,
                            "indices":[INDICES.POLLICE.value[0]],
-                           "names":["Articolarità interfalangea distale del pollice (gradi °)","Articolarità interfalangea distale dell'indice (gradi °)","Articolarità interfalangea distale del medio","Articolarità interfalangea distale dell'anulare","Articolarità interfalangea distale del mignolo (gradi °)"]
+                           "names":["(DIPj)Articolarità interfalangea distale del pollice (gradi °)","(DIPj)Articolarità interfalangea distale dell'indice (gradi °)","(DIPj)Articolarità interfalangea distale del medio","(DIPj)Articolarità interfalangea distale dell'anulare","(DIPj)Articolarità interfalangea distale del mignolo (gradi °)"]
                            },
         CONTROLS.IPJ.value[1]: {"active":False,
                            "indices":[INDICES.POLLICE.value[0]],
-                           "names":["Articolarità interfalangea del pollice (gradi °)","Articolarità interfalangea dell'indice (gradi °)","Articolarità interfalangea del medio (gradi °)","Articolarità interfalangea dell'anulare (gradi °)","Articolarità interfalangea del mignolo (gradi °)"]
+                           "names":["(IPj)Articolarità interfalangea del pollice (gradi °)","(IPj)Articolarità interfalangea dell'indice (gradi °)","(IPj)Articolarità interfalangea del medio (gradi °)","(IPj)Articolarità interfalangea dell'anulare (gradi °)","(IPj)Articolarità interfalangea del mignolo (gradi °)"]
                            },
         CONTROLS.POLSO.value[1]: {"active":False,
                            "indices":[INDICES.POLLICE.value[0]]
@@ -244,10 +245,10 @@ class PathologyTimline:
                 print(f"Processing MCPJ for index {index}")
                 print(form.mpcj)
                 mpcj_data[int(index)] = {
-                    'arom_estensione': form.mpcj[int(index)].arom_estensione.data,
-                    'arom_flessione': form.mpcj[int(index)].arom_flessione.data,
-                    'prom_estensione': form.mpcj[int(index)].prom_estensione.data,
-                    'prom_flessione': form.mpcj[int(index)].prom_flessione.data
+                    FINGER_PARAMETERS.AROM_ESTENSIONE.value[0]: form.mpcj[int(index)].arom_estensione.data,
+                    FINGER_PARAMETERS.AROM_FLESSIONE.value[0]: form.mpcj[int(index)].arom_flessione.data,
+                    FINGER_PARAMETERS.PROM_ESTENSIONE.value[0]: form.mpcj[int(index)].prom_estensione.data,
+                    FINGER_PARAMETERS.PROM_FLESSIONE.value[0]: form.mpcj[int(index)].prom_flessione.data
                 }
 
         print(mpcj_data)
@@ -257,10 +258,10 @@ class PathologyTimline:
             for index in controls_map[CONTROLS.DIPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 dipj_data[int(index)] = {
-                    'arom_estensione': form.dipj[int(index)].arom_estensione.data,
-                    'arom_flessione': form.dipj[int(index)].arom_flessione.data,
-                    'prom_estensione': form.dipj[int(index)].prom_estensione.data,
-                    'prom_flessione': form.dipj[int(index)].prom_flessione.data
+                    FINGER_PARAMETERS.AROM_ESTENSIONE.value[0]: form.dipj[int(index)].arom_estensione.data,
+                    FINGER_PARAMETERS.AROM_FLESSIONE.value[0]: form.dipj[int(index)].arom_flessione.data,
+                    FINGER_PARAMETERS.PROM_ESTENSIONE.value[0]: form.dipj[int(index)].prom_estensione.data,
+                    FINGER_PARAMETERS.PROM_FLESSIONE.value[0]: form.dipj[int(index)].prom_flessione.data
                 }
         print("DIPJ")
         print(dipj_data)
@@ -271,10 +272,10 @@ class PathologyTimline:
             for index in controls_map[CONTROLS.PIPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 pipj_data[int(index)] = {
-                    'arom_estensione': form.pipj[int(index)].arom_estensione.data,
-                    'arom_flessione': form.pipj[int(index)].arom_flessione.data,
-                    'prom_estensione': form.pipj[int(index)].prom_estensione.data,
-                    'prom_flessione': form.pipj[int(index)].prom_flessione.data
+                    FINGER_PARAMETERS.AROM_ESTENSIONE.value[0]: form.pipj[int(index)].arom_estensione.data,
+                    FINGER_PARAMETERS.AROM_FLESSIONE.value[0]: form.pipj[int(index)].arom_flessione.data,
+                    FINGER_PARAMETERS.PROM_ESTENSIONE.value[0]: form.pipj[int(index)].prom_estensione.data,
+                    FINGER_PARAMETERS.PROM_FLESSIONE.value[0]: form.pipj[int(index)].prom_flessione.data
                 }
 
         print("PIPJ")
@@ -285,10 +286,10 @@ class PathologyTimline:
             for index in controls_map[CONTROLS.IPJ.value[1]]["indices"]:
                 # Dynamically retrieve the data for each subform
                 ipj_data[int(index)] = {
-                    'arom_estensione': form.ipj[int(index)].arom_estensione.data,
-                    'arom_flessione': form.ipj[int(index)].arom_flessione.data,
-                    'prom_estensione': form.ipj[int(index)].prom_estensione.data,
-                    'prom_flessione': form.ipj[int(index)].prom_flessione.data
+                    FINGER_PARAMETERS.AROM_ESTENSIONE.value[0]: form.ipj[int(index)].arom_estensione.data,
+                    FINGER_PARAMETERS.AROM_FLESSIONE.value[0]: form.ipj[int(index)].arom_flessione.data,
+                    FINGER_PARAMETERS.PROM_ESTENSIONE.value[0]: form.ipj[int(index)].prom_estensione.data,
+                    FINGER_PARAMETERS.PROM_FLESSIONE.value[0]: form.ipj[int(index)].prom_flessione.data
                 }
 
         print("IPJ")
@@ -312,14 +313,14 @@ class PathologyTimline:
         if controls_map[CONTROLS.POLSO.value[1]]["active"]:
             for index in controls_map[CONTROLS.POLSO.value[1]]["indices"]:
                 polso[int(index)] = {
-                    'arom_estensione': form.polso[int(index)].arom_estensione.data,
-                    'arom_flessione': form.polso[int(index)].arom_flessione.data,
-                    'prom_estensione': form.polso[int(index)].prom_estensione.data,
-                    'prom_flessione': form.polso[int(index)].prom_flessione.data,
-                    'arom_supinazione': form.polso[int(index)].arom_supinazione.data,
-                    'arom_pronazione': form.polso[int(index)].arom_pronazione.data,
-                    'prom_supinazione': form.polso[int(index)].prom_supinazione.data,
-                    'prom_pronazione': form.polso[int(index)].prom_pronazione.data
+                    FINGER_PARAMETERS.AROM_ESTENSIONE.value[0]: form.polso[int(index)].arom_estensione.data,
+                    FINGER_PARAMETERS.AROM_FLESSIONE.value[0]: form.polso[int(index)].arom_flessione.data,
+                    FINGER_PARAMETERS.PROM_ESTENSIONE.value[0]: form.polso[int(index)].prom_estensione.data,
+                    FINGER_PARAMETERS.PROM_FLESSIONE.value[0]: form.polso[int(index)].prom_flessione.data,
+                    FINGER_PARAMETERS.AROM_SUPINAZIONE.value[0]: form.polso[int(index)].arom_supinazione.data,
+                    FINGER_PARAMETERS.AROM_PRONAZIONE.value[0]: form.polso[int(index)].arom_pronazione.data,
+                    FINGER_PARAMETERS.PROM_SUPINAZIONE.value[0]: form.polso[int(index)].prom_supinazione.data,
+                    FINGER_PARAMETERS.PROM_PRONAZIONE.value[0]: form.polso[int(index)].prom_pronazione.data
                 }     
 
         print("POLSO")
@@ -521,6 +522,7 @@ class LesioneLigamentosaTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -628,6 +630,7 @@ class ScafoidePseudoartrosiTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -749,6 +752,7 @@ class ScafoideFratturaTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -945,6 +949,7 @@ class DupuytrenTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -1051,6 +1056,7 @@ class ResezioneFilieraTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.FORZA.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
         
         #Setto i valori per il primo controllo
@@ -1133,6 +1139,7 @@ class LesioneTendineaEstensoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
 
         return tmp_ControlMap,pre_controls_map
@@ -1330,6 +1337,7 @@ class LesioneTendineaFlessoriTimeline(PathologyTimline):
 
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
 
         return tmp_ControlMap,pre_controls_map
@@ -1531,6 +1539,7 @@ class FrattureFalangeProssimaleTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -1663,6 +1672,7 @@ class FratturaMetaCarpaleTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
 
@@ -1780,6 +1790,7 @@ class FrattureRadioDistaliTimeline(PathologyTimline):
         #deepCopy ctrl_map
         tmp_ControlMap = copy.deepcopy(cls.Controls_Map)
         tmp_ControlMap[CONTROLS.DATA_FRATTURA.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
 
         return tmp_ControlMap,pre_controls_map
   
@@ -1904,6 +1915,7 @@ class RizoartrosiControlsTimeline(PathologyTimline):
         tmp_ControlMap[CONTROLS.DASH.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.PRWHE.value[1]]["active"]=True
         tmp_ControlMap[CONTROLS.EATON_LITTLER.value[1]]["active"]=True
+        tmp_ControlMap[CONTROLS.ALTRO.value[1]]["active"]=True
         
 
         #Setto i valori per il primo controllo

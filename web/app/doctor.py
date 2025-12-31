@@ -1123,9 +1123,9 @@ def update_statistics():
     # recupero tutti i valori dei vari contorlli dei vari parametri
     params_name = [control.value[1] for control in CONTROLS]
     
-    print(f"PATHOLOGY IDS {pathology_ids}")
-    print(f"CONTROLS NUMBER {controls_number}")
-    print(f"PARAMS NAME {params_name}")
+    # print(f"PATHOLOGY IDS {pathology_ids}")
+    # print(f"CONTROLS NUMBER {controls_number}")
+    # print(f"PARAMS NAME {params_name}")
 
     for pathology in PATHOLOGY:
         for control_number in controls_number:
@@ -1148,14 +1148,16 @@ def update_statistics():
                     pipj_data_list.append(pipj_data)
                     pipj_data_list.append(pipj_data)
                 
-
+            print(f"Pathology Type {pathology.value[1]} - Control Number {control_number}")
+            
+            
             print("STATISTICS DATA")
             print(mpcj_data_list)
             print(pipj_data_list)
               
            
-            print(f"Pathology Type {pathology.value[1]} - Control Number {control_number}")
-            print(f"STATS {statistics} Len {len(statistics)}")
+           
+            
 
     
     return "Ok"
