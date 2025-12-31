@@ -234,7 +234,9 @@ class PathologyData(db.Model):
     #Ad esempio nello scafoide dopo 6 mesi devo aggiungere dei parametri aggiuntivi
     post_options= db.Column(JSONB)
     
-
+    __table_args__ = (
+        db.Index('pathology_data_idx','id_pathology', 'next_control_number'),
+    )
 
 class PathologyDataStats(db.Model):
     """
@@ -253,6 +255,7 @@ class PathologyDataStats(db.Model):
     parameter = db.relationship('Parameters', foreign_keys=[id_parameter])
     control_number = db.Column(db.Integer, nullable=False)
     #Rappresenta il dito a cui si riferisce il parametro. Ad esempio per mpcj
+    # enum INDECES
     dito=db.Column(db.Integer,nullable=True)
     # Rappresenta il parametro specifico del dito. Ad esempio per mpcj può essere arom_flessione, prom_flessione, arom_estensione, prom_estensione
     # Ho aggiunto un enum specifico per questo FINGER_PARAMETERS
@@ -263,7 +266,8 @@ class PathologyDataStats(db.Model):
     data_aggiornamento = db.Column(db.DateTime, default=datetime.utcnow)
 
     __table_args__ = (
-        UniqueConstraint('id_pathology', 'id_parameter', 'control_number'),
+        db.Index('pathology_stats_idx', 'id_pathology', 'id_parameter', 'control_number', 'dito'),
+        
     )
 
     

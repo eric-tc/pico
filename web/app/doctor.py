@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session,make_response
 from flask_login import login_required, current_user
 from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
-from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology
+from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology,PathologyDataStats
 from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline,LesioneLigamentosaTimeline,DupuytrenTimeline
 from . import db,csrf,cache
 from sqlalchemy import cast, Integer,func
@@ -1150,9 +1150,32 @@ def update_statistics():
                 
             print(f"Pathology Type {pathology.value[1]} - Control Number {control_number}")
             
-            
-            print("STATISTICS DATA")
+            print("MPCJ DATA LIST")
             print(mpcj_data_list)
+            #Verifico se nella tabella PathologyDataStats ci sono già delle righe
+
+            data_present= db.session.query(PathologyDataStats).first()
+            mpcj_data_db=CONTROLS.MPCJ.value[2](mpcj_data_list)
+            pipj_data_db=CONTROLS.PIPJ.value[2](pipj_data_list)
+            
+                
+            for dito, parametri in mpcj_data_db.items():
+                for finger_param, values in parametri.items():
+                    stat_row = PathologyDataStats(
+                        id_pathology=pathology.value[0],
+                        control_number=control_number,
+                        id_parameter=CONTROLS.MPCJ.value[0],
+                        dito=int(dito),
+                        finger_parameter=finger_param,  # oppure l'id dell'enum se usi enum per finger_parameter
+                        media=values['mean'],
+                        mediana=values['median'],
+                        deviazione_standard=values['std'],
+                        data_aggiornamento=datetime.utcnow()
+                    )
+                    db.session.add(stat_row)
+            db.session.commit()
+            
+            
             print(pipj_data_list)
               
            
