@@ -17,7 +17,7 @@ import sys
 from weasyprint import HTML
 from .settings_form import SettingsFormDoctor
 from .internal_data_enum_pathologies import DASH_ENUM_FIFTH,DASH_ENUM_FOURTH,DASH_ENUM_SECOND,DASH_ENUM_THIRD,DASH_ENUM_FIRST,DASH_ENUM_SIXTH,INDICES
-
+from flask_wtf.csrf import generate_csrf
 #TEST
 
 from .doctor_forms import DashFormTest
@@ -80,6 +80,119 @@ def profile():
                            interventi_da_fissare=interventi_da_fissare, 
                            next_treatments=next_treatments)
                           
+"""
+Route utilizzata per ritornare i pazienti associati al dottore in formato datatable.js
+Funzione richiamata tramite ajax per popolare i risultati della datatable
+"""
+@doctor.route('/ajax_profile_pazienti_datatable')
+def api_pazienti_datatable():
+    # Parametri inviati da DataTables.js
+    draw = request.args.get('draw', type=int)
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    search_value = request.args.get('search[value]', '')
+
+    # 1. Base della tua query originale
+    query = (
+        db.session.query(DoctorPatient, User.name, User.surname)
+        .join(User, DoctorPatient.id_patient == User.id)
+        .filter(DoctorPatient.id_doctor == current_user.id)
+    )
+
+    # 2. Filtro di ricerca (Cerca per nome o cognome)
+    if search_value:
+        query = query.filter(User.surname.ilike(f'{search_value}%'))
+
+    # 3. Conteggio totale per la paginazione
+    total_records = query.count()
+
+    # 4. Ordinamento e Paginazione
+    # Calcoliamo la pagina corrente per SQLAlchemy
+    page = (start // length) + 1
+    paginated_results = query.order_by(User.surname.asc()).paginate(page=page, per_page=length, error_out=False)
+
+    # 5. Costruzione del JSON
+    data = []
+    for link, name, surname in paginated_results.items:
+        # Link al profilo
+        profile_url = url_for('patient.profile_patient', patient_id=link.id_patient)
+        
+        # HTML per la colonna Nome
+        full_name_html = f'<a href="{profile_url}">{surname or ""} {name}</a>'
+        
+        # HTML per i pulsanti (semplificati in <a> per leggerezza, ma con stile btn)
+        btn_crea = f'<a href="{url_for("doctor.insert_pre_medical_treatment", patient_id=link.id_patient, patient_name=name)}" class="btn btn-success">Crea</a>'
+        btn_storia = f'<a href="{url_for("doctor.patient_treatment_list", patient_id=link.id_patient, patient_name=name)}" class="btn btn-primary">Vedi Trattamenti</a>'
+
+        data.append({
+            "name_col": full_name_html,
+            "action_crea": btn_crea,
+            "action_storia": btn_storia
+        })
+
+    return jsonify({
+        "draw": draw,
+        "recordsTotal": total_records,
+        "recordsFiltered": total_records, # In questo caso uguale al totale filtrato
+        "data": data
+    })
+
+
+
+@doctor.route('/ajax_interventi_da_fissare')
+def api_interventi_da_fissare():
+    draw = request.args.get('draw', type=int)
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    search_value = request.args.get('search[value]', '')
+
+    # 1. Query base (adattala ai tuoi nomi di tabelle/modelli)
+    query= (db.session.query(PathologyData,User.name,User.surname,Pathology.name)\
+    .join(User, PathologyData.id_patient == User.id)\
+    .join(Pathology,PathologyData.id_pathology==Pathology.id)\
+    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(PathologyData.created_at.desc())
+    )
+
+    # 2. Ricerca per cognome
+    if search_value:
+        query = query.filter(User.surname.ilike(f'{search_value}%'))
+
+    # 3. Conteggio e Paginazione
+    total_records = query.count()
+    page = (start // length) + 1
+    results = query.order_by(PathologyData.created_at.desc()).paginate(page=page, per_page=length)
+    token = generate_csrf()
+    data = []
+    for pathology_data, p_name, p_surname, path_name in results.items:
+        # Costruzione del link profilo
+        profile_url = url_for('patient.profile_patient', patient_id=pathology_data.id_patient)
+        
+        # Costruzione del Form POST (importante gestire il CSRF token qui)
+        # Nota: passiamo il token che Flask-WTF ci mette a disposizione
+        form_html = f'''
+            <form method="POST" action="{url_for('doctor.medical_treatment')}">
+                <input type="hidden" name="csrf_token" value="{token}">
+                <input type="hidden" name="patient_id" value="{pathology_data.id_patient}">
+                <input type="hidden" name="patient_name" value="{p_name}">
+                <input type="hidden" name="pathology_id" value="{pathology_data.id_pathology}">
+                <input type="hidden" name="row_id" value="{pathology_data.id}">
+                <button class="btn btn-success" type="submit">Crea</button>
+            </form>
+        '''
+
+        data.append({
+            "nome": f'<a href="{profile_url}">{p_surname or ""} {p_name}</a>',
+            "patologia": path_name,
+            "add_control": form_html,
+            "data_ins": pathology_data.created_at.strftime('%d-%m-%Y')
+        })
+
+    return jsonify({
+        "draw": draw,
+        "recordsTotal": total_records,
+        "recordsFiltered": total_records,
+        "data": data
+    })
 
 """
 Route usata per settare i parametri del dottore. Come Email, cambio password, ecc

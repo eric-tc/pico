@@ -42,50 +42,17 @@
     {% endif %}
     {% endwith %}
 
-    <table id="patientTable" class="table-rounded">
-      <thead>
-          <tr class="text-center">
-              <th>Nome</th>
-              <th>Nuovo Intervento</th>
-              <th>Storia Paziente</th>
-              <!-- <th>Impostazioni</th>
-              <th>Azioni</th> -->
-
-              
-          </tr>
-      </thead>
-      <tbody>
-          {% for link, name,surname in patients_list %}
-              <tr class="patientRow text-center" data-patient-id="{{ link.id}}">
-                  <td>
-                    <a href="{{ url_for('patient.profile_patient', patient_id=link.id_patient) }}">
-                      {% if surname %}{{ surname }} {% endif %}{{ name }}
-                    </a>
-                  </td>
-                  <td>
-                    <form method="get" action="{{ url_for('doctor.insert_pre_medical_treatment', patient_id=link.id_patient, patient_name=name) }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-success" type="submit">Crea</button>
-                      </form>
-                  </td>
-                  <td>
-                    <form method="get" action="{{ url_for('doctor.patient_treatment_list', patient_id=link.id_patient, patient_name=name) }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-primary" type="submit">Vedi Trattamenti</button>
-                      </form>
-                  </td>
-
-                  <!-- <td>
-                    <form method="get" action="{{ url_for('patient.settings_patient_doctor', patient_id=link.id_patient) }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-success" type="submit">Cambia</button>
-                      </form>
-                  </td>
-                  <td><button class="btn btn-danger sendLinkPatient" >Rimuovi</button></td> -->
-              </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+    <table id="patientTable" class="table-rounded display" style="width:100%">
+    <thead>
+        <tr class="text-center">
+            <th>Nome</th>
+            <th>Nuovo Intervento</th>
+            <th>Storia Paziente</th>
+        </tr>
+    </thead>
+    <tbody>
+        </tbody>
+  </table>
   </div>
 </div>
 
@@ -109,45 +76,17 @@
 <div class="row">
   <div class="col-md-12 mb-12 col-lg-12">
 
-    <table id="patientTable" class="table-rounded">
-      <thead>
-          <tr class="text-center">
-             
-              <th>Nome</th>
-              <th>Patologia Intervento</th>
-              <th>Aggiungi Controllo</th>
-              <th>Data inserimento</th>
-
-          </tr>
-      </thead>
-      <tbody>
-          {% for pathology_data, patient_name,patient_surname, pathology_name in interventi_da_fissare %}
-              <tr class="patientRow text-center" data-patient-id="{{ pathology_data.id}}">
-                 
-                 <td>
-                    <a href="{{ url_for('patient.profile_patient', patient_id=pathology_data.id_patient) }}">
-                      {% if patient_surname %}{{ patient_surname }} {% endif %}{{ patient_name }}
-                    </a>
-                  </td>
-                  <td>
-                      {{ pathology_name }}
-                  </td>
-                  <td>
-                    <form method="POST" action="{{ url_for('doctor.medical_treatment')}}">
-                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                      <input type="hidden" name="patient_id" value="{{ pathology_data.id_patient }}">
-                      <input type="hidden" name="patient_name" value="{{ patient_name }}">
-                      <input type="hidden" name="pathology_id" value="{{ pathology_data.id_pathology }}">
-                      <input type="hidden" name="row_id" value="{{ pathology_data.id }}">
-
-                      <button class="btn btn-success" type="submit">Crea</button>
-                    </form>
-                  </td>
-                  <td>{{pathology_data.created_at.strftime('%d-%m-%Y')}}</td>
-              </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+    <table id="Interventi" class="table-rounded display" style="width:100%">
+    <thead>
+        <tr class="text-center">
+            <th>Nome</th>
+            <th>Patologia Intervento</th>
+            <th>Aggiungi Controllo</th>
+            <th>Data inserimento</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
   </div>
 </div>
@@ -155,6 +94,40 @@
 
 <script>
   
+
+  $(document).ready(function() {
+    $('#patientTable').DataTable({
+        "serverSide": true,
+        "ajax": "/ajax_profile_pazienti_datatable",
+        "columns": [
+            { "data": "name_col" },   // Corrisponde alla chiave nel dizionario Python
+            { "data": "action_crea", "orderable": false, "className": "text-center" },
+            { "data": "action_storia", "orderable": false, "className": "text-center" }
+        ],
+        "pageLength": 20,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json"
+        }
+    });
+
+    $('#Interventi').DataTable({
+        "serverSide": true,
+        "ajax": "/ajax_interventi_da_fissare",
+        "columns": [
+            { "data": "nome" },
+            { "data": "patologia", "className": "text-center" },
+            { "data": "add_control", "orderable": false, "className": "text-center" },
+            { "data": "data_ins", "className": "text-center" }
+        ],
+        "pageLength": 20,
+        "order": [[ 3, "desc" ]], // Ordina per data inserimento di default
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json"
+        }
+    });
+});
+
+
   var week_to_add;
   var specificDate;
 

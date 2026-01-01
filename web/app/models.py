@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(300))
     name = db.Column(db.String(120))
-    surname = db.Column(db.String(120))
+    surname = db.Column(db.String(120),index=True)
     role = db.Column(db.Integer)
     phone = db.Column(db.String(20))
     sx_dx_hand = db.Column(db.String(5))
