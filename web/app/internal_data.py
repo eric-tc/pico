@@ -2080,8 +2080,6 @@ class PATHOLOGY(Enum):
                                 LesioneTendineaEstensoriEnum,
                                 None)
         
-
-
 class PATHOLOGY_STATUS(Enum):
     PRIMA= (1,"Prima del Trattamento")
     DURANTE= (2,"Trattamento")
@@ -2104,85 +2102,3 @@ class PATHOLOGY_TYPE(Enum):
 
 
 
-
-'''
-Questa classe contiene tutte le chiavi 
-del form utilizzato per la selezione delle patologie
-'''
-class PATHOLOGY_KEY_SELECTION_FORM(Enum):
-    #RADIO DISTALE
-    
-    radio_distale_giorni_value= "radio_distale_giorni_value"
-    classificazione_radiografica_tipo_valore= "classificazione_radiografica_tipo_valore"
-    classificazione_radiografica_numero_valore= "classificazione_radiografica_numero_valore"
-    #METACARPALI
-    fratture_metacarpali_non_chirurgico_type= "fratture_metacarpali_non_chirurgico_type"
-    fratture_metacarpali_non_chirirgico_polso= "fratture_metacarpali_non_chirirgico_polso"
-    fratture_metacarpali_non_chirirgico_mcpj = "fratture_metacarpali_non_chirirgico_mcpj"
-    fratture_metacarpali_non_chirirgico_mcpj_yes_value="fratture_metacarpali_non_chirirgico_mcpj_yes_value"
-    fratture_metacarpali_non_chirirgico_pipj="fratture_metacarpali_non_chirirgico_pipj"
-    fratture_metacarpali_non_chirirgico_pipj_yes="fratture_metacarpali_non_chirirgico_pipj_yes"
-    fratture_metacarpali_non_chirirgico_pipj_yes_value="fratture_metacarpali_non_chirirgico_pipj_yes_value"
-    fratture_metacarpali_chirurgico_data="fratture_metacarpali_chirurgico_data"
-    fratture_metacarpali_fili_kirschner="fratture_metacarpali_fili_kirschner"
-    fratture_metacarpali_viti="fratture_metacarpali_viti"
-    fratture_metacarpali_step1_valore="fratture_metacarpali_step1_valore"
-    fratture_metacarpali_classificazione_radiografica_value="fratture_metacarpali_classificazione_radiografica_value"
-    fratture_metacarpali_diafisaria_value="fratture_metacarpali_diafisaria_value"
-
-    #FALANGE_PROSSIMALE
-
-    fratture_falange_prossimale_non_chirurgico_type= "fratture_falange_prossimale_non_chirurgico_type"
-    fratture_falange_prossimale_non_chirirgico_polso= "fratture_falange_prossimale_non_chirirgico_polso"
-    fratture_falange_prossimale_non_chirirgico_mcpj = "fratture_falange_prossimale_non_chirirgico_mcpj"
-    fratture_falange_prossimale_non_chirirgico_mcpj_yes_value="fratture_falange_prossimale_non_chirirgico_mcpj_yes_value"
-    fratture_falange_prossimale_non_chirirgico_pipj="fratture_falange_prossimale_non_chirirgico_pipj"
-    fratture_falange_prossimale_non_chirirgico_pipj_yes="fratture_falange_prossimale_non_chirirgico_pipj_yes"
-    fratture_falange_prossimale_non_chirirgico_pipj_yes_value="fratture_falange_prossimale_non_chirirgico_pipj_yes_value"
-    fratture_falange_prossimale_chirurgico_data="fratture_falange_prossimale_chirurgico_data"
-    fratture_falange_prossimale_fili_kirschner="fratture_falange_prossimale_fili_kirschner"
-    fratture_falange_prossimale_viti="fratture_falange_prossimale_viti"
-    fratture_falange_prossimale_step1_valore="fratture_falange_prossimale_step1_valore"
-    fratture_falange_prossimale_classificazione_radiografica_value="fratture_falange_prossimale_classificazione_radiografica_value"
-    fratture_falange_prossimale_diafisaria_value="fratture_falange_prossimale_diafisaria_value" 
-
-def get_pathology_type_dict():
-
-    """
-    Ritorna le patologie in formato json in modo da essere utilizzate in javascript
-    Esempio
-    {"1": 
-        {
-        "name": ["Trapeziectomia e artoplastica in sospensione con APL", "Protesi Touch", "Altre tipologie Rizoartrosi"],
-        "id": ["1", "2", "3"]
-        }
-    "2":...
-    }
-    """
-    name_dict = {}
-    #Per ogni controllo devo ritornare il numero di settimane del controllo successivo.
-    #Questo serve nell'interfaccia grafica per selezionare i giorni del calendario in cui è possibile selzionare la data
-
-    timeline_dict = {}
-    # Iterate over enum values
-    for pathology_type in PATHOLOGY_TYPE:
-        category = str(pathology_type.value[1].value[0])
-        #Questo id è lo stesso inserito a database
-        id_type = str(pathology_type.value[0])
-        name = pathology_type.value[2]
-
-        # If category already exists, append the option, otherwise create a new list
-        if category in name_dict:
-            name_dict[category]["name"].append(name)
-            name_dict[category]["id"].append(id_type)
-        else:
-            name_dict[category]={}            
-            name_dict[category]["name"] = [name]
-            name_dict[category]["id"] = [id_type]
-            #per ogni PATHOLOGY prendo dopo quante settimane c'è il primo controllo
-            timeline_dict[category]= pathology_type.value[1].value[2].timeline[1]
-            
-            
-    name_dict = str(name_dict).replace("'", '"')
-    timeline_dict = str(timeline_dict).replace("'", '"')
-    return name_dict,timeline_dict

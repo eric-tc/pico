@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,jsonify,redirect, url_for, flash,session,make_response
 from flask_login import login_required, current_user
-from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY_KEY_SELECTION_FORM,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,PATHOLOGY_TYPE,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
+from .internal_data import ROLE,NOTIFICATION_STATUS,PATHOLOGY,CONTROL_STATUS,EMAIL_STATUS,DoctorData,RizoartrosiControlsTimeline,CONTROLS,PATHOLOGY_STATUS,CacheDataDoctor,CONTROLSNUMBER
 from .models import User,DoctorPatient,Notification,PathologyData,PathologyType,Pathology,PathologyDataStats
 from .internal_data import FratturaMetaCarpaleTimeline,FrattureFalangeProssimaleTimeline,LesioneLigamentosaTimeline,DupuytrenTimeline
 from . import db,csrf,cache
@@ -11,8 +11,7 @@ from datetime import datetime, timedelta,time
 from .mutils import get_date,get_date_from_datetime,get_pathology_enum,pathology_set_next_control,getDateInYMD
 from werkzeug.security import generate_password_hash
 import json
-from .internal_data import get_pathology_type_dict,EVENT_DAYS
-from .query_sql import select_next_treatments
+from .internal_data import EVENT_DAYS
 import sys
 from weasyprint import HTML
 from .settings_form import SettingsFormDoctor
@@ -41,44 +40,9 @@ def remove_session_data():
 def profile():
 
     remove_session_data()
-
-    patients_list=(
-    db.session.query(DoctorPatient, User.name,User.surname)
-    .join(User, DoctorPatient.id_patient == User.id)
-    .filter(DoctorPatient.id_doctor == current_user.id)
-    .order_by(User.surname.asc()).all()
-    )
-    
-
-    print(patients_list)
-
-    #Ritorna tutti le patologie aggiunte dal dottore per le quali non è ancora stato fissato intervento
-    #(pathology_row,patient_name,pathology_name)
-    interventi_da_fissare= db.session.query(PathologyData,User.name,User.surname,Pathology.name)\
-    .join(User, PathologyData.id_patient == User.id)\
-    .join(Pathology,PathologyData.id_pathology==Pathology.id)\
-    .filter(PathologyData.id_doctor == current_user.id , PathologyData.id_pathology_status==PATHOLOGY_STATUS.PRIMA.value[0],PathologyData.id_control_status==CONTROL_STATUS.ACTIVE.value[0]).order_by(PathologyData.created_at.desc()).all()
-    print("INTERVENTI DA FISSARE")
-    print(interventi_da_fissare)
-
-
-    # 2 recupero gli interventi di diversi pazienti più vicini alla data attuale
-    next_treatments=[]
-    # for patient_query in patients_list:
-    #     #in base all'id paziente 
-    #     print("value")
-    #     doctorPatient, name = patient_query
-
-    #     #recupero tutte le patologie a cui il paziente è associato il dottore
-    #     select_next_treatments(doctorPatient.id_patient,next_treatments)
-
-
-            
     return render_template('doctor/profile.html', 
-                           name=current_user.name,
-                           patients_list=patients_list,
-                           interventi_da_fissare=interventi_da_fissare, 
-                           next_treatments=next_treatments)
+                           name=current_user.name, 
+                           )
                           
 """
 Route utilizzata per ritornare i pazienti associati al dottore in formato datatable.js
@@ -305,7 +269,7 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
             # print(controls_map)
             break
     
-    
+    # Inserisco a db tutti i controlli necessari per la patologia selezionata
     if request.method == 'POST':
         
         precontrols_data=None
@@ -385,7 +349,6 @@ def parameters_pre_treatment_selection(patient_id,patient_name,pathology_id):
                             patient_name=patient_name,
                             patient_id=patient_id,
                             pathology=PATHOLOGY,
-                            form_keys=PATHOLOGY_KEY_SELECTION_FORM,
                             indices_labels=indices_labels,
                             form=form,
                             controls_map=controls_map,
@@ -426,7 +389,7 @@ def insert_pre_medical_treatment(patient_id,patient_name):
                             patient_name=patient_name,
                             patient_id=patient_id,
                             pathology=PATHOLOGY,
-                            form_keys=PATHOLOGY_KEY_SELECTION_FORM
+                           
                           )
 
 

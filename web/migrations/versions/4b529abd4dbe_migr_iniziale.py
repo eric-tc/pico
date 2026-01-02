@@ -1,8 +1,8 @@
-"""migrazione iniziale
+"""migr iniziale
 
-Revision ID: ef74cf5aa32e
+Revision ID: 4b529abd4dbe
 Revises: 
-Create Date: 2025-12-31 13:43:17.169630
+Create Date: 2026-01-02 09:20:02.976539
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = 'ef74cf5aa32e'
+revision = '4b529abd4dbe'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,8 +55,9 @@ def upgrade():
     )
     op.create_table('pathology_type',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id_pathology', sa.Integer(), nullable=True),
     sa.Column('type', sa.Integer(), nullable=True),
-    sa.Column('name', sa.String(length=120), nullable=True),
+    sa.Column('name', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -78,6 +79,9 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
+    with op.batch_alter_table('user', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_user_surname'), ['surname'], unique=False)
+
     op.create_table('doctor_current_pathology',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('id_doctor', sa.Integer(), nullable=False),
@@ -162,7 +166,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('pathology_data', schema=None) as batch_op:
-        batch_op.create_index('pathology_data_idx', ['id_pathology', 'next_control_number'], unique=False)
+        batch_op.create_index('pathology_data_idx', ['id_pathology', 'next_control_number', 'id_pathology_type'], unique=False)
+        batch_op.create_index('patient_pathology_idx', ['id_patient', 'id_pathology', 'id_pathology_type'], unique=False)
 
     op.create_table('pathology_data_stats',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -170,6 +175,7 @@ def upgrade():
     sa.Column('id_parameter', sa.Integer(), nullable=False),
     sa.Column('control_number', sa.Integer(), nullable=False),
     sa.Column('dito', sa.Integer(), nullable=True),
+    sa.Column('id_pathology_type', sa.Integer(), nullable=False),
     sa.Column('finger_parameter', sa.Integer(), nullable=True),
     sa.Column('media', sa.Float(), nullable=True),
     sa.Column('mediana', sa.Float(), nullable=True),
@@ -177,10 +183,11 @@ def upgrade():
     sa.Column('data_aggiornamento', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['id_parameter'], ['parameters.id'], ),
     sa.ForeignKeyConstraint(['id_pathology'], ['pathology.id'], ),
+    sa.ForeignKeyConstraint(['id_pathology_type'], ['pathology_type.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('pathology_data_stats', schema=None) as batch_op:
-        batch_op.create_index('pathology_stats_idx', ['id_pathology', 'id_parameter', 'control_number', 'dito'], unique=False)
+        batch_op.create_index('pathology_stats_idx', ['id_pathology', 'id_parameter', 'control_number'], unique=False)
 
     # ### end Alembic commands ###
 
@@ -192,12 +199,16 @@ def downgrade():
 
     op.drop_table('pathology_data_stats')
     with op.batch_alter_table('pathology_data', schema=None) as batch_op:
+        batch_op.drop_index('patient_pathology_idx')
         batch_op.drop_index('pathology_data_idx')
 
     op.drop_table('pathology_data')
     op.drop_table('notification')
     op.drop_table('doctor_patient')
     op.drop_table('doctor_current_pathology')
+    with op.batch_alter_table('user', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_user_surname'))
+
     op.drop_table('user')
     op.drop_table('pathology_type')
     op.drop_table('pathology_status')

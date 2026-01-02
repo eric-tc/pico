@@ -52,7 +52,7 @@ class LesioneTendineaEstensoriEnum(Enum):
     [0]= Valore salvato a db nel campo pathology_data.id_pathology_type
     [1]= Visualizzato nel form
     """       
-    FLESSORI = ("1","Estensori")
+    ESTENSORI = ("1","Estensori")
 
 class ResezioneFilieraEnum(Enum):
     """

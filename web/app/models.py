@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import datetime
-from .internal_data import CONTROLS,PATHOLOGY_TYPE,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS,PATHOLOGY_STATUS
+from .internal_data import CONTROLS,PATHOLOGY,NOTIFICATION_STATUS,EMAIL_STATUS,CONTROL_STATUS,PATHOLOGY_STATUS
 from .internal_data_enum_pathologies import FINGER_PARAMETERS
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -128,18 +128,23 @@ class PathologyType(db.Model):
    
     
     id = db.Column(db.Integer,primary_key=True)
+    id_pathology= db.Column(db.Integer)
     type=db.Column(db.Integer) 
-    name = db.Column(db.String(120))
+    name = db.Column(db.String(200))
     
     @classmethod
     def insert_rows(cls):
         # Create and insert a new row for each value in the list
         if db.session.query(cls).count() == 0:
-            for row in PATHOLOGY_TYPE:
+            for row in PATHOLOGY:
+                id_pathology,name,timeline,form,enum_type,pre_options= row.value
 
-                id_code,type,name= row.value
-                new_instance = cls(id=id_code,name=name,type=type.value[0])
-                db.session.add(new_instance)
+                # Rappresenta i valori che un utente può selezionare come sotto tipologia di patologia
+                # Esempio: Lesione Ligamentosa Chirurgica o Non Chirurgica
+                # Questo lo uso per recuperare le statistiche in base al tipo di patologia e intervento chirurgico
+                for type_selected in enum_type:
+                    new_instance = cls(id_pathology=id_pathology,name=type_selected.value[1],type=type_selected.value[0])
+                    db.session.add(new_instance)
             
             # Commit the changes
             db.session.commit()
@@ -235,7 +240,8 @@ class PathologyData(db.Model):
     post_options= db.Column(JSONB)
     
     __table_args__ = (
-        db.Index('pathology_data_idx','id_pathology', 'next_control_number'),
+        db.Index('pathology_data_idx','id_pathology',"next_control_number",'id_pathology_type'),
+        db.Index('patient_pathology_idx','id_patient','id_pathology','id_pathology_type'),
     )
 
 class PathologyDataStats(db.Model):
@@ -257,17 +263,21 @@ class PathologyDataStats(db.Model):
     #Rappresenta il dito a cui si riferisce il parametro. Ad esempio per mpcj
     # enum INDECES
     dito=db.Column(db.Integer,nullable=True)
-    # Rappresenta il parametro specifico del dito. Ad esempio per mpcj può essere arom_flessione, prom_flessione, arom_estensione, prom_estensione
-    # Ho aggiunto un enum specifico per questo FINGER_PARAMETERS
+    # Rappresenta il tipo di intervento selezionato nella patologia. 
+    # Ad esempio lesione Ligamentosa chirurgica o non chirurgica
+    id_pathology_type=db.Column(db.Integer,db.ForeignKey('pathology_type.id'),nullable=False)
+    pathology_type= db.relationship('PathologyType', foreign_keys=[id_pathology_type])
+    # Per valori come mpcj,pipj,dipj,ipj polso,trapezio_metacarpale ecc
+    # indica il parametro specifico del dito. Ad esempio per mpcj 0= arom_flessione,1= prom_flessione ecc
     finger_parameter=db.Column(db.Integer,nullable=True)
     media = db.Column(db.Float, nullable=True)
     mediana = db.Column(db.Float, nullable=True)
     deviazione_standard = db.Column(db.Float, nullable=True)
     data_aggiornamento = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # non aggiungo tutti i valori perchè questi dovrebbero filtrare abbastanza bene
     __table_args__ = (
-        db.Index('pathology_stats_idx', 'id_pathology', 'id_parameter', 'control_number', 'dito'),
-        
+        db.Index('pathology_stats_idx', 'id_pathology', 'id_parameter', 'control_number'),
     )
 
     

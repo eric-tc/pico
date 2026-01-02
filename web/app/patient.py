@@ -5,7 +5,6 @@ from .models import User,DoctorPatient,Notification,PathologyData,PathologyType
 from sqlalchemy import or_, and_
 from . import db
 from datetime import datetime
-from .query_sql import select_next_treatments
 from .settings_form import SettingsFormPatient
 from werkzeug.security import generate_password_hash, check_password_hash
 from .mutils import getDateInYMD,getDateStringFromDate
@@ -108,7 +107,7 @@ def profile_patient(patient_id=None):
 
     #recupero la lista degli interventi successivi associati al paziente
     next_treatments = []
-    select_next_treatments(current_user.id, next_treatments)
+    
 
     return render_template('patient/profile_patient.html',
                            form=form,
