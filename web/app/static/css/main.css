@@ -281,6 +281,8 @@ input {
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+/* ------------------------ Button ------------------------------ */
+
 .fixed-button {
   position: fixed; /* Ensures the button stays in a fixed position */
   top: 6%;       /* Distance from the top of the viewport */
@@ -288,6 +290,14 @@ input {
   padding: 10px 20px;
 }
 
+.link-button {
+  background: None;
+  border: None;
+  color: #198754;
+  padding:0;
+  text-decoration: underline;
+  cursor:pointer;
+}
 
 table {
   width: 100%; /* Ensure all tables span the entire width */
@@ -375,3 +385,4 @@ table.prwhe th {
   margin-bottom: 8px;
   display: block;
 }
+

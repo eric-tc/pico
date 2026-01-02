@@ -140,13 +140,12 @@ def api_interventi_da_fissare():
                 <input type="hidden" name="patient_name" value="{p_name}">
                 <input type="hidden" name="pathology_id" value="{pathology_data.id_pathology}">
                 <input type="hidden" name="row_id" value="{pathology_data.id}">
-                <button class="btn btn-success" type="submit">Crea</button>
+                <button class="link-button" type="submit">{path_name}</button>
             </form>
         '''
 
         data.append({
             "nome": f'<a href="{profile_url}">{p_surname or ""} {p_name}</a>',
-            "patologia": path_name,
             "add_control": form_html,
             "data_ins": pathology_data.created_at.strftime('%d-%m-%Y')
         })

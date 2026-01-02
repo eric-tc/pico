@@ -80,7 +80,6 @@
     <thead>
         <tr class="text-center">
             <th>Nome</th>
-            <th>Patologia Intervento</th>
             <th>Aggiungi Controllo</th>
             <th>Data inserimento</th>
         </tr>
@@ -115,12 +114,11 @@
         "ajax": "/ajax_interventi_da_fissare",
         "columns": [
             { "data": "nome" },
-            { "data": "patologia", "className": "text-center" },
             { "data": "add_control", "orderable": false, "className": "text-center" },
             { "data": "data_ins", "className": "text-center" }
         ],
         "pageLength": 20,
-        "order": [[ 3, "desc" ]], // Ordina per data inserimento di default
+        "order": [[ 2, "desc" ]], // Ordina per data inserimento di default
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json"
         }
