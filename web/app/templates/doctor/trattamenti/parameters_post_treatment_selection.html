@@ -18,44 +18,78 @@
 <script>
 
 
-  function retrieve_form_data(){
+  function retrieve_form_data() {
+    // 1. Creiamo il clone
     var formClone = $("#form-post-treatment").clone();
 
-    
-    // Update the form clone to include user-input values
+    // 2. Aggiorniamo il clone con i valori REALI presi dall'interfaccia utente
     formClone.find("input, textarea, select").each(function () {
-      if ($(this).is(":checkbox") || $(this).is(":radio")) {
-          // For checkboxes and radio buttons
-          if ($(this).is(":checked")) {
-              $(this).attr("checked", true);
-          } else {
-              $(this).removeAttr("checked");
-          }
-      } else if ($(this).is("select")) {
-          // For select elements
-          console.log($(this).attr("id"), $(this).val());
+        
+        // Recuperiamo l'ID per trovare l'elemento ORIGINALE corrispondente
+        var inputId = $(this).attr("id");
+        
+        // Se l'elemento non ha ID, non possiamo trovare l'originale in modo sicuro con questa logica
+        if (!inputId) return; 
 
-          let selectElement = document.getElementById($(this).attr("id"));
-          let selectedValue = selectElement.value;
-          //Cicla su tutte le opzioni del select  
-          $(this).find("option").each(function () {
+        // Riferimento all'elemento originale nel DOM (quello che l'utente vede)
+        var originalElement = $("#" + inputId);
+        // Valore attuale inserito dall'utente
+        var realValue = originalElement.val(); 
 
-            //Questo setta il valore selected a true solo opzione che ha il valore uguale a quello selezionato
-            if ($(this).val() == selectedValue) {
-                  $(this).attr("selected", true);
-              } else {
-                  $(this).removeAttr("selected");
-              }
-          });
-      } else {
-          // For text, email, textarea, and other inputs
-          console.log("VALUE", $(this).val());
-          $(this).attr("value", $(this).val());
-      }
+        if ($(this).is(":checkbox") || $(this).is(":radio")) {
+            // CHECKBOX & RADIO
+            // Leggiamo la proprietà .prop("checked") dall'originale
+            if (originalElement.prop("checked")) {
+                $(this).attr("checked", "checked"); // Importante usare "checked" stringa per HTML standard
+            } else {
+                $(this).removeAttr("checked");
+            }
+
+        } else if ($(this).is("select")) {
+            // SELECT
+            // Cicla su tutte le opzioni del CLONE
+            $(this).find("option").each(function () {
+                // Confronta il valore dell'opzione con il valore reale della select originale
+                if ($(this).val() == realValue) {
+                    $(this).attr("selected", "selected");
+                } else {
+                    $(this).removeAttr("selected");
+                }
+            });
+
+        } else if ($(this).is("textarea")) {
+           
+            var replacementDiv = $("<div></div>");
+
+            // 2. Copiamo lo stile base per farlo sembrare simile al form (opzionale)
+            // 'white-space: pre-wrap' è FONDAMENTALE: mantiene gli "a capo" e gli spazi scritti dall'utente
+            replacementDiv.css({
+                "width": "100%",
+                "min-height": $(this).height() + "px", // Mantiene almeno l'altezza originale
+                "white-space": "pre-wrap",             // Mantiene la formattazione del testo (a capo)
+                "font-family": $(this).css("font-family"),
+                "font-size": $(this).css("font-size"),
+                "border": "1px solid #ccc",            // Bordo simile agli input (opzionale)
+                "padding": "6px 12px",                 // Padding stile Bootstrap
+                "color": "black"
+            });
+
+            // 3. Inseriamo il testo REALE preso dall'elemento originale
+            replacementDiv.text(realValue);
+
+            // 4. Sostituiamo la textarea NEL CLONE con questo div
+            $(this).replaceWith(replacementDiv);
+
+        } else {
+            // INPUT DI TESTO, DATE, EMAIL, HIDDEN, ecc.
+            // Qui va bene usare l'attributo value
+            $(this).attr("value", realValue);
+        }
     });
 
     return formClone;
   }
+
   function generate_full_pdf(){
     
     

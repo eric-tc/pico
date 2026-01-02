@@ -1014,19 +1014,36 @@ def event_details(row_id,event_in_range):
         
         if form.submit_form.data:
             print("SUBMIT FORM")
+
+            html_content = render_template(
+            'general/pathology_form_fields.html', 
+            form=form,
+            controls_map=controls_map, 
+            is_pdf=True  # <--- Questo è il "flag" magico
+            )   
+
+            filename = f"report_{row_id}.pdf"
+            pdf_path = os.path.join(PDF_DIRECTORY, filename)
+            HTML(string=html_content).write_pdf(pdf_path)
+            
             #Creo il PDF Dai dati parsati del form submit
 
-            html_content_original = form.hidden_html.data
-            if html_content_original:
-                try:
-                    html_content = request.get_json(silent=True) or eval(html_content_original)
+            # html_content_original = form.hidden_html.data
+            # print("HTML CONTENT ORIGINAL")
+            # print(html_content_original)
+            # input("T")
+            # if html_content_original:
+            #     try:
+            #         html_content = request.get_json(silent=True) or eval(html_content_original)
 
-                    filename = f"report_{row_id}.pdf"
-                    pdf_path = os.path.join(PDF_DIRECTORY, filename)
-                    HTML(string=html_content.get("html")).write_pdf(pdf_path)
-                except Exception as e:
-                    print(f"Error parsing form data: {e}")
-                    parsed_data = {}
+            #         filename = f"report_{row_id}.pdf"
+            #         pdf_path = os.path.join(PDF_DIRECTORY, filename)
+            #         HTML(string=html_content.get("html")).write_pdf(pdf_path)
+            #     except Exception as e:
+            #         print(f"Error parsing form data: {e}")
+            #         parsed_data = {}
+
+
 
             #Inserisco i dati a database della patologia inserita
             for key in controls_map.keys():
@@ -1106,26 +1123,26 @@ def event_details(row_id,event_in_range):
 
 
 
-@doctor.route("/generate_pdf", methods=["POST"])
-def generate_pdf():
-    form_data = request.json  # Receive form data as JSON
+# @doctor.route("/generate_pdf", methods=["POST"])
+# def generate_pdf():
+#     form_data = request.json  # Receive form data as JSON
 
-    # Render the HTML template with form data
-    rendered_html = render_template("general/control_pdf.html", form_data=form_data)
+#     # Render the HTML template with form data
+#     rendered_html = render_template("general/control_pdf.html", form_data=form_data)
 
-    # Generate the PDF
-    pdf = HTML(string=rendered_html).write_pdf()
+#     # Generate the PDF
+#     pdf = HTML(string=rendered_html).write_pdf()
 
-    # response = make_response(pdf)
-    # response.headers["Content-Type"] = "application/pdf"
-    # response.headers["Content-Disposition"] = "inline; filename=form_data.pdf"
+#     # response = make_response(pdf)
+#     # response.headers["Content-Type"] = "application/pdf"
+#     # response.headers["Content-Disposition"] = "inline; filename=form_data.pdf"
 
-    # Save the PDF on the server (optional)
-    pdf_path = os.path.join(PDF_DIRECTORY, "generated_form_data.pdf")
-    with open(pdf_path, "wb") as pdf_file:
-        pdf_file.write(pdf)
+#     # Save the PDF on the server (optional)
+#     pdf_path = os.path.join(PDF_DIRECTORY, "generated_form_data.pdf")
+#     with open(pdf_path, "wb") as pdf_file:
+#         pdf_file.write(pdf)
 
-    return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
+#     return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
 
 
 @doctor.route('/generate_page_pdf/<row_id>', methods=['POST'])
