@@ -887,8 +887,37 @@ def controls_for_day(date):
     )
 
 
+def genera_pdf_da_html(html_content, row_id, PatientName, PatientSurname, PathologyName):
+    """
+    Genera un file PDF a partire da una stringa HTML.
     
+    :param html_content: La stringa HTML da convertire in PDF.
+    :param output_path: Il percorso del file PDF di output.
+    """
 
+    current_date = datetime.now().strftime("%d-%m-%Y")
+    
+    additional_html = f"""
+    <div style="color: black; font-weight: bold;">
+        <h1>Resoconto Terapia</h1>
+        <p>Data Referto: {current_date} </p>
+        <p>Nome: {PatientName} {PatientSurname} </p>
+        <p>Patologia: {PathologyName} </p>
+        
+    </div>
+    """
+    full_html = additional_html +  html_content
+
+    #print(html_content)
+    print("Generate PDF")
+    # Generate the PDF
+    filename = f"report_{row_id}.pdf"
+    pdf_path = os.path.join(PDF_DIRECTORY, filename)
+    HTML(string=full_html).write_pdf(pdf_path)
+
+    return filename
+
+    
 @doctor.route('/next_controls/<row_id>/<event_in_range>',methods=["GET","POST"])
 @login_required
 def event_details(row_id,event_in_range):
@@ -910,6 +939,14 @@ def event_details(row_id,event_in_range):
     data_intervento=None
     data_controllo=None
     pathology_db = db.session.query(PathologyData).filter(PathologyData.id==row_id).first()
+
+    # recupero nome e cognome dell paziente
+    patient_db = db.session.query(User).filter(User.id==pathology_db.id_patient).first()
+    p_name= patient_db.name
+    p_surname= patient_db.surname
+
+    # recupero nome patologia
+    pathology_enum= get_pathology_enum(pathology_db.id_pathology)
 
     #Verifico se la data di inizio mobilizzazione è già stata inserita
     pathology_parent= db.session.query(PathologyData).filter(PathologyData.id==pathology_db.id_created_from).first()
@@ -1015,34 +1052,10 @@ def event_details(row_id,event_in_range):
         if form.submit_form.data:
             print("SUBMIT FORM")
 
-            html_content = render_template(
-            'general/pathology_form_fields.html', 
-            form=form,
-            controls_map=controls_map, 
-            is_pdf=True  # <--- Questo è il "flag" magico
-            )   
-
-            filename = f"report_{row_id}.pdf"
-            pdf_path = os.path.join(PDF_DIRECTORY, filename)
-            HTML(string=html_content).write_pdf(pdf_path)
-            
-            #Creo il PDF Dai dati parsati del form submit
-
-            # html_content_original = form.hidden_html.data
-            # print("HTML CONTENT ORIGINAL")
-            # print(html_content_original)
-            # input("T")
-            # if html_content_original:
-            #     try:
-            #         html_content = request.get_json(silent=True) or eval(html_content_original)
-
-            #         filename = f"report_{row_id}.pdf"
-            #         pdf_path = os.path.join(PDF_DIRECTORY, filename)
-            #         HTML(string=html_content.get("html")).write_pdf(pdf_path)
-            #     except Exception as e:
-            #         print(f"Error parsing form data: {e}")
-            #         parsed_data = {}
-
+            genera_pdf_da_html(form.hidden_html.data,
+                              row_id,p_name,
+                              p_surname,
+                              pathology_enum.value[1])
 
 
             #Inserisco i dati a database della patologia inserita
@@ -1156,32 +1169,33 @@ def generate_page_pdf(row_id):
     current_date = datetime.now().strftime("%d/%m/%Y")
 
     #Get Patient Name
-    Data= db.session.query(PathologyData.id,PathologyData.id_pathology,PathologyData.id_patient,User.name,Pathology.name)\
+    Data= db.session.query(PathologyData.id,PathologyData.id_pathology,PathologyData.id_patient,User.name,User.surname,Pathology.name)\
         .join(User,PathologyData.id_patient==User.id)\
         .join(Pathology,PathologyData.id_pathology==Pathology.id)\
         .filter(PathologyData.id == row_id).first()
                 
-    Id,IdPathology,IdPatient,PatientName,PathologyName= Data
+    Id,IdPathology,IdPatient,PatientName,PatientSurname,PathologyName= Data
 
-    additional_html = f"""
-    <div style="color: black; font-weight: bold;">
-        <h1>Resoconto Terapia</h1>
-        <p>Data Referto: {current_date} </p>
-        <p>Nome: {PatientName} </p>
-        <p>Patologia: {PathologyName} </p>
+    # additional_html = f"""
+    # <div style="color: black; font-weight: bold;">
+    #     <h1>Resoconto Terapia</h1>
+    #     <p>Data Referto: {current_date} </p>
+    #     <p>Nome: {PatientName} </p>
+    #     <p>Patologia: {PathologyName} </p>
         
-    </div>
-    """
-    full_html = additional_html +  html_content
+    # </div>
+    # """
+    # full_html = additional_html +  html_content
 
-    #print(html_content)
-    print("Generate PDF")
-    # Generate the PDF
-    filename = f"report_{row_id}.pdf"
-    pdf_path = os.path.join(PDF_DIRECTORY, filename)
-    HTML(string=full_html).write_pdf(pdf_path)
+    # #print(html_content)
+    # print("Generate PDF")
+    # # Generate the PDF
+    # filename = f"report_{row_id}.pdf"
+    # pdf_path = os.path.join(PDF_DIRECTORY, filename)
+    # HTML(string=full_html).write_pdf(pdf_path)
     
-    print("Finish PDF")
+    # print("Finish PDF")
+    filename = genera_pdf_da_html(html_content, row_id, PatientName, PatientSurname, PathologyName)
     
     # Return the filename for download
     return jsonify({"filename": filename})

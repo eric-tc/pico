@@ -87,6 +87,8 @@
         }
     });
 
+    formClone.find("#data-controllo").remove();
+
     return formClone;
   }
 
@@ -130,7 +132,7 @@ document.getElementById("form-post-treatment").addEventListener("submit", functi
   var formHtml = formClone.prop("outerHTML");
         
   // Assign serialized data to the hidden input field
-  document.getElementById("hidden_html").value = JSON.stringify({ html: formHtml });
+  document.getElementById("hidden_html").value = formHtml;
 });
 
  

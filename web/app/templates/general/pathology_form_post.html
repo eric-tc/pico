@@ -2,6 +2,7 @@
     {{ form.csrf_token }}
     
     {% if event_in_range=="0" %}
+     <div class="row" id="data-controllo">
         <h2 class="title mt-3">
             Puoi cambiare la data del controllo
         </h2>
@@ -22,12 +23,13 @@
             <h4>Evento non aperto. Puoi compilare solo 20 giorni prima o 20 giorni dopo rispetto alla data indicata</h4>
             <h5>Se vuoi aprire evento cambia data. Attenzione però che i dati non saranno conteggiati nello storico paziente</h5>
         </div>
+     </div>
     {% endif %}
    
 
     {% if event_in_range=="1" %}
 
-    <div class="row">
+    <div class="row" id="data-controllo">
      <h2 class="title mt-3">
             Puoi cambiare la data del controllo
         </h2>
