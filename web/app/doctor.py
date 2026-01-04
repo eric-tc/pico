@@ -664,10 +664,16 @@ def patient_treatment_list(patient_id,patient_name):
     )
     name=""
     surname=""
+    pathology_name=""
     for item in pathology_list:
         name=item[1]
         surname=item[2]
+        pathology_name=item[4]
         break
+    
+    session[DoctorData.NAME_PATIENT.value]= name
+    session[DoctorData.SURNAME_PATIENT.value]= surname
+    session[DoctorData.PATHOLOGY_NAME.value]= pathology_name
     
     print("PATHOLOGY LIST")
     print(pathology_list)
@@ -691,20 +697,25 @@ def patient_history():
     print(id_pathology)
     print(id_pathology_type)
 
-    all_pathology_row = db.session.query(PathologyData).filter(PathologyData.id_patient == session.get(DoctorData.ID_PATIENT.value),
+    # Ritornano tutti i controlli associati a quella patologia
+    all_pathology_controls_data = db.session.query(PathologyData).filter(PathologyData.id_patient == session.get(DoctorData.ID_PATIENT.value),
                                           PathologyData.id_pathology==id_pathology ,
                                           PathologyData.id_pathology_type== id_pathology_type).order_by(PathologyData.next_control_date.asc()).all()
     
-    #Associa ad ogni controllo la propria lista di controlli attivi 
-    pathology_and_control_maps=[]
 
-    for pathology_raw in all_pathology_row:
 
-        #control_map = RizoartrosiControlsTimeline.get_controls(pathology_raw.next_control_number)
-        control_map=None
-        pathology_and_control_maps.append((pathology_raw,control_map))
+    for row in all_pathology_controls_data:
+        print(f"CONTROL DATE {row.next_control_date} - CONTROL NUMBER {row.next_control_number} - CONTROL STATUS {row.id_control_status}")
 
-    return render_template('patient_history.html',pathology_and_control_maps=pathology_and_control_maps,control_status_enum=CONTROL_STATUS)
+        print(f"ALTRO {row.altro}")
+
+    return render_template('patient_history.html',
+                           all_pathology_controls_data=all_pathology_controls_data,
+                           control_status_enum=CONTROL_STATUS,
+                           name=session.get(DoctorData.NAME_PATIENT.value),
+                           surname=session.get(DoctorData.SURNAME_PATIENT.value),
+                           pathology_name=session.get(DoctorData.PATHOLOGY_NAME.value)
+                           )
 
 
 """

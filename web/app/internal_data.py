@@ -1982,6 +1982,7 @@ class DoctorData(Enum):
     SURNAME_PATIENT= "surname_patient"
     ID_PATHOLOGY= "id_pathology"
     ID_PATHOLOGY_TYPE= "id_pathology_type"
+    PATHOLOGY_NAME= "pathology_name"
     CONTROL_DATE = "first_control_date"
     CONTROL_TIME = "first_control_time"
     #questa chiave tiene traccia dell'appuntamento del controllo successivo
