@@ -1133,31 +1133,6 @@ def event_details(row_id,event_in_range):
                            data_inizio_mobilizzazione=data_inizio_mobilizzazione)
 
 
-
-
-
-# @doctor.route("/generate_pdf", methods=["POST"])
-# def generate_pdf():
-#     form_data = request.json  # Receive form data as JSON
-
-#     # Render the HTML template with form data
-#     rendered_html = render_template("general/control_pdf.html", form_data=form_data)
-
-#     # Generate the PDF
-#     pdf = HTML(string=rendered_html).write_pdf()
-
-#     # response = make_response(pdf)
-#     # response.headers["Content-Type"] = "application/pdf"
-#     # response.headers["Content-Disposition"] = "inline; filename=form_data.pdf"
-
-#     # Save the PDF on the server (optional)
-#     pdf_path = os.path.join(PDF_DIRECTORY, "generated_form_data.pdf")
-#     with open(pdf_path, "wb") as pdf_file:
-#         pdf_file.write(pdf)
-
-#     return jsonify({"message": "PDF generated", "pdf_filename": "generated_form_data.pdf"})
-
-
 @doctor.route('/generate_page_pdf/<row_id>', methods=['POST'])
 def generate_page_pdf(row_id):
     # Get the HTML content from the AJAX request
@@ -1175,24 +1150,6 @@ def generate_page_pdf(row_id):
         .filter(PathologyData.id == row_id).first()
                 
     Id,IdPathology,IdPatient,PatientName,PatientSurname,PathologyName= Data
-
-    # additional_html = f"""
-    # <div style="color: black; font-weight: bold;">
-    #     <h1>Resoconto Terapia</h1>
-    #     <p>Data Referto: {current_date} </p>
-    #     <p>Nome: {PatientName} </p>
-    #     <p>Patologia: {PathologyName} </p>
-        
-    # </div>
-    # """
-    # full_html = additional_html +  html_content
-
-    # #print(html_content)
-    # print("Generate PDF")
-    # # Generate the PDF
-    # filename = f"report_{row_id}.pdf"
-    # pdf_path = os.path.join(PDF_DIRECTORY, filename)
-    # HTML(string=full_html).write_pdf(pdf_path)
     
     # print("Finish PDF")
     filename = genera_pdf_da_html(html_content, row_id, PatientName, PatientSurname, PathologyName)

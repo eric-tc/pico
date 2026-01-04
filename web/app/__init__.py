@@ -12,7 +12,8 @@ from flask_cors import CORS
 from flask_caching import Cache
 
 from flask_migrate import Migrate
-
+from flask_session import Session
+from datetime import timedelta
 #ROLE 1 = DOCTOR
 #ROLE 2 = PATIENT
 
@@ -51,6 +52,19 @@ def create_app():
     app.config['SECRET_KEY'] = "#ekqk3DEgqwer)=90mlw@"
     app.config["CACHE_TYPE"] = "SimpleCache"
     app.config["CACHE_DEFAULT_TIMEOUT"] = 60
+    
+    # Salvataggio dati sessione server side
+
+    app.config['SESSION_TYPE'] = 'filesystem' 
+    # Dove salvare i file? (Usa instance_path per ordine)
+    app.config['SESSION_FILE_DIR'] = os.path.join(app.instance_path, 'flask_session_data')
+    # Sicurezza: non persistente = logout alla chiusura del browser (consigliato per app mediche)
+    app.config['SESSION_PERMANENT'] = True
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+    # Usa il signer per proteggere il cookie dell'ID di sessione
+    app.config['SESSION_USE_SIGNER'] = True
+
+    Session(app)
     
     csrf = CSRFProtect(app)
     CORS(app)
